@@ -1,9 +1,9 @@
-name: build-LIM
+name: Validate LIM
 on:
   push:
     paths:
-      - 'data'
-      - 'schema'
+      - '**.xml'
+      - '**.rng'
 jobs:
   validate:
     runs-on: ubuntu-latest
