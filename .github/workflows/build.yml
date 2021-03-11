@@ -1,5 +1,9 @@
 name: build-LIM
-on: [push]
+on:
+  push:
+    paths:
+      - 'data'
+      - 'schema'
 jobs:
   validate:
     runs-on: ubuntu-latest
