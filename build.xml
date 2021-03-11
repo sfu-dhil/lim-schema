@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="validate" name="buildLIM">
+    
+    <property name="lib.dir" value="${basedir}/lib"/>
+    <property name="jing" value="${lib.dir}/jing.jar"/>
+    
+    <!--First thing: validate-->
+    
+    <target name="validate">
+        <jing rngfile="schema/lim.rng">
+            <fileset dir="data" includes="**/*.xml"/>
+        </jing>
+    </target>    
+
+    <taskdef name="jing"
+        classname="com.thaiopensource.relaxng.util.JingTask"
+        classpath="${jing}">
+        <classpath>
+            <fileset dir="${lib.dir}">
+                <include name="jing.jar"/>
+            </fileset>
+        </classpath>
+    </taskdef>
+    
+</project>
