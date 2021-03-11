@@ -1,0 +1,421 @@
+@charset "UTF-8";
+/* Basic CSS for the documentation site */
+html, body {
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.45;
+  font-size: 1rem;
+}
+
+main {
+  display: grid;
+  grid-template-areas: "nav article";
+  grid-column-gap: 1rem;
+  grid-template-columns: 15rem auto;
+  height: 100%;
+  overflow: hidden;
+}
+
+nav, article {
+  overflow-y: scroll;
+}
+
+h1 {
+  font-size: 2rem;
+  text-align: center;
+}
+
+img {
+  max-width: 75%;
+}
+
+a,
+a:visited,
+span.toggle {
+  color: #2A5DB0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover,
+span.toggle {
+  color: #5b1684;
+}
+
+a.selected {
+  color: inherit;
+  font-size: 96%;
+}
+
+.selected {
+  font-weight: bold;
+}
+
+a.spec {
+  display: inline-block;
+  padding: 0.1rem;
+}
+
+nav {
+  grid-area: nav;
+  background-color: #f2f5f3;
+  padding: 1em;
+  overflow-wrap: break-word;
+}
+
+.list {
+  margin: 0.5rem 0.25rem;
+}
+
+td .list .item {
+  display: block;
+  margin-left: 0;
+}
+
+td .list .item + .item {
+  padding-top: 0.1rem;
+}
+
+pre {
+  display: inline;
+}
+
+pre.block {
+  display: block;
+  background: #dedfe0;
+  padding: 0.5rem;
+  border: 1px dotted black;
+  font-size: 90%;
+  margin: 1rem;
+}
+
+.list .item {
+  display: list-item;
+  margin-left: 1rem;
+}
+
+.item + .item {
+  padding-top: 0.5rem;
+}
+
+nav ul,
+nav li {
+  display: block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li + li {
+  padding-top: 0.25em;
+}
+
+nav ul > li {
+  padding-left: 1rem;
+}
+
+nav ul > li:first-child {
+  padding-top: 0.25em;
+}
+
+.JS span.toggle {
+  padding-right: 0.5rem;
+  margin-left: -0.5rem;
+}
+
+.JS li.open > span.toggle::before {
+  content: "-";
+}
+
+.JS li.closed > span.toggle::before {
+  content: "+";
+}
+
+.checked::before {
+  content: "✅";
+  /* Checkmark emoji */
+  padding-right: 0.5rem;
+}
+
+.error::before {
+  content: "❌";
+  /*Crossmark emoji  */
+  padding-right: 0.5rem;
+}
+
+.JS li.collapse > ul {
+  display: none;
+}
+
+.JS li.collapse.open > ul {
+  display: block;
+}
+
+.error[data-n]::after {
+  content: " (" attr(data-n) ")";
+}
+
+h2 {
+  margin: 0;
+  padding: 0;
+}
+
+article {
+  grid-area: article;
+  padding: 0 10% 10% 3%;
+}
+
+pre {
+  white-space: pre-wrap;
+}
+
+.p {
+  margin: 1em 0;
+}
+
+.label {
+  font-weight: bold;
+}
+
+table {
+  border-collapse: collapse;
+  padding: 1em;
+}
+
+tr, td {
+  border: 3px solid #efefef;
+  padding: 0.5rem 0.75rem;
+}
+
+.emph {
+  font-weight: 700;
+}
+
+#appendix {
+  display: none;
+}
+
+.title.m,
+.title.j {
+  font-style: italic;
+}
+
+.title.m > .title.m,
+.title.j > .title.m,
+.title.j > .title.j,
+.title.m > .title.j {
+  font-style: normal;
+}
+
+.title.a::before,
+.title.a::after,
+.q::before,
+.q::after {
+  content: '"';
+}
+
+/************************************************************************ POPUPS */
+#popup.hidden {
+  display: none;
+}
+
+#popup.showing {
+  position: absolute;
+  word-wrap: break-word;
+  font-size: 1.2rem;
+  background: white;
+  padding: 0.75em;
+  border: 1px solid #b9b9b9;
+  border-radius: 9px;
+  box-shadow: 1px 1px 1px #b9b9b9;
+  display: block;
+  -webkit-animation: fade-in 0.5s;
+          animation: fade-in 0.5s;
+  margin-left: 0.15rem;
+  max-width: 25rem;
+  z-index: 20;
+}
+
+/***************************************************************************** ANIMATIONS */
+@-webkit-keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+#popup::after, #popup::before {
+  right: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+
+#popup::after {
+  border-color: rgba(255, 255, 255, 0);
+  border-right-color: white;
+  /* THIS IS WHAT CONTROLS THE ARROW SIZE */
+  border-width: 6px;
+  margin-top: -6px;
+}
+
+#popup::before {
+  border-color: rgba(185, 185, 185, 0);
+  border-right-color: #b9b9b9;
+  /* SHHOULD ALWAYS BE +BORERWIDTH */
+  border-width: 7.5px;
+  margin-top: -7.5px;
+}
+
+#popup.hidden {
+  display: none;
+  opacity: 0;
+}
+
+#popup_content {
+  margin: 0.5em 0.25em 0.25em 0.25em;
+  font-size: 75%;
+}
+
+#popup_content .returnToNote {
+  display: none;
+}
+
+#popup_closer {
+  float: right;
+  top: 5rem;
+  font-size: 70%;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+/******************************************************************** EG XML */
+/* When the input field gets focus, change its width to 100% */
+/* Eg stuff, taken from the TEI's CSS stylesheet:  */
+/* TEI COPYRIGHT NOTICE:
+ *
+ * Copyright 2015 TEI Consortium
+
+This software is dual-licensed:
+
+1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
+Unported License http://creativecommons.org/licenses/by-sa/3.0/
+
+2. http://www.opensource.org/licenses/BSD-2-Clause
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+* Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+This software is provided by the copyright holders and contributors
+"as is" and any express or implied warranties, including, but not
+limited to, the implied warranties of merchantability and fitness for
+a particular purpose are disclaimed. In no event shall the copyright
+holder or contributors be liable for any direct, indirect, incidental,
+special, exemplary, or consequential damages (including, but not
+limited to, procurement of substitute goods or services; loss of use,
+data, or profits; or business interruption) however caused and on any
+theory of liability, whether in contract, strict liability, or tort
+(including negligence or otherwise) arising in any way out of the use
+of this software, even if advised of the possibility of such damage.
+
+*/
+div.egXML {
+  margin: 0.5rem;
+  font-family: monospace;
+  font-variant: normal;
+  padding: 1.25rem;
+  word-break: break-word;
+}
+
+div.egXML.true {
+  background-color: #f7f9f6;
+  border-color: #c5d8bb;
+}
+
+div.egXML.feasible {
+  background-color: #fff9f3;
+  border-color: #ffe1ad;
+}
+
+div.egXML.false {
+  border-color: #ffe7e8;
+  background-color: #fdbbac;
+}
+
+.gi::before {
+  content: "<";
+}
+
+a[href].gi::after {
+  link: attr(href);
+  content: "> ↗";
+}
+
+.gi::after {
+  content: ">";
+}
+
+.val::before {
+  content: '"';
+}
+
+.val::after {
+  content: '"';
+}
+
+.xmlTag, .xmlAttName, .xmlAttVal {
+  font-weight: 700;
+}
+
+/* These colours are taken from oXygen's defaults */
+.xmlTag {
+  color: #000099;
+}
+
+.xmlAttName,
+.att {
+  color: #f5844c;
+}
+
+.att::before {
+  content: "@";
+}
+
+.xmlAttVal, .val {
+  color: #993300;
+}
+
+.xmlComment {
+  color: #009900;
+}
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRvY3VtZW50YXRpb24uY3NzIiwiLi4vc2Nzcy9kb2N1bWVudGF0aW9uLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsZ0JBQWdCO0FDQWhCLHlDQUFBO0FBRUE7RUFDRSxZQUFBO0VBQ0EsZ0JBQUE7RUFDQSxTQUFBO0VBQ0EsMEpBQUE7RUFDQSxpQkFBQTtFQUNBLGVBQUE7QURDRjs7QUNHQTtFQUNFLGFBQUE7RUFDQSxrQ0FDRTtFQUNGLHFCQUFBO0VBQ0EsaUNBQUE7RUFDQSxZQUFBO0VBQ0EsZ0JBQUE7QURERjs7QUNJQTtFQUNFLGtCQUFBO0FEREY7O0FDSUE7RUFDRSxlQUFBO0VBQ0Esa0JBQUE7QURERjs7QUNJQTtFQUNFLGNBQUE7QURERjs7QUNJQTs7O0VBR0UsY0FBQTtFQUNBLHFCQUFBO0VBQ0EsZUFBQTtBRERGOztBQ0dBOztFQUVFLGNBQUE7QURBRjs7QUNHQTtFQUNFLGNBQUE7RUFDQSxjQUFBO0FEQUY7O0FDRUE7RUFDRSxpQkFBQTtBRENGOztBQ0VBO0VBQ0UscUJBQUE7RUFDQSxlQUFBO0FEQ0Y7O0FDRUE7RUFDRSxjQUFBO0VBQ0EseUJBQUE7RUFDQSxZQUFBO0VBQ0EseUJBQUE7QURDRjs7QUNFQTtFQUNFLHNCQUFBO0FEQ0Y7O0FDRUE7RUFDRSxjQUFBO0VBQ0EsY0FBQTtBRENGOztBQ0VBO0VBQ0UsbUJBQUE7QURDRjs7QUNFQTtFQUNFLGVBQUE7QURDRjs7QUNFQTtFQUNFLGNBQUE7RUFDQSxtQkFBQTtFQUNBLGVBQUE7RUFDQSx3QkFBQTtFQUNBLGNBQUE7RUFDQSxZQUFBO0FEQ0Y7O0FDQ0E7RUFDRSxrQkFBQTtFQUNBLGlCQUFBO0FERUY7O0FDQ0E7RUFDRSxtQkFBQTtBREVGOztBQ0NBOztFQUVFLGNBQUE7RUFDQSxnQkFBQTtFQUNBLFNBQUE7RUFDQSxVQUFBO0FERUY7O0FDQ0E7RUFDRSxtQkFBQTtBREVGOztBQ0NBO0VBQ0Usa0JBQUE7QURFRjs7QUNDQTtFQUNFLG1CQUFBO0FERUY7O0FDQ0E7RUFDRSxxQkFBQTtFQUNBLG9CQUFBO0FERUY7O0FDQUE7RUFDRSxZQUFBO0FER0Y7O0FDQUE7RUFDRSxZQUFBO0FER0Y7O0FDQUE7RUFDRSxZQUFBO0VBQWEsb0JBQUE7RUFDYixxQkFBQTtBRElGOztBQ0RBO0VBQ0UsWUFBQTtFQUFjLG9CQUFBO0VBQ2QscUJBQUE7QURLRjs7QUNGQTtFQUNFLGFBQUE7QURLRjs7QUNGQTtFQUNFLGNBQUE7QURLRjs7QUNGQTtFQUNFLDhCQUFBO0FES0Y7O0FDREE7RUFDRSxTQUFBO0VBQ0EsVUFBQTtBRElGOztBQ0RBO0VBQ0Usa0JBQUE7RUFDQSxxQkFBQTtBRElGOztBQ0RBO0VBQ0UscUJBQUE7QURJRjs7QUNEQTtFQUNFLGFBQUE7QURJRjs7QUNEQTtFQUNFLGlCQUFBO0FESUY7O0FDRkE7RUFDRSx5QkFBQTtFQUNBLFlBQUE7QURLRjs7QUNGQTtFQUNFLHlCQUFBO0VBQ0EsdUJBQUE7QURLRjs7QUNEQTtFQUNFLGdCQUFBO0FESUY7O0FDREE7RUFDRSxhQUFBO0FESUY7O0FDQUE7O0VBRUUsa0JBQUE7QURHRjs7QUNBQTs7OztFQUlFLGtCQUFBO0FER0Y7O0FDQUE7Ozs7RUFJRSxZQUFBO0FER0Y7O0FDREEsa0ZBQUE7QUFHQTtFQUNFLGFBQUE7QURFRjs7QUNDQTtFQUNFLGtCQUFBO0VBQ0EscUJBQUE7RUFDQSxpQkFBQTtFQUNBLGlCQUFBO0VBQ0EsZUFBQTtFQUNBLHlCQUFBO0VBQ0Esa0JBQUE7RUFDQSwrQkFBQTtFQUNBLGNBQUE7RUFDQSwrQkFBQTtVQUFBLHVCQUFBO0VBQ0Esb0JBQUE7RUFDQSxnQkFBQTtFQUNBLFdBQUE7QURFRjs7QUNFQSwyRkFBQTtBQUNBO0VBQ0U7SUFDRSxVQUFBO0VEQ0Y7RUNDQTtJQUNFLFVBQUE7RURDRjtBQUNGO0FDUEE7RUFDRTtJQUNFLFVBQUE7RURDRjtFQ0NBO0lBQ0UsVUFBQTtFRENGO0FBQ0Y7QUNDQTtFQUNFLFdBQUE7RUFDQSxRQUFBO0VBQ0EseUJBQUE7RUFDQSxZQUFBO0VBQ0EsU0FBQTtFQUNBLFFBQUE7RUFDQSxrQkFBQTtBRENGOztBQ0VBO0VBQ0Usb0NBQUE7RUFDQSx5QkFBQTtFQUNBLHlDQUFBO0VBQ0EsaUJBQUE7RUFDQSxnQkFBQTtBRENGOztBQ0NBO0VBQ0Usb0NBQUE7RUFDQSwyQkFBQTtFQUNBLGtDQUFBO0VBQ0EsbUJBQUE7RUFDQSxrQkFBQTtBREVGOztBQ0NBO0VBQ0UsYUFBQTtFQUNBLFVBQUE7QURFRjs7QUNFQTtFQUNFLGtDQUFBO0VBQ0EsY0FBQTtBRENGOztBQ0VBO0VBQ0UsYUFBQTtBRENGOztBQ0VBO0VBQ0UsWUFBQTtFQUNBLFNBQUE7RUFDQSxjQUFBO0VBQ0EsWUFBQTtFQUNBLGlCQUFBO0VBQ0EsZUFBQTtBRENGOztBQ0dBO0VBQ0UscUJBQUE7QURBRjs7QUNJQSw4RUFBQTtBQUNBLDhEQUFBO0FBRUEsb0RBQUE7QUFFQTs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0NBQUE7QUFzQ0E7RUFDRSxjQUFBO0VBQ0Esc0JBQUE7RUFDQSxvQkFBQTtFQUNBLGdCQUFBO0VBQ0Esc0JBQUE7QURKRjs7QUNPQTtFQUNFLHlCQUFBO0VBQ0EscUJBQUE7QURKRjs7QUNNQTtFQUNFLHlCQUFBO0VBQ0EscUJBQUE7QURIRjs7QUNLQTtFQUNFLHFCQUFBO0VBQ0EseUJBQUE7QURGRjs7QUNLQTtFQUNFLFlBQUE7QURGRjs7QUNLQTtFQUNFLGdCQUFBO0VBQ0EsY0FBQTtBREZGOztBQ0tBO0VBQ0UsWUFBQTtBREZGOztBQ0tBO0VBQ0UsWUFBQTtBREZGOztBQ0tBO0VBQ0UsWUFBQTtBREZGOztBQ0tBO0VBQ0UsZ0JBQUE7QURGRjs7QUNLQSxtREFBQTtBQUVBO0VBQ0UsY0FBQTtBREhGOztBQ01BOztFQUVFLGNBQUE7QURIRjs7QUNNQTtFQUNFLFlBQUE7QURIRjs7QUNNQTtFQUNFLGNBQUE7QURIRjs7QUNNQTtFQUNFLGNBQUE7QURIRiIsImZpbGUiOiJkb2N1bWVudGF0aW9uLmNzcyJ9 */
