@@ -31,7 +31,6 @@
   </teiHeader>
   <text>
     <front>
-
       <div>
         <head>Encoding Guidelines</head>
         <p>This document serves as the documentation for <title level="m">The Lyon in Mourning: Networking Jacobites</title> (LiM). At the moment, what follows is a collection of notes to help with planning the project's structure and workflow; as decisions are made and plans are concretized, this document will be updated to reflect the actual encoding principles and guidelines.</p>
@@ -39,7 +38,13 @@
     </front>
     <body>
       <div>
-        <head>Directory Structure</head>
+        <head>Setup</head>
+        <div>
+          <head>Downloading the Repository</head>
+          <p>Instructions for downloading the repository</p>
+        </div>
+        <div>
+          <head>The Repository Structure</head>
           <list type="tree" rendition="#rnd_code">
             <item>root/
               <list>
@@ -48,9 +53,9 @@
                     <item>volumes/
                       <list>
                         <item>vol1/
-                            <list>
-                              <item>???</item>
-                            </list>
+                          <list>
+                            <item>???</item>
+                          </list>
                         </item>
                         <item>vol2/</item>
                         <item>+++</item>
@@ -79,8 +84,48 @@
               </list>
             </item>
           </list>
+        </div>
       </div>
       <div>
+        <head>GitHub Workflow</head>
+        <div>
+          <head>Committing Changes</head>
+          <p>Instructions for committing changes</p>
+        </div>
+        <div>
+          <head>Pushing Changes</head>
+          <p>Instructions for pushing changes to the </p>
+        </div>
+        <div>
+          <head>Updating Your Local Copy</head>
+        </div>
+      </div>
+      <div>
+        <head>Encoding Guidelines</head>
+        <div>
+          <head>Table of Contents</head>
+          <p>How to encode the table of contents</p>
+          <div>
+            <head>Components of an Item</head>
+            <p>Discuss how each item should be structured: numbers and titles.</p>
+          </div>
+        </div>
+        <div>
+          <head>People/Places/Organizations</head>
+          <p>TODO: Determine how to encode people/places/organizations. VIAF? Geonames?</p>
+        </div>
+        <div>
+          <head>Emendations, Marginalia, and other Annotations</head>
+          <p>Instructions for encoding notes, labels, annotations, as well as deletions, additions.</p>
+        </div>
+        <div>
+          <head>Editorial Decisions and Uncertainty</head>
+          <p>How to add editorial notes, uncertainty, supplied, gaps.</p>
+        </div>
+      </div>
+      
+      
+      <!--<div>
         <head>Possible Approach</head>
         <list rend="simple">
           <item>Encoding starts with the eleventh volume since it is the index for the entire manuscript</item>
@@ -90,8 +135,8 @@
               <item>The item should have a fairly simple structure; probably something like:
               <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <item>
-                  <rs><!--Title of the item--></rs>
-                  <num><!--Page number--></num>
+                  <rs><!-\-Title of the item-\-></rs>
+                  <num><!-\-Page number-\-></num>
                 </item>
               </egXML>
               
@@ -142,10 +187,10 @@
                   <fileDesc>
                     <titleStmt>
                       <title>The Lyon in Mourning Vol. 1</title>
-                      <!--More metadata-->
+                      <!-\-More metadata-\->
                     </titleStmt>
                   </fileDesc>
-                  <!--Lots more metadata about the entire manuscript: provenance, editors, date of creation, etc-->
+                  <!-\-Lots more metadata about the entire manuscript: provenance, editors, date of creation, etc-\->
                 </teiHeader>
                 <facsimile>
                   <surface xml:id="vol1_0001">
@@ -155,7 +200,7 @@
                     <graphic url="path/to/images/0002"/>
                   </surface>
                 </facsimile>
-                <!--[...]-->
+                <!-\-[...]-\->
               </teiCorpus>
             </egXML>
               The suggestion to use a <gi>teiCorpus</gi> stems from the need for complex, structured metadata for each individual item, which is best done through the <gi>teiHeader</gi> (probably using the suite of elements contained in <gi>textDesc</gi> and/or taxonomies encoded using <gi>taxonomy</gi>, <gi>category</gi> and <gi>catRef</gi>).
@@ -199,11 +244,11 @@
           </item>
         </list>
       </div>
-      
+      -->
     </body>
     <back>
       <div>
-        <head>Schema Specification</head>
+        <head>Appendix</head>
         <schemaSpec ident="lim" start="TEI list">
           <moduleRef key="core" include="abbr author bibl choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note num orig p pb ptr pubPlace publisher quote ref reg resp respStmt sic term title unclear"/>
           <!--Not sure we need anything from corpus: check proposal-->

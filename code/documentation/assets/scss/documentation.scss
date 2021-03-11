@@ -15,7 +15,7 @@ main{
   grid-template-areas:
     "nav article";
   grid-column-gap:1rem;
-  grid-template-columns:15rem auto;
+  grid-template-columns: minmax(20vw, 20rem) minmax(min(50vw, 30ch), 1fr);
   height:100%;
   overflow:hidden;
 }
@@ -26,7 +26,6 @@ nav, article{
 
 h1{
   font-size:2rem;
-  text-align:center;
 }
 
 img{
@@ -99,58 +98,64 @@ pre.block{
   padding-top:.5rem;
 }
 
-nav ul,
-nav li{
-  display:block;
-  list-style:none;
-  margin:0;
-  padding:0;
+
+nav{
+    ul, li{
+     display:block;
+     list-style:none;
+    margin:0;
+    padding:0;      
+    }
+    li + li{
+      padding-top:.25em;  
+    }
+    ul > li{
+     padding-left:1rem;
+     &:first-child{
+         padding-top: .33rem;
+     }
+    }
 }
 
-nav li+li{
-  padding-top:.25em;
+.nav-item{
+    display:flex;
+    justify-content:space-between;
+    a{
+        display:block;
+        width:100%;
+       
+    }
+    span{
+        display:block;
+    }
+    a, span.nav-dropdown{
+        cursor:pointer;
+        &:hover{
+          background: #efefef;
+        }
+    }
 }
 
-nav ul > li{
-  padding-left:1rem;
+
+li.expandable > ul{
+    display:none;
 }
 
-nav ul > li:first-child{
-  padding-top:.25em;
+li.expandable.expanded > ul{
+    display:block;
 }
 
-.JS span.toggle{
-  padding-right:.5rem;
-  margin-left:-.5rem;
-}
-.JS li.open > span.toggle::before{
-  content: "-";
+nav *{
+    transition: all  0.3s ease-in-out;
 }
 
-.JS li.closed > span.toggle::before{
-  content: "+";
+.nav-dropdown > svg{    
+    transform: rotate(0deg);
 }
 
-.checked::before{
-  content:"✅"; /* Checkmark emoji */
-  padding-right:.5rem;
-}
 
-.error::before{
-  content: "❌"; /*Crossmark emoji  */
-  padding-right:.5rem;
-}
-
-.JS li.collapse > ul{
-  display:none;
-}
-
-.JS li.collapse.open > ul{
-  display:block;
-}
-
-.error[data-n]::after{
-  content: " (" attr(data-n) ")";
+li.expanded > .nav-item > .nav-dropdown > svg{
+    transform: rotate(180deg);
 }
 
 

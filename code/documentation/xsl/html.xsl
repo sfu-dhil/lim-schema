@@ -9,6 +9,7 @@
     xmlns:xd="https://www.oxygenxml.com/ns/doc/xsl"
     xmlns:xh="http://www.w3.org/1999/xhtml"
     xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+    xmlns:svg="http://www.w3.org/2000/svg"
     xmlns="http://www.w3.org/1999/xhtml"
     version="3.0">
     <xd:doc>
@@ -67,15 +68,15 @@
             <xsl:for-each select="($chapters, $appendixItems)">
                 <xsl:variable name="currId" select="jt:getId(.)"/>
                 <xsl:map-entry key="$currId" select="$currId"/>
-                <xsl:for-each select="descendant::*[@xml:id]">
-                    <xsl:map-entry key="xs:string(@xml:id)" select="$currId"/>
+                <xsl:for-each select="descendant::*[self::div or @xml:id]">
+                    <xsl:map-entry key="jt:getId(.)" select="$currId"/>
                 </xsl:for-each>
             </xsl:for-each>
         </xsl:map>
     </xsl:variable>
     <xsl:variable name="toc" as="element(xh:ul)">
         <ul>
-            <xsl:apply-templates select="$text/(body|back)" mode="toc"/>
+            <xsl:apply-templates select="$text/(front|body|back)" mode="toc"/>
         </ul>
     </xsl:variable>
     
@@ -165,6 +166,17 @@
         <ul>
             <xsl:apply-templates select="$toc" mode="xh"/>
         </ul>
+    </xsl:template>
+    
+    <xsl:template match="xh:li/@class[contains-token(.,'expandable')]" mode="xh">
+        <xsl:param name="thisId" tunnel="yes"/>
+        <xsl:variable name="childRefs" 
+            select="../descendant::xh:a[not(contains(@href,'#'))]/@href!substring-before(.,'.html')"
+            as="xs:string*"/>
+        <xsl:variable name="curr" 
+            select="$thisId = $childRefs"
+            as="xs:boolean"/>
+        <xsl:attribute name="class" select="if ($curr) then (. ||' current expanded') else ."/>
     </xsl:template>
     
     <xsl:template match="xh:div[@id='appendix']" mode="xh">
@@ -367,29 +379,46 @@
        *                                                            *
        **************************************************************-->
     
-    <xsl:template match="div" mode="toc">
-        <xsl:variable name="tokens"
-            select="(jt:getId(.), ancestor-or-self::div[jt:getId(.) = $tocIds]/jt:getId(.))
-                    => reverse()
-                    => distinct-values()" as="xs:string+"/>
-        <xsl:variable name="doc" select="$tokens[1]" as="xs:string"/>
-        <xsl:variable name="ptr" select="$tokens[1] || '.html' || (if (count($tokens) = 2) then '#' || $tokens[2] else ())"/>
-        <xsl:variable name="docExists" select="$tokens[1] = $tocIds" as="xs:boolean"/>
-        <xsl:variable name="title" select="(head, jt:getId(.))[1] => string()"/>
+    <xsl:template match="front" mode="toc">
         <li>
-            <xsl:choose>
-                <xsl:when test="$docExists">
-                    <a href="{$ptr}"><xsl:value-of select="$title"/></a>
-                </xsl:when>
-                <xsl:otherwise>
-                    <span><xsl:value-of select="$title"/></span>
-                </xsl:otherwise>
-            </xsl:choose>
-            <xsl:where-populated>
+            <span class="nav-item">
+                <a href="index.html">Home</a>
+            </span>
+        </li>
+    </xsl:template>
+    
+    <xsl:template match="div" mode="toc">
+        <xsl:variable name="thisId" select="jt:getId(.)" as="xs:string"/>
+        <xsl:variable name="link" select="jt:resolveRef('#' || $thisId)" as="xs:string?"/>
+        <xsl:variable name="title" select="(head, jt:getId(.))[1] => string()"/>
+        <xsl:variable name="items" select="div" as="element(div)*"/>
+        <li>
+            <xsl:if test="exists($items)">
+                <xsl:attribute name="class" select="'expandable'"/>
+            </xsl:if>
+            <span class="nav-item">
+                <xsl:choose>
+                    <xsl:when test="exists($link)">
+                        <a href="{$link}"><xsl:value-of select="$title"/></a>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <span><xsl:value-of select="$title"/></span>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:if test="exists($items)">
+                    <span class="nav-dropdown">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                            <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/>
+                        </svg>
+                    </span>
+                </xsl:if>
+            </span>
+            <xsl:if test="exists($items)">
                 <ul>
-                    <xsl:apply-templates select="div" mode="#current"/>
+                    <xsl:apply-templates select="$items" mode="#current"/>
                 </ul>
-            </xsl:where-populated>
+            </xsl:if>
         </li>
     </xsl:template>
     
