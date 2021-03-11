@@ -106,34 +106,7 @@
                 
                 <!--Now for the rest of the string-->
                 <xsl:non-matching-substring>
-                    
-                    <!--How many spaces lead up to this thing?-->
-                    <xsl:variable name="spacesCount" select="jt:countLeadingSpace(.)"/>
-                    
-                    <!--How many spaces can we indent by?-->
-                    <xsl:variable name="spacesToInsert" as="xs:integer">
-                        <xsl:choose>
-                            <!--If this text's leading spaces is greater than the initial space
-                                    (this is what happens in most cases for nested elements-->
-                            <xsl:when test="$spacesCount gt $initialSpace">
-                                <!--Then the number of spaces to insert is equal to the number of leading
-                                        spaces minus the initial space-->
-                                <xsl:value-of select="$spacesCount - $initialSpace"/>
-                            </xsl:when>
-                            <!--If this text's leading spaces is the same as initial space (likely
-                                    these are sibling elements)-->
-                            <xsl:when test="$spacesCount = $initialSpace">
-                                <!--Then don't add spaces-->
-                                <xsl:value-of select="0"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <!--Otherwise, there are somehow fewer spaces than what was declared
-                                        at the start; that happens if someone is trying to demonstrate
-                                        some oddly spaced feature-->
-                                <xsl:value-of select="$spacesCount"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:variable>
+                    <xsl:variable name="spacesToInsert" select="jt:getSpacesToInsert(., $initialSpace)" as="xs:integer"/>
                     <!--Now iterate $spacesToInsert amount of times and output that many &nbsp; characters (which are equivalent
                             to $#160;-->
                     <xsl:for-each select="if ($spacesToInsert gt 0) then (1 to $spacesToInsert) else ()">
@@ -153,6 +126,8 @@
             </xsl:analyze-string>
         </span>
     </xsl:template>
+    
+    
     
     <xd:doc>
         <xd:desc>This template creates an element tag and its attributes. Note that it does not
@@ -207,6 +182,35 @@
        *                                                            *
        **************************************************************-->
     
+    <xsl:function name="jt:getSpacesToInsert" as="xs:integer">
+       <xsl:param name="currNode" as="xs:string"/>
+       <xsl:param name="initialSpace" as="xs:integer"/>
+       <xsl:variable name="spacesCount"
+           select="jt:countLeadingSpace($currNode)"
+           as="xs:integer"/>
+        <xsl:choose>
+            <!--If this text's leading spaces is greater than the initial space
+                                    (this is what happens in most cases for nested elements-->
+            <xsl:when test="$spacesCount gt $initialSpace">
+                <!--Then the number of spaces to insert is equal to the number of leading
+                                        spaces minus the initial space-->
+                <xsl:value-of select="$spacesCount - $initialSpace"/>
+            </xsl:when>
+            <!--If this text's leading spaces is the same as initial space (likely
+                                    these are sibling elements)-->
+            <xsl:when test="$spacesCount = $initialSpace">
+                <!--Then don't add spaces-->
+                <xsl:value-of select="0"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <!--Otherwise, there are somehow fewer spaces than what was declared
+                                        at the start; that happens if someone is trying to demonstrate
+                                        some oddly spaced feature-->
+                <xsl:value-of select="$spacesCount"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+    
     
     <!--Special functions for egXML processing-->
     <xd:doc>
@@ -215,7 +219,7 @@
             in the egXML.</xd:desc>
         <xd:param name="egNode">The egXML element</xd:param>
     </xd:doc>
-    <xsl:function name="jt:returnInitialSpace" as="xs:integer">
+    <xsl:function name="jt:returnInitialSpace" as="xs:integer" new-each-time="no">
         <xsl:param name="egNode" as="element(teix:egXML)"/>
         <xsl:variable name="lastLines" as="xs:string*">
             <!--Iterate through all child text elements-->

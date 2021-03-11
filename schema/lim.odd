@@ -203,6 +203,7 @@
     </body>
     <back>
       <div>
+        <head>Schema Specification</head>
         <schemaSpec ident="lim" start="TEI list">
           <moduleRef key="core" include="abbr author bibl choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note num orig p pb ptr pubPlace publisher quote ref reg resp respStmt sic term title unclear"/>
           <!--Not sure we need anything from corpus: check proposal-->

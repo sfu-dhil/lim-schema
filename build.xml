@@ -2,24 +2,30 @@
 <project basedir="." default="validate" name="buildLIM">
     
     <property name="lib.dir" value="${basedir}/lib"/>
-    <property name="jing" value="${lib.dir}/jing.jar"/>
+    <property name="rng" value="${basedir}/schema/lim.rng"/>
+    
+    <fileset id="dataXml" dir="${basedir}/data">
+        <include name="**/**.xml"/>
+    </fileset>
+    
+    <resourcecount property="dataXmlCount" refid="dataXml"/>
+
     
     <!--First thing: validate-->
     
     <target name="validate">
-        <jing rngfile="schema/lim.rng">
-            <fileset dir="data" includes="**/*.xml"/>
-        </jing>
-    </target>    
-
-    <taskdef name="jing"
-        classname="com.thaiopensource.relaxng.util.JingTask"
-        classpath="${jing}">
-        <classpath>
-            <fileset dir="${lib.dir}">
-                <include name="jing.jar"/>
-            </fileset>
-        </classpath>
-    </taskdef>
+        <echo>Validating ${dataXmlCount} XML files</echo>
+        <apply executable="java" parallel="true" failonerror="true">
+            <arg line="-jar ${lib.dir}/jing.jar"/>
+            <arg value="${rng}"/>
+            <fileset refid="dataXml"/>
+        </apply>
+    </target>
+    
+    <target name="documentation">
+        <ant antfile="code/documentation/build.xml" inheritall="false"/>
+    </target>
+    
+    
     
 </project>

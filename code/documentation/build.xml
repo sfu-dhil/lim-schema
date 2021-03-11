@@ -84,6 +84,7 @@
             <arg value="-xsl:${basedir}/xsl/html.xsl"/>
             <arg value="-s:${odd.fixed}"/>
             <arg value="outDir=${out}"/>
+            <arg value="-TP:profile.html"/>
         </java>
     </target>
 
