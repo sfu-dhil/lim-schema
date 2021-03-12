@@ -74,6 +74,11 @@
             </xsl:for-each>
         </xsl:map>
     </xsl:variable>
+    
+    <xsl:variable name="rndMap" 
+        as="map(xs:string, xs:string)"
+        select="map:merge($sourceDoc//rendition[@xml:id] ! map{string(@xml:id): string(.)})"/>
+    
     <xsl:variable name="toc" as="element(xh:ul)">
         <ul>
             <xsl:apply-templates select="$text/(front|body|back)" mode="toc"/>
@@ -115,15 +120,23 @@
     </xsl:template>
 
     <xsl:template name="createClass">
-        <xsl:attribute name="class" separator=" ">
-            <xsl:sequence select="local-name()"/>
+        <xsl:variable name="tokens" as="xs:string+">
+            <xsl:value-of select="local-name()"/>
             <xsl:apply-templates select="@*" mode="class"/>
-        </xsl:attribute>
+        </xsl:variable>
+        
+        <xsl:attribute name="class" select="string-join(tokenize(string-join($tokens,' ')),' ')"/>
     </xsl:template>
     
     <xsl:template match="@rend | @type | @level" mode="class">
         <xsl:value-of select="."/>
     </xsl:template>
+    
+    <xsl:template match="@rendition" mode="class">
+        <xsl:value-of select="replace(.,'#','')"/>
+    </xsl:template>
+    
+    <xsl:template match="@*" mode="class"/>
 
 
     <!--**************************************************************
@@ -136,6 +149,23 @@
     <xsl:template match="xh:html/@id" mode="xh">
         <xsl:param name="thisId" tunnel="yes"/>
         <xsl:attribute name="id" select="$thisId"/>
+    </xsl:template>
+    
+    <xsl:template match="xh:head" mode="xh">
+        <xsl:param name="thisDiv" tunnel="yes"/>
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()" mode="#current"/>
+            <xsl:if test="$thisDiv/descendant-or-self::*[@rendition]">
+                <xsl:variable name="rndTokens" select="distinct-values($thisDiv/descendant-or-self::*[@rendition]/tokenize(@rendition))"/>
+                <style>
+                    <xsl:for-each select="$rndTokens">
+                        <xsl:variable name="id" select="substring-after(.,'#')"/>
+                        <xsl:value-of select="'.' || $id || '{' || $rndMap($id) || '}' || codepoints-to-string(10)"/>
+                    </xsl:for-each>
+                </style>
+               
+            </xsl:if>
+        </xsl:copy>
     </xsl:template>
     
     <xsl:template match="xh:article" mode="xh">
@@ -168,16 +198,46 @@
         </ul>
     </xsl:template>
     
-    <xsl:template match="xh:li/@class[contains-token(.,'expandable')]" mode="xh">
-        <xsl:param name="thisId" tunnel="yes"/>
-        <xsl:variable name="childRefs" 
-            select="../descendant::xh:a[not(contains(@href,'#'))]/@href!substring-before(.,'.html')"
-            as="xs:string*"/>
-        <xsl:variable name="curr" 
-            select="$thisId = $childRefs"
-            as="xs:boolean"/>
-        <xsl:attribute name="class" select="if ($curr) then (. ||' current expanded') else ."/>
+   <xsl:template match="xh:li" mode="xh">
+       <xsl:param name="thisId" as="xs:string" tunnel="yes"/>
+       <xsl:variable name="expandable" select="contains-token(@class,'expandable')"/>
+       <xsl:variable name="childRefs" 
+           select="descendant::xh:a[not(contains(@href,'#'))]/@href!substring-before(.,'.html')"
+           as="xs:string*"/>
+       <xsl:variable name="current" select="$thisId = $childRefs" as="xs:boolean"/>
+       <xsl:copy>
+           <xsl:apply-templates select="@*|node()" mode="#current">
+               <xsl:with-param name="expandable" select="$expandable" tunnel="yes"/>
+               <xsl:with-param name="current" select="$current" tunnel="yes"/>
+           </xsl:apply-templates>
+       </xsl:copy>
+   </xsl:template>
+    
+    <xsl:template match="xh:li/xh:span/xh:a" mode="xh">
+        <xsl:param name="current" tunnel="yes" select="false()" as="xs:boolean"/>
+        <xsl:choose>
+            <xsl:when test="$current">
+                <span>
+                    <xsl:apply-templates select="node()" mode="#current"/>
+                </span>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy>
+                    <xsl:apply-templates select="@*|node()" mode="#current"/>
+                </xsl:copy>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
+    
+    <xsl:template match="xh:li/@class" mode="xh">
+        <xsl:param name="expandable" as="xs:boolean" tunnel="yes" select="false()"/>
+        <xsl:param name="current" tunnel="yes" select="false()" as="xs:boolean"/>
+        <xsl:variable name="newClasses" 
+            select="(if ($current) then 'current' else (), if ($expandable and $current) then 'expanded' else ())"
+            as="xs:string*"/>
+        <xsl:attribute name="class" select="string-join((., $newClasses),' ')"/>
+    </xsl:template>
+    
     
     <xsl:template match="xh:div[@id='appendix']" mode="xh">
         <xsl:param name="thisDiv" tunnel="yes"/>
@@ -237,6 +297,12 @@
     
     <!--Tables-->
     
+    <xsl:template match="table[not(ancestor::table)]" mode="main">
+        <div class="table-container">
+            <xsl:next-match/>
+        </div>
+    </xsl:template>
+    
     <xsl:template match="table" mode="main">
         <table>
             <xsl:if test="row[@role='label']">
@@ -275,13 +341,13 @@
     
     <!--Lists-->
 
-    <xsl:template match="list[count(item) = 1 and item[list]]" mode="main">
+ <!--   <xsl:template match="list[count(item) = 1 and item[list]]" mode="main">
         <xsl:apply-templates mode="#current"/>
     </xsl:template>
     
     <xsl:template match="item[list][parent::list[count(item) = 1]]" mode="main">
         <xsl:apply-templates mode="#current"/>
-    </xsl:template>
+    </xsl:template>-->
     
     <!--Figures and graphics-->
     
