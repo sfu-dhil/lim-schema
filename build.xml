@@ -9,17 +9,27 @@
     </fileset>
     
     <resourcecount property="dataXmlCount" refid="dataXml"/>
-
     
-    <!--First thing: validate-->
+    <target name="validate" depends="rng, schematron">
+        <echo>Validated ${dataXmlCount} XML files</echo>
+    </target>
     
-    <target name="validate">
-        <echo>Validating ${dataXmlCount} XML files</echo>
+    <target name="rng">
         <apply executable="java" parallel="true" failonerror="true">
             <arg line="-jar ${lib.dir}/jing.jar"/>
             <arg value="${rng}"/>
             <fileset refid="dataXml"/>
         </apply>
+    </target>
+    
+    <target name="schematron">
+        <java jar="${lib.dir}/saxon-he-10.jar" fork="true" failonerror="true">
+            <arg line="-xsl:xsl-schematron/xsl/validate.xsl"/>
+            <arg line="-s:xsl-schematron/xsl/validate.xsl"/>
+            <arg line="dir=${basedir}/data"/>
+            <arg line="rng=${basedir}/schema/lim.rng"/>
+            <arg line="-TP:profile.html"/>
+        </java>
     </target>
     
     <target name="documentation">
