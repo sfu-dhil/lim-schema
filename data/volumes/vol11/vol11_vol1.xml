@@ -2,6 +2,8 @@
 <?xml-model href="../../../schema/lim.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <?xml-model href="../../../schema/lim.rng" type="application/xml"
 	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-stylesheet type="text/xsl" href="../../test.xsl"?>
+<?xml-stylesheet type="text/css" href="../../test.css"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" type="index" xml:id="vol11_vol1">
     <pb/>
     <fw type="pageNum" place="left">1</fw>
@@ -56,4 +58,3 @@
     * Do we care about line beginnings? YES
     * Page beginnings? YES
     -->
-
