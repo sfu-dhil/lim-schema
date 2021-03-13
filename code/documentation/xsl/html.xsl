@@ -193,9 +193,7 @@
     </xsl:template>
     
     <xsl:template match="xh:nav/xh:ul" mode="xh">
-        <ul>
-            <xsl:apply-templates select="$toc" mode="xh"/>
-        </ul>
+       <xsl:apply-templates select="$toc" mode="#current"/>
     </xsl:template>
     
    <xsl:template match="xh:li" mode="xh">

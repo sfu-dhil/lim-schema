@@ -13,13 +13,16 @@ html, body{
 .container{
   display:grid;
   grid-column-gap:1rem;
-  grid-template-columns: minmax(17vw, 18rem) minmax(min(50vw, 30ch), 1fr);
+  grid-template-columns: 1fr 2fr;
   height:100%;
   overflow:hidden;
 }
-
-nav, main{
+main{
   overflow-y:auto;
+}
+
+nav{
+    overflow-y:scroll;
 }
 
 h1{
@@ -59,8 +62,85 @@ a.spec{
 nav{
   background-color:rgb(242, 245, 243);
   padding:1em;
+  padding-right:0;
+  display:grid;
   overflow-wrap: break-word;
+  grid-template-columns: minmax(17vw, 22rem);
+  justify-content:end;
+  ul, li{
+     display:block;
+     list-style:none;
+    margin:0;
+    padding:0;      
+    }
+    li{
+        max-width:19.5rem;
+    }
+    ul > li{
+     padding-left:1rem;
+     &:first-child{
+         padding-top: .33rem;
+     }
+    
+    }
 }
+
+.nav-item{
+    display:flex;
+    justify-content:space-between;
+    > *{
+        display:block;
+        padding-top:.185rem;
+        padding-bottom:.185rem;
+        height:100%;
+        &:is(a){
+            width:100%;
+        }
+    }
+    a, span.nav-dropdown{
+        cursor:pointer;
+        &:hover{
+          background: #efefef;
+        }
+    }
+}
+
+
+
+.nav-dropdown{
+    padding-left:.5rem;
+}
+
+li.expandable > ul{
+    display:none;
+}
+
+li.expandable.expanded > ul{
+    display:block;
+    margin-bottom:.4rem;
+    .nav-item{
+        & > *{
+            padding-top:.1rem;
+            padding-bottom: .1rem;
+        }
+    }
+    
+}
+
+nav *{
+    transition: all  0.3s ease-in-out;
+}
+
+.nav-dropdown > svg{    
+    transform: rotate(0deg);
+}
+
+
+li.expanded > .nav-item > .nav-dropdown > svg{
+    transform: rotate(180deg);
+}
+
+
 
 .list{
   margin:.5rem .25rem;
@@ -96,66 +176,6 @@ pre.block{
   padding-top:.5rem;
 }
 
-
-nav{
-    ul, li{
-     display:block;
-     list-style:none;
-    margin:0;
-    padding:0;      
-    }
-    li + li{
-      padding-top:.25em;  
-    }
-    ul > li{
-     padding-left:1rem;
-     &:first-child{
-         padding-top: .33rem;
-     }
-    }
-    
-}
-
-.nav-item{
-    display:flex;
-    justify-content:space-between;
-    a{
-        display:block;
-        width:100%;
-       
-    }
-    span{
-        display:block;
-    }
-    a, span.nav-dropdown{
-        cursor:pointer;
-        &:hover{
-          background: #efefef;
-        }
-    }
-}
-
-
-li.expandable > ul{
-    display:none;
-}
-
-li.expandable.expanded > ul{
-    display:block;
-}
-
-nav *{
-    transition: all  0.3s ease-in-out;
-}
-
-.nav-dropdown > svg{    
-    transform: rotate(0deg);
-}
-
-
-li.expanded > .nav-item > .nav-dropdown > svg{
-    transform: rotate(180deg);
-}
 
 
 h2{
