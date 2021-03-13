@@ -4,6 +4,7 @@ on:
     paths:
       - '**.odd'
       - 'docs.yml'
+      - 'code/documentation/**/**'	
 jobs:
   buildDocs:
     runs-on: ubuntu-latest
