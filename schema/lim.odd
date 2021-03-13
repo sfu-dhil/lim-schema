@@ -3,6 +3,7 @@
 <?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
 	schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <TEI xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns:sch="http://purl.oclc.org/dsdl/schematron"
   xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns="http://www.tei-c.org/ns/1.0">
   <teiHeader>
     <fileDesc>
@@ -249,13 +250,34 @@
     <back>
       <div>
         <head>Appendix</head>
-        <schemaSpec ident="lim" start="TEI list">
+        <schemaSpec ident="lim" start="TEI div">
+          
+          <!--CORE-->
           <moduleRef key="core" include="abbr author bibl choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note num orig p pb ptr pubPlace publisher quote ref reg resp respStmt sic term title unclear"/>
+
+          
           <!--Not sure we need anything from corpus: check proposal-->
           <!--<moduleRef key="corpus"/>-->
           <!--Adding a lot of GAIJI module stuff, since I imagine we'll be
           dealing with some unfamiliar characters?-->
           <moduleRef key="gaiji" include="char charDecl charName charProp g glyph glyphName mapping unicodeName unicodeProp"/>
+          <elementSpec ident="g" module="gaiji" mode="change">
+            <constraintSpec ident="div.onlyRootWithIndexAndVolume11" scheme="schematron" mode="add">
+              <desc>All glyph pointers should have a @ref and point to something in the glyphs file.</desc>
+              <constraint>
+                <sch:pattern>
+                  <sch:rule context="tei:g">
+                    <sch:let name="ref" value="@ref"/>
+                    <sch:assert test="matches($ref,'g:')">ERROR: All glyphs must have an @ref that points to a glyph using the 'g:' prefix (e.g. ref="g:plus").</sch:assert>
+                    <sch:assert test="exists($glyphs[@xml:id = substring-after($ref,'g:')])">ERROR: Cannot find glyph <sch:value-of select="substring-after($ref,'g:')"/>.</sch:assert>
+                  </sch:rule>
+                </sch:pattern>
+              </constraint>
+            </constraintSpec>
+            
+          </elementSpec>
+          
+          
           
           <!--Add quite a few of the header elements, but we may need more-->
           <moduleRef key="header" include="abstract catDesc catRef category change correspAction correspContext correspDesc encodingDesc fileDesc handNote idno listChange listPrefixDef notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
@@ -270,10 +292,102 @@
           <!--Include all attributes-->
           <moduleRef key="tei"/>
           
+          <!-- TEXTSTRUCTURE -->
+          <moduleRef key="textstructure"
+            include="TEI body byline closer dateline div docAuthor docDate docEdition docImprint docTitle epigraph front imprimatur opener postscript salute signed titlePart text trailer"/>
           
-          <moduleRef key="textstructure" include="TEI body byline closer dateline div docAuthor docDate docEdition docImprint docTitle epigraph front imprimatur opener postscript salute signed titlePart text trailer"/>
+          <elementSpec ident="div" mode="change" module="textstructure">
+            <constraintSpec ident="div.onlyRootWithIndexAndVolume11" scheme="schematron" mode="add">
+                <desc>Only index divs are allowed as a root div element and only for vol 11.</desc>
+                <constraint>
+                  <sch:pattern>
+                    <sch:rule context="/tei:div">
+                      <sch:assert test="@type = 'index'">ERROR: Only divisions with @type='index' are allowed
+                      as root elements.</sch:assert>
+                      <sch:assert test="matches(document-uri(/),'vol11_')">ERROR: Only use root divs for volume 11.</sch:assert>
+                    </sch:rule>
+                  </sch:pattern>
+                </constraint>
+            </constraintSpec> 
+              <attList>
+                <attDef ident="type" mode="change">
+                    <valList mode="add" type="closed">
+                      <valItem ident="index">
+                        <gloss>index</gloss>
+                        <desc>An index/table of contents for a single volume.</desc>
+                      </valItem>
+                      <valItem ident="preface">
+                        <gloss>preface</gloss>
+                        <desc>A preface or some prefatory matter to a volume or text.</desc>
+                      </valItem>
+                    </valList>
+                </attDef>
+              </attList>
+
+          </elementSpec>
           
-          <moduleRef key="transcr" include="damage damageSpan delSpan facsimile fw handNotes handShift metamark supplied surface surfaceGrp zone"/>
+          <moduleRef key="transcr"
+            include="damage damageSpan delSpan facsimile fw handNotes handShift metamark supplied surface surfaceGrp zone"/>
+          <elementSpec ident="fw" module="transcr" mode="change">
+            <attList>
+              <attDef ident="type" mode="change" usage="req">
+                <valList mode="add" type="closed">
+                  <valItem ident="pageNum">
+                    <gloss>page number</gloss>
+                    <desc>A page number, usually written on the top left or right hand sides of a page.</desc>
+                  </valItem>
+                  <valItem ident="catchword">
+                    <gloss>catchword</gloss>
+                    <desc>A catchword, usually on the bottom right of the page.</desc>
+                  </valItem>
+                  <valItem ident="sig">
+                    <gloss>signature</gloss>
+                    <desc>A page signature, usually on the bottom center of the page.</desc>
+                  </valItem>
+                </valList>
+              </attDef>
+            </attList>
+            
+          </elementSpec>
+          
+          
+          <!--Global variables for constraints-->
+          <constraintSpec scheme="schematron" ident="global.variables">
+            <desc>Global variables for use across the schematron.</desc>
+            <constraint>
+              <sch:pattern>
+                <sch:let name="id" value="/tei:*/@xml:id"/>
+                <sch:let name="uri" value="document-uri(/)"/>
+                <sch:let name="basename" value="tokenize($uri,'[/\\\.]')[last() - 1]"/>
+                <sch:let name="pd" value="replace($uri,'^(.+[/\\]lim-tei[\\/]).+$', '$1')"/>
+                <sch:let name="dataDir" value="replace($pd,'(.+(.))$','$1data$2')"/>
+                <sch:let name="glyphs"
+                  value="document($dataDir || 'glyphs.xml')//tei:glyph[@xml:id]"/>
+                
+              </sch:pattern>
+     
+            </constraint>
+          </constraintSpec>
+          
+          <!--GLOBAL CONSTRAINTS-->
+          <constraintSpec scheme="schematron" ident="global.rootIdMustMatchDocument">
+            <desc>The rootid must be the same as the document's name.</desc>
+            <constraint>
+              <sch:pattern>
+                <sch:rule context="/tei:*">
+                  <sch:assert test="$basename = $id">
+                    ERROR: Document's @xml:id (<sch:value-of select="$id"/>) must match the document's base filename
+                    (<sch:value-of select="$basename"/>)
+                  </sch:assert>
+                </sch:rule>
+              </sch:pattern>
+            </constraint>
+          </constraintSpec>
+          
+
+          
+          
+    
           
           
         </schemaSpec>
