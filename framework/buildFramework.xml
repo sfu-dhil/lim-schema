@@ -1,0 +1,51 @@
+<project default="all" name="buildFramework">
+   <path id="frameworkFiles">
+      <first>
+         <fileset dir="${basedir}">
+            <include name="*.framework"/>
+         </fileset>
+      </first>
+   </path>
+   
+   <pathconvert property="frameworkFile" refid="frameworkFiles"/>
+   
+   <basename property="frameworkName" file="${frameworkFile}" suffix=".framework"/>
+   
+   <property name="distDir" value="${basedir}/dist"/>
+   <property name="frameworkDistDir" value="${distDir}/${frameworkName}"/>
+   
+   <target name="init">
+      <echoproperties/>
+      <delete dir="${distDir}"/>
+      <mkdir dir="${frameworkDistDir}"/>
+   </target>
+   
+   
+   <target name="dist">
+      <copy todir="${frameworkDistDir}">
+         <fileset dir="${basedir}">
+            <include name="css/**"/>
+            <include name="schema/**"/>
+            <include name="**.framework"/>
+         </fileset>
+      </copy>
+      <java jar="${lib.dir}/saxon-he-10.jar" fork="true">
+         <arg line="-xsl:${basedir}/framework/create_update_site.xsl"/>
+         <arg line="-s:${basedir}/framework/updateSite.xml"/>
+         <arg line="-o:${distDir}/updateSite.xml"/>
+         <arg line="framework=${frameworkName}"/>
+      </java>
+      <loadfile property="distVersion" srcfile="${distDir}/VERSION"/>
+      <zip basedir="${distDir}" destfile="${distDir}/${frameworkName}_${distVersion}.zip">
+         <include name="${frameworkName}/**"/>
+      </zip>
+ 
+   </target>
+   
+   <target name="clean">
+      <delete dir="dist/${frameworkName}"/>
+   </target>
+   
+   <target name="all" depends="init, dist, clean"/>
+   
+</project>

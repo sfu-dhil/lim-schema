@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xt:extensions xmlns:xt="http://www.oxygenxml.com/ns/extension"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.oxygenxml.com/ns/extension http://www.oxygenxml.com/ns/extension/extensions.xsd">
+   <xt:extension id="lyon-in-mourning">
+      <xt:location/>
+      <xt:version>0.0.0<!--DYNAMICALLY ADDED--></xt:version>
+      <xt:oxy_version>20.0+</xt:oxy_version>
+      <xt:type>framework</xt:type>
+      <xt:author>Joey Takeda / DHIL </xt:author>
+      <xt:name>Lyon in Mourning Encoding Framework</xt:name>
+      <xt:description xmlns="http://www.w3.org/1999/xhtml">
+         <html>
+            <head>
+               <title>Lyon in Mourning Encoding Framework</title>
+            </head>
+            <body>
+               <p>Encoding framework for the Lyon in Mourning project (PI: Leith Davis), supported by
+               the Digital Humanities Innovation Lab at Simon Fraser University.</p>
+            </body>
+         </html>
+      </xt:description>
+      <xt:license>
+         <![CDATA[
+
+END USER LICENSE AGREEMENT
+
+]]></xt:license>
+   </xt:extension>
+</xt:extensions>
