@@ -1,6 +1,3 @@
 [submodule "lib"]
 	path = lib
 	url = https://github.com/joeytakeda/lib
-[submodule "xsl-schematron"]
-	path = xsl-schematron
-	url = https://github.com/joeytakeda/xsl-schematron
