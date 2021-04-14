@@ -262,7 +262,7 @@
           dealing with some unfamiliar characters?-->
           <moduleRef key="gaiji" include="char charDecl charName charProp g glyph glyphName mapping unicodeName unicodeProp"/>
           <elementSpec ident="g" module="gaiji" mode="change">
-            <constraintSpec ident="div.onlyRootWithIndexAndVolume11" scheme="schematron" mode="add">
+<!--            <constraintSpec ident="div.onlyRootWithIndexAndVolume11" scheme="schematron" mode="add">
               <desc>All glyph pointers should have a @ref and point to something in the glyphs file.</desc>
               <constraint>
                 <sch:pattern>
@@ -273,7 +273,7 @@
                   </sch:rule>
                 </sch:pattern>
               </constraint>
-            </constraintSpec>
+            </constraintSpec>-->
             
           </elementSpec>
           
@@ -304,7 +304,7 @@
                     <sch:rule context="/tei:div">
                       <sch:assert test="@type = 'index'">ERROR: Only divisions with @type='index' are allowed
                       as root elements.</sch:assert>
-                      <sch:assert test="matches(document-uri(/),'vol11_')">ERROR: Only use root divs for volume 11.</sch:assert>
+                      <sch:assert test="matches($uri,'vol11_')">ERROR: Only use root divs for volume 11.</sch:assert>
                     </sch:rule>
                   </sch:pattern>
                 </constraint>
@@ -359,10 +359,10 @@
                 <sch:let name="id" value="/tei:*/@xml:id"/>
                 <sch:let name="uri" value="document-uri(/)"/>
                 <sch:let name="basename" value="tokenize($uri,'[/\\\.]')[last() - 1]"/>
-                <sch:let name="pd" value="replace($uri,'^(.+[/\\]lim-tei[\\/]).+$', '$1')"/>
+               <!-- <sch:let name="pd" value="replace($uri,'^(.+[/\\]lim-tei[\\/]).+$', '$1')"/>
                 <sch:let name="dataDir" value="replace($pd,'(.+(.))$','$1data$2')"/>
                 <sch:let name="glyphs"
-                  value="document($dataDir || 'glyphs.xml')//tei:glyph[@xml:id]"/>
+                  value="document($dataDir || 'glyphs.xml')//tei:glyph[@xml:id]"/> -->
                 
               </sch:pattern>
      
