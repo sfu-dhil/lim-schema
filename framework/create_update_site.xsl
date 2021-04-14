@@ -38,7 +38,7 @@
     <xsl:template match="xt:location">
         <xsl:copy>
             <xsl:attribute name="href">
-                <xsl:value-of expand-text="yes">https://github.com/{$repoOwner}/{$repoName}/releases/latest/download/{$framework}_{$version}.zip</xsl:value-of>
+                <xsl:value-of expand-text="yes">https://github.com/{$repoOwner}/{$repoName}/releases/latest/download/{$framework}.zip</xsl:value-of>
             </xsl:attribute>
         </xsl:copy>
     </xsl:template>

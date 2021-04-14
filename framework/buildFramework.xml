@@ -1,4 +1,6 @@
 <project default="all" name="buildFramework">
+   
+   
    <path id="frameworkFiles">
       <first>
          <fileset dir="${basedir}">
@@ -11,8 +13,19 @@
    
    <basename property="frameworkName" file="${frameworkFile}" suffix=".framework"/>
    
+   
+   <fileset id="assets" dir="${basedir}">
+      <include name="css/**"/>
+      <include name="schema/**"/>
+      <include name="**.framework"/>
+   </fileset>
+   
+   
+   
    <property name="distDir" value="${basedir}/dist"/>
    <property name="frameworkDistDir" value="${distDir}/${frameworkName}"/>
+   
+  
    
    <target name="init">
       <echoproperties/>
@@ -20,27 +33,37 @@
       <mkdir dir="${frameworkDistDir}"/>
    </target>
    
-   
-   <target name="dist">
+   <target name="copyAssets">
       <copy todir="${frameworkDistDir}">
-         <fileset dir="${basedir}">
-            <include name="css/**"/>
-            <include name="schema/**"/>
-            <include name="**.framework"/>
-         </fileset>
+         <fileset refid="assets"/>
       </copy>
+   </target>
+   
+   <target name="makeUpdate">
       <java jar="${lib.dir}/saxon-he-10.jar" fork="true">
          <arg line="-xsl:${basedir}/framework/create_update_site.xsl"/>
          <arg line="-s:${basedir}/framework/updateSite.xml"/>
          <arg line="-o:${distDir}/updateSite.xml"/>
          <arg line="framework=${frameworkName}"/>
       </java>
+   </target>
+   
+   <target name="zip">
       <loadfile property="distVersion" srcfile="${distDir}/VERSION"/>
-      <zip basedir="${distDir}" destfile="${distDir}/${frameworkName}_${distVersion}.zip">
+      <zip basedir="${distDir}" destfile="${distDir}/${frameworkName}.zip" >
          <include name="${frameworkName}/**"/>
       </zip>
- 
    </target>
+   
+   <target name="flatten">
+      <description>create a flattened version of the assets for dist.</description>
+      <copy todir="${distDir}" includeemptydirs="false">
+         <fileset refid="assets"/>
+         <flattenmapper/>
+      </copy>
+   </target>
+   
+   <target name="dist" depends="copyAssets, makeUpdate, zip, flatten"/>
    
    <target name="clean">
       <delete dir="dist/${frameworkName}"/>
