@@ -9,6 +9,10 @@
     <fileDesc>
       <titleStmt>
         <title>Schema and Encoding Guidelines for the <title level="m">Lyon in Mourning</title> Project</title>
+        <respStmt>
+          <resp>Principle Investigator</resp>
+          <name>Leith Davis</name>
+        </respStmt>
       </titleStmt>
       <publicationStmt>
         <p>Probably free?</p>
@@ -39,52 +43,47 @@
     </front>
     <body>
       <div>
-        <head>Setup</head>
+        <head>Pre-amble</head>
+        <p>The project's data, schema, and processing are all in GitHub. The data is in the "lim-data" repository; the schema in the "lim-schema" repository.</p>
+      </div>
+      <div>
+        <head>Getting Started</head>
         <div>
-          <head>Downloading the Repository</head>
-          <p>Instructions for downloading the repository</p>
+          <head>Setting up</head>
+          <p>Before working on the LiM documents, there are two pieces of software you will need to install: oXygen XML Editor and Github Desktop. You will also need a Github account.</p>
+          <list type="instructions">
+            <item>Provide the DHIL with your GitHub account username. If you do not have a GitHub account, you can create a free account here: <ptr target="https://github.com/join"/>.</item>
+            <item>Download and install oXygen:  <ptr target="https://www.oxygenxml.com/xml_editor/download_oxygenxml_editor.html"/>. Members of the LiM team should contact the DHIL regarding license keys.</item>
+            <item>Download and install the GitHub desktop client: <ptr target="https://desktop.github.com/"/></item>
+          </list>
         </div>
         <div>
-          <head>The Repository Structure</head>
-          <list type="tree" rendition="#rnd_code">
-            <item>root/
-              <list>
-                <item>data/
-                  <list>
-                    <item>volumes/
-                      <list>
-                        <item>vol1/
-                          <list>
-                            <item>???</item>
-                          </list>
-                        </item>
-                        <item>vol2/</item>
-                        <item>+++</item>
-                        <item>vol11/
-                          <list>
-                            <item>vol11_vol1.xml</item>
-                            <item>vol11_vol2.xml</item>
-                            <item>+++</item>
-                          </list>
-                        </item>
-                      </list>
-                    </item>
-                    <item>people.xml</item>
-                    <item>places.xml</item>
-                    <item>organizations.xml</item>
-                  </list>
-                </item>
-                <item>
-                  schema/
-                  <list>
-                    <item>lim.odd</item>
-                    <item>lim.rng</item>
-                  </list>
-                </item>
-                <item>lim.xpr</item>
-              </list>
-            </item>
-          </list>
+          <head>Getting the data</head>
+          <p><!--Need some advice from MJ here re: GitHub desktop--></p>
+        </div>
+        <div>
+          <head>Setting up oXygen</head>
+          <div>
+            <head>Using the Project File</head>
+            <list>
+              <item>Open oXygen</item>
+              <item>If this is your first time opening oXygen, you can close most of the panes on the right-hand and bottom side of your editor window. Make sure, however, that you retain the <term>Project</term> pane.</item>
+              <item>In the toolbar, click Project/Open Project and navigate the <code>lim-data</code> directory.</item>
+              <item>Open the <code>lim-schema.xpr</code> file and accept the popup notification from oXygen.</item>
+            </list>
+          </div>
+          <div>
+            <head>Installing the LiM Encoding Tools/Schemas/Framework</head>
+             <list>
+               <item>In the toolbar, click Help/Install New Add Ons</item>
+               <item>In the text box, paste the following url<lb/>
+               <code>https://github.com/joeytakeda/lim-schema/releases/latest/download/updateSite.xml</code>
+               <lb/>
+               </item>
+                <item>Accept all of the notifications</item>
+              <item>Restart oXygen</item>               
+             </list>
+          </div>
         </div>
       </div>
       <div>

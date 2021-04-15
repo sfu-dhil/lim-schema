@@ -1,4 +1,4 @@
-<project default="all" name="buildFramework">
+<project default="all" basedir="../" name="buildFramework">
    
    
    <path id="frameworkFiles">

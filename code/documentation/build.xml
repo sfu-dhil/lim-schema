@@ -1,6 +1,6 @@
 <project basedir="." default="all">
 
-    <dirname property="projectDir" file="../../lim.xpr"/>
+    <dirname property="projectDir" file="../../lim-schema.xpr"/>
 
 
     <property name="echo.separator">**************</property>
