@@ -31,6 +31,9 @@
         <prefixDef ident="doc" matchPattern="(.+)(#.+)?" replacementPattern="$1.xml$2">
           <p>Mechanism for pointing to a document in the repository. E.g. <val>doc:vol11_vol1</val>.</p>
         </prefixDef>
+        <prefixDef ident="islandora" matchPattern="(\d+)" replacementPattern="https://digital.lib.sfu.ca/islandora/object/lyoninmourning:$1">
+          <p>Resolves links to SFU's Islandora collection for the Lyon in Mourning page images.</p>
+        </prefixDef>
       </listPrefixDef>
     </encodingDesc>
   </teiHeader>
@@ -42,10 +45,22 @@
       </div>
     </front>
     <body>
-      <div>
-        <head>Pre-amble</head>
-        <p>The project's data, schema, and processing are all in GitHub. The data is in the "lim-data" repository; the schema in the "lim-schema" repository.</p>
-      </div>
+     <div>
+       <head>Schedule and Plans</head>
+       <list rend="ordered">
+         <item>Encode the index volume:
+          <list>
+            <item>Each volume gets its own TEI file</item>
+            <item>Each index item is encoded with people and places stored in a shared GDrive spreadsheet</item>
+            <item>Once the index is encoded, each index item is converted into its own file in its respective directory</item>
+            <item>The spreadsheets are converted into TEI -ography files </item>
+          </list>
+         
+         </item>
+         
+         
+       </list>
+     </div>
       <div>
         <head>Getting Started</head>
         <div>
@@ -86,6 +101,7 @@
           </div>
         </div>
       </div>
+      
       <div>
         <head>GitHub Workflow</head>
         <div>
@@ -101,15 +117,28 @@
         </div>
       </div>
       <div>
-        <head>Encoding Guidelines</head>
-        <div>
-          <head>Table of Contents</head>
-          <p>How to encode the table of contents</p>
-          <div>
-            <head>Components of an Item</head>
-            <p>Discuss how each item should be structured: numbers and titles.</p>
-          </div>
-        </div>
+        <head>Encoding the Index Volume (Volume 11)</head>
+            <p>As the volume 11 contains the index for the other 10 volumes, the encoding for volume 11 is slightly different from a standard TEI encoding framework. The folder structure looks like so:
+              <list>
+                <item>vol11/
+                  <list>
+                    <item>vol11.xml</item>
+                    <item>vol11_vol1.xml</item>
+                    <item>vol11_vol2.xml</item>
+                    <item>vol11_vol3.xml</item>
+                    <item>[...]</item>
+                  </list>
+                </item>
+              </list>
+            </p>
+            <p>The <code>vol11.xml</code> file contains all of the metadata for volume 11, but does not contain the transcription for the volume. Instead, each volume its own <term>fragment file</term> that contains the transcription for that volume's section within the index. This is mostly for convience: splitting the files this way makes it easier for multiple encoders to work on the index at the same time. Note that these fragment files do not begin with the standard <gi>TEI</gi> element, but instead use a special type of <gi>div</gi> (<gi>div</gi>/<att>type</att>="<val>index</val>") that contains the transcription for that section of the index. Each file will look something like this:       
+              <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                <div type="index" xml:id="vol11_vol1">
+                  <!--[...]-->
+                </div>
+              </egXML>
+            </p>
+      </div>
         <div>
           <head>People/Places/Organizations</head>
           <p>TODO: Determine how to encode people/places/organizations. VIAF? Geonames?</p>
@@ -122,7 +151,6 @@
           <head>Editorial Decisions and Uncertainty</head>
           <p>How to add editorial notes, uncertainty, supplied, gaps.</p>
         </div>
-      </div>
       
       
       <!--<div>
@@ -276,19 +304,20 @@
             
           </elementSpec>
           
-          
-          
           <!--Add quite a few of the header elements, but we may need more-->
           <moduleRef key="header" include="abstract catDesc catRef category change correspAction correspContext correspDesc encodingDesc fileDesc handNote idno listChange listPrefixDef notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
           
+
+
           <moduleRef key="linking" include="linkGrp ptr"/>
           
           <!--We may need some components from msdescription, but it depends-->
           <!--<moduleRef key="msdescription"/>-->
+
           
           <moduleRef key="namesdates" include="addName birth death faith floruit forename genName langKnowledge langKnown listOrg listPerson listPlace location nameLink nationality occupation org orgName persName person persona place placeName residence roleName surname"/>
-          
-          <!--Include all attributes-->
+
+
           <moduleRef key="tei"/>
           
           <!-- TEXTSTRUCTURE -->
@@ -322,8 +351,24 @@
                     </valList>
                 </attDef>
               </attList>
-
           </elementSpec>
+          
+          <elementSpec ident="item" mode="change" module="textstructure">
+            <constraintSpec ident="item.indexItemsMustHaveTitleAndNum" scheme="schematron" mode="add">
+              <desc>All index items must contain a title and a number</desc>
+              <constraint>
+                <sch:pattern>
+                  <sch:rule context="tei:div[@type='index']/tei:list/tei:item">
+                    <sch:assert test="tei:num">ERROR: All index items must contain a num element.</sch:assert>
+                    <sch:assert test="tei:title">ERROR: All index items must contain a title element.</sch:assert>
+                  </sch:rule>
+                </sch:pattern>
+              </constraint>
+            </constraintSpec>
+            
+          </elementSpec>
+          
+          
           
           <moduleRef key="transcr"
             include="damage damageSpan delSpan facsimile fw handNotes handShift metamark supplied surface surfaceGrp zone"/>
@@ -383,12 +428,19 @@
             </constraint>
           </constraintSpec>
           
-
-          
-          
-    
-          
-          
+          <constraintSpec scheme="schematron" ident="inlineElementsNoSpaces">
+            <desc>Inline elements should not begin or end with spaces.</desc>
+            <constraint>
+              <sch:pattern>
+                <sch:rule context="tei:title | tei:num | tei:ref">
+                  <sch:let name="text" value="string(.)"/>
+                  <sch:assert test="not(matches($text, '^\s+|\s+$'))">
+                    ERROR: <sch:name/> should not begin or end with spaces.
+                  </sch:assert>
+                </sch:rule>
+              </sch:pattern>
+            </constraint>
+          </constraintSpec>
         </schemaSpec>
       </div>
     </back>
