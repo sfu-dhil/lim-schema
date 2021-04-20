@@ -12,11 +12,12 @@
    <pathconvert property="frameworkFile" refid="frameworkFiles"/>
    
    <basename property="frameworkName" file="${frameworkFile}" suffix=".framework"/>
-   
+   <property name="lib.dir" value="${basedir}/lib"/>
    
    <fileset id="assets" dir="${basedir}">
       <include name="css/**"/>
       <include name="schema/**"/>
+      <include name="templates/**"/>
       <include name="**.framework"/>
    </fileset>
    
@@ -28,7 +29,6 @@
   
    
    <target name="init">
-      <echoproperties/>
       <delete dir="${distDir}"/>
       <mkdir dir="${frameworkDistDir}"/>
    </target>

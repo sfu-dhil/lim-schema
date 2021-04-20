@@ -15,7 +15,7 @@
     </xd:doc>
 
     <xsl:param name="pd" select="'../'" as="xs:string"/>
-    <xsl:param name="repoOwner">joeytakeda</xsl:param>
+    <xsl:param name="repoOwner">sfu-dhil</xsl:param>
     <xsl:param name="repoName">lim-schema</xsl:param>
     <xsl:param name="framework">lyon_in_mourning</xsl:param>
     <xsl:param name="env" select="'dev'"/>
