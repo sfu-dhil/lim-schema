@@ -50,7 +50,7 @@
    
    <target name="zip">
       <loadfile property="distVersion" srcfile="${distDir}/VERSION"/>
-      <zip basedir="${distDir}" destfile="${distDir}/${frameworkName}.zip" >
+      <zip basedir="${distDir}" destfile="${distDir}/${frameworkName}-${distVersion}.zip" >
          <include name="${frameworkName}/**"/>
       </zip>
    </target>
@@ -58,7 +58,10 @@
    <target name="flatten">
       <description>create a flattened version of the assets for dist.</description>
       <copy todir="${distDir}" includeemptydirs="false">
-         <fileset refid="assets"/>
+         <fileset dir="${basedir}">
+            <include name="**.framework"/>
+            <include name="schema/**.rng"/>
+         </fileset>
          <flattenmapper/>
       </copy>
    </target>

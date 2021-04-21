@@ -18,7 +18,6 @@
     <xsl:param name="repoOwner">sfu-dhil</xsl:param>
     <xsl:param name="repoName">lim-schema</xsl:param>
     <xsl:param name="framework">lyon_in_mourning</xsl:param>
-    <xsl:param name="env" select="'dev'"/>
     
     <xsl:output cdata-section-elements="xt:license"/>
     
@@ -38,7 +37,7 @@
     <xsl:template match="xt:location">
         <xsl:copy>
             <xsl:attribute name="href">
-                <xsl:value-of expand-text="yes">https://github.com/{$repoOwner}/{$repoName}/releases/latest/download/{$framework}.zip</xsl:value-of>
+                <xsl:value-of expand-text="yes">https://github.com/{$repoOwner}/{$repoName}/releases/latest/download/{$framework}-{$version}.zip</xsl:value-of>
             </xsl:attribute>
         </xsl:copy>
     </xsl:template>
