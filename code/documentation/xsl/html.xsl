@@ -358,18 +358,18 @@
     
     <xsl:template match="graphic" mode="main">
         <img>
-            <xsl:attribute name="alt" select="normalize-space(../figDesc)"/>
+            <xsl:attribute name="alt" select="normalize-space((../figDesc, desc)[1])"/>
             <xsl:apply-templates select="@url|node()" mode="#current"/>
         </img>
     </xsl:template>
     
-    <xsl:template match="figDesc" mode="main"/>
-    
-    
-    <!--Repoint the src in graphics-->
     <xsl:template match="graphic/@url" mode="main">
-        <xsl:attribute name="src" select="concat('graphics/',tokenize(.,'/')[last()])"/>
+        <xsl:attribute name="src" select="."/>
     </xsl:template>
+    
+    
+    <xsl:template match="figDesc | graphic/desc" mode="main"/>
+   
 
     <!--Inline elements-->
     
