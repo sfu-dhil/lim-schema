@@ -17,7 +17,7 @@
 								<Integer>6</Integer>
 							</field>
 							<field name="uri">
-								<String>${frameworkDir}/schema/lim.rng</String>
+								<String>${framework}/schema/lim.rng</String>
 							</field>
 						</docTypeSchema>
 					</field>
@@ -142,7 +142,7 @@
 					</field>
 					<field name="templatesLocations">
 						<String-array>
-							<String>${frameworkDir}/templates</String>
+							<String>${framework}/templates</String>
 						</String-array>
 					</field>
 					<field name="xmlCatalogs">
