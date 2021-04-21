@@ -73,27 +73,31 @@
           </list>
         </div>
         <div>
-          <head>Getting the data</head>
-          <p><!--Need some advice from MJ here re: GitHub desktop--></p>
-        </div>
-        <div>
           <head>Setting up oXygen</head>
           <div>
             <head>Using the Project File</head>
             <list>
               <item>Open oXygen</item>
               <item>If this is your first time opening oXygen, you can close most of the panes on the right-hand and bottom side of your editor window. Make sure, however, that you retain the <term>Project</term> pane.</item>
-              <item>In the toolbar, click Project/Open Project and navigate the <code>lim-data</code> directory.</item>
+              <item>In the toolbar, click <code>Project/Open Project</code> and navigate the <code>lim-data</code> directory.</item>
               <item>Open the <code>lim-schema.xpr</code> file and accept the popup notification from oXygen.</item>
             </list>
           </div>
           <div>
             <head>Installing the LiM Encoding Tools/Schemas/Framework</head>
              <list>
-               <item>In the toolbar, click Help/Install New Add Ons</item>
-               <item>In the text box, paste the following url<lb/>
-               <code>https://github.com/joeytakeda/lim-schema/releases/latest/download/updateSite.xml</code>
-               <lb/>
+               <item>In the toolbar, click <code>Help/Install New Add Ons</code>:
+                 <graphic url="images/install-addons.png">
+                   <desc>Install add on</desc>
+                 </graphic>
+   
+                 
+               </item>
+               <item>In the text box, paste the following URL:<lb/>
+               <code>https://github.com/sfu-dhil/lim-schema/releases/latest/download/updateSite.xml</code>
+                 <graphic url="images/select-addon.png">
+                   <desc>Install add on</desc>
+                 </graphic>
                </item>
                 <item>Accept all of the notifications</item>
               <item>Restart oXygen</item>               
