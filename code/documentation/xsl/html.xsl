@@ -68,7 +68,7 @@
             <xsl:for-each select="($chapters, $appendixItems)">
                 <xsl:variable name="currId" select="jt:getId(.)"/>
                 <xsl:map-entry key="$currId" select="$currId"/>
-                <xsl:for-each select="descendant::*[self::div or @xml:id]">
+                <xsl:for-each select="descendant::tei:*[self::div or @xml:id]">
                     <xsl:map-entry key="jt:getId(.)" select="$currId"/>
                 </xsl:for-each>
             </xsl:for-each>
@@ -368,8 +368,13 @@
     </xsl:template>
     
     
-    <xsl:template match="figDesc | graphic/desc" mode="main"/>
+    <xsl:template match="graphic/desc" mode="main"/>
    
+   <xsl:template match="figDesc" mode="main">
+       <figcaption>
+           <xsl:apply-templates mode="#current"/>
+       </figcaption>
+   </xsl:template>
 
     <!--Inline elements-->
     
@@ -393,10 +398,17 @@
     <!-- Links -->
     <xsl:template match="ref" mode="main">
         <xsl:param name="thisId" tunnel="yes"/>
+        <xsl:variable name="external" select="matches(@target,'^https?')" as="xs:boolean"/>
+        
         <xsl:variable name="resolvedTarget" select="jt:resolveRef(xs:string(@target))" as="xs:string?"/>
         <xsl:choose>
             <xsl:when test="exists($resolvedTarget)">
                 <a href="{$resolvedTarget}">
+                    <!--Make external links new tab-->
+                    <xsl:if test="$external">
+                        <xsl:attribute name="target">_blank</xsl:attribute>
+                        <xsl:attribute name="rel">noopener noreferrer</xsl:attribute>
+                    </xsl:if>
                     <xsl:apply-templates mode="#current"/>
                 </a>
             </xsl:when>
