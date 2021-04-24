@@ -34,6 +34,9 @@
         <prefixDef ident="islandora" matchPattern="(\d+)" replacementPattern="https://digital.lib.sfu.ca/islandora/object/lyoninmourning:$1">
           <p>Resolves links to SFU's Islandora collection for the Lyon in Mourning page images.</p>
         </prefixDef>
+        <prefixDef ident="lib" matchPattern="(\d+)" replacementPattern="#sfu_pg_$1">
+          <p>Resolve links from a page in a volume to a facsimile element.</p>
+        </prefixDef>
       </listPrefixDef>
     </encodingDesc>
   </teiHeader>
@@ -45,7 +48,7 @@
       </div>
     </front>
     <body>
-     <div>
+<!--     <div>
        <head>Schedule and Plans</head>
        <list rend="ordered">
          <item>Encode the index volume:
@@ -60,7 +63,26 @@
          
          
        </list>
-     </div>
+     </div>-->
+      <div>
+        <head>Helpful Links</head>
+        <list>
+          <item><ref target="https://digital.lib.sfu.ca/lyoninmourning-collection/lyon-mourning">Lyon in Mourning facsimiles (SFU)</ref></item>
+          <item><ref target="https://docs.github.com/en/desktop">GitHub Desktop Documentation</ref></item>
+          
+          <item><ref target="https://tei-c.org/guidelines/">TEI Guidelines</ref></item>
+          
+          <item>Volume 1:
+            <list>
+              <item><ref target="https://www.gutenberg.org/files/43222/43222-h/43222-h.htm">Project Gutenberg</ref></item>
+              <item><ref target="https://view.nls.uk/mirador/125649979">NLS</ref></item>
+            </list>
+          
+          </item>
+          
+        </list>
+        
+      </div>
       <div>
         <head>Getting Started</head>
         <div>
@@ -142,6 +164,126 @@
                 </div>
               </egXML>
             </p>
+        <div>
+          <head>Encoding pages</head>
+          <p>Use a self-closing (i.e. empty) <gi>pb</gi> element to denote the <emph>start</emph> of a new <emph>physical</emph> page in the manuscript. In most cases, the <gi>pb</gi> element should go exactly where it happens in flow of the text.</p>
+          
+          <p>As an example, let's look at these four pages of the introduction from volume 11:
+            <figure>
+              <graphic url="images/vol11_pg3.png"/>
+              <figDesc><ref target="https://digital.lib.sfu.ca/lyoninmourning-2642/%E2%80%98lyon-mourning%E2%80%99-bishop-robert-forbess-collection-jacobite-papers-index-volume">Volume 11, page 3.</ref></figDesc>
+              
+            </figure>
+            <figure>
+              <graphic url="images/vol11_pg4.png"/>
+              <figDesc>
+                <ref target="https://digital.lib.sfu.ca/lyoninmourning-2641/%E2%80%98lyon-mourning%E2%80%99-bishop-robert-forbess-collection-jacobite-papers-index-volume">Volume 11, page 4.</ref>
+              </figDesc>
+            </figure></p>
+          <p>While there are two <emph>digitized</emph> images, the encoding for the above should contain four <gi>pb</gi> elements, one for each of:
+            <list>
+              <item>the blank verso page</item>
+              <item>the recto page</item>
+              <item>the blank verso page</item>
+              <item>the recto page</item>
+            </list>
+Since the first paragraph of text extends across the page boundary, we place the <gi>pb</gi> within the middle of the paragraph:
+            
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <pb facs="lib:3"/>
+              <pb facs="lib:3"/>
+              <div type="preface">
+                <lb/>
+                <opener>
+                  <salute>Dear <persName>Mr. Blank</persName>,</salute>
+                </opener>
+                <lb/>
+                <p>I have at rescued
+                  <lb/> the <title level="m">Index to the Lion in Mourning</title> from
+                  <lb/>my father's hands where it has lain
+                  <lb/> <!--[....]-->
+                  <lb/>Chambers thirteen years ago. You may
+                  <pb facs="lib:4"/>
+                  <pb facs="lib:4"/>
+                  <fw type="pageNum" place="right">2</fw>
+                  <lb/>therefore submit the matter to the 
+                  <lb/>Curators whenever you choose.</p>
+              </div>
+            </egXML>
+          </p>
+          <p>There are a few things to note here:
+          <list>
+            <item>Each line of text is denoted by using the <gi>lb</gi> (line beginning) element. Like the <gi>pb</gi> element, the <gi>lb</gi> element is self-closing and denotes the <emph>beginning</emph> of a line.</item>
+            <item>Each <gi>pb</gi> element also has a <att>facs</att> attribute that denotes the <emph>SFU Library page number</emph> by using the special <val>lib:</val> prefix. The <att>facs</att> attribute, in other words, provides a mechanism for aligning the transcription with the digital images housed at SFU library.</item>
+            <item>We encode the written page number using the <gi>fw</gi> (formework) element with an <att>type</att> value of <val>pageNum</val> and an <att>place</att> value of <val>right</val>.</item>
+          </list>
+          </p>
+        </div>
+        
+        <div>
+          <head>Encoding the Indexes</head>
+          <p>Each indexed volume has a separate file that will house your transcription. These are a bit strange compared to the rest of the documents; they begin with a <gi>div</gi> element, rather than a <gi>TEI</gi> (this is because these aren't distinct documents, but rather fragments all contained with one document).</p>
+          <p>Each volume's index can be considered as a single <gi>list</gi> with each letter, narrative, etc found in the manuscript as a separate <gi>item</gi> in that list:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <div type="index" xml:id="vol11_vol1">
+              <pb facs="lib:9"/>
+              <fw type="pageNum" place="left">1</fw>
+              <fw type="pageNum" place="right">3</fw>
+              <list>
+                <item><!--The first item--></item>
+                <item><!--The second item--></item>
+                <!--....-->
+              </list>
+            </div>
+          </egXML>
+          Like above, these documents should contain all of the bibliographic information for the document (i.e. page beginnings [<gi>pb</gi>], page numbers and other formeworks [<gi>fw</gi>], etc).
+          </p>
+          
+          <div>
+            <head>Index Items</head>
+            <div>
+              <head>Basic Structure</head>
+              <p>Within the <gi>list</gi>, encode each item as a separate <gi>item</gi> that contains the title of the piece and a page number, encoded using the <gi>title</gi> and <gi>num</gi> tag, respectively:
+                
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <list>
+                    <item>
+                      <!--Encoding of the title simplified for demonstrative purposes...-->
+                      <title>Letter from the Revt. Mr. Lyon to his mother + Sisters</title>
+                      <num>1</num>
+                    </item>
+                  </list>
+                </egXML>
+                Note that we do not encode information about the separating line between the page number and the title.
+              </p>
+            </div>
+            <div>
+              <head>Marginalia in Index Items</head>
+              <p>Some of the index items will have marginal marks or annotations associated with that item that we want to capture. To do so, encode the note text using <gi>note</gi> element with an <att>place</att> to signal the note's position. The <gi>note</gi> element should be contained within the <gi>item</gi> with which it is associated. For example: this item from volume 11:
+                
+                <figure>
+                  <graphic url="images/item_with_note.png">
+                    <desc>From volume 11; item with note.</desc>
+                  </graphic>
+                </figure>
+                
+                is encoded like so: 
+                
+                
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <item>
+                    <note place="left">v</note>
+                    <title>Speech of Mr. Theodore Deacon</title>
+                    <num></num>
+                  </item>
+                  
+                </egXML>
+              </p>
+            </div>
+          </div>
+          
+        </div>
+        
       </div>
         <div>
           <head>People/Places/Organizations</head>
@@ -285,28 +427,66 @@
           
           <!--CORE-->
           <moduleRef key="core" include="abbr author bibl choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note num orig p pb ptr pubPlace publisher quote ref reg resp respStmt sic term title unclear"/>
-
+          
+          <elementSpec ident="pb" module="core" mode="change">
+              <classes mode="change">
+                <memberOf key="att.global" mode="delete"/>
+                <memberOf key="att.typed" mode="delete"/>
+                <memberOf key="att.global.facs" mode="add"/>
+              </classes>
+              <attList>
+                <!--Make @facs required-->
+                <attDef ident="facs" mode="change" usage="req"/>
+              </attList>
+          </elementSpec>
+          
+          <elementSpec ident="note" module="core" mode="change">
+            <classes mode="change">
+              <memberOf key="att.pointer" mode="delete"/>
+            </classes>
+            <constraintSpec ident="note.co-occurence" scheme="schematron">
+              <desc>Various co-occurence constraints</desc>
+              <constraint>
+                <sch:pattern>
+                  <sch:rule context="tei:note[@type='marginalia']">
+                    <sch:assert test="@place = ('left','right','above','below')">ERROR: All marginalia must have a place attribute with a value of left, right, above, or below.</sch:assert>
+                  </sch:rule>
+                </sch:pattern>
+              </constraint>
+            </constraintSpec>
+            <constraintSpec ident="note.mustHaveTypeInText" scheme="schematron">
+              <desc>Notes must be typed in the body</desc>
+              <constraint>
+                <sch:pattern>
+                  <sch:rule context="tei:note[ancestor::tei:text]">
+                    <sch:assert test="@type">ERROR: All notes in transcriptions must have a @type.</sch:assert>
+                  </sch:rule>
+                </sch:pattern>
+              </constraint>
+            </constraintSpec>
+              <attList>
+                <attDef ident="type" mode="change" usage="opt">
+                  <valList type="closed">
+                    <valItem ident="editorial">
+                      <gloss>editorial note</gloss>
+                      <desc>An editorial note written by a team member.</desc>
+                    </valItem>
+                    <valItem ident="marginalia">
+                      <gloss>marginalia</gloss>
+                      <desc>A note that's not a footnote, but is some sort of marginal note.</desc>
+                    </valItem>
+                  </valList>
+                </attDef>
+              </attList>
+          </elementSpec>
+          
+          
           
           <!--Not sure we need anything from corpus: check proposal-->
           <!--<moduleRef key="corpus"/>-->
           <!--Adding a lot of GAIJI module stuff, since I imagine we'll be
           dealing with some unfamiliar characters?-->
-          <moduleRef key="gaiji" include="char charDecl charName charProp g glyph glyphName mapping unicodeName unicodeProp"/>
-          <elementSpec ident="g" module="gaiji" mode="change">
-<!--            <constraintSpec ident="div.onlyRootWithIndexAndVolume11" scheme="schematron" mode="add">
-              <desc>All glyph pointers should have a @ref and point to something in the glyphs file.</desc>
-              <constraint>
-                <sch:pattern>
-                  <sch:rule context="tei:g">
-                    <sch:let name="ref" value="@ref"/>
-                    <sch:assert test="matches($ref,'g:')">ERROR: All glyphs must have an @ref that points to a glyph using the 'g:' prefix (e.g. ref="g:plus").</sch:assert>
-                    <sch:assert test="exists($glyphs[@xml:id = substring-after($ref,'g:')])">ERROR: Cannot find glyph <sch:value-of select="substring-after($ref,'g:')"/>.</sch:assert>
-                  </sch:rule>
-                </sch:pattern>
-              </constraint>
-            </constraintSpec>-->
-            
-          </elementSpec>
+<!--          <moduleRef key="gaiji" include="char charDecl charName charProp g glyph glyphName mapping unicodeName unicodeProp"/>-->
           
           <!--Add quite a few of the header elements, but we may need more-->
           <moduleRef key="header" include="abstract catDesc catRef category change correspAction correspContext correspDesc encodingDesc fileDesc handNote idno listChange listPrefixDef notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
@@ -324,9 +504,109 @@
 
           <moduleRef key="tei"/>
           
+    
+          <classSpec ident="att.breaking" type="atts" module="tei" 
+            mode="delete"/>
+          <classSpec ident="att.declaring" module="tei" type="atts"
+            mode="delete"/>
+          <classSpec ident="att.divLike" module="tei" type="atts"
+            mode="delete"/>
+          <classSpec ident="att.edition" module="tei" type="atts"
+            mode="delete"/>
+          <classSpec type="atts" ident="att.global.facs" mode="change">
+            <!--Restrict the use of @facs to only allow lib:-->
+            <attList>
+              <attDef ident="facs" mode="change">
+                <datatype maxOccurs="1">
+                  <dataRef name="token" restriction="lib:\d+"/>
+                </datatype>
+              </attDef>
+            </attList>
+            <remarks>
+              <p>The facs attribute should contain only a single pointer of the form lib:\d+ (i.e. lib: followed by 1 or more digit).</p>
+            </remarks>
+          </classSpec>
+          <classSpec ident="att.global" module="tei" type="atts"
+            mode="change">
+            <classes mode="change">
+              <!--Remove facs and responsibility from the global modules,
+                so we can add them on the individual elements that we need-->
+              <memberOf key="att.global.facs" mode="delete"/>
+              <memberOf key="att.global.responsibility" mode="delete"/>
+            </classes>
+            <attList>
+              <!--We'll never need space or base, afaik-->
+              <attDef ident="xml:space" mode="delete"/>
+              <attDef ident="xml:base" mode="delete"/>
+            </attList>
+          </classSpec>
+          <!--Remove change everywhere-->
+          <classSpec ident="att.global.change" module="transcr" type="atts"
+            mode="delete" />
+          <!--Remove linking (though we may need some of them, like @corresp)-->
+          <classSpec ident="att.global.linking" module="linking" type="atts"
+            mode="delete"/>
+          <classSpec ident="att.global.rendition" module="tei" type="atts"
+            mode="change">
+            <attList>
+              <!--Delete @rend, since it's too ambiguous to be useful-->
+              <attDef ident="rend" mode="delete"/>
+              <!--Delete style unless we think that's important-->
+              <attDef ident="style" mode="delete"/>
+              <!--And constraint rendition-->
+              <attDef ident="rendition" mode="change">
+                <valList type="closed" mode="add">
+                  <valItem ident="rnd:super">
+                    <desc>superscript</desc>
+                    <gloss>superscript</gloss>
+                  </valItem>
+                  <valItem ident="rnd:sub">
+                    <desc>subscript</desc>
+                    <gloss>subscript</gloss>
+                  </valItem>
+                  <valItem ident="rnd:underlined">
+                    <gloss>underlined</gloss>
+                    <desc>underlined (NOTE: This should be used almost exclusively with emph or title)</desc>
+                  </valItem>
+                </valList>
+              </attDef>
+            </attList>
+          </classSpec>
+          <!--Remove spanning-->
+          <classSpec ident="att.spanning" module="tei" type="atts"
+            mode="delete"/>
+          <!--Constraint place values-->
+          <classSpec ident="att.placement" module="tei" type="atts"
+            mode="change">
+            <attList>
+              <attDef ident="place" mode="change">
+                <valList type="closed" mode="replace">
+                  <valItem ident="left" mode="add">
+                    <gloss>left</gloss>
+                    <desc>in the left margin</desc>
+                  </valItem>
+                  <valItem ident="right" mode="add">
+                    <gloss>right</gloss>
+                    <desc>in the right margin</desc>
+                  </valItem>
+                  <valItem ident="above" mode="add">
+                    <gloss>above</gloss>
+                    <desc>above the line</desc>
+                  </valItem>
+                  <valItem ident="below" mode="add">
+                    <gloss>below</gloss>
+                    <desc>below the line</desc>
+                  </valItem>
+                </valList>
+              </attDef>
+            </attList>
+          </classSpec>
+
+          
+          
           <!-- TEXTSTRUCTURE -->
           <moduleRef key="textstructure"
-            include="TEI body byline closer dateline div docAuthor docDate docEdition docImprint docTitle epigraph front imprimatur opener postscript salute signed titlePart text trailer"/>
+            include="TEI body byline closer dateline div docAuthor docDate docEdition docImprint docTitle epigraph front imprimatur opener postscript salute signed titlePage titlePart text trailer"/>
           
           <elementSpec ident="div" mode="change" module="textstructure">
             <constraintSpec ident="div.onlyRootWithIndexAndVolume11" scheme="schematron" mode="add">
@@ -363,8 +643,8 @@
               <constraint>
                 <sch:pattern>
                   <sch:rule context="tei:div[@type='index']/tei:list/tei:item">
-                    <sch:assert test="tei:num">ERROR: All index items must contain a num element.</sch:assert>
-                    <sch:assert test="tei:title">ERROR: All index items must contain a title element.</sch:assert>
+                    <sch:assert test="count(tei:num) = 1">ERROR: All index items must contain one num element.</sch:assert>
+                    <sch:assert test="count(tei:title) = 1">ERROR: All index items must contain one title element.</sch:assert>
                   </sch:rule>
                 </sch:pattern>
               </constraint>
@@ -375,8 +655,18 @@
           
           
           <moduleRef key="transcr"
-            include="damage damageSpan delSpan facsimile fw handNotes handShift metamark supplied surface surfaceGrp zone"/>
+            include="damage facsimile fw handNotes handShift supplied surface surfaceGrp zone"/>
           <elementSpec ident="fw" module="transcr" mode="change">
+            <constraintSpec ident="fw.pageNum.mustHavePlace" scheme="schematron">
+              <desc>All pageNum formeworks must have an @place</desc>
+              <constraint>
+                <sch:pattern>
+                  <sch:rule context="tei:fw[@type='pageNum']">
+                    <sch:assert test="@place">ERROR: Missing required @place attribute for page number formework.</sch:assert>
+                  </sch:rule>
+                </sch:pattern>
+              </constraint>
+            </constraintSpec>
             <attList>
               <attDef ident="type" mode="change" usage="req">
                 <valList mode="add" type="closed">
