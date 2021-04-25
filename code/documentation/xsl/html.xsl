@@ -409,6 +409,7 @@
                         <xsl:attribute name="target">_blank</xsl:attribute>
                         <xsl:attribute name="rel">noopener noreferrer</xsl:attribute>
                     </xsl:if>
+                    <xsl:call-template name="createClass"/>
                     <xsl:apply-templates mode="#current"/>
                 </a>
             </xsl:when>

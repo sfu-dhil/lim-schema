@@ -7,6 +7,7 @@
     xmlns:eg="http://www.tei-c.org/ns/Examples"
     xmlns:xd="https://www.oxygenxml.com/ns/doc/xsl"
     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+    xmlns:jt="https://github.com/joeytakeda"
     xmlns="http://www.tei-c.org/ns/1.0"
     version="3.0">
     <xd:doc>
@@ -21,7 +22,42 @@
     <!--Identity transform-->
     <xsl:mode on-no-match="shallow-copy"/>
     <xsl:output indent="yes" suppress-indentation="ref"/>
-
+    
+    <xsl:variable name="processedODD" select="document(replace(document-uri(.),'_lite.xml','_processed.odd'))" as="document-node()"/>
+    
+    <xsl:variable name="specMap" as="map(xs:string, element())">
+        <xsl:map>
+            <xsl:for-each select="$processedODD//schemaSpec/*[not(self::constraintSpec)]">
+                <xsl:map-entry key="string(@ident)">
+                    <xsl:apply-templates select="." mode="spec"/>
+                </xsl:map-entry>
+            </xsl:for-each>
+        </xsl:map>
+    </xsl:variable>
+    
+    
+    <!--Only retrieve the latest version-->
+    <xsl:template match="tei:*[lang('en')][@versionDate]" mode="spec">
+       <xsl:variable name="name" select="local-name()"/>
+       <xsl:variable name="myDate" select="xs:date(@versionDate)"/>
+       <xsl:variable name="bestVersion" select="jt:getBestVersion(parent::tei:*, $name)"/> 
+       <xsl:if test="current() is $bestVersion">
+           <xsl:next-match/>
+       </xsl:if>
+    </xsl:template> 
+    
+    <!--Items to remove in the spec sources-->
+    <xsl:template match="tei:exemplum | tei:remarks | tei:listRef | @versionDate | @xml:lang | tei:*[not(lang('en'))]" mode="spec"/>
+    
+    <!--And identity-->
+    <xsl:template match="@*|node()" priority="-1" mode="spec">
+        <xsl:copy copy-namespaces="no">
+            <xsl:apply-templates select="@*|node()" mode="#current"/>
+        </xsl:copy>
+    </xsl:template>
+    
+    
+    
    
    <!--*** STRUCTURE ***-->
     
@@ -125,17 +161,82 @@
             <xsl:apply-templates select="table|table/following-sibling::node()" mode="#current"/>
         </xsl:copy>
     </xsl:template>
-
-    <xsl:template match="row">
-        <xsl:choose>
-            <xsl:when test="normalize-space(string-join(cell[1]/descendant::text(),'')) = ('Schema Declaration', 'Declaration')"/>
-            <xsl:otherwise>
-                <xsl:copy>
-                    <xsl:apply-templates select="@*|node()" mode="#current"/>
-                </xsl:copy>
-            </xsl:otherwise>
-        </xsl:choose>
+    
+    
+    <xd:doc>
+        <xd:desc>Template to add in ODD spec.</xd:desc>
+    </xd:doc>
+    <xsl:template match="div[@type='refdoc']/table">
+        <!--Handle the table normally-->
+        <xsl:variable name="thisId" select="parent::div/@xml:id"/>
+        <xsl:variable name="thisIdent" select="substring-after($thisId,'TEI.')"/>
+        <xsl:variable name="thisSpec" select="$specMap($thisIdent)" as="element()?"/>
+        <xsl:copy>
+            <xsl:apply-templates select="@*"/>
+            <xsl:for-each-group select="row[not(cell[@cols = '2'])]" group-adjacent="jt:getRowLabel(.)">
+                <xsl:choose>
+                    <!--Rows to ignore -->
+                    <xsl:when test="current-grouping-key() = ('Schema Declaration', 'Declaration', 'Content model')"/>
+                    <xsl:when test="current-grouping-key() = 'Schematron'">
+                        <row>
+                            <cell>
+                                <label>Schematron</label>
+                                <cell>
+                                   <xsl:for-each select="$thisSpec//constraintSpec">
+                                       <div>
+                                           <xsl:for-each select="desc">
+                                               <p><xsl:apply-templates select="node()"/></p>
+                                           </xsl:for-each>
+                                           <eg:egXML>
+                                               <xsl:apply-templates select="constraint/node()"/>
+                                           </eg:egXML>
+                                       </div>
+                                       
+                                   </xsl:for-each>
+                                </cell>
+                            </cell>
+                        </row>
+                        
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <row>
+                            <cell>
+                                <label><xsl:value-of select="if (current-grouping-key() = 'Example') then 'Examples' else current-grouping-key()"/></label>
+                            </cell>
+                            <cell>
+                                <xsl:apply-templates select="current-group()/cell[2]/node()"/>
+                            </cell>
+                        </row>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:for-each-group>
+            <xsl:if test="$thisSpec">
+                <row>
+                    <cell><label>Source</label></cell>
+                    <cell>
+                        <ref target="https://github.com/TEIC/TEI/blob/dev/P5/Source/Specs/{$thisIdent}.xml" rend="right">Github</ref>
+                        <eg:egXML>
+                            <xsl:apply-templates select="$thisSpec" mode="eg"/>
+                        </eg:egXML>
+                    
+                    </cell>
+                </row>
+                
+            </xsl:if>
+           
+        </xsl:copy>
+        
     </xsl:template>
+    
+    <!--Remove constraint specs now from the cell-->
+    <xsl:template match="constraintSpec" mode="eg"/>
+    
+    <xsl:template match="@*|node()" mode="eg" priority="-1">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()" mode="#current"/>
+        </xsl:copy>
+    </xsl:template>
+    
     
     <!--*** INLINE FIXES ***-->
     
@@ -151,6 +252,16 @@
 
     <xsl:template match="hi">
         <xsl:apply-templates mode="#current"/>
+    </xsl:template>
+    
+    <xsl:template match="sch:*">
+        <xsl:element name="sch:{local-name()}">
+            <xsl:apply-templates select="@*|node()"/>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template match="text()[parent::sch:*]">
+        <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
 
     <!--*** CODE BLOCKS *** -->
@@ -183,6 +294,8 @@
         </val>
     </xsl:template>
     
+
+    
     <xsl:template match="cell[@rend='Attribute']/att">
         <xsl:analyze-string select="text()" regex="'^(\w+)(\s+.+)$'">
             <xsl:matching-substring>
@@ -196,7 +309,7 @@
         </xsl:analyze-string>
     </xsl:template>
 
-    <xsl:template match="tei:ab[@xml:space='preserve'][contains(.,'&lt;')][not(ancestor::div[head/text()='Constraints'])] ">
+    <xsl:template match="tei:ab[@xml:space='preserve'][contains(.,'&lt;')][not(ancestor::div[head/text()='Constraints'])][not(ancestor::row[jt:getRowLabel(.) = 'Schematron'])] ">
         <code>
             <xsl:apply-templates select="@*|node()" mode="#current"/>
         </code>
@@ -210,13 +323,27 @@
     
     <!--*** DELETIONS ***-->
     
-    <xsl:template match="row[cell[normalize-space(string-join(descendant::text(),''))='Example']][descendant::eg:egXML[descendant::eg:egXML]]" />
-    <xsl:template match="div/table/row[cell[@cols='2']]" />
     <xsl:template match="index"/>
     <xsl:template match="processing-instruction('TEIVERSION')" />
     <!--Remove the root TEI attribute-->
     <xsl:template match="TEI/@xml:id"/>
     <!--Be explicit about the tei NS here to avoid matching egXMLs-->
     <xsl:template match="tei:*[ancestor::back]/@rend| tei:*/@xml:base | tei:*/@xml:lang | eg:egXML/@xml:space | tei:*/@xml:space" />
+    
+    
+    <xsl:function name="jt:getBestVersion" as="element()" new-each-time="no">
+        <xsl:param name="spec" as="element()"/>
+        <xsl:param name="name" as="xs:string"/>
+        <xsl:variable name="candidates" 
+            select="$spec/*[@versionDate][local-name() = $name][lang('en')]" as="element()+"/>
+        <xsl:variable name="sorted" 
+            select="sort($candidates, (), function($el){xs:date($el/@versionDate)})"/>
+        <xsl:sequence select="$candidates[last()]"/>
+    </xsl:function>
+    
+    <xsl:function name="jt:getRowLabel" as="xs:string" new-each-time="no">
+        <xsl:param name="row" as="element(row)"/>
+        <xsl:sequence select="normalize-space(string-join($row/cell[1]/descendant::text(),''))"/>
+    </xsl:function>
 
 </xsl:stylesheet>
