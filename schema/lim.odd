@@ -4,7 +4,8 @@
 	schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <TEI xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:svg="http://www.w3.org/2000/svg"
   xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-  xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns="http://www.tei-c.org/ns/1.0">
+  xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns="http://www.tei-c.org/ns/1.0"
+  xml:lang="en">
   <teiHeader>
     <fileDesc>
       <titleStmt>
@@ -274,7 +275,7 @@ Since the first paragraph of text extends across the page boundary, we place the
                   <item>
                     <note place="left">v</note>
                     <title>Speech of Mr. Theodore Deacon</title>
-                    <num></num>
+                    <num>37</num>
                   </item>
                   
                 </egXML>
