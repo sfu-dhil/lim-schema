@@ -427,7 +427,7 @@ Since the first paragraph of text extends across the page boundary, we place the
         <schemaSpec ident="lim" start="TEI div person">
           
           <!--CORE-->
-          <moduleRef key="core" include="abbr author bibl choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note num orig p pb ptr pubPlace publisher quote ref reg resp respStmt sic term title unclear"/>
+          <moduleRef key="core" include="abbr author bibl choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note num orig p pb ptr pubPlace publisher quote ref reg resp respStmt rs sic term title unclear"/>
           
           <elementSpec ident="pb" module="core" mode="change">
               <classes mode="change">
