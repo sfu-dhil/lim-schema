@@ -130,19 +130,90 @@
       </div>
       
       <div>
-        <head>GitHub Workflow</head>
+        <head>Workflow</head>
+        <div>
+          <head>Updating your Repository</head>
+          <p>Update your local copy of the repository by merging any changes from the <term>upstream</term> repository. To do so:</p>
+            <list type="instructions">
+              <item>Open GitHub Desktop and click the <term>branch</term> tab (the second tab on the top; it will say something like "main"):
+                <figure>
+                  <graphic url="images/branch_menu.png"/>
+                  <figDesc>Branch Menu</figDesc>
+                </figure>
+              </item>
+              <item>In the <term>branch menu</term>, click <q>Choose branch to merge into <hi style="font-weight:bold">main</hi></q>:
+                <figure>
+                  <graphic url="images/choose_branch_merge.png"/>
+                  <figDesc>Choose branch to merge menu</figDesc>
+                </figure>
+              </item>
+              <item>Click on <q>upstream/main</q>:
+                <figure>
+                  <graphic url="images/select_upstream_main.png"/>
+                  <figDesc>Select upstream/main</figDesc>
+                </figure>
+              </item>
+              <item>
+                Depending on whether your repository is up to date:
+                <list>
+                  <item>If there are no changes to merge (<q>This branch is up to date ...</q>), then you're done!</item>
+                  <item>If there are changes to merge (<q>This will merge x commits...</q>), then click <q>Merge upstream/main</q></item>
+                </list>
+              </item>
+            </list>
+        </div>
+        <div>
+          <head>Editing in oXygen</head>
+          <p>All work on the TEI documents should be done in oXygen. It is an incredibly powerful and useful tool for editing XML and there are a number of custom features and tools that will editing easier and more efficient.</p>
+          <p>When you open oXygen, make sure you see the <code>lim-data.xpr</code> project in the oXygen project pane (usually on the left-hand side):
+          <figure>
+            <graphic url="images/oxygen_splash.png"/>
+            <figDesc>Project pane</figDesc>
+          </figure>
+            oXygen remembers the last project you opened, so it will usually use the <code>lim-data</code> project file automatically. If, for whatever reason, you are not in the <code>lim-data</code> project, make sure to open the project file by going to <code>Project/Open Project</code> in the toolbar. You can use the Project pane to navigate through the project files; all of the TEI files are in the <code>data/</code> folder.
+          </p>
+          
+          <p>As you edit your TEI file in oXygen, it is imperative that you frequently and consistently <emph>validate</emph> your file. Invalidities in an oXygen are signalled much like spell-check: the invalid element is underlined in red and its location in the document is marked in the scrollbar.</p>
+            
+            <p>oXygen validates for you automatically as you type, but it might lag (especially for large or complex documents), so it is best practice to trigger validation manually as well, especially before committing your changes.</p>
+          
+          <p>To validate your document, you can either use the keyboard shortcut CMD+Shift+V (CMD = ⌘ on Mac) or click the red checkmark in the toolbar:
+            
+            <figure>
+              <graphic url="images/oxygen_validation_valid.png"/>
+              <figDesc>A valid document</figDesc>
+            </figure>
+            
+            Once the document finishes validating, there will be a message at the bottom of the screen stating whether validation was successful. If there are errors in your document and validation fails, you will see the red underlines and a info box at the bottom of the screen that outlines the precise errors.
+          
+          <figure>
+            <graphic url="images/oxygen_validation_errors.png"/>
+            <figDesc>Validation Errors</figDesc>
+          </figure>
+        Try your best to determine what the error is: the validation message usually provides a good indication of what the pfrom the validation message (some are more helpful than others); the problem is quite often something simple like a typo, an errant space at the beginning or end of an element, or a missing quotation mark.
+          </p>
+          <p>If you can't figure out the error, then it is OK to commit the file, but do let the team and the developers know right away so that the error can be resolved as soon as possible.</p>
+        </div>
         <div>
           <head>Committing Changes</head>
-          <p>Instructions for committing changes</p>
+          <p>After you've made a set of changes (i.e. before you take a break or before the end of your work day) and confirmed that they were valid, you need to commit those changes to the repository. To do that, navigate to GitHub Desktop, which should show you a list of changes that you've made:
+           <figure>
+             <graphic url="images/changes.png"/>
+             <figDesc>Changes in GitHub Desktop</figDesc>
+           </figure> 
+          </p>
+          <p>It is a good idea to review those changes to make sure everything looks right (i.e. all of the files that you actually changed are listed; there are no additional changes). (You may see that the <code>lim-data.xpr</code> oXygen project file has changed even though you didn't do anything to it—that's expected).</p>
+          <p>Assuming that everything looks correct, you can then commit those files by filling out the commit message boxes in the bottom left-hand corner:
+              <figure>
+                <graphic url="images/commit_box.png"/>
+                <figDesc>Commit box</figDesc>
+              </figure>
+            These commit messages are helpful for record keeping and for tracking changes to the files; note that these commit messages are both permanent and public. In the <code>Summary</code> field, add a brief description of what you've done (i.e. "Added index items for vol7"). If there is additional information you'd like to add, put a longer explanation in the <code>Description</code> box.
+          </p>
         </div>
-        <div>
-          <head>Pushing Changes</head>
-          <p>Instructions for pushing changes to the </p>
-        </div>
-        <div>
-          <head>Updating Your Local Copy</head>
-        </div>
+       
       </div>
+      
       <div>
         <head>Encoding the Index Volume (Volume 11)</head>
             <p>As the volume 11 contains the index for the other 10 volumes, the encoding for volume 11 is slightly different from a standard TEI encoding framework. The folder structure looks like so:
@@ -171,12 +242,12 @@
           
           <p>As an example, let's look at these four pages of the introduction from volume 11:
             <figure>
-              <graphic url="images/vol11_pg3.png"/>
+              <graphic url="images/vol11_pg3.jpg"/>
               <figDesc><ref target="https://digital.lib.sfu.ca/lyoninmourning-2642/%E2%80%98lyon-mourning%E2%80%99-bishop-robert-forbess-collection-jacobite-papers-index-volume">Volume 11, page 3.</ref></figDesc>
               
             </figure>
             <figure>
-              <graphic url="images/vol11_pg4.png"/>
+              <graphic url="images/vol11_pg4.jpg"/>
               <figDesc>
                 <ref target="https://digital.lib.sfu.ca/lyoninmourning-2641/%E2%80%98lyon-mourning%E2%80%99-bishop-robert-forbess-collection-jacobite-papers-index-volume">Volume 11, page 4.</ref>
               </figDesc>
