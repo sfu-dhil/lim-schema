@@ -286,16 +286,38 @@ Since the first paragraph of text extends across the page boundary, we place the
         
       </div>
       <div>
-        <head>Abbrevations and Corrections</head>
-        <p></p>
+        <head>Editorial Additions: Changing or Supplying Text</head>
+        <p>The following instructions apply to all editorial changes made to a text; this includes features like editorial notes, expanding abbreviations, correction of spelling, or supplying clarifying text.</p>
+        <div>
+          <head>Adding Editorial Notes</head>
+          <p>To add an editorial note, use the <gi>note</gi> tag with an <att>type</att>=<val>editorial</val>:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <note type="editorial">An editorially supplied note.</note>
+            </egXML>
+            The <att>type</att> is important here: it distinguishes the editorially supplied note from other notes and annotations made by Forbes or later editors.</p>
+        </div>
+        <div>
+          <head>Abbreviations and Expansions</head>
+          <p>Uncommon or unfamiliar abbreviations—like <mentioned>Revt</mentioned>—will often need to be expanded in order to provide clarity and to facilitate searching. To do so, first tag the abbreviation with the <gi>abbr</gi> element, then tag your expansion with an <gi>expan</gi>, and then wrap both in a <gi>choice</gi> element. For example:
+            
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <title>Letter from the <choice><abbr>Revt.</abbr><expan>Reverend</expan></choice> Mr. <persName>Lyon</persName></title>
+            </egXML>
+          </p>
+          <p>The <gi>choice</gi> element is known in TEI-speak as a <term>Janus</term> element: it always contains two elements—one original, and one editorially supplied.</p>
+        </div>
+        <div>
+          <head>Corrections</head>
+          <p>Correcting erronous text follows a similar protocol: use the <gi>sic</gi> element to tag the original error and a <gi>corr</gi> for the correction, wrapping both in a <gi>choice</gi>:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <choice><sic>acount</sic><corr>account</corr></choice>
+            </egXML>
+          </p>
+        </div>
       </div>
         <div>
           <head>People/Places/Organizations</head>
           <p>TODO: Determine how to encode people/places/organizations. VIAF? Geonames?</p>
-        </div>
-        <div>
-          <head>Emendations, Marginalia, and other Annotations</head>
-          <p>Instructions for encoding notes, labels, annotations, as well as deletions, additions.</p>
         </div>
         <div>
           <head>Editorial Decisions and Uncertainty</head>
