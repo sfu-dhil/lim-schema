@@ -80,8 +80,8 @@
             </list>
           
           </item>
-          
         </list>
+        <divGen xml:id="helpful_links_facs"/>
         
       </div>
       <div>
@@ -277,7 +277,6 @@ Since the first paragraph of text extends across the page boundary, we place the
                     <title>Speech of Mr. Theodore Deacon</title>
                     <num>37</num>
                   </item>
-                  
                 </egXML>
               </p>
             </div>
@@ -285,6 +284,10 @@ Since the first paragraph of text extends across the page boundary, we place the
           
         </div>
         
+      </div>
+      <div>
+        <head>Abbrevations and Corrections</head>
+        <p></p>
       </div>
         <div>
           <head>People/Places/Organizations</head>
@@ -298,128 +301,7 @@ Since the first paragraph of text extends across the page boundary, we place the
           <head>Editorial Decisions and Uncertainty</head>
           <p>How to add editorial notes, uncertainty, supplied, gaps.</p>
         </div>
-      
-      
-      <!--<div>
-        <head>Possible Approach</head>
-        <list rend="simple">
-          <item>Encoding starts with the eleventh volume since it is the index for the entire manuscript</item>
-          <item>The encoding for that volume would be fairly straightforward:
-            <list rend="simple">
-              <item>Each volume is a <gi>list</gi> with each index entry as an <gi>item</gi></item>
-              <item>The item should have a fairly simple structure; probably something like:
-              <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <item>
-                  <rs><!-\-Title of the item-\-></rs>
-                  <num><!-\-Page number-\-></num>
-                </item>
-              </egXML>
-              
-              We would not want to capture any of the source information here (i.e. not tagging the genre or medium of the piece). We may, however, want to start tagging people and places (or at least begin identifying the people, places, etc in the text.
-              </item>
-              <item>I'm not sure, though, whether or not we'd want to encode some corrections/expansions/etc in the title. We probably will want that information anyway, though, so we may do something like:
-                <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                  <item>
-                    <rs>Letter from the <choice><abbr>Revt.</abbr><expan>Reverend</expan></choice> Mr. Robert Lyon to his mother <choice><abbr>+</abbr><expan>and</expan></choice> Sisters</rs>
-                    <num>1</num>
-                  </item>
-                </egXML>
-                
-                If we start identifying pieces of information in the text, we want to do something like:
-                
-                <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                  <item>
-                    <rs>Letter from the <choice><abbr>Revt.</abbr><expan>Reverend</expan></choice> Mr. <persName key="Robert Lyon">Robert Lyon</persName> to his mother <choice><abbr>+</abbr><expan>and</expan></choice> Sisters</rs>
-                    <num>1</num>
-                  </item>
-                </egXML>
-                
-             If we used the <att>key</att> approach, then we could harvest all of the names/places <emph>after</emph> the index is encoded, which provides a basic structure for research later (i.e. we have all of the names and places, or the vast majority of them).
-                
-              </item>
-            </list>
-          
-          </item>
-          <item>Once the the eleventh volume is encoded, then the index is used to generate all of the constituent files in the volume. So each <gi>item</gi> becomes a file with each <gi>rs</gi> gaining a <att>target</att> that points to the new file.</item>
-          
-        </list>
-        
-        <p>For the rest of the volumes, we may want to have a structure where:
-          <list>
-            <item>Each volume has an index file named the same as the directory:
-                  <list rendition="#rnd_code">
-                    <item>vol1/
-                      <list>
-                        <item>vol1.xml</item>
-                      </list>
-                    </item>
-                  </list>
-            </item>
-            <item>The index file is a <gi>teiCorpus</gi> element that contains information about the facsimile and the metadata for the entire volume:
-            <egXML xmlns="http://www.tei-c.org/ns/Examples">
-              <teiCorpus xml:id="vol1">
-                <teiHeader>
-                  <fileDesc>
-                    <titleStmt>
-                      <title>The Lyon in Mourning Vol. 1</title>
-                      <!-\-More metadata-\->
-                    </titleStmt>
-                  </fileDesc>
-                  <!-\-Lots more metadata about the entire manuscript: provenance, editors, date of creation, etc-\->
-                </teiHeader>
-                <facsimile>
-                  <surface xml:id="vol1_0001">
-                    <graphic url="path/to/images/0001"/>
-                  </surface>
-                  <surface xml:id="vol1_0002">
-                    <graphic url="path/to/images/0002"/>
-                  </surface>
-                </facsimile>
-                <!-\-[...]-\->
-              </teiCorpus>
-            </egXML>
-              The suggestion to use a <gi>teiCorpus</gi> stems from the need for complex, structured metadata for each individual item, which is best done through the <gi>teiHeader</gi> (probably using the suite of elements contained in <gi>textDesc</gi> and/or taxonomies encoded using <gi>taxonomy</gi>, <gi>category</gi> and <gi>catRef</gi>).
-            </item>
-            
-          </list>
-        
-        </p>
-        
-      </div>
-      <div>
-        <head>Questions to work through</head>
-        <list>
-          <item>
-            <label>Best way to include the documents into the corpus?</label>
-            <p>We could use XIncludes: that would be a formal and broadly processable way of handling the structure (but it would mean that all of our schemas/processing/etc would need to know how to handle them properly; Saxon think it does, but it can be a bit messy or wrong). An alternative approach could be to use processing-instructions, which would be a custom solution.</p>
-            <p>Or, since the <gi>text</gi> element is allowed in <gi>teiCorpus</gi>, we could organize the information using text and structure it with pointers or something else:
-            <egXML xmlns="http://www.tei-c.org/ns/Examples">
-              <text>
-                <front>
-                  <linkGrp>
-                    <ptr target="foo.xml"/>
-                    <ptr target="bar.xml"/>
-                  </linkGrp>
-                </front>
-                <body>
-                  <linkGrp>
-                    <ptr target="baz.xml"/>
-                    <ptr target="blort.xml"/>
-                  </linkGrp>
-                </body>
-              </text>
-            </egXML>
-            That might the right way to do it, since that would basically provide the true TOC for that collection that better structures the corpus as a whole.
-            </p>
-          </item>
-          <item>
-            <label>How to Name Documents?</label>
-          </item>
-          <item>
-          </item>
-        </list>
-      </div>
-      -->
+     
     </body>
     <back>
       <div>
@@ -441,6 +323,27 @@ Since the first paragraph of text extends across the page boundary, we place the
               </attList>
           </elementSpec>
           
+          <elementSpec ident="rs" module="core" mode="change">
+            <attList>
+              <attDef ident="type" mode="change" usage="req">
+                <valList mode="change">
+                  <valItem mode="add" ident="person">
+                    <gloss>person</gloss>
+                    <desc>An indirect reference to a person (e.g. "his father"); use &lt;persName&gt; for direct references (i.e. "John Smith").</desc>
+                  </valItem>
+                  <valItem mode="add" ident="event">
+                    <gloss>event</gloss>
+                    <desc>An indirect reference to an event (e.g. "the day"); use &lt;name type="event"&gt; for direct references to events.</desc>
+                  </valItem>
+                  <valItem mode="add" ident="place">
+                    <gloss>place</gloss>
+                    <desc>An indirect reference to a place (e.g. "over there"); use &lt;placeName&gt; for direct references to places (i.e. "Edinburgh").</desc>
+                  </valItem>
+                </valList>
+              </attDef>
+            </attList>
+          </elementSpec>
+          
           <elementSpec ident="note" module="core" mode="change">
             <classes mode="change">
               <memberOf key="att.pointer" mode="delete"/>
@@ -450,7 +353,7 @@ Since the first paragraph of text extends across the page boundary, we place the
               <constraint>
                 <sch:pattern>
                   <sch:rule context="tei:note[@type='marginalia']">
-                    <sch:assert test="@place = ('left','right','above','below')">ERROR: All marginalia must have a place attribute with a value of left, right, above, or below.</sch:assert>
+                    <sch:assert test="@place">ERROR: All marginalia must have an @place.</sch:assert>
                   </sch:rule>
                 </sch:pattern>
               </constraint>
@@ -505,15 +408,44 @@ Since the first paragraph of text extends across the page boundary, we place the
 
           <moduleRef key="tei"/>
           
-    
+          <classSpec ident="att.anchoring" type="atts" module="tei"
+            mode="change">
+            <attList>
+              <attDef ident="targetEnd" mode="delete"/>
+            </attList>
+          </classSpec>
           <classSpec ident="att.breaking" type="atts" module="tei" 
             mode="delete"/>
-          <classSpec ident="att.declaring" module="tei" type="atts"
+          <classSpec ident="att.canonical" type="atts" module="tei"
+            mode="change">
+            <attList>
+              <attDef ident="key" mode="delete"/>
+            </attList>
+          </classSpec>
+          <classSpec ident="att.coordinated" type="atts" module="tei"
+            mode="delete"/>
+          <classSpec ident="att.cReferencing" module="tei" type="atts"
+            mode="delete"/>
+          <classSpec ident="att.damaged" type="atts" module="tei"
+            mode="change">
+            <attList>
+              <attDef ident="group" mode="delete"/>
+            </attList>
+          </classSpec>
+          <classSpec ident="att.datable.iso" module="tei" type="atts"
+            mode="delete"/>
+          <classSpec ident="att.declarable" module="tei" type="atts"
             mode="delete"/>
           <classSpec ident="att.divLike" module="tei" type="atts"
             mode="delete"/>
           <classSpec ident="att.edition" module="tei" type="atts"
             mode="delete"/>
+          <classSpec ident="att.editLike" module="tei" type="atts"
+            mode="change">
+            <attList>
+              <attDef ident="instant" mode="delete"/>
+            </attList>
+          </classSpec>
           <classSpec type="atts" ident="att.global.facs" mode="change">
             <!--Restrict the use of @facs to only allow lib:-->
             <attList>
@@ -573,10 +505,16 @@ Since the first paragraph of text extends across the page boundary, we place the
               </attDef>
             </attList>
           </classSpec>
-          <!--Remove spanning-->
-          <classSpec ident="att.spanning" module="tei" type="atts"
+          <classSpec ident="att.naming" module="tei" type="atts"
+          mode="change">
+            <attList>
+              <attDef ident="nymRef" mode="delete"/>
+            </attList>
+          </classSpec>
+          <classSpec ident="att.notated" module="tei" type="atts"
             mode="delete"/>
-          <!--Constraint place values-->
+          <classSpec ident="att.personal" module="tei" type="atts"
+            mode="delete"/>
           <classSpec ident="att.placement" module="tei" type="atts"
             mode="change">
             <attList>
@@ -602,6 +540,26 @@ Since the first paragraph of text extends across the page boundary, we place the
               </attDef>
             </attList>
           </classSpec>
+          <classSpec ident="att.pointing" module="tei" type="atts"
+            mode="change">
+            <attList>
+              <attDef ident="targetLang" mode="delete"/>
+              <attDef ident="evaluate" mode="delete"/>
+            </attList>
+          </classSpec>
+          <classSpec ident="att.pointing.group" mode="delete"
+            module="tei" type="atts"/>
+          <!--Remove spanning-->
+          <classSpec ident="att.spanning" module="tei" type="atts"
+            mode="delete"/>
+          <classSpec ident="att.sortable" module="tei" type="atts"
+            mode="delete"/>
+          <classSpec ident="att.timed" module="tei" type="atts"
+            mode="delete"/>
+          <classSpec ident="att.transcriptional"
+            module="tei" type="atts"
+            mode="delete"/>
+          
 
           
           
@@ -662,7 +620,7 @@ Since the first paragraph of text extends across the page boundary, we place the
               <desc>All pageNum formeworks must have an @place</desc>
               <constraint>
                 <sch:pattern>
-                  <sch:rule context="tei:fw[@type='pageNum']">
+                  <sch:rule context="tei:fw[@type=('pageNum', 'folioNum')]">
                     <sch:assert test="@place">ERROR: Missing required @place attribute for page number formework.</sch:assert>
                   </sch:rule>
                 </sch:pattern>
@@ -682,6 +640,10 @@ Since the first paragraph of text extends across the page boundary, we place the
                   <valItem ident="sig">
                     <gloss>signature</gloss>
                     <desc>A page signature, usually on the bottom center of the page.</desc>
+                  </valItem>
+                  <valItem ident="folioNum">
+                    <gloss>folio number</gloss>
+                    <desc>A folio number, usually written on the top left or right hand sides of a page.</desc>
                   </valItem>
                 </valList>
               </attDef>
@@ -727,7 +689,7 @@ Since the first paragraph of text extends across the page boundary, we place the
             <desc>Inline elements should not begin or end with spaces.</desc>
             <constraint>
               <sch:pattern>
-                <sch:rule context="tei:title | tei:num | tei:ref">
+                <sch:rule context="tei:title | tei:num | tei:ref | tei:rs | tei:placeName | tei:persName">
                   <sch:let name="text" value="string(.)"/>
                   <sch:assert test="not(matches($text, '^\s+|\s+$'))">
                     ERROR: <sch:name/> should not begin or end with spaces.

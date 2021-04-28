@@ -9,6 +9,7 @@
     xmlns:xd="https://www.oxygenxml.com/ns/doc/xsl"
     xmlns:xh="http://www.w3.org/1999/xhtml"
     xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+    xmlns:array="http://www.w3.org/2005/xpath-functions/array"
     xmlns:svg="http://www.w3.org/2000/svg"
     xmlns="http://www.w3.org/1999/xhtml"
     version="3.0">
@@ -37,6 +38,7 @@
     
     <xsl:param name="outDir"/>
     <xsl:param name="templateURI" select="'../assets/template.html'" as="xs:string"/>
+    <xsl:param name="facsJsonURI" select="'../assets/js/facs.json'" as="xs:string"/>
     
     
     <!--**************************************************************
@@ -62,6 +64,7 @@
     <xsl:variable name="chapters" select="$text/body/div" as="element(div)+"/>
     <xsl:variable name="appendixItems" select="$text/back//div[@xml:id]/div[@xml:id]" as="element(div)+"/>
     <xsl:variable name="tocIds" select="for $div in ($chapters, $appendixItems) return jt:getId($div)" as="xs:string+"/>
+    <xsl:variable name="facsArray" select="json-doc($facsJsonURI)" as="array(*)"/>
     
     <xsl:variable name="idMap" as="map(xs:string, xs:string+)">
         <xsl:map>
@@ -281,6 +284,36 @@
             <xsl:apply-templates select="node()" mode="#current"/>
         </div>
     </xsl:template>
+    
+    
+    <!-- Special divGen handling for creating facs blocks -->
+    <xsl:template match="divGen[@xml:id='helpful_links_facs']" mode="main">
+        <div class="img-gallery-ctr">
+            <h3>Facsimiles</h3>
+            <xsl:for-each select="1 to 11">
+                <xsl:variable name="volNum" select="."/>
+                <details>
+                    <summary>Volume <xsl:value-of select="$volNum"/></summary>
+                    <div class="img-gallery">
+                        <xsl:variable name="pages" select="array:get($facsArray, .)" as="array(*)"/>
+                        <xsl:for-each select="1 to array:size($pages)">
+                            <xsl:variable name="id" select="$pages(.) => xs:integer()" as="xs:integer"/>
+                            <xsl:variable name="objId" select="'lyoninmourning:' || $id"/>
+                            <xsl:variable name="objectUrl" select="'https://digital.lib.sfu.ca/islandora/object/' || encode-for-uri($objId)"/>
+                            <a class="img-gallery-item" href="{$objectUrl}" loading="lazy">
+                                <xsl:attribute name="target">_blank</xsl:attribute>
+                                <xsl:attribute name="rel">noopener noreferrer</xsl:attribute>
+                                <div>Page <xsl:value-of select="."/></div>
+                                <img data-src="{$objectUrl}/datastream/TN/view" width="165px" height="200px" alt="Lyon in Mourning, Vol {$volNum}, p. {$id}"/>
+                                
+                            </a>
+                        </xsl:for-each>
+                    </div>
+                </details>
+            </xsl:for-each>
+        </div>
+    </xsl:template>
+        
     
     <!--Headings-->
     

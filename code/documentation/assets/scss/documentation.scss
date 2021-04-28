@@ -30,6 +30,25 @@ h1{
   margin-top:0;
 }
 
+.img-gallery{
+    display:grid;
+    grid-template-columns: repeat( auto-fit, minmax(175px, 1fr));
+    grid-row-gap: 0.75rem;
+    grid-column-gap: 0.25rem;
+    & > a{
+        padding: 0.33rem;
+        margin: 0.125rem;
+        text-align:center;
+        border:1px solid #efefef;
+      div{
+          margin: 0.25rem 0;
+      }
+      img{
+          padding:0;
+      }
+    }
+}
+
 img{
   max-width:100%;
   margin:0 auto;
@@ -199,13 +218,37 @@ article > *{
 
 }
 
+
+
 article {
-    & > *:is(.table-container, code, pre){
+    & > *:is(.table-container, code, pre, .img-gallery-ctr){
         max-width:80rem;
         overflow-x:auto;
     }
     
 }
+
+details{
+    margin:0.5rem 0;
+    &[open]{
+        border:1px dashed #050505;
+        summary{
+            border:none;
+            border-bottom: 1px dashed #050505;
+        }
+    }
+}
+
+summary{
+    font-size: 1.25rem;
+    padding:1rem 0.5rem;
+    border: 1px dashed #050505;
+    background: #efefef;
+    cursor: pointer;
+    
+}
+
+
 
 
 
