@@ -15,7 +15,8 @@
           if (details.open){
            details.querySelectorAll('img').forEach(img => {
               img.src = img.getAttribute('data-src'); 
-           });   
+           });
+            details.classList.add('clicked');
           }
        });
     });

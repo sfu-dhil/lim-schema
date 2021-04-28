@@ -236,7 +236,13 @@ details{
             border:none;
             border-bottom: 1px dashed #050505;
         }
+        .img-gallery{
+            max-height: 50rem;
+            resize:vertical;
+            overflow-y:auto;
+        }
     }
+    
 }
 
 summary{
