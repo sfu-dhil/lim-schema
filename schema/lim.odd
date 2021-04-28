@@ -36,7 +36,16 @@
           <p>Resolves links to SFU's Islandora collection for the Lyon in Mourning page images.</p>
         </prefixDef>
         <prefixDef ident="lib" matchPattern="(\d+)" replacementPattern="#sfu_pg_$1">
-          <p>Resolve links from a page in a volume to a facsimile element.</p>
+          <p>Resolves links from a page in a volume to a facsimile element.</p>
+        </prefixDef>
+        <prefixDef ident="prs" matchPattern="(.+)" replacementPattern="people.xml#$1">
+          <p>Resolves links to a person to the personography.</p>
+        </prefixDef>
+        <prefixDef ident="plc" matchPattern="(.+)" replacementPattern="places.xml#$1">
+          <p>Resolves links to a place to the geography.</p>
+        </prefixDef>
+        <prefixDef ident="obj" matchPattern="(.+)" replacementPattern="objects.xml#$1">
+          <p>Resolves links to an object to the object database.</p>
         </prefixDef>
       </listPrefixDef>
     </encodingDesc>
@@ -432,6 +441,10 @@ Since the first paragraph of text extends across the page boundary, we place the
                     <gloss>place</gloss>
                     <desc>An indirect reference to a place (e.g. "over there"); use &lt;placeName&gt; for direct references to places (i.e. "Edinburgh").</desc>
                   </valItem>
+                  <valItem mode="add" ident="object">
+                    <gloss>object</gloss>
+                    <desc>An indirect reference to an object (e.g. "that thing"); use &lt;name type='object' for direct references to objects (i.e. "Excalibur").</desc>
+                  </valItem>
                 </valList>
               </attDef>
             </attList>
@@ -497,6 +510,30 @@ Since the first paragraph of text extends across the page boundary, we place the
 
           
           <moduleRef key="namesdates" include="addName birth death faith floruit forename genName langKnowledge langKnown listOrg listPerson listPlace location nameLink nationality occupation org orgName persName person persona place placeName residence roleName surname"/>
+          
+          <elementSpec ident="persName" module="namesdates" mode="change">
+             <constraintSpec ident="persName.mustHaveRefWithPrs" mode="add" scheme="schematron">
+               <desc>All inline persNames must have a ref that points to the personography db.</desc>
+               <constraint>
+                 <!--TODO: Remove @ref once feasible-->
+                 <sch:rule context="tei:persName[not(parent::tei:person)][@ref]">
+                   <sch:assert test="matches(@ref,'^prs:\d+')">ERROR: All persName pointers must have an @ref that begins with "prs:" and ends with a digit.</sch:assert>
+                 </sch:rule>
+               </constraint>
+             </constraintSpec>
+          </elementSpec>
+          
+          <elementSpec ident="placeName" module="namesdates" mode="change">
+            <constraintSpec ident="placeName.mustHaveRefWithPlc" mode="add" scheme="schematron">
+              <desc>All inline placeNames must have a ref that points to the place db.</desc>
+              <constraint>
+                <!--TODO: Remove @ref once feasible-->
+                <sch:rule context="tei:placeName[not(parent::tei:place)][@ref]">
+                  <sch:assert test="matches(@ref,'^plc:\d+')">ERROR: All placeName pointers must have an @ref that begins with "plc:" and ends with a digit.</sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+          </elementSpec>
 
 
           <moduleRef key="tei"/>
