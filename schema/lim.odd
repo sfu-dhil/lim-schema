@@ -58,22 +58,6 @@
       </div>
     </front>
     <body>
-<!--     <div>
-       <head>Schedule and Plans</head>
-       <list rend="ordered">
-         <item>Encode the index volume:
-          <list>
-            <item>Each volume gets its own TEI file</item>
-            <item>Each index item is encoded with people and places stored in a shared GDrive spreadsheet</item>
-            <item>Once the index is encoded, each index item is converted into its own file in its respective directory</item>
-            <item>The spreadsheets are converted into TEI -ography files </item>
-          </list>
-         
-         </item>
-         
-         
-       </list>
-     </div>-->
       <div>
         <head>Helpful Links</head>
         <list>
@@ -81,13 +65,35 @@
           <item><ref target="https://docs.github.com/en/desktop">GitHub Desktop Documentation</ref></item>
           
           <item><ref target="https://tei-c.org/guidelines/">TEI Guidelines</ref></item>
-          
-          <item>Volume 1:
+          <item>Paton Edition:
+            
             <list>
-              <item><ref target="https://www.gutenberg.org/files/43222/43222-h/43222-h.htm">Project Gutenberg</ref></item>
-              <item><ref target="https://view.nls.uk/mirador/125649979">NLS</ref></item>
+              <item>Volume 1
+                <list>
+                  <item><ref target="https://www.gutenberg.org/files/43222/43222-h/43222-h.htm">Full Text Transcription (Project Gutenberg)</ref></item>
+                  <item>
+                    <ref target="https://digital.nls.uk/print/transcriptions/lyon/vol1/index.html">Indexed PDF (NLS)</ref>
+                  </item>
+                  <item><ref target="https://view.nls.uk/mirador/125649979">Zoomable Book Viewer (NLS)</ref></item>
+                </list>
+              
+              </item>
+              <item>Volume 2:
+                <list>
+                  <item>
+                    <ref target="https://digital.nls.uk/print/transcriptions/lyon/vol2/index.html">Indexed PDF (NLS)</ref>
+                  </item>
+                </list>
+              
+              </item>
+              <item>Volume 3:
+              <list>
+                <item>
+                  <ref target="https://digital.nls.uk/print/transcriptions/lyon/vol3/index.html">Indexed PDF (NLS)</ref>
+                </item>
+              </list>
+              </item>
             </list>
-          
           </item>
         </list>
         <divGen xml:id="helpful_links_facs"/>
@@ -386,6 +392,7 @@ Since the first paragraph of text extends across the page boundary, we place the
           </p>
           <p>The <gi>choice</gi> element is known in TEI-speak as a <term>Janus</term> element: it always contains two elements—one original, and one editorially supplied.</p>
         </div>
+        
         <div>
           <head>Corrections</head>
           <p>Correcting erronous text follows a similar protocol: use the <gi>sic</gi> element to tag the original error and a <gi>corr</gi> for the correction, wrapping both in a <gi>choice</gi>:
@@ -394,15 +401,125 @@ Since the first paragraph of text extends across the page boundary, we place the
             </egXML>
           </p>
         </div>
+        <div>
+          <head>Uncertainty</head>
+          <p>If you are uncertain about either an expansion or a correction, use the <att>cert</att> attribute with a value of "low", "medium", or "high" to flag uncertainty about your editorial emendation:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <choice><sic>acount</sic><corr cert="low">a count</corr></choice>
+          </egXML>
+          </p>
+        </div>
       </div>
+      <div>
+        <head>Tagging People, Places, etc in Transcriptions</head>
+        <p>Note: Currently, we use a Google Spreadsheet to record basic information about people and places (the "database"); this is a temporary stop-gap until vol11 is encoded.</p>
+        <p>People, places, and other <term>named entities</term> are tagged in a similar fashion: each name is tagged using a distinguishing tag with an <att>ref</att> attribute that points to the associated id. They also share a set of common rules:
+        <list>
+          <item>They must not begin or end with spaces</item>
+          <item>They must use the <att>ref</att> to refer to the entity's record</item>
+          <item>They can contain phrase- and word-level elements (i.e. <gi>choice</gi>, <gi>add</gi>, <gi>supplied</gi>, etc)</item>
+          <item>They cannot nest: i.e. do not put a <gi>placeName</gi> inside of a <gi>persName</gi>.</item>
+        </list>
+        </p>
         <div>
-          <head>People/Places/Organizations</head>
-          <p>TODO: Determine how to encode people/places/organizations. VIAF? Geonames?</p>
+          <head>People</head>
+          <p>Direct references to people should be tagged using the <gi>persName</gi> element that uses the <att>ref</att> attribute to point to the person's id using the special <val>prs:</val> prefix. For instance:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <persName ref="prs:1">Mr. Lyon</persName>
+          </egXML>
+            Where <val>prs:1</val> refers to the person's id in the person database/spreadsheet. 
+            
+          </p>
+          <p>As mentioned above, personal names should include any honourifics or titles, which may be editorially expanded:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <persName ref="prs:1"><choice><abbr>Revt.</abbr><expan>Reverend</expan></choice> Mr. Lyon</persName>
+          </egXML>
+          </p>
+          <p>Do not use <gi>persName</gi> to tag <term>indirect</term> references to people—e.g. <q>The King</q>; <q>His mother</q>; <q>That Guy</q>—as these are not personal names, but references to a person. In these cases, instead of <gi>persName</gi>, use the <gi>rs</gi> (referring string) element with <att>type</att>=<val>person</val> alongside the <att>ref</att> attribute that points to the person. For instance:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <rs type="person" ref="prs:3">his mother</rs>
+          </egXML>
+          </p>
+          <p>Groups of people that are not organizations (i.e. Parliament) or anonymous groups (the audience) can be tagged as if they are a single person:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <rs type="person" ref="prs:4">Sisters</rs>
+            </egXML>
+          </p>
+          <p>The above examples all derive from the first item of vol11_vol1; here is what it looks in its entirety:
+           <egXML xmlns="http://www.tei-c.org/ns/Examples">
+             <title>Letter from the <persName ref="prs:1"><choice><abbr>Revt.</abbr><expan>Reverend</expan></choice> Mr. <persName>Lyon</persName></persName> to <rs type="person" ref="prs:3">his mother</rs> <choice><abbr>+</abbr><expan>and</expan></choice> <rs type="person" ref="prs:4">Sisters</rs></title>
+           </egXML>
+          </p>
         </div>
         <div>
-          <head>Editorial Decisions and Uncertainty</head>
-          <p>How to add editorial notes, uncertainty, supplied, gaps.</p>
+          <head>Places</head>
+          <p>See summary below.</p>
         </div>
+        <div>
+          <head>Events</head>
+          <p>TODO</p>
+        </div>
+        <div>
+          <head>Objects</head>
+          <p>TODO</p>
+        </div>
+        <div>
+          <head>Summary</head>
+          <table>
+            <row role="label">
+              <cell>Type</cell>
+              <cell>Direct Reference</cell>
+              <cell>Indirect Reference</cell>
+              <cell><att>ref</att> prefix</cell>
+            </row>
+            <row role="data">
+              <cell>person</cell>
+              <cell><gi>persName</gi></cell>
+              <cell>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <rs type="person" ref="prs:3">his mother</rs>
+                </egXML>
+              </cell>
+              <cell><val>prs:</val></cell>
+            </row>
+            <row role="data">
+              <cell>place</cell>
+              <cell><gi>placeName</gi></cell>
+              <cell>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <!--This is made up-->
+                  <rs type="place" ref="plc:4">across the field</rs>
+                </egXML>
+              </cell>
+              <cell><val>plc:</val></cell>
+            </row>
+            <row role="data">
+              <cell>event</cell>
+              <cell>
+                <!--TODO-->
+              </cell>
+              <cell>
+                <!--TODO-->
+              </cell>
+              <cell>
+                <!--TODO-->
+              </cell>
+            </row>
+            <row role="data">
+              <cell>object</cell>
+              <cell>
+                <!--TODO-->
+              </cell>
+              <cell>
+                <!--TODO-->
+              </cell>
+              <cell>
+                <!--TODO-->
+              </cell>
+            </row>
+          </table>
+        </div>
+      </div>
      
     </body>
     <back>
@@ -412,6 +529,40 @@ Since the first paragraph of text extends across the page boundary, we place the
           
           <!--CORE-->
           <moduleRef key="core" include="abbr author bibl choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note num orig p pb ptr pubPlace publisher quote ref reg resp respStmt rs sic term title unclear"/>
+          
+          <elementSpec ident="abbr" module="core" mode="change">
+            <classes mode="change">
+              <!--Remove from pPart.editorial, since it should only be in <choice>-->
+              <memberOf key="model.pPart.editorial" mode="delete"/>
+              <!--Add cert and resp-->
+              <memberOf key="att.global.responsibility" mode="add"/>
+            </classes>
+          </elementSpec>
+          <elementSpec ident="expan" module="core" mode="change">
+            <classes mode="change">
+              <!--Remove from pPart.editorial, since it should only be in <choice>-->
+              <memberOf key="model.pPart.editorial" mode="delete"/>
+              <!--Add cert and resp-->
+              <memberOf key="att.global.responsibility" mode="add"/>
+            </classes>
+          </elementSpec>
+          <elementSpec ident="sic" module="core" mode="change">
+            <classes mode="change">
+              <!--Remove from pPart.transcriptional, since it should only be in <choice>-->
+              <memberOf key="model.pPart.transcriptional" mode="delete"/>
+              <!--Add cert and resp-->
+              <memberOf key="att.global.responsibility" mode="add"/>
+            </classes>
+          </elementSpec>
+          <elementSpec ident="corr" module="core" mode="change">
+            <classes mode="change">
+              <!--Remove from pPart.transcriptional, since it should only be in <choice>-->
+              <memberOf key="model.pPart.transcriptional" mode="delete"/>
+              <!--Add cert and resp-->
+              <memberOf key="att.global.responsibility" mode="add"/>
+            </classes>
+          </elementSpec>
+          
           
           <elementSpec ident="pb" module="core" mode="change">
               <classes mode="change">
@@ -443,7 +594,34 @@ Since the first paragraph of text extends across the page boundary, we place the
                   </valItem>
                   <valItem mode="add" ident="object">
                     <gloss>object</gloss>
-                    <desc>An indirect reference to an object (e.g. "that thing"); use &lt;name type='object' for direct references to objects (i.e. "Excalibur").</desc>
+                    <desc>An indirect reference to an object (e.g. "that thing"); use &lt;name type="object"&gt; for direct references to objects (i.e. "Excalibur").</desc>
+                  </valItem>
+                </valList>
+              </attDef>
+            </attList>
+          </elementSpec>
+          
+          <elementSpec ident="name" module="core" mode="change">
+            <constraintSpec ident="name.notForPeopleOrPlaces" mode="change" scheme="schematron">
+              <desc>Name should only be used if there isn't a more specific element.</desc>
+              <constraint>
+                <!--TODO: Remove @ref once feasible-->
+                <sch:rule context="tei:name[@ref]">
+                  <sch:assert test="not(matches(@ref,'^prs:\d+'))">ERROR: Use &lt;persName&gt; to tag names of people.</sch:assert>
+                  <sch:assert test="not(matches(@ref,'^plc:\d+'))">ERROR: Use &lt;placeName&gt; to tag names of places.</sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+            <attList>
+              <attDef ident="type" mode="change" usage="req">
+                <valList type="closed" mode="add">
+                  <valItem ident="event" mode="add">
+                    <gloss>event</gloss>
+                    <desc>The name of an event (e.g. "The Battle of Prestonpans")</desc>
+                  </valItem>
+                  <valItem ident="object" mode="add">
+                    <gloss>object</gloss>
+                    <desc>The name of an object (e.g. "Excalibur")</desc>
                   </valItem>
                 </valList>
               </attDef>
@@ -546,12 +724,13 @@ Since the first paragraph of text extends across the page boundary, we place the
           </classSpec>
           <classSpec ident="att.breaking" type="atts" module="tei" 
             mode="delete"/>
-          <classSpec ident="att.canonical" type="atts" module="tei"
+          <!--We'll retain key for the time being, but remove ASAP-->
+<!--          <classSpec ident="att.canonical" type="atts" module="tei"
             mode="change">
             <attList>
               <attDef ident="key" mode="delete"/>
             </attList>
-          </classSpec>
+          </classSpec>-->
           <classSpec ident="att.coordinated" type="atts" module="tei"
             mode="delete"/>
           <classSpec ident="att.cReferencing" module="tei" type="atts"
@@ -643,8 +822,12 @@ Since the first paragraph of text extends across the page boundary, we place the
           </classSpec>
           <classSpec ident="att.notated" module="tei" type="atts"
             mode="delete"/>
-          <classSpec ident="att.personal" module="tei" type="atts"
-            mode="delete"/>
+          <classSpec ident="att.personal" module="tei" type="atts" mode="change">
+            <attList>
+              <attDef ident="full" mode="delete"/>
+              <attDef ident="sort" mode="delete"/>
+            </attList>
+          </classSpec>
           <classSpec ident="att.placement" module="tei" type="atts"
             mode="change">
             <attList>
@@ -686,6 +869,13 @@ Since the first paragraph of text extends across the page boundary, we place the
             mode="delete"/>
           <classSpec ident="att.timed" module="tei" type="atts"
             mode="delete"/>
+          <classSpec ident="att.typed" module="tei" type="atts" mode="change">
+            <attList>
+              <!--Remove subtype for now-->
+              <attDef ident="subtype" mode="delete"/>
+            </attList>
+            
+          </classSpec>
           <classSpec ident="att.transcriptional"
             module="tei" type="atts"
             mode="delete"/>
@@ -738,13 +928,13 @@ Since the first paragraph of text extends across the page boundary, we place the
                 </sch:pattern>
               </constraint>
             </constraintSpec>
-            
           </elementSpec>
           
           
           
           <moduleRef key="transcr"
             include="damage facsimile fw handNotes handShift supplied surface surfaceGrp zone"/>
+          
           <elementSpec ident="fw" module="transcr" mode="change">
             <constraintSpec ident="fw.pageNum.mustHavePlace" scheme="schematron">
               <desc>All pageNum formeworks must have an @place</desc>
