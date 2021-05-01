@@ -923,7 +923,7 @@ Since the first paragraph of text extends across the page boundary, we place the
                 <sch:pattern>
                   <sch:rule context="tei:div[@type='index']/tei:list/tei:item">
                     <sch:assert test="count(tei:num) = 1">ERROR: All index items must contain one num element.</sch:assert>
-                    <sch:assert test="count(tei:title) = 1">ERROR: All index items must contain one title element.</sch:assert>
+                    <sch:assert test="count(descendant::tei:title) gt 0">ERROR: All index items must contain at least one title element.</sch:assert>
                   </sch:rule>
                 </sch:pattern>
               </constraint>
