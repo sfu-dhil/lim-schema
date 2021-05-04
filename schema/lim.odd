@@ -252,6 +252,104 @@
               </egXML>
             </p>
         <div>
+          <head>Index and Page Numbers</head>
+          <table>
+            <row role="label">
+              <cell>Volume</cell>
+              <cell>Library</cell>
+              <cell>Steuart page</cell>
+              <cell>NLS folio</cell>
+              <cell>Note</cell>
+              <cell>Forbes</cell>
+              <cell>Paton</cell>
+            </row>
+            <row>
+              <cell>Volume 2</cell>
+              <cell>Library 13</cell>
+              <cell>Steuart 3</cell>
+              <cell>NLS 5</cell>
+              <cell>at top of page</cell>
+              <cell>Forbes 199</cell>
+              <cell>Paton 1:113</cell>
+   
+            </row>
+            <row>
+              <cell>Volume 3</cell>
+              <cell>Library 15</cell>
+              <cell>Steuart 4</cell>
+              <cell>NLS 6</cell>
+              <cell>half way down page</cell>
+              <cell>Forbes 381</cell>
+              <cell>Paton 1:210</cell>
+         
+            </row>
+            <row>
+              <cell>Volume 4</cell>
+              <cell>Library 23</cell>
+              <cell>Steuart 8</cell>
+              <cell>NLS 10</cell>
+              <cell>halfway down page</cell>
+              <cell>Forbes 625</cell>
+              <cell>Paton 1:344</cell>
+            </row>
+            <row>
+              <cell>Volume 5</cell>
+              <cell>Library 31</cell>
+              <cell>Steuart 12</cell>
+              <cell>NLS 15</cell>
+              <cell>halfway down page but no note</cell>
+              <cell>Forbes 869</cell>
+              <cell>Paton 2:76</cell>
+            </row>
+            <row>
+              <cell>Volume 6</cell>
+              <cell>Library 39</cell>
+              <cell>Steuart 16</cell>
+              <cell>NLS 18</cell>
+              <cell>halfway down page but no note</cell>
+              <cell>Forbes 1113</cell>
+              <cell>Paton 2:200</cell>
+            </row>
+            <row>
+              <cell>Volume 7</cell>
+              <cell>Library 53</cell>
+              <cell>Steuart 23</cell>
+              <cell>NLS 25</cell>
+              <cell>three from the top but no note</cell>
+              <cell>Forbes 1357</cell>
+              <cell>Paton 2:320</cell>
+            </row>
+            <row>
+              <cell>Volume 8</cell>
+              <cell>Library 67</cell>
+              <cell>Steuart 29</cell>
+              <cell>NLS 32</cell>
+              <cell>three from the top but no note</cell>
+              <cell>Forbes 1599</cell>
+              <cell>Paton 3:65</cell>
+            </row>
+            <row>
+              <cell>Volume 9</cell>
+              <cell>Library 77</cell>
+              <cell>Steuart 34</cell>
+              <cell>NLS 37</cell>
+              <cell>1/2 way down page but no note</cell>
+              <cell>Forbes 1841</cell>
+              <cell>Paton 3:188 </cell>
+            </row>
+            <row>
+              <cell>Volume 10</cell>
+              <cell>Library 105</cell>
+              <cell>Steuart 48</cell>
+              <cell>NLS 51</cell>
+              <cell>1/2 way down page but no note</cell>
+              <cell>Forbes 3015</cell>
+              <cell>Paton 3:356</cell>
+            </row>
+          </table>
+        </div>
+        
+        <div>
           <head>Encoding pages</head>
           <p>Use a self-closing (i.e. empty) <gi>pb</gi> element to denote the <emph>start</emph> of a new <emph>physical</emph> page in the manuscript. In most cases, the <gi>pb</gi> element should go exactly where it happens in flow of the text.</p>
           
@@ -334,6 +432,7 @@ Since the first paragraph of text extends across the page boundary, we place the
                 
                 <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <list>
+                    <lb/>
                     <item>
                       <!--Encoding of the title simplified for demonstrative purposes...-->
                       <title>Letter from the Revt. Mr. Lyon to his mother + Sisters</title>
@@ -342,6 +441,30 @@ Since the first paragraph of text extends across the page boundary, we place the
                   </list>
                 </egXML>
                 Note that we do not encode information about the separating line between the page number and the title.
+              </p>
+            </div>
+            <div>
+              <head>Line Beginnings</head>
+              <p>All line beginnings must be encoded using the <gi>lb</gi> element; always include the <gi>lb</gi> precisely where the line <emph>begins</emph>. (Note that there is no equivalent <soCalled>line ending</soCalled> tag.)</p>
+              <p>Since XML collapses all whitespace to a single space, it is not imperative that the line beginning is preceded or followed by a carriage return or a space. For consistency's sake, however, the project recommends placing a hard return <emph>before</emph> the line beginning tag and placing no spaces after the <gi>lb</gi>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <!--Note that the lb goes before the block element-->
+                  <lb/>
+                  <p>Here is a 
+                  <lb/>the second line and then the
+                  <lb/>third line.</p>
+                </egXML>
+              </p>
+              <p>Line beginnings preceded by a piece of punctuation to denote end-of-line hyphens (or, in the case of Steuart, colons) require a bit of special tagging:
+              <list>
+                <item>Encode the punctuation using the <gi>pc</gi> element with a <att>force</att>=<val>weak</val></item>
+                <item>Do not put any spaces before or after the <gi>lb</gi></item>
+              </list>
+                For example:
+              <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                <title>Copy of a Letter from <persName ref="prs:16"><choice><abbr>Captn.</abbr><expan>Captain</expan></choice> Malcolm Mac<pc force="weak">;</pc><lb/>Leod</persName>
+                </title>
+              </egXML>
               </p>
             </div>
             <div>
@@ -371,8 +494,9 @@ Since the first paragraph of text extends across the page boundary, we place the
         </div>
         
       </div>
+      
       <div>
-        <head>Editorial Additions: Changing or Supplying Text</head>
+        <head>Transcribing and Editing</head>
         <p>The following instructions apply to all editorial changes made to a text; this includes features like editorial notes, expanding abbreviations, correction of spelling, or supplying clarifying text.</p>
         <div>
           <head>Adding Editorial Notes</head>
@@ -407,6 +531,42 @@ Since the first paragraph of text extends across the page boundary, we place the
           <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <choice><sic>acount</sic><corr cert="low">a count</corr></choice>
           </egXML>
+          </p>
+        </div>
+        <div>
+          <head>Unclear Text</head>
+          <p>Tag text that you are unable to transcribe text that is partially obscured for some reason (illegible writing, scan is missing or incompletel, external damage like ink smudges, etc) using the <gi>unclear</gi> element:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <unclear>MacDonald</unclear>
+            </egXML>
+            If you'd like to expand on what is unclear, or possible other readings, then add a note beside the <gi>unclear</gi> using the <gi>note</gi> element with <att>type</att>=<val>editorial</val>
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <unclear>MacDonald</unclear><note type="editorial">Quite likely MacDonald, but could also be McDonald.</note>
+            </egXML>
+          </p>
+          <p>If you are unable to transcribe the text at all or the text has been removed completely (i.e. the page is burnt; the text is cut off in the facsimile), use the <gi>gap</gi> element with an explanatory <gi>desc</gi>:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <gap><desc>First six words illegible due to scan.</desc></gap>
+          </egXML>
+          </p>
+        </div>
+        <div>
+          <head>Deletions</head>
+          <p>Tag text that has been marked for deleting using the <gi>del</gi> element:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <title>Written in <del>in</del> April</title>
+          </egXML>
+            If the deletion has obscured the text such that it makes the text difficult (but not impossible) to transcribe, nest the <gi>unclear</gi> tag within the <gi>del</gi>; as above, add an editorial note if warrants further explanation or clarification is needed (note, however, that the <gi>note</gi> is beside the <gi>del</gi> element):
+            
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <title>While I pondered weak and <del><unclear>wary</unclear></del><note type="editorial">Possibly <mentioned>weary</mentioned>.</note></title>
+            </egXML>
+          </p>
+          <p>If the text is rendered completely illegible, then use a <gi>gap</gi> element with an explanatory <gi>desc</gi> within the <gi>del</gi>:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <title>While I pondered weak and <del><gap><desc>Illegible</desc></gap></del></title>
+            </egXML>
+          
           </p>
         </div>
       </div>
@@ -527,6 +687,37 @@ Since the first paragraph of text extends across the page boundary, we place the
         <head>Appendix</head>
         <schemaSpec ident="lim" start="TEI div person">
           
+          <!--ANALYSIS-->
+          <moduleRef key="analysis" include="pc"/>
+          <elementSpec ident="pc" mode="change" module="analysis">
+            <!--Remove all other attributes-->
+            <classes mode="change">
+              <memberOf key="att.global" mode="delete"/>
+              <memberOf key="att.segLike" mode="delete"/>
+              <memberOf key="att.typed" mode="delete"/>
+            </classes>
+            <content>
+              <textNode/>
+            </content>
+            <constraintSpec ident="pc.onlyPunct" scheme="schematron"
+              mode="add">
+              <desc>Only punctuation in pc.</desc>
+              <constraint>
+                <!--TODO: Remove @ref once feasible-->
+                <sch:rule context="tei:pc">
+                  <sch:assert test="matches(text(),'^\p{P}$')">ERROR: Only a single punctuation character is allowed in pc</sch:assert>
+                  <sch:assert test="following-sibling::node()[1][self::tei:lb]">ERROR: All pc elements must be followed immediately by an lb element.</sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+            <attList>
+              <attDef ident="unit" mode="delete"/>
+              <attDef ident="pre" mode="delete"/>
+              <attDef ident="force" mode="change" usage="req"/>
+            </attList>
+          </elementSpec>
+          
+          
           <!--CORE-->
           <moduleRef key="core" include="abbr author bibl choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note num orig p pb ptr pubPlace publisher quote ref reg resp respStmt rs sic term title unclear"/>
           
@@ -563,6 +754,15 @@ Since the first paragraph of text extends across the page boundary, we place the
             </classes>
           </elementSpec>
           
+          <elementSpec ident="lb" module="core" mode="change">
+            <constraintSpec ident="lb.noSpaces" scheme="schematron">
+              <constraint>
+                <sch:rule context="tei:lb[preceding-sibling::node()[1][self::tei:pc]]">
+                 <sch:assert test="matches(following::text()[1],'^\S')">ERROR: All punctuation separated words in lines should not have any spaces after the line beginning element.</sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+          </elementSpec>
           
           <elementSpec ident="pb" module="core" mode="change">
               <classes mode="change">
@@ -668,7 +868,7 @@ Since the first paragraph of text extends across the page boundary, we place the
               </attList>
           </elementSpec>
           
-          
+
           
           <!--Not sure we need anything from corpus: check proposal-->
           <!--<moduleRef key="corpus"/>-->
@@ -743,7 +943,11 @@ Since the first paragraph of text extends across the page boundary, we place the
           </classSpec>
           <classSpec ident="att.datable.iso" module="tei" type="atts"
             mode="delete"/>
+          <classSpec ident="att.datcat" module="tei"
+            type="atts" mode="delete"/>
           <classSpec ident="att.declarable" module="tei" type="atts"
+            mode="delete"/>
+          <classSpec ident="att.declaring" module="tei" type="atts"
             mode="delete"/>
           <classSpec ident="att.divLike" module="tei" type="atts"
             mode="delete"/>
@@ -814,6 +1018,8 @@ Since the first paragraph of text extends across the page boundary, we place the
               </attDef>
             </attList>
           </classSpec>
+          <classSpec ident="att.linguistic" module="analysis"
+            type="atts" mode="delete"/> 
           <classSpec ident="att.naming" module="tei" type="atts"
           mode="change">
             <attList>
@@ -862,6 +1068,12 @@ Since the first paragraph of text extends across the page boundary, we place the
           </classSpec>
           <classSpec ident="att.pointing.group" mode="delete"
             module="tei" type="atts"/>
+          <classSpec ident="att.segLike" module="tei" mode="change" type="atts">
+            <attList>
+              <attDef ident="function" mode="delete"/>
+            </attList>
+          </classSpec>
+          
           <!--Remove spanning-->
           <classSpec ident="att.spanning" module="tei" type="atts"
             mode="delete"/>
@@ -879,6 +1091,54 @@ Since the first paragraph of text extends across the page boundary, we place the
           <classSpec ident="att.transcriptional"
             module="tei" type="atts"
             mode="delete"/>
+          
+          
+          <!--DATA SPECS-->
+          <dataSpec module="tei" ident="teidata.language" mode="change">
+            <content>
+              <alternate>
+                <dataRef name="language"/>
+                <!--Add the subset of languages we know we might use
+                  so far-->
+                <valList mode="add" type="semi">
+                  <valItem ident="la">
+                    <desc>la</desc>
+                    <gloss>Latin</gloss>
+                  </valItem>
+                  <valItem ident="en">
+                    <desc>en</desc>
+                    <gloss>English</gloss>
+                  </valItem>
+                  <valItem ident="fr">
+                    <desc>fr</desc>
+                    <gloss>French</gloss>
+                  </valItem>
+                  <valItem ident="gr">
+                    <desc>gr</desc>
+                    <gloss>Greek</gloss>
+                  </valItem>
+                  <valItem ident="ga">
+                    <desc>ga</desc>
+                    <gloss>Irish</gloss>
+                  </valItem>
+                  <valItem ident="gd">
+                    <desc>gd</desc>
+                    <gloss>Scottish Gaelic</gloss>
+                  </valItem>
+                  <valItem ident="de">
+                    <desc>de</desc>
+                    <gloss>German</gloss>
+                  </valItem>
+                  <valItem ident="es">
+                    <desc>es</desc>
+                    <gloss>Spanish</gloss>
+                  </valItem>
+                  
+                </valList>
+              </alternate>
+            </content>
+            
+          </dataSpec>
           
 
           
