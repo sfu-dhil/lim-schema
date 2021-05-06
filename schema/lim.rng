@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2021-05-04T00:16:24Z. .
+Schema generated from ODD source 2021-05-06T02:34:32Z. .
 TEI Edition: Version 3.6.0. Last updated on
 	16th July 2019, revision daa3cc0b9
 TEI Edition Location: http://www.tei-c.org/Vault/P5/Version 3.6.0/
@@ -5519,7 +5519,7 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:math="http://www.w3.org/1998/Math/MathML"
                 xmlns="http://www.tei-c.org/ns/1.0">
-      <sch:rule context="tei:title | tei:num | tei:ref | tei:rs | tei:placeName | tei:persName">
+      <sch:rule context="tei:title | tei:num | tei:ref | tei:rs | tei:placeName[not(parent::tei:place)] | tei:persName[not(parent::tei:person)]">
          <sch:let name="text" value="string(.)"/>
          <sch:assert test="not(matches($text, '^\s+|\s+$'))">
                     ERROR: <sch:name/> should not begin or end with spaces.

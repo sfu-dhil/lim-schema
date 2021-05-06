@@ -1269,7 +1269,7 @@ Since the first paragraph of text extends across the page boundary, we place the
             <desc>Inline elements should not begin or end with spaces.</desc>
             <constraint>
               <sch:pattern>
-                <sch:rule context="tei:title | tei:num | tei:ref | tei:rs | tei:placeName | tei:persName">
+                <sch:rule context="tei:title | tei:num | tei:ref | tei:rs | tei:placeName[not(parent::tei:place)] | tei:persName[not(parent::tei:person)]">
                   <sch:let name="text" value="string(.)"/>
                   <sch:assert test="not(matches($text, '^\s+|\s+$'))">
                     ERROR: <sch:name/> should not begin or end with spaces.
