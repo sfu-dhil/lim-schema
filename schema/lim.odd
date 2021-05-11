@@ -569,6 +569,25 @@ Since the first paragraph of text extends across the page boundary, we place the
           
           </p>
         </div>
+        <div>
+          <head>Foreign Language</head>
+          <p>To tag that something is in a foreign language, use the <att>xml:lang</att> attribute with an ISO language tag value for that language (<ptr target="#TEI.teidata.language"/> for the list of language tags).</p>
+          <p>How and where you attach that <att>xml:lang</att> depends on whether the segment of foreign language is entirely contained by a single element. For instance, if an entire <gi>title</gi> in an <gi>item</gi> is in French, then you can place the <att>xml:lang</att> directly on the <gi>item</gi>:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <item>
+                <title xml:lang="fr">Le petit chien</title>
+              </item>
+              
+            </egXML>
+        If the foreign language appears has no logical wrapper (i.e. a single foreign phrase in a sentence or a foreign word), then use the <gi>foreign</gi> element:
+           <egXML xmlns="http://www.tei-c.org/ns/Examples">
+             <item>
+               <title>This example was created <foreign xml:lang="la">ex nihilo</foreign></title>
+             </item>
+           </egXML>
+          
+          </p>
+        </div>
       </div>
       <div>
         <head>Tagging People, Places, etc in Transcriptions</head>
@@ -705,7 +724,7 @@ Since the first paragraph of text extends across the page boundary, we place the
               <constraint>
                 <!--TODO: Remove @ref once feasible-->
                 <sch:rule context="tei:pc">
-                  <sch:assert test="matches(text(),'^\p{P}$')">ERROR: Only a single punctuation character is allowed in pc</sch:assert>
+                  <sch:assert test="matches(text(),'^[\p{P}=]$')">ERROR: Only a single punctuation character is allowed in pc</sch:assert>
                   <sch:assert test="following-sibling::node()[1][self::tei:lb]">ERROR: All pc elements must be followed immediately by an lb element.</sch:assert>
                 </sch:rule>
               </constraint>
@@ -722,12 +741,24 @@ Since the first paragraph of text extends across the page boundary, we place the
           <moduleRef key="core" include="abbr author bibl choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note num orig p pb ptr pubPlace publisher quote ref reg resp respStmt rs sic term title unclear"/>
           
           <elementSpec ident="abbr" module="core" mode="change">
+
             <classes mode="change">
               <!--Remove from pPart.editorial, since it should only be in <choice>-->
               <memberOf key="model.pPart.editorial" mode="delete"/>
               <!--Add cert and resp-->
               <memberOf key="att.global.responsibility" mode="add"/>
             </classes>
+            <constraintSpec ident="abbr.shouldntContainJustAmp" scheme="schematron"
+              mode="add">
+              <desc>Don't expand the ampersand only.</desc>
+              <constraint>
+                <!--TODO: Remove @ref once feasible-->
+                <sch:rule context="tei:abbr">
+                  <sch:let name="content" value="string(.)"/>
+                  <sch:assert test="not(matches($content, '^\s*&amp;\s*$'))">ERROR: There is no need to tag ampersands when it means "and".</sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
           </elementSpec>
           <elementSpec ident="expan" module="core" mode="change">
             <classes mode="change">
@@ -1013,6 +1044,10 @@ Since the first paragraph of text extends across the page boundary, we place the
                   <valItem ident="rnd:underlined">
                     <gloss>underlined</gloss>
                     <desc>underlined (NOTE: This should be used almost exclusively with emph or title)</desc>
+                  </valItem>
+                  <valItem ident="rnd:right-braced">
+                    <gloss>right-braced</gloss>
+                    <desc>An item that has a curly right brace.</desc>
                   </valItem>
                 </valList>
               </attDef>
