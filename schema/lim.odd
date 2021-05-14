@@ -990,7 +990,7 @@ Since the first paragraph of text extends across the page boundary, we place the
               <attDef ident="instant" mode="delete"/>
             </attList>
           </classSpec>
-          <classSpec type="atts" ident="att.global.facs" mode="change">
+          <classSpec ident="att.global.facs" type="atts" mode="change">
             <!--Restrict the use of @facs to only allow lib:-->
             <attList>
               <attDef ident="facs" mode="change">
@@ -1010,6 +1010,7 @@ Since the first paragraph of text extends across the page boundary, we place the
                 so we can add them on the individual elements that we need-->
               <memberOf key="att.global.facs" mode="delete"/>
               <memberOf key="att.global.responsibility" mode="delete"/>
+              <memberOf key="att.global.linking" mode="delete"/>
             </classes>
             <attList>
               <!--We'll never need space or base, afaik-->
@@ -1020,9 +1021,6 @@ Since the first paragraph of text extends across the page boundary, we place the
           <!--Remove change everywhere-->
           <classSpec ident="att.global.change" module="transcr" type="atts"
             mode="delete" />
-          <!--Remove linking (though we may need some of them, like @corresp)-->
-          <classSpec ident="att.global.linking" module="linking" type="atts"
-            mode="delete"/>
           <classSpec ident="att.global.rendition" module="tei" type="atts"
             mode="change">
             <attList>
@@ -1051,6 +1049,17 @@ Since the first paragraph of text extends across the page boundary, we place the
                   </valItem>
                 </valList>
               </attDef>
+            </attList>
+          </classSpec>
+          <classSpec ident="att.global.linking" module="tei" type="atts" mode="change">
+            <attList>
+              <attDef ident="synch" mode="delete"/>
+              <attDef ident="sameAs" mode="delete"/>
+              <attDef ident="copyOf" mode="delete"/>
+              <attDef ident="next" mode="delete"/>
+              <attDef ident="prev" mode="delete"/>
+              <attDef ident="exclude" mode="delete"/>
+              <attDef ident="select" mode="delete"/>
             </attList>
           </classSpec>
           <classSpec ident="att.linguistic" module="analysis"
@@ -1230,6 +1239,12 @@ Since the first paragraph of text extends across the page boundary, we place the
           <moduleRef key="transcr"
             include="damage facsimile fw handNotes handShift supplied surface surfaceGrp zone"/>
           
+          <elementSpec ident="facsimile" module="transcr" mode="change">
+              <classes mode="change">
+                <memberOf key="att.global.linking" mode="add"/>
+              </classes>
+          </elementSpec>
+          
           <elementSpec ident="fw" module="transcr" mode="change">
             <constraintSpec ident="fw.pageNum.mustHavePlace" scheme="schematron">
               <desc>All pageNum formeworks must have an @place</desc>
@@ -1263,8 +1278,8 @@ Since the first paragraph of text extends across the page boundary, we place the
                 </valList>
               </attDef>
             </attList>
-            
           </elementSpec>
+          
           
           
           <!--Global variables for constraints-->
