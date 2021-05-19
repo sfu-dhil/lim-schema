@@ -704,7 +704,7 @@ Since the first paragraph of text extends across the page boundary, we place the
     <back>
       <div>
         <head>Appendix</head>
-        <schemaSpec ident="lim" start="TEI div person">
+        <schemaSpec ident="lim" start="TEI div person place">
           
           <!--ANALYSIS-->
           <moduleRef key="analysis" include="pc"/>
@@ -838,8 +838,8 @@ Since the first paragraph of text extends across the page boundary, we place the
               <constraint>
                 <!--TODO: Remove @ref once feasible-->
                 <sch:rule context="tei:name[@ref]">
-                  <sch:assert test="not(matches(@ref,'^prs:\d+'))">ERROR: Use &lt;persName&gt; to tag names of people.</sch:assert>
-                  <sch:assert test="not(matches(@ref,'^plc:\d+'))">ERROR: Use &lt;placeName&gt; to tag names of places.</sch:assert>
+                  <sch:assert test="not(matches(@ref,'^prs:'))">ERROR: Use &lt;persName&gt; to tag names of people.</sch:assert>
+                  <sch:assert test="not(matches(@ref,'^plc:'))">ERROR: Use &lt;placeName&gt; to tag names of places.</sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -920,16 +920,59 @@ Since the first paragraph of text extends across the page boundary, we place the
           
           <moduleRef key="namesdates" include="addName birth death faith floruit forename genName langKnowledge langKnown listOrg listPerson listPlace location nameLink nationality occupation org orgName persName person persona place placeName residence roleName surname"/>
           
+          <elementSpec ident="person" module="namesdates" mode="change">
+            <constraintSpec ident="person.mustHaveProperId" scheme="schematron">
+              <desc>All people must have a proper id.</desc>
+              <constraint>
+                <sch:rule context="tei:person[not(@role='contributor')]">
+                  <sch:assert
+                    test="matches(@xml:id,concat('^', $persIdPattern, '$'))">ERROR: All people must have an @xml:id of 5 uppercase letters and a number (e.g. FORBR1).</sch:assert>
+                </sch:rule>
+                <sch:rule context="tei:person[@role='contributor']">
+                  <sch:assert test="matches(@xml:id, '^[A-Z]{2}\d+$')">ERROR: All contributors must have an @xml:id of 2 uppercase letters and a number (e.g. LD1).</sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+            <attList>
+              <attDef ident="xml:id" mode="change" usage="req"/>
+              <attDef ident="age" mode="delete"/>
+              <attDef ident="role" mode="change">
+                <valList>
+                  <valItem ident="contributor" mode="add">
+                    <desc>contributor</desc>
+                    <gloss>a contemporary contributor to the Lyon in Mourning project</gloss>
+                  </valItem>
+                </valList>
+              </attDef>
+            </attList>
+          </elementSpec>
+          
           <elementSpec ident="persName" module="namesdates" mode="change">
              <constraintSpec ident="persName.mustHaveRefWithPrs" mode="add" scheme="schematron">
                <desc>All inline persNames must have a ref that points to the personography db.</desc>
                <constraint>
                  <!--TODO: Remove @ref once feasible-->
                  <sch:rule context="tei:persName[not(parent::tei:person)][@ref]">
-                   <sch:assert test="matches(@ref,'^prs:\d+')">ERROR: All persName pointers must have an @ref that begins with "prs:" and ends with a digit.</sch:assert>
+                   <sch:assert test="matches(@ref,concat('^prs:', $persIdPattern, '$'))">ERROR: All persName pointers must have an @ref that begins with "prs:" followed by 5 uppercase letters and a number (e.g. prs:FORBR1).</sch:assert>
                  </sch:rule>
                </constraint>
              </constraintSpec>
+          </elementSpec>
+          
+          
+          <elementSpec ident="place" module="namesdates" mode="change">
+            <constraintSpec ident="place.mustHaveProperId" scheme="schematron">
+              <desc>All people must have a proper id.</desc>
+              <constraint>
+                <sch:rule context="tei:place">
+                  <sch:assert
+                    test="matches(@xml:id,concat('^', $placeIdPattern, '$'))">ERROR: All people must have an @xml:id of 4 uppercase letters and a number (e.g. LEIT1).</sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+            <attList>
+              <attDef ident="xml:id" mode="change" usage="req"/>
+            </attList>
           </elementSpec>
           
           <elementSpec ident="placeName" module="namesdates" mode="change">
@@ -938,7 +981,7 @@ Since the first paragraph of text extends across the page boundary, we place the
               <constraint>
                 <!--TODO: Remove @ref once feasible-->
                 <sch:rule context="tei:placeName[not(parent::tei:place)][@ref]">
-                  <sch:assert test="matches(@ref,'^plc:\d+')">ERROR: All placeName pointers must have an @ref that begins with "plc:" and ends with a digit.</sch:assert>
+                  <sch:assert test="matches(@ref,concat('^plc:', $placeIdPattern, '$'))">ERROR: All placeName pointers must have an @ref that begins with "plc:" followed by 4 uppercase letters and a number (e.g. plc:LEIT1).</sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -1290,6 +1333,8 @@ Since the first paragraph of text extends across the page boundary, we place the
                 <sch:let name="id" value="/tei:*/@xml:id"/>
                 <sch:let name="uri" value="document-uri(/)"/>
                 <sch:let name="basename" value="tokenize($uri,'[/\\\.]')[last() - 1]"/>
+                <sch:let name="placeIdPattern" value="'[A-Z]{4}\d+'"/>
+                <sch:let name="persIdPattern" value="'[A-Z]{5}\d+'"/>
                <!-- <sch:let name="pd" value="replace($uri,'^(.+[/\\]lim-tei[\\/]).+$', '$1')"/>
                 <sch:let name="dataDir" value="replace($pd,'(.+(.))$','$1data$2')"/>
                 <sch:let name="glyphs"
