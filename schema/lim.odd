@@ -959,6 +959,31 @@ Since the first paragraph of text extends across the page boundary, we place the
              </constraintSpec>
           </elementSpec>
           
+          <elementSpec ident="birth" module="namesdates" mode="change">
+            <classes mode="change">
+              <memberOf key="att.locatable" mode="add"/>
+            </classes>
+          </elementSpec>
+          
+          <elementSpec ident="death" module="namesdates" mode="change">
+            <classes mode="change">
+              <memberOf key="att.locatable" mode="add"/>
+            </classes>
+          </elementSpec>
+          
+          <elementSpec ident="langKnown" module="namesdates" mode="change">
+            <classes mode="change">
+              <!--Add @cert and @resp explicitly-->
+              <memberOf key="att.global.responsibility" mode="add"/>
+            </classes>
+            <attList>
+              <!--We do not specify level of fluency-->
+              <attDef ident="level" mode="delete"/>
+            </attList>
+          </elementSpec>
+          
+          
+          
           
           <elementSpec ident="place" module="namesdates" mode="change">
             <constraintSpec ident="place.mustHaveProperId" scheme="schematron">
@@ -980,8 +1005,9 @@ Since the first paragraph of text extends across the page boundary, we place the
               <desc>All inline placeNames must have a ref that points to the place db.</desc>
               <constraint>
                 <!--TODO: Remove @ref once feasible-->
-                <sch:rule context="tei:placeName[not(parent::tei:place)][@ref]">
-                  <sch:assert test="matches(@ref,concat('^plc:', $placeIdPattern, '$'))">ERROR: All placeName pointers must have an @ref that begins with "plc:" followed by 4 uppercase letters and a number (e.g. plc:LEIT1).</sch:assert>
+                <sch:rule context="tei:placeName[not(parent::tei:place)][@ref] | tei:*[@where]">
+                  <sch:let name="ptr" value="(@ref, @where)[1]"/>
+                  <sch:assert test="matches($ptr ,concat('^plc:', $placeIdPattern, '$'))">ERROR: All <sch:name/> pointers must have an @<sch:value-of select="local-name($ptr)"/> that begins with "plc:" followed by 4 uppercase letters and a number (e.g. plc:LEIT1).</sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -1015,6 +1041,44 @@ Since the first paragraph of text extends across the page boundary, we place the
               <attDef ident="group" mode="delete"/>
             </attList>
           </classSpec>
+          <!--Add schematron rule for dtes pre 1752-->
+          <!--Not dealing with att.datable at the moment; not sure if it's actually
+            necessary, given that we can more-or-less automate that...-->
+          <!--<classSpec ident="att.datable" module="tei" type="atts" mode="change">
+            <constraintSpec ident="pre1752.mustBeCustom" scheme="schematron">
+              <constraint>
+                <sch:pattern>
+                  <sch:rule context="tei:*[@when | @from | @to | @notBefore | @notAfter]">
+                    <sch:let name="dateAtts" value="(@when | @from | @to | @notBefore | @notAfter)"/>
+                    <sch:let name="errors" value="$dateAtts[xs:date(string-join((tokenize(.,'-'),'01','01')[position() lt 4],'-')) lt $cutoff]"/>
+                    <sch:assert test="empty($errors)">ERROR: Dates before 1752 must use a @*-custom attribute with the proper dating method.</sch:assert>
+                  </sch:rule>
+                </sch:pattern>
+              </constraint>
+            </constraintSpec>
+          </classSpec>
+          <classSpec ident="att.datable.custom" module="namesdates" type="atts">
+            <constraintSpec ident="pre1752.customRequiresDatingMethod" scheme="schematron">
+              <constraint>
+                <sch:pattern>
+                  <sch:rule context="tei:*[@when-custom | @from-custom | @to-custom | @notBefore-custom | @notAfter-custom]">
+                    <sch:let name="dateAtts" value="(@when-custom | @from-custom | @to-custom | @notBefore-custom | @notAfter-custom)"/>
+                    <sch:assert test="@datingMethod">ERROR @*-custom dates require a dating method.</sch:assert>
+                  </sch:rule>
+                </sch:pattern>
+              </constraint>
+            </constraintSpec>
+            <attList>
+              <attDef ident="datingMethod" mode="change">
+                <valList>
+                  <valItem ident="cal:julian" mode="add">
+                      <desc>Julian</desc>
+                      <gloss>The Julian Calendar (used pre-1752)</gloss>
+                  </valItem>
+                </valList>
+              </attDef>
+            </attList>
+          </classSpec>-->
           <classSpec ident="att.datable.iso" module="tei" type="atts"
             mode="delete"/>
           <classSpec ident="att.datcat" module="tei"
@@ -1178,8 +1242,7 @@ Since the first paragraph of text extends across the page boundary, we place the
           <classSpec ident="att.transcriptional"
             module="tei" type="atts"
             mode="delete"/>
-          
-          
+
           <!--DATA SPECS-->
           <dataSpec module="tei" ident="teidata.language" mode="change">
             <content>
@@ -1323,6 +1386,21 @@ Since the first paragraph of text extends across the page boundary, we place the
             </attList>
           </elementSpec>
           
+          <!--CUSTOMIZATIONS -->
+          <moduleSpec ident="lim"/>
+          
+          <!-- CUSTOM CLASS SPECIFICATION:
+            att.locatable-->
+          <classSpec ident="att.locatable" module="lim" type="atts" mode="add">
+           <attList>
+             <attDef ident="where" usage="opt">
+               <desc versionDate="2007-06-11" xml:lang="en">indicates the location of an event by pointing to a <gi>place</gi> element</desc>
+               <datatype>
+                 <dataRef key="teidata.pointer"/>
+               </datatype>
+             </attDef>
+           </attList> 
+          </classSpec>
           
           
           <!--Global variables for constraints-->
@@ -1335,6 +1413,7 @@ Since the first paragraph of text extends across the page boundary, we place the
                 <sch:let name="basename" value="tokenize($uri,'[/\\\.]')[last() - 1]"/>
                 <sch:let name="placeIdPattern" value="'[A-Z]{4}\d+'"/>
                 <sch:let name="persIdPattern" value="'[A-Z]{5}\d+'"/>
+                <sch:let name="cutoff" value="xs:date('1752-09-02')"/>
                <!-- <sch:let name="pd" value="replace($uri,'^(.+[/\\]lim-tei[\\/]).+$', '$1')"/>
                 <sch:let name="dataDir" value="replace($pd,'(.+(.))$','$1data$2')"/>
                 <sch:let name="glyphs"
