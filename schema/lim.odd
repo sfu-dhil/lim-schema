@@ -899,13 +899,8 @@ Since the first paragraph of text extends across the page boundary, we place the
               </attList>
           </elementSpec>
           
-
-          
-          <!--Not sure we need anything from corpus: check proposal-->
-          <!--<moduleRef key="corpus"/>-->
-          <!--Adding a lot of GAIJI module stuff, since I imagine we'll be
-          dealing with some unfamiliar characters?-->
-<!--          <moduleRef key="gaiji" include="char charDecl charName charProp g glyph glyphName mapping unicodeName unicodeProp"/>-->
+          <!--Include all of corpus-->
+          <moduleRef key="corpus"/>
           
           <!--Add quite a few of the header elements, but we may need more-->
           <moduleRef key="header" include="abstract catDesc catRef category change correspAction correspContext correspDesc encodingDesc fileDesc handNote idno listChange listPrefixDef notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
@@ -918,24 +913,33 @@ Since the first paragraph of text extends across the page boundary, we place the
           <!--<moduleRef key="msdescription"/>-->
 
           
-          <moduleRef key="namesdates" include="addName birth death faith floruit forename genName langKnowledge langKnown listOrg listPerson listPlace location nameLink nationality occupation org orgName persName person persona place placeName residence roleName surname"/>
+          <moduleRef key="namesdates" include="addName birth death faith floruit forename genName langKnowledge langKnown listOrg listPerson listPlace location nameLink nationality occupation org orgName persName person persona place placeName residence roleName sex surname"/>
           
           <elementSpec ident="person" module="namesdates" mode="change">
-            <constraintSpec ident="person.mustHaveProperId" scheme="schematron">
-              <desc>All people must have a proper id.</desc>
+            <content>
+              <macroRef key="lim.personMacro"/>
+              <!--Add linkGrp optionally only for person, not persona-->
+              <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
+            </content>
+            <constraintSpec ident="person.constraints" scheme="schematron">
+              <desc>Various constraints for the different models for contributors and non-contributors.</desc>
               <constraint>
                 <sch:rule context="tei:person[not(@role='contributor')]">
                   <sch:assert
                     test="matches(@xml:id,concat('^', $persIdPattern, '$'))">ERROR: All people must have an @xml:id of 5 uppercase letters and a number (e.g. FORBR1).</sch:assert>
+                  <sch:assert test="tei:langKnowledge">ERROR: People must contain a langKnowledge element.</sch:assert>
                 </sch:rule>
                 <sch:rule context="tei:person[@role='contributor']">
                   <sch:assert test="matches(@xml:id, '^[A-Z]{2}\d+$')">ERROR: All contributors must have an @xml:id of 2 uppercase letters and a number (e.g. LD1).</sch:assert>
+                  <sch:assert test="tei:persName and tei:note">ERROR: Contributors should only contain persName and note.</sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
             <attList>
               <attDef ident="xml:id" mode="change" usage="req"/>
               <attDef ident="age" mode="delete"/>
+              <!--Remove @sex, since we use the element instead-->
+              <attDef ident="sex" mode="delete"/>
               <attDef ident="role" mode="change">
                 <valList>
                   <valItem ident="contributor" mode="add">
@@ -945,6 +949,13 @@ Since the first paragraph of text extends across the page boundary, we place the
                 </valList>
               </attDef>
             </attList>
+            
+          </elementSpec>
+          
+          <elementSpec ident="persona" module="namesdates" mode="change">
+            <content>
+              <macroRef key="lim.personMacro"/>
+            </content>
           </elementSpec>
           
           <elementSpec ident="persName" module="namesdates" mode="change">
@@ -959,16 +970,74 @@ Since the first paragraph of text extends across the page boundary, we place the
              </constraintSpec>
           </elementSpec>
           
+          <elementSpec ident="sex" module="namesdates" mode="change">
+            <classes>
+              <memberOf key="att.global" mode="delete"/>
+              <memberOf key="att.typed" mode="delete"/>
+            </classes>
+            <attList>
+              <attDef ident="val" mode="change" usage="req"/>
+              <attDef ident="calendar" mode="delete"/>
+              <attDef ident="type" mode="delete"/>
+            </attList>
+          </elementSpec>
+          
           <elementSpec ident="birth" module="namesdates" mode="change">
             <classes mode="change">
+              <memberOf key="att.global" mode="delete"/>
+              <memberOf key="att.dimensions" mode="delete"/>
+              <memberOf key="att.naming" mode="delete"/>
+              <memberOf key="att.canonical" mode="delete"/>
               <memberOf key="att.locatable" mode="add"/>
+              <memberOf key="att.typed" mode="delete"/>
             </classes>
+            <attList>
+              <attDef ident="calendar" mode="delete"/>
+            </attList>
           </elementSpec>
           
           <elementSpec ident="death" module="namesdates" mode="change">
             <classes mode="change">
+              <memberOf key="att.global" mode="delete"/>
+              <memberOf key="att.dimensions" mode="delete"/>
+              <memberOf key="att.naming" mode="delete"/>
+              <memberOf key="att.canonical" mode="delete"/>
               <memberOf key="att.locatable" mode="add"/>
+              <memberOf key="att.typed" mode="delete"/>
             </classes>
+            <attList>
+              <attDef ident="calendar" mode="delete"/>
+            </attList>
+          </elementSpec>
+          
+          <elementSpec ident="residence" module="namesdates" mode="change">
+            <classes mode="change">
+              <memberOf key="att.global" mode="delete"/>
+              <memberOf key="att.locatable" mode="add"/>
+              <memberOf key="att.naming" mode="delete"/>
+            </classes>
+            <attList>
+              <attDef ident="calendar" mode="delete"/>
+            </attList>
+          </elementSpec>
+          
+          <elementSpec ident="faith" module="namesdates" mode="change">
+            <classes mode="change">
+              <memberOf key="att.global" mode="delete"/>
+            </classes>
+            <attList>
+              <attDef ident="calendar" mode="delete"/>
+              <attDef ident="ref" mode="change" usage="req"/>
+            </attList>
+          </elementSpec>
+          
+          <elementSpec ident="langKnowledge" module="namesdates" mode="change">
+            <classes mode="replace">
+              <memberOf key="model.persStateLike"/>
+            </classes>
+            <content>
+              <elementRef key="langKnown" minOccurs="1" maxOccurs="unbounded"/>
+            </content>
           </elementSpec>
           
           <elementSpec ident="langKnown" module="namesdates" mode="change">
@@ -982,10 +1051,19 @@ Since the first paragraph of text extends across the page boundary, we place the
             </attList>
           </elementSpec>
           
-          
-          
-          
+          <!--TODO: Figure out how best to represent nesting of places -->
           <elementSpec ident="place" module="namesdates" mode="change">
+            <classes mode="change">
+              <memberOf key="att.global.rendition" mode="delete"/>
+              <memberOf key="att.typed" mode="delete"/>
+              <memberOf key="att.global.analytic" mode="delete"/>
+              <memberOf key="att.global.source" mode="delete"/>
+            </classes>
+            <content>
+              <elementRef key="placeName"/>
+              <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+              <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
+            </content>
             <constraintSpec ident="place.mustHaveProperId" scheme="schematron">
               <desc>All people must have a proper id.</desc>
               <constraint>
@@ -1044,6 +1122,19 @@ Since the first paragraph of text extends across the page boundary, we place the
           <!--Add schematron rule for dtes pre 1752-->
           <!--Not dealing with att.datable at the moment; not sure if it's actually
             necessary, given that we can more-or-less automate that...-->
+          
+          <classSpec ident="att.datable" module="tei" type="atts" mode="change">
+            <attList>
+              <attDef ident="period" mode="delete"/>
+            </attList>
+          </classSpec>
+          
+          <classSpec ident="att.datable.custom" module="namesdates" type="atts" mode="change">
+            <attList>
+              <attDef ident="datingPoint" mode="delete"/>
+            </attList>
+          </classSpec>
+          
           <!--<classSpec ident="att.datable" module="tei" type="atts" mode="change">
             <constraintSpec ident="pre1752.mustBeCustom" scheme="schematron">
               <constraint>
@@ -1290,9 +1381,6 @@ Since the first paragraph of text extends across the page boundary, we place the
             
           </dataSpec>
           
-
-          
-          
           <!-- TEXTSTRUCTURE -->
           <moduleRef key="textstructure"
             include="TEI body byline closer dateline div docAuthor docDate docEdition docImprint docTitle epigraph front imprimatur opener postscript salute signed titlePage titlePart text trailer"/>
@@ -1340,8 +1428,7 @@ Since the first paragraph of text extends across the page boundary, we place the
             </constraintSpec>
           </elementSpec>
           
-          
-          
+          <!--Transcription module-->
           <moduleRef key="transcr"
             include="damage facsimile fw handNotes handShift supplied surface surfaceGrp zone"/>
           
@@ -1401,6 +1488,24 @@ Since the first paragraph of text extends across the page boundary, we place the
              </attDef>
            </attList> 
           </classSpec>
+          
+          <macroSpec ident="lim.personMacro" module="lim" mode="add">
+            <content>
+              <elementRef key="persName" minOccurs="1" maxOccurs="unbounded"/>
+              <sequence preserveOrder="false">
+                <elementRef key="sex" minOccurs="0" maxOccurs="1"/>
+                <elementRef key="birth" minOccurs="0" maxOccurs="1"/>
+                <elementRef key="death" minOccurs="0" maxOccurs="1"/>
+                <elementRef key="faith" minOccurs="0" maxOccurs="unbounded"/>
+                <elementRef key="occupation" minOccurs="0" maxOccurs="unbounded"/>
+                <elementRef key="nationality" minOccurs="0" maxOccurs="unbounded"/>
+                <elementRef key="residence" minOccurs="0" maxOccurs="unbounded"/>
+                <elementRef key="langKnowledge" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+              <elementRef key="note"/>
+            </content>
+         
+          </macroSpec>
           
           
           <!--Global variables for constraints-->
