@@ -1085,6 +1085,10 @@ Since the first paragraph of text extends across the page boundary, we place the
                     <desc>Irish</desc>
                     <gloss>Irish</gloss>
                   </valItem>
+                  <valItem ident="ntl:Scottish" mode="add">
+                    <desc>Scottish</desc>
+                    <gloss>Scottish</gloss>
+                  </valItem>
                   <valItem ident="ntl:Prussian" mode="add">
                     <desc>Prussian</desc>
                     <gloss>Prussian</gloss>
