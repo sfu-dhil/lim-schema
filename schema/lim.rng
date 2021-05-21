@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2021-05-21T04:36:20Z. .
+Schema generated from ODD source 2021-05-21T05:18:04Z. .
 TEI Edition: Version 3.6.0. Last updated on
 	16th July 2019, revision daa3cc0b9
 TEI Edition Location: http://www.tei-c.org/Vault/P5/Version 3.6.0/
@@ -113,16 +113,7 @@ TEI Edition Location: http://www.tei-c.org/Vault/P5/Version 3.6.0/
       </optional>
    </define>
    <define name="att.canonical.attributes">
-      <ref name="att.canonical.attribute.key"/>
       <ref name="att.canonical.attribute.ref"/>
-   </define>
-   <define name="att.canonical.attribute.key">
-      <optional>
-         <attribute name="key">
-            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides an externally-defined means of identifying the entity (or entities) being named, using a coded value of some kind.</a:documentation>
-            <data type="string"/>
-         </attribute>
-      </optional>
    </define>
    <define name="att.canonical.attribute.ref">
       <optional>
@@ -680,6 +671,10 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
                   <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(German) de</a:documentation>
                   <value>es</value>
                   <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Spanish) es</a:documentation>
+                  <value>sco</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Scots) sco</a:documentation>
+                  <value>ghc</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Hiberno-Scottish Gaelic) ghc</a:documentation>
                </choice>
             </choice>
          </attribute>
@@ -4550,12 +4545,22 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
          <ref name="att.datable.custom.attribute.from-custom"/>
          <ref name="att.datable.custom.attribute.to-custom"/>
          <ref name="att.datable.custom.attribute.datingMethod"/>
-         <ref name="att.canonical.attribute.key"/>
          <attribute name="ref">
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(reference) provides an explicit means of locating a full definition or identity for the entity being named by means of one or more URIs.</a:documentation>
             <list>
                <oneOrMore>
-                  <data type="anyURI"/>
+                  <choice>
+                     <value>rel:ChurchOfScotland</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Church of Scotland) Church of Scotland</a:documentation>
+                     <value>rel:Episcopalian</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Episcopalian) Episcopalian</a:documentation>
+                     <value>rel:Anglican</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Anglican) Anglican</a:documentation>
+                     <value>rel:RomanCatholic</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Roman Catholic) Roman Catholic</a:documentation>
+                     <value>rel:BritishOrthodox</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(British Orthodox) British Orthodox</a:documentation>
+                  </choice>
                </oneOrMore>
             </list>
          </attribute>
@@ -4601,6 +4606,10 @@ Sample values include: 1] practicing; 2] clandestine; 3] patrilineal; 4] matrili
                            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(German) de</a:documentation>
                            <value>es</value>
                            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Spanish) es</a:documentation>
+                           <value>sco</value>
+                           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Scots) sco</a:documentation>
+                           <value>ghc</value>
+                           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Hiberno-Scottish Gaelic) ghc</a:documentation>
                         </choice>
                      </choice>
                   </oneOrMore>
@@ -4639,6 +4648,10 @@ Sample values include: 1] practicing; 2] clandestine; 3] patrilineal; 4] matrili
                   <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(German) de</a:documentation>
                   <value>es</value>
                   <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Spanish) es</a:documentation>
+                  <value>sco</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Scots) sco</a:documentation>
+                  <value>ghc</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Hiberno-Scottish Gaelic) ghc</a:documentation>
                </choice>
             </choice>
          </attribute>
@@ -4745,10 +4758,33 @@ Sample values include: 1] practicing; 2] clandestine; 3] patrilineal; 4] matrili
       <element name="nationality">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains an informal description of a person's present or past nationality or citizenship. [15.2.2. The Participant Description]</a:documentation>
          <ref name="macro.phraseSeq"/>
-         <ref name="att.global.attributes"/>
          <ref name="att.datable.attributes"/>
          <ref name="att.editLike.attributes"/>
-         <ref name="att.naming.attributes"/>
+         <attribute name="ref">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(reference) provides an explicit means of locating a full definition or identity for the entity being named by means of one or more URIs.</a:documentation>
+            <list>
+               <oneOrMore>
+                  <choice>
+                     <value>ntl:English</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(English) English</a:documentation>
+                     <value>ntl:French</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(French) French</a:documentation>
+                     <value>ntl:Spanish</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Spanish) Spanish</a:documentation>
+                     <value>ntl:Irish</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Irish) Irish</a:documentation>
+                     <value>ntl:Prussian</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Prussian) Prussian</a:documentation>
+                     <value>ntl:Hanoverian</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Hanoverian) Hanoverian</a:documentation>
+                     <value>ntl:Italian</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Italian) Italian</a:documentation>
+                     <value>ntl:Dutch</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Dutch) Dutch</a:documentation>
+                  </choice>
+               </oneOrMore>
+            </list>
+         </attribute>
          <optional>
             <attribute name="type">
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">characterizes the element in some sense, using any convenient classification scheme or typology.

@@ -658,8 +658,7 @@ Since the first paragraph of text extends across the page boundary, we place the
                 <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <rs type="person" ref="prs:3">his mother</rs>
                 </egXML>
-              </cell>
-              <cell><val>prs:</val></cell>
+              </cell> <cell><val>prs:</val></cell>
             </row>
             <row role="data">
               <cell>place</cell>
@@ -701,6 +700,9 @@ Since the first paragraph of text extends across the page boundary, we place the
       </div>
      
     </body>
+    
+
+    
     <back>
       <div>
         <head>Appendix</head>
@@ -913,7 +915,9 @@ Since the first paragraph of text extends across the page boundary, we place the
           <!--<moduleRef key="msdescription"/>-->
 
           
-          <moduleRef key="namesdates" include="addName birth death faith floruit forename genName langKnowledge langKnown listOrg listPerson listPlace location nameLink nationality occupation org orgName persName person persona place placeName residence roleName sex surname"/>
+          <moduleRef
+            key="namesdates" 
+            include="addName birth death faith floruit forename genName langKnowledge langKnown listOrg listPerson listPlace location nameLink nationality occupation org orgName persName person persona place placeName residence roleName sex surname"/>
           
           <elementSpec ident="person" module="namesdates" mode="change">
             <content>
@@ -949,7 +953,6 @@ Since the first paragraph of text extends across the page boundary, we place the
                 </valList>
               </attDef>
             </attList>
-            
           </elementSpec>
           
           <elementSpec ident="persona" module="namesdates" mode="change">
@@ -1013,6 +1016,7 @@ Since the first paragraph of text extends across the page boundary, we place the
           <elementSpec ident="residence" module="namesdates" mode="change">
             <classes mode="change">
               <memberOf key="att.global" mode="delete"/>
+              <!--Add custom att.locatable-->
               <memberOf key="att.locatable" mode="add"/>
               <memberOf key="att.naming" mode="delete"/>
             </classes>
@@ -1027,9 +1031,82 @@ Since the first paragraph of text extends across the page boundary, we place the
             </classes>
             <attList>
               <attDef ident="calendar" mode="delete"/>
-              <attDef ident="ref" mode="change" usage="req"/>
+              <attDef ident="ref" mode="change" usage="req">
+                <valList type="closed" mode="add">
+                  <valItem ident="rel:ChurchOfScotland" mode="add">
+                    <desc>Church of Scotland</desc>
+                    <gloss>Church of Scotland</gloss>
+                  </valItem>
+                  <valItem ident="rel:Episcopalian" mode="add">
+                    <desc>Episcopalian</desc>
+                    <gloss>Episcopalian</gloss>
+                  </valItem>
+                  <valItem ident="rel:Anglican" mode="add">
+                    <desc>Anglican</desc>
+                    <gloss>Anglican</gloss>
+                  </valItem>
+                  <valItem ident="rel:RomanCatholic" mode="add">
+                    <desc>Roman Catholic</desc>
+                    <gloss>Roman Catholic</gloss>
+                  </valItem>
+                  <valItem ident="rel:BritishOrthodox" mode="add">
+                    <desc>British Orthodox</desc>
+                    <gloss>British Orthodox</gloss>
+                  </valItem>
+                </valList>
+              </attDef>
             </attList>
           </elementSpec>
+          
+          <elementSpec ident="nationality" module="namesdates" mode="change">
+            <classes mode="change">
+              <memberOf key="att.global" mode="delete"/>
+            </classes>
+            <attList>
+              <!--Remove @role, which is provided by att.naming,
+                but att.naming is a superset of att.canonical,
+                which we want for ref.-->
+              <attDef ident="role" mode="delete"/>
+              <attDef ident="ref" mode="change" usage="req">
+                <valList type="closed" mode="add">
+                  <valItem ident="ntl:English" mode="add">
+                    <desc>English</desc>
+                    <gloss>English</gloss>
+                  </valItem>
+                  <valItem ident="ntl:French" mode="add">
+                    <desc>French</desc>
+                    <gloss>French</gloss>
+                  </valItem>
+                  <valItem ident="ntl:Spanish" mode="add">
+                    <desc>Spanish</desc>
+                    <gloss>Spanish</gloss>
+                  </valItem>
+                  <valItem ident="ntl:Irish" mode="add">
+                    <desc>Irish</desc>
+                    <gloss>Irish</gloss>
+                  </valItem>
+                  <valItem ident="ntl:Prussian" mode="add">
+                    <desc>Prussian</desc>
+                    <gloss>Prussian</gloss>
+                  </valItem>
+                  <valItem ident="ntl:Hanoverian" mode="add">
+                    <desc>Hanoverian</desc>
+                    <gloss>Hanoverian</gloss>
+                  </valItem>
+                  <valItem ident="ntl:Italian" mode="add">
+                    <desc>Italian</desc>
+                    <gloss>Italian</gloss>
+                  </valItem>
+                  <valItem ident="ntl:Dutch" mode="add">
+                    <desc>Dutch</desc>
+                    <gloss>Dutch</gloss>
+                  </valItem>
+                </valList>
+              </attDef>
+            </attList>
+          </elementSpec>
+          
+          
           
           <elementSpec ident="langKnowledge" module="namesdates" mode="change">
             <classes mode="replace">
@@ -1102,13 +1179,12 @@ Since the first paragraph of text extends across the page boundary, we place the
           </classSpec>
           <classSpec ident="att.breaking" type="atts" module="tei" 
             mode="delete"/>
-          <!--We'll retain key for the time being, but remove ASAP-->
-<!--          <classSpec ident="att.canonical" type="atts" module="tei"
+          <classSpec ident="att.canonical" type="atts" module="tei"
             mode="change">
             <attList>
               <attDef ident="key" mode="delete"/>
             </attList>
-          </classSpec>-->
+          </classSpec>
           <classSpec ident="att.coordinated" type="atts" module="tei"
             mode="delete"/>
           <classSpec ident="att.cReferencing" module="tei" type="atts"
@@ -1170,6 +1246,7 @@ Since the first paragraph of text extends across the page boundary, we place the
               </attDef>
             </attList>
           </classSpec>-->
+          
           <classSpec ident="att.datable.iso" module="tei" type="atts"
             mode="delete"/>
           <classSpec ident="att.datcat" module="tei"
@@ -1374,7 +1451,14 @@ Since the first paragraph of text extends across the page boundary, we place the
                     <desc>es</desc>
                     <gloss>Spanish</gloss>
                   </valItem>
-                  
+                  <valItem ident="sco">
+                    <desc>sco</desc>
+                    <gloss>Scots</gloss>
+                  </valItem>
+                  <valItem ident="ghc">
+                    <desc>ghc</desc>
+                    <gloss>Hiberno-Scottish Gaelic</gloss>
+                  </valItem>
                 </valList>
               </alternate>
             </content>
