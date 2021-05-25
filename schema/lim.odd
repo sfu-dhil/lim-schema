@@ -1093,6 +1093,10 @@ Since the first paragraph of text extends across the page boundary, we place the
                     <desc>Prussian</desc>
                     <gloss>Prussian</gloss>
                   </valItem>
+                  <valItem ident="ntl:Austrian" mode="add">
+                    <desc>Austrian</desc>
+                    <gloss>Austrian</gloss>
+                  </valItem>
                   <valItem ident="ntl:Hanoverian" mode="add">
                     <desc>Hanoverian</desc>
                     <gloss>Hanoverian</gloss>
@@ -1116,9 +1120,6 @@ Since the first paragraph of text extends across the page boundary, we place the
             <classes mode="replace">
               <memberOf key="model.persStateLike"/>
             </classes>
-            <content>
-              <elementRef key="langKnown" minOccurs="1" maxOccurs="unbounded"/>
-            </content>
           </elementSpec>
           
           <elementSpec ident="langKnown" module="namesdates" mode="change">
@@ -1592,7 +1593,6 @@ Since the first paragraph of text extends across the page boundary, we place the
               </sequence>
               <elementRef key="note"/>
             </content>
-         
           </macroSpec>
           
           
