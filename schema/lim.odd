@@ -1379,6 +1379,10 @@ Since the first paragraph of text extends across the page boundary, we place the
                     <gloss>below</gloss>
                     <desc>below the line</desc>
                   </valItem>
+                  <valItem ident="inline" mode="add">
+                    <gloss>inline</gloss>
+                    <desc>an inline note</desc>
+                  </valItem>
                 </valList>
               </attDef>
             </attList>
