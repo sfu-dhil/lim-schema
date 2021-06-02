@@ -988,6 +988,7 @@ Since the first paragraph of text extends across the page boundary, we place the
           <elementSpec ident="birth" module="namesdates" mode="change">
             <classes mode="change">
               <memberOf key="att.global" mode="delete"/>
+              <memberOf key="att.global.responsibility" mode="add"/>
               <memberOf key="att.dimensions" mode="delete"/>
               <memberOf key="att.naming" mode="delete"/>
               <memberOf key="att.canonical" mode="delete"/>
@@ -1002,6 +1003,7 @@ Since the first paragraph of text extends across the page boundary, we place the
           <elementSpec ident="death" module="namesdates" mode="change">
             <classes mode="change">
               <memberOf key="att.global" mode="delete"/>
+              <memberOf key="att.global.responsibility" mode="add"/>
               <memberOf key="att.dimensions" mode="delete"/>
               <memberOf key="att.naming" mode="delete"/>
               <memberOf key="att.canonical" mode="delete"/>
