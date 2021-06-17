@@ -1142,7 +1142,7 @@ Since the first paragraph of text extends across the page boundary, we place the
               <memberOf key="att.global.source" mode="delete"/>
             </classes>
             <content>
-              <elementRef key="placeName"/>
+              <elementRef key="placeName" minOccurs="1" maxOccurs="unbounded"/>
               <elementRef key="note" minOccurs="0" maxOccurs="1"/>
               <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
             </content>
