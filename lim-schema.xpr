@@ -202,10 +202,10 @@
                                                                 <String></String>
                                                             </field>
                                                             <field name="buildTarget">
-                                                                <String></String>
+                                                                <String>schema</String>
                                                             </field>
                                                             <field name="buildFilePath">
-                                                                <String>${baseFrameworkDir}/xml/tei/stylesheet/relaxng/build-to.xml</String>
+                                                                <String>${pd}/build.xml</String>
                                                             </field>
                                                             <field name="ditaParams">
                                                                 <list>
