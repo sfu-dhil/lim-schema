@@ -7,13 +7,9 @@
 
     <!--ODD 2 Lite XSLT-->
     <!--ODD 2 ODD XSLT (from the TEI framework)-->
-    <property name="TEIStylesheets" value="https://raw.githubusercontent.com/TEIC/Stylesheets/released"/>
+
     <property name="odd2odd" value="${TEIStylesheets}/odds/odd2odd.xsl"/>
     <property name="odd2Lite" value="${TEIStylesheets}/odds/odd2lite.xsl"/>
-    <property name="saxon" value="${projectDir}/lib/saxon-he-10.jar"/>
-
-
-
     <property name="schemaDir" value="${projectDir}/schema"/>
     <property name="odd.src" value="${schemaDir}/lim.odd"/>
     <basename property="odd.basename" file="${odd.src}"/>

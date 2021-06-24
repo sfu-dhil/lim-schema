@@ -21,8 +21,6 @@
       <include name="**.framework"/>
    </fileset>
    
-   
-   
    <property name="distDir" value="${basedir}/dist"/>
    <property name="frameworkDistDir" value="${distDir}/${frameworkName}"/>
    
@@ -40,7 +38,7 @@
    </target>
    
    <target name="makeUpdate">
-      <java jar="${lib.dir}/saxon-he-10.jar" fork="true">
+      <java jar="${saxon}" fork="true">
          <arg line="-xsl:${basedir}/framework/create_update_site.xsl"/>
          <arg line="-s:${basedir}/framework/updateSite.xml"/>
          <arg line="-o:${distDir}/updateSite.xml"/>
