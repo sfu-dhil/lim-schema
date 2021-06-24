@@ -1,8 +1,10 @@
 .DS_Store
-tmppublic
+tmp
+public
 profile.html
 public
 tmp
+*.tmp
 .idea
 data
 dist
