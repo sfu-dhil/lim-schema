@@ -3,6 +3,34 @@
     
     <property name="lib.dir" value="${basedir}/lib"/>
     
+    <property name="dataDir" value="${basedir}/data"/>
+    <property name="schemaDir" value="${basedir}/schema"/>
+    <property name="pathTEI" value="https://raw.githubusercontent.com/TEIC/Stylesheets/dev"/> 
+    
+    <target name="schema">
+        <echo>Expanding ODD...</echo>
+        <java jar="">
+            <arg line="-xsl:${pathTEI}/odds/odd2odd.xsl"/>
+            <arg line="-s:${schemaDir}/lim.odd"/>
+            <arg line="-o:${schemaDir}/lim.expanded.odd"/>
+        </java>
+        <echo>Building RNG</echo>
+        <exec executable="saxon">
+            <arg line="-xsl:${pathTEI}/odds/odd2rng.xsl"/>
+            <arg line="-s:${schemaDir}/lim.expanded.odd"/>
+            <arg line="-o:${schemaDir}/lim.rng"/>
+        </exec>
+    </target>
+    
+    <target name="validate">
+        <!--Just fetch the validate action-->
+        <ant antfile="${basedir}/xml-validate-action/build.xml" dir="${basedir}">
+            <property name="dir" value="${dataDir}"/>
+            <property name="rng" value="${schemaDir}/lim.rng"/>
+            <property name="saxon" value="${saxon}"/>
+        </ant>
+    </target>
+    
     <target name="documentation">
         <ant antfile="code/documentation/build.xml" inheritall="false"/>
     </target>
