@@ -1,19 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="all" name="buildLIM">
+    <description>
+        Build file for creating the schema and documentation from the LiM ODD files.
+        
+        All submodules must be fetched beforehand.
+    </description>
     
     <property name="lib.dir" value="${basedir}/lib"/>
+    <property name="dataDir" value="${basedir}/data"/>
+    <property name="schemaDir" value="${basedir}/schema"/>
+    <property name="TEIStylesheets" value="https://raw.githubusercontent.com/TEIC/Stylesheets/released"/>
+    <property name="saxon" value="${lib.dir}/saxon10HE.jar"/>
     
-    <target name="documentation">
-        <ant antfile="code/documentation/build.xml" inheritall="false"/>
+    <target name="install">
+        <description>target: install
+        
+        Target to fetch all of the jar files necessary for building things;
+        this includes saxon, jing, and the xsl-schematron implementation. We just
+        fetch all of those using the xml-validate-action.
+        </description>
+        <ant antfile="${basedir}/xml-validate-action/build.xml"
+            dir="${basedir}"
+            target="install">
+            <property name="saxon" value="${saxon}"/>
+        </ant>
     </target>
-        
-        
-   <target name="framework">
+    
+    <target name="makeRng" depends="install">
+        <description>
+            target: makeRng
+            
+            Creates the schema using the TEI Stylesheets repository
+            (first expanding, and then convert to RelaxNG)
+        </description>
+        <echo>Expanding ODD...</echo>
+        <java jar="${saxon}" fork="true">
+            <arg line="-xsl:${TEIStylesheets}/odds/odd2odd.xsl"/>
+            <arg line="-s:${schemaDir}/lim.odd"/>
+            <arg line="-o:${schemaDir}/lim.expanded.odd"/>
+        </java>
+        <echo>Building RNG</echo>
+        <java jar="${saxon}" fork="true">
+            <arg line="-xsl:${TEIStylesheets}/odds/odd2relax.xsl"/>
+            <arg line="-s:${schemaDir}/lim.expanded.odd"/>
+            <arg line="-o:${schemaDir}/lim.rng"/>
+        </java>
+    </target>
+    
+    <target name="validate">
+        <description>
+            target: validate
+            
+            Validates files using the xml-validate-action build;
+            this is mostly helpful when rebuilding the schema to make
+            sure everything worked the way you wanted it to.
+        </description>
+        <ant antfile="${basedir}/xml-validate-action/build.xml" dir="${basedir}">
+            <property name="dir" value="${dataDir}"/>
+            <property name="rng" value="${schemaDir}/lim.rng"/>
+            <property name="saxon" value="${saxon}"/>
+        </ant>
+    </target>
+    
+    <target name="documentation" depends="install">
+        <description>
+            target: documentation
+            
+            Rebuild the documentation using the TEI Stylesheets.
+        </description>
+        <ant antfile="code/documentation/build.xml" inheritall="false">
+            <property name="TEIStylesheets" value="${TEIStylesheets}"/>
+            <property name="saxon" value="${saxon}"/>
+        </ant>
+    </target>
+    
+   <target name="framework" depends="install">
+       <description>
+           target: framework
+           
+           Create the LiM encoding framework
+       </description>
        <ant antfile="framework/buildFramework.xml" inheritall="true"/>
    </target>
     
     
-  <target name="all" depends="documentation, framework"/>  
+  <target name="all" depends="documentation, framework">
+      <description>
+          target: all
+          
+          Creates the documentation and framework in one go 
+      </description>
+      
+  </target>
+    
+    <target name="schema" depends="makeRng, validate">
+      <description>
+          target: schema
+          
+          Creates the RelaxNG schema and then validates files against the newly created RelaxNG.
+      </description>
+  </target>
     
     
 </project>

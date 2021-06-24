@@ -13,7 +13,8 @@ jobs:
           java-version: 1.8
       - name: Build everything
         run: ant -f ${{ github.workspace }}/build.xml documentation
-      - name: Deploy documentation🚀
+      - name: Deploy documentation
+        if: ${{ github.repository_owner == 'sfu-dhil' }}
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
           branch: gh-pages

@@ -197,142 +197,15 @@
                                                         <Integer>0</Integer>
                                                     </field>
                                                     <field name="value">
-                                                        <scenario>
-                                                            <field name="advancedOptionsMap">
-                                                                <null/>
-                                                            </field>
-                                                            <field name="name">
-                                                                <String>Build Documentation</String>
-                                                            </field>
-                                                            <field name="baseURL">
-                                                                <String></String>
-                                                            </field>
-                                                            <field name="footerURL">
-                                                                <String></String>
-                                                            </field>
-                                                            <field name="fOPMethod">
-                                                                <String>pdf</String>
-                                                            </field>
-                                                            <field name="fOProcessorName">
-                                                                <String>Apache FOP</String>
-                                                            </field>
-                                                            <field name="headerURL">
-                                                                <String></String>
-                                                            </field>
-                                                            <field name="inputXSLURL">
-                                                                <String>${baseFramework}/xml/tei/stylesheet/odds/odd2odd.xsl</String>
-                                                            </field>
-                                                            <field name="inputXMLURL">
-                                                                <String>${currentFileURL}</String>
-                                                            </field>
-                                                            <field name="defaultScenario">
-                                                                <Boolean>false</Boolean>
-                                                            </field>
-                                                            <field name="isFOPPerforming">
-                                                                <Boolean>false</Boolean>
-                                                            </field>
-                                                            <field name="type">
-                                                                <String>XSL</String>
-                                                            </field>
-                                                            <field name="saveAs">
-                                                                <Boolean>true</Boolean>
-                                                            </field>
-                                                            <field name="openInBrowser">
-                                                                <Boolean>false</Boolean>
-                                                            </field>
-                                                            <field name="outputResource">
-                                                                <String>${pd}/docs/${cfn}.html</String>
-                                                            </field>
-                                                            <field name="openOtherLocationInBrowser">
-                                                                <Boolean>false</Boolean>
-                                                            </field>
-                                                            <field name="locationToOpenInBrowserURL">
-                                                                <null/>
-                                                            </field>
-                                                            <field name="openInEditor">
-                                                                <Boolean>false</Boolean>
-                                                            </field>
-                                                            <field name="showInHTMLPane">
-                                                                <Boolean>false</Boolean>
-                                                            </field>
-                                                            <field name="showInXMLPane">
-                                                                <Boolean>false</Boolean>
-                                                            </field>
-                                                            <field name="showInSVGPane">
-                                                                <Boolean>false</Boolean>
-                                                            </field>
-                                                            <field name="showInResultSetPane">
-                                                                <Boolean>false</Boolean>
-                                                            </field>
-                                                            <field name="useXSLTInput">
-                                                                <Boolean>true</Boolean>
-                                                            </field>
-                                                            <field name="xsltParams">
-                                                                <list>
-                                                                    <transformationParameter>
-                                                                        <field name="paramDescription">
-                                                                            <paramDescriptor>
-                                                                                <field name="localName">
-                                                                                    <String>defaultSource</String>
-                                                                                </field>
-                                                                                <field name="prefix">
-                                                                                    <null/>
-                                                                                </field>
-                                                                                <field name="namespace">
-                                                                                    <null/>
-                                                                                </field>
-                                                                            </paramDescriptor>
-                                                                        </field>
-                                                                        <field name="value">
-                                                                            <String>${baseFramework}/xml/tei/odd/p5subset.xml</String>
-                                                                        </field>
-                                                                        <field name="hasXPathValue">
-                                                                            <Boolean>false</Boolean>
-                                                                        </field>
-                                                                        <field name="isStatic">
-                                                                            <Boolean>false</Boolean>
-                                                                        </field>
-                                                                    </transformationParameter>
-                                                                </list>
-                                                            </field>
-                                                            <field name="cascadingStylesheets">
-                                                                <String-array>
-                                                                    <String>${baseFramework}/xml/tei/stylesheet/odds/odd2lite.xsl</String>
-                                                                    <String>${baseFramework}/xml/tei/stylesheet/html/html.xsl</String>
-                                                                </String-array>
-                                                            </field>
-                                                            <field name="xslTransformer">
-                                                                <String>Saxon-PE</String>
-                                                            </field>
-                                                            <field name="extensionURLs">
-                                                                <String-array/>
-                                                            </field>
-                                                        </scenario>
-                                                    </field>
-                                                    <field name="patchHandling">
-                                                        <String>addIndex</String>
-                                                    </field>
-                                                    <field name="anchor">
-                                                        <null/>
-                                                    </field>
-                                                </poPatch>
-                                                <poPatch>
-                                                    <field name="fieldPath">
-                                                        <String>scenarios</String>
-                                                    </field>
-                                                    <field name="index">
-                                                        <Integer>1</Integer>
-                                                    </field>
-                                                    <field name="value">
                                                         <antScenario>
                                                             <field name="additionalAntArgs">
                                                                 <String></String>
                                                             </field>
                                                             <field name="buildTarget">
-                                                                <String></String>
+                                                                <String>schema</String>
                                                             </field>
                                                             <field name="buildFilePath">
-                                                                <String>${baseFrameworkDir}/xml/tei/stylesheet/relaxng/build-to.xml</String>
+                                                                <String>${pd}/build.xml</String>
                                                             </field>
                                                             <field name="ditaParams">
                                                                 <list>
@@ -612,7 +485,6 @@
                                                     </field>
                                                     <field name="value">
                                                         <list>
-                                                            <String>Build Documentation</String>
                                                             <String>Build RelaxNG Schema</String>
                                                         </list>
                                                     </field>
@@ -5465,7 +5337,7 @@ The TEI tagset for markup language documentation (module tagdocs, chapter 22 "Do
             </serialized>
         </options>
     </meta>
-    <projectTree name="lim.xpr">
+    <projectTree name="lim-schema.xpr">
         <folder path="."/>
     </projectTree>
 </project>
