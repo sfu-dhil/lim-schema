@@ -44,8 +44,14 @@
         <prefixDef ident="plc" matchPattern="(.+)" replacementPattern="places.xml#$1">
           <p>Resolves links to a place to the geography.</p>
         </prefixDef>
+        <prefixDef ident="org" matchPattern="(.+)" replacementPattern="organizations.xml#$1">
+          <p>Resolves links to a place to the geography.</p>
+        </prefixDef>
         <prefixDef ident="obj" matchPattern="(.+)" replacementPattern="objects.xml#$1">
           <p>Resolves links to an object to the object database.</p>
+        </prefixDef>
+        <prefixDef ident="bibl" matchPattern="(.+)" replacementPattern="bibliography.xml$1">
+          <p>Resolves links to a bibliographic item.</p>
         </prefixDef>
       </listPrefixDef>
     </encodingDesc>
@@ -706,7 +712,7 @@ Since the first paragraph of text extends across the page boundary, we place the
     <back>
       <div>
         <head>Appendix</head>
-        <schemaSpec ident="lim" start="TEI div person place">
+        <schemaSpec ident="lim" start="TEI div person place org biblStruct" source="tei:4.2.2">
           
           <!--ANALYSIS-->
           <moduleRef key="analysis" include="pc"/>
@@ -740,7 +746,7 @@ Since the first paragraph of text extends across the page boundary, we place the
           
           
           <!--CORE-->
-          <moduleRef key="core" include="abbr author bibl choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note num orig p pb ptr pubPlace publisher quote ref reg resp respStmt rs sic term title unclear"/>
+          <moduleRef key="core" include="abbr author biblStruct choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note num orig p pb ptr pubPlace publisher quote ref reg resp respStmt rs sic term title unclear"/>
           
           <elementSpec ident="abbr" module="core" mode="change">
 
@@ -757,7 +763,8 @@ Since the first paragraph of text extends across the page boundary, we place the
                 <!--TODO: Remove @ref once feasible-->
                 <sch:rule context="tei:abbr">
                   <sch:let name="content" value="string(.)"/>
-                  <sch:assert test="not(matches($content, '^\s*&amp;\s*$'))">ERROR: There is no need to tag ampersands when it means "and".</sch:assert>
+                  <sch:assert
+                    test="not(matches($content, '^\s*&amp;\s*$'))">ERROR: There is no need to tag ampersands when it means "and".</sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -810,6 +817,15 @@ Since the first paragraph of text extends across the page boundary, we place the
           </elementSpec>
           
           <elementSpec ident="rs" module="core" mode="change">
+            <constraintSpec ident="rs.familyNoRef" mode="change" scheme="schematron">
+              <desc>Family references should not have a ref.</desc>
+              <constraint>
+                <!--TODO: Remove @ref once feasible-->
+                <sch:rule context="tei:rs[@type='family']">
+                  <sch:assert test="not(@ref)">ERROR: Do not use a @ref attribute on for a family reference since it can't point to anything.</sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
             <attList>
               <attDef ident="type" mode="change" usage="req">
                 <valList mode="change">
@@ -829,6 +845,10 @@ Since the first paragraph of text extends across the page boundary, we place the
                     <gloss>object</gloss>
                     <desc>An indirect reference to an object (e.g. "that thing"); use &lt;name type="object"&gt; for direct references to objects (i.e. "Excalibur").</desc>
                   </valItem>
+                  <valItem mode="add" ident="family">
+                    <gloss>family</gloss>
+                    <desc>An reference to a family (e.g. "To my family").</desc>
+                  </valItem>
                 </valList>
               </attDef>
             </attList>
@@ -842,6 +862,7 @@ Since the first paragraph of text extends across the page boundary, we place the
                 <sch:rule context="tei:name[@ref]">
                   <sch:assert test="not(matches(@ref,'^prs:'))">ERROR: Use &lt;persName&gt; to tag names of people.</sch:assert>
                   <sch:assert test="not(matches(@ref,'^plc:'))">ERROR: Use &lt;placeName&gt; to tag names of places.</sch:assert>
+                  <sch:assert test="not(matches(@ref,'^org:'))">ERROR: Use &lt;orgName&gt; to tag names of organizations.</sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -917,7 +938,7 @@ Since the first paragraph of text extends across the page boundary, we place the
           
           <moduleRef
             key="namesdates" 
-            include="addName birth death faith floruit forename genName langKnowledge langKnown listOrg listPerson listPlace location nameLink nationality occupation org orgName persName person persona place placeName residence roleName sex surname"/>
+            include="addName affiliation birth death faith floruit forename genName langKnowledge langKnown listOrg listPerson listPlace location nameLink nationality occupation org orgName persName person persona place placeName residence roleName sex surname"/>
           
           <elementSpec ident="person" module="namesdates" mode="change">
             <content>
@@ -931,11 +952,14 @@ Since the first paragraph of text extends across the page boundary, we place the
                 <sch:rule context="tei:person[not(@role='contributor')]">
                   <sch:assert
                     test="matches(@xml:id,concat('^', $persIdPattern, '$'))">ERROR: All people must have an @xml:id of 5 uppercase letters and a number (e.g. FORBR1).</sch:assert>
-                  <sch:assert test="tei:langKnowledge">ERROR: People must contain a langKnowledge element.</sch:assert>
+                  <sch:assert
+                    test="tei:langKnowledge">ERROR: People must contain a langKnowledge element.</sch:assert>
                 </sch:rule>
                 <sch:rule context="tei:person[@role='contributor']">
-                  <sch:assert test="matches(@xml:id, '^[A-Z]{2}\d+$')">ERROR: All contributors must have an @xml:id of 2 uppercase letters and a number (e.g. LD1).</sch:assert>
-                  <sch:assert test="tei:persName and tei:note">ERROR: Contributors should only contain persName and note.</sch:assert>
+                  <sch:assert
+                    test="matches(@xml:id, '^[A-Z]{2}\d+$')">ERROR: All contributors must have an @xml:id of 2 uppercase letters and a number (e.g. LD1).</sch:assert>
+                  <sch:assert
+                    test="tei:persName and tei:note">ERROR: Contributors should only contain persName and note.</sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -955,11 +979,35 @@ Since the first paragraph of text extends across the page boundary, we place the
             </attList>
           </elementSpec>
           
+          
           <elementSpec ident="persona" module="namesdates" mode="change">
             <content>
               <macroRef key="lim.personMacro"/>
             </content>
           </elementSpec>
+          
+          
+          <macroSpec ident="lim.personMacro" module="lim" mode="add">
+            <content>
+              <elementRef key="persName" minOccurs="1" maxOccurs="unbounded"/>
+              <!--NOTE: preserveORder doesn't actually work, but there
+                may be a new element coming: see
+                https://github.com/TEIC/TEI/issues/2154 -->
+              <sequence preserveOrder="false">
+                <elementRef key="sex" minOccurs="0" maxOccurs="1"/>
+                <elementRef key="birth" minOccurs="0" maxOccurs="1"/>
+                <elementRef key="death" minOccurs="0" maxOccurs="1"/>
+                <elementRef key="faith" minOccurs="0" maxOccurs="unbounded"/>
+                <elementRef key="affiliation" minOccurs="0" maxOccurs="unbounded"/>
+                <elementRef key="occupation" minOccurs="0" maxOccurs="unbounded"/>
+                <elementRef key="nationality" minOccurs="0" maxOccurs="unbounded"/>
+                <elementRef key="residence" minOccurs="0" maxOccurs="unbounded"/>
+              </sequence>
+              <!--Always make langKnowledge and note come last-->
+              <elementRef key="langKnowledge" minOccurs="0" maxOccurs="1"/>
+              <elementRef key="note"/>
+            </content>
+          </macroSpec>
           
           <elementSpec ident="persName" module="namesdates" mode="change">
              <constraintSpec ident="persName.mustHaveRefWithPrs" mode="add" scheme="schematron">
@@ -971,7 +1019,17 @@ Since the first paragraph of text extends across the page boundary, we place the
                  </sch:rule>
                </constraint>
              </constraintSpec>
+            <constraintSpec ident="persName.dontUseRoleName" mode="add" scheme="schematron">
+              <desc>Do not use roleName, but use occupation instead.</desc>
+              <constraint>
+                <!--TODO: Remove @ref once feasible-->
+                <sch:rule context="tei:persName/tei:roleName">
+                  <sch:assert test="false()">ERROR: Rolenames should not be denoted in a persName directly; all role information should be encoded using the occupation element.</sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
           </elementSpec>
+          
           
           <elementSpec ident="sex" module="namesdates" mode="change">
             <classes>
@@ -1116,7 +1174,30 @@ Since the first paragraph of text extends across the page boundary, we place the
             </attList>
           </elementSpec>
           
-          
+          <elementSpec ident="affiliation" module="namesdates" mode="change">
+            <constraintSpec scheme="schematron" ident="orgs.mustHaveXmlIdAndProperlyNested">
+              <desc>orgs must have an xml:id that follows the 4 letters and digit pattern, but may be nested.</desc>
+              <constraint>
+                <sch:rule context="tei:affiliation[@type=('clan','army')]">
+                  <sch:assert test="matches(@ref,'org:')">ERROR: All <sch:value-of select="@type"/> affiliations must have a @ref that points to the org for that <sch:value-of select="@type"/>.</sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+              <attList>
+                <attDef ident="type" mode="change" usage="req">
+                  <valList type="closed" mode="replace">
+                    <valItem ident="clan" mode="add">
+                      <desc>clan</desc>
+                      <gloss>clan</gloss>
+                    </valItem>
+                    <valItem ident="army" mode="add">
+                      <desc>clan</desc>
+                      <gloss>clan</gloss>
+                    </valItem>
+                  </valList>
+                </attDef>
+              </attList>
+          </elementSpec>
           
           <elementSpec ident="langKnowledge" module="namesdates" mode="change">
             <classes mode="replace">
@@ -1134,6 +1215,56 @@ Since the first paragraph of text extends across the page boundary, we place the
               <attDef ident="level" mode="delete"/>
             </attList>
           </elementSpec>
+          
+          <!--ORGS -->
+          <elementSpec ident="org" module="namesdates" mode="change">
+            <content>
+              <!--Orgs must have an orgName-->
+              <elementRef key="orgName" minOccurs="1" maxOccurs="unbounded"/>
+              <!--Also needs a note-->
+              <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+              <!--And may include a ptrGrp-->
+              <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
+              <!--And may have a list of suborganizations below it-->
+              <elementRef key="listOrg" minOccurs="0" maxOccurs="1"/>
+            </content>
+            <attList>
+              <attDef ident="xml:id" mode="change" usage="req">
+                <constraintSpec scheme="schematron" ident="orgs.mustHaveXmlIdAndProperlyNested">
+                  <desc>orgs must have an xml:id that follows the 4 letters and digit pattern, but may be nested.</desc>
+                  <constraint>
+                    <sch:rule context="/tei:org">
+                      <sch:assert test="matches(@xml:id, concat('^', $orgIdPattern, '$'))">ERROR: All main orgs must have an id that is a sequence of four letter and a digit.</sch:assert>
+                    </sch:rule>
+                  </constraint>
+                </constraintSpec>
+                <constraintSpec scheme="schematron" ident="orgs.mustHaveXmlIdAndProperlyNested">
+                  <desc>org ids must be inherited.</desc>
+                  <constraint>
+                    <sch:rule context="tei:org/tei:listOrg/tei:org">
+                      <sch:let name="parentId" value="ancestor::tei:org[1]/@xml:id"/>
+                      <sch:assert test="starts-with(@xml:id, $parentId)">ERROR: All sub organization ids must start with the id of its parent organization.</sch:assert>
+                    </sch:rule>
+                  </constraint>
+                </constraintSpec>
+              </attDef>
+            </attList>
+          </elementSpec>
+          
+          <elementSpec ident="orgName" module="namesdates" mode="change">
+            <constraintSpec ident="placeName.mustHaveRefWithPlc" mode="add" scheme="schematron">
+              <desc>All inline placeNames must have a ref that points to the place db.</desc>
+              <constraint>
+                <!--TODO: Remove @ref once feasible-->
+                <sch:rule context="tei:orgName[not(parent::tei:org)][@ref]">
+                  <sch:let name="ptr" value="(@ref, @where)[1]"/>
+                  <sch:assert test="matches($ptr ,concat('^org:', $orgIdPattern, '$'))">ERROR: All <sch:name/> pointers must have an @<sch:value-of select="local-name($ptr)"/> that begins with "org:" followed by 4 uppercase letters and a number (e.g. org:CLAN1).</sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+            
+          </elementSpec>
+          
           
           <!--TODO: Figure out how best to represent nesting of places -->
           <elementSpec ident="place" module="namesdates" mode="change">
@@ -1584,22 +1715,7 @@ Since the first paragraph of text extends across the page boundary, we place the
            </attList> 
           </classSpec>
           
-          <macroSpec ident="lim.personMacro" module="lim" mode="add">
-            <content>
-              <elementRef key="persName" minOccurs="1" maxOccurs="unbounded"/>
-              <sequence preserveOrder="false">
-                <elementRef key="sex" minOccurs="0" maxOccurs="1"/>
-                <elementRef key="birth" minOccurs="0" maxOccurs="1"/>
-                <elementRef key="death" minOccurs="0" maxOccurs="1"/>
-                <elementRef key="faith" minOccurs="0" maxOccurs="unbounded"/>
-                <elementRef key="occupation" minOccurs="0" maxOccurs="unbounded"/>
-                <elementRef key="nationality" minOccurs="0" maxOccurs="unbounded"/>
-                <elementRef key="residence" minOccurs="0" maxOccurs="unbounded"/>
-                <elementRef key="langKnowledge" minOccurs="0" maxOccurs="1"/>
-              </sequence>
-              <elementRef key="note"/>
-            </content>
-          </macroSpec>
+
           
           
           <!--Global variables for constraints-->
@@ -1609,10 +1725,15 @@ Since the first paragraph of text extends across the page boundary, we place the
               <sch:pattern>
                 <sch:let name="id" value="/tei:*/@xml:id"/>
                 <sch:let name="uri" value="document-uri(/)"/>
-                <sch:let name="basename" value="tokenize($uri,'[/\\\.]')[last() - 1]"/>
+                <sch:let name="tokens" value="tokenize($uri,'[/\\\.]')"/>
+                <sch:let name="basename" value="$tokens[last() - 1]"/>
+                <sch:let name="dirName" value="$tokens[last() - 2]"/>
                 <sch:let name="placeIdPattern" value="'[A-Z]{4}\d+'"/>
+                <sch:let name="orgIdPattern" value="'[A-Z]{4}\d+'"/>
                 <sch:let name="persIdPattern" value="'[A-Z]{5}\d+'"/>
                 <sch:let name="cutoff" value="xs:date('1752-09-02')"/>
+
+                
                <!-- <sch:let name="pd" value="replace($uri,'^(.+[/\\]lim-tei[\\/]).+$', '$1')"/>
                 <sch:let name="dataDir" value="replace($pd,'(.+(.))$','$1data$2')"/>
                 <sch:let name="glyphs"
@@ -1629,10 +1750,40 @@ Since the first paragraph of text extends across the page boundary, we place the
             <constraint>
               <sch:pattern>
                 <sch:rule context="/tei:*">
+                  <sch:let name="rootEl" value="local-name()"/>
+                  <sch:let name="correctDir" value="
+                    if (self::tei:person and @role='contributor') then 'contributors'
+                    else if (self::tei:person) then 'people'
+                    else if (self::tei:place) then 'places'
+                    else if (self::tei:org) then 'orgs'
+                    else $dirName"/>
                   <sch:assert test="$basename = $id">
                     ERROR: Document's @xml:id (<sch:value-of select="$id"/>) must match the document's base filename
                     (<sch:value-of select="$basename"/>)
                   </sch:assert>
+                  <sch:assert test="$dirName = $correctDir">
+                    ERROR: All <sch:value-of select="if (self::person/@role) then @role else local-name()"/> files should added to the <sch:value-of select="$correctDir"/> folder. This file (<sch:value-of select="$id"/>) is in the <sch:value-of select="$dirName"/> folder.
+                  </sch:assert>
+                  <!--<sch:rule context="/tei:person[not(@role='contributor')]">
+                    <sch:assert test="$dirName = 'people'">
+                      ERROR: All people should be added to the /people/ folder. This is in the <sch:value-of select="$dirName"/> folder.
+                    </sch:assert>
+                  </sch:rule>
+                  <sch:rule context="/tei:person[@role='contributor']">
+                    <sch:assert test="$dirName = 'people'">
+                      ERROR: All contributors should be added to the /contributors/ folder. This is in the <sch:value-of select="$dirName"/> folder.
+                    </sch:assert>
+                  </sch:rule>
+                  <sch:rule context="/tei:org">
+                    <sch:assert test="$dirName = 'orgs'">
+                      ERROR: All orgs should be added to the /orgs/ folder. This is in the <sch:value-of select="$dirName"/> folder.
+                    </sch:assert>
+                  </sch:rule>
+                  <sch:rule context="/tei:place">
+                    <sch:assert test="$dirName = 'places'">
+                      ERROR: All places should be added to the /places/ folder. This is in the <sch:value-of select="$dirName"/> folder.
+                    </sch:assert>
+                  </sch:rule>-->
                 </sch:rule>
               </sch:pattern>
             </constraint>
