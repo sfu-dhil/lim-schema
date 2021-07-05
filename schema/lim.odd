@@ -1646,7 +1646,7 @@ Since the first paragraph of text extends across the page boundary, we place the
               <constraint>
                 <sch:pattern>
                   <sch:rule context="tei:div[@type='index']/tei:list/tei:item">
-                    <sch:assert test="count(tei:num) = 1">ERROR: All index items must contain one num element.</sch:assert>
+                    <sch:assert test="count(tei:num) gt 0">ERROR: All index items must contain at least one num element.</sch:assert>
                     <sch:assert test="count(descendant::tei:title) gt 0">ERROR: All index items must contain at least one title element.</sch:assert>
                   </sch:rule>
                 </sch:pattern>
@@ -1729,7 +1729,7 @@ Since the first paragraph of text extends across the page boundary, we place the
                 <sch:let name="basename" value="$tokens[last() - 1]"/>
                 <sch:let name="dirName" value="$tokens[last() - 2]"/>
                 <sch:let name="placeIdPattern" value="'[A-Z]{4}\d+'"/>
-                <sch:let name="orgIdPattern" value="'[A-Z]{4}\d+'"/>
+                <sch:let name="orgIdPattern" value="'[A-Z]{4}\d+(_.+)*'"/>
                 <sch:let name="persIdPattern" value="'[A-Z]{5}\d+'"/>
                 <sch:let name="cutoff" value="xs:date('1752-09-02')"/>
 
