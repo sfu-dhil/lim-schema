@@ -22,7 +22,65 @@
         <p>No source; born digital.</p>
       </sourceDesc>
     </fileDesc>
+
     <encodingDesc>
+      <classDecl>
+        <taxonomy>
+          <desc>Genre</desc>
+          <category xml:id="letter">
+            <catDesc>
+              <term>letter</term>
+              <gloss></gloss>
+            </catDesc>
+          </category>
+          <category xml:id="speech">
+            <catDesc>
+              <term>speech</term>
+              <gloss></gloss>
+            </catDesc>
+          </category>
+          <category xml:id="conversation">
+            <catDesc>
+              <term>conversation</term>
+            </catDesc>
+          </category>
+          <category xml:id="accountNarrative">
+            <catDesc>
+              <term>account/narrative</term>
+            </catDesc>
+          </category>
+          <category xml:id="text">
+            <catDesc>
+              <term>text</term>
+            </catDesc>
+            <category xml:id="text_poem">
+              <catDesc>
+                <term>poem</term>
+              </catDesc>
+            </category>
+            <category xml:id="text_song">
+              <catDesc>
+                <term>poem</term>
+              </catDesc>
+            </category>
+            <category xml:id="text_epitaph">
+              <catDesc>
+                <term>epitaph</term>
+              </catDesc>
+            </category>
+          </category>
+          <category xml:id="insert">
+            <catDesc>
+              <term>insert</term>
+            </catDesc>
+          </category>
+          <category xml:id="misc">
+            <catDesc>
+              <term>Miscellaneous</term>
+            </catDesc>
+          </category>
+        </taxonomy>
+      </classDecl>
       <tagsDecl>
         <rendition xml:id="rnd_code">
            font-family: monospace;
@@ -1725,14 +1783,13 @@ Since the first paragraph of text extends across the page boundary, we place the
               <sch:pattern>
                 <sch:let name="id" value="/tei:*/@xml:id"/>
                 <sch:let name="uri" value="document-uri(/)"/>
-                <sch:let name="tokens" value="tokenize($uri,'[/\\\.]')"/>
-                <sch:let name="basename" value="$tokens[last() - 1]"/>
-                <sch:let name="dirName" value="$tokens[last() - 2]"/>
+                <sch:let name="tokens" value="tokenize($uri,'[/\\]')"/>
+                <sch:let name="basename" value="replace($tokens[last()],'\.xm[l_]$','')"/>
+                <sch:let name="dirName" value="$tokens[last() - 1]"/>
                 <sch:let name="placeIdPattern" value="'[A-Z]{4}\d+'"/>
-                <sch:let name="orgIdPattern" value="'[A-Z]{4}\d+(_.+)*'"/>
+                <sch:let name="orgIdPattern" value="'[A-Z]{4}\d+(_[^_]+)*'"/>
                 <sch:let name="persIdPattern" value="'[A-Z]{5}\d+'"/>
                 <sch:let name="cutoff" value="xs:date('1752-09-02')"/>
-
                 
                <!-- <sch:let name="pd" value="replace($uri,'^(.+[/\\]lim-tei[\\/]).+$', '$1')"/>
                 <sch:let name="dataDir" value="replace($pd,'(.+(.))$','$1data$2')"/>
