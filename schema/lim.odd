@@ -164,7 +164,7 @@
           
           
           <!--CORE-->
-          <moduleRef key="core" include="abbr author biblStruct choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note num orig p pb ptr pubPlace publisher quote ref reg resp respStmt rs sic term title unclear"/>
+          <moduleRef key="core" include="abbr author bibl biblStruct choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note noteGrp num orig p pb ptr pubPlace publisher quote ref reg resp respStmt rs sic term time title unclear"/>
           
           <elementSpec ident="abbr" module="core" mode="change">
 
@@ -285,7 +285,7 @@
               </constraint>
             </constraintSpec>
             <attList>
-              <attDef ident="type" mode="change" usage="req">
+              <attDef ident="type" mode="change" usage="opt">
                 <valList type="closed" mode="add">
                   <valItem ident="event" mode="add">
                     <gloss>event</gloss>
@@ -346,19 +346,101 @@
           <!--Add quite a few of the header elements, but we may need more-->
           <moduleRef key="header" include="abstract catDesc catRef category change correspAction correspContext correspDesc encodingDesc fileDesc handNote idno listChange listPrefixDef notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
           
+          <elementSpec ident="correspAction" module="header" mode="change">
+             <classes mode="change">
+               <memberOf key="att.datable" mode="add"/>
+               <memberOf key="lim.att.locatable" mode="add"/>
+               <memberOf key="att.ascribed" mode="add"/>
+             </classes>
+            <content>
+              <!--Allow for empty content-->
+              <alternate>
+                <classRef key="model.correspActionPart"
+                  minOccurs="0" maxOccurs="unbounded"/>
+                <classRef key="model.pLike" minOccurs="0"
+                  maxOccurs="unbounded"/>
+              </alternate>
+            </content>
+          </elementSpec>
+          
+          <elementSpec ident="revisionDesc" mode="change" module="header">
+            
+            <content>
+              <elementRef key="change" minOccurs="1" maxOccurs="unbounded"/>
+            </content>
+            <constraintSpec ident="revisionDescStatusMustMatch" scheme="schematron">
+              <constraint>
+                <sch:pattern>
+                  <sch:rule context="tei:revisionDesc[@status]">
+                    <sch:let name="thisStatus" value="@status"/>
+                    <sch:let name="firstChange" value="tei:change[@status][1]"/>
+                    <sch:assert test="$firstChange/@status = $thisStatus">
+                      ERROR: The status attribute must match the @status of the latest change element.
+                    </sch:assert>
+                  </sch:rule>
+                </sch:pattern>
+              </constraint>
+            </constraintSpec>
+            <constraintSpec ident="revisionDescEarliest" scheme="schematron">
+              <constraint>
+                <sch:pattern>
+                  <sch:rule context="tei:revisionDesc[count(tei:change[@when]) gt 1]">
+                    <sch:let name="firstChange" value="tei:change[1]"/>
+                    <sch:let name="secondChange" value="tei:change[2]"/>
+                    <sch:let name="firstDate" value="xs:date(string-join((tokenize($firstChange/@when,'-'),'01','01')[position() lt 4],'-'))"/>
+                    <sch:let name="secondDate"
+                      value="xs:date(string-join((tokenize($firstChange/@when,'-'),'01','01')[position() lt 4],'-'))"/>
+                    <sch:assert test="($firstDate gt $secondDate) or ($firstDate = $secondDate)">
+                      ERROR: Change elements should be ordered reverse chronologically (latest first).
+                    </sch:assert>
+                  </sch:rule>
+                </sch:pattern>
+              </constraint>
+            </constraintSpec>
+            <attList>
+              <attDef ident="status" mode="change" usage="req"/>
+            </attList>
+          </elementSpec>
+          
+          <elementSpec ident="change" mode="change" module="header">
+            <constraintSpec ident="changeMustPointToTeam" scheme="schematron">
+              <constraint>
+                <sch:pattern>
+                  <sch:rule context="tei:change">
+                    <sch:assert 
+                      test="every $ptr in tokenize(@who,'\s+') satisfies matches($ptr,'^team:')">
+                      ERROR: Every pointer in change/@who must start with 'team:'.
+                    </sch:assert>
+                  </sch:rule>
+                </sch:pattern>
+              </constraint>
+            </constraintSpec>
+            <attList>
+              <attDef ident="status" mode="change" usage="req"/>
+              <attDef ident="who" mode="change" usage="req"/>
+              <attDef ident="when" mode="change" usage="req"/>
+            </attList>
+            
+            
+            
+          </elementSpec>
+          
 
 
-          <moduleRef key="linking" include="linkGrp ptr"/>
+          <moduleRef key="linking" include="standOff linkGrp ptr"/>
           
           <!--We may need some components from msdescription, but it depends-->
-          <!--<moduleRef key="msdescription"/>-->
+          <moduleRef key="msdescription" include="locus"/>
 
           
           <moduleRef
             key="namesdates" 
-            include="addName affiliation birth death faith floruit forename genName langKnowledge langKnown listOrg listPerson listPlace location nameLink nationality occupation org orgName persName person persona place placeName residence roleName sex surname"/>
+            include="addName affiliation birth death faith floruit forename genName langKnowledge langKnown listObject listOrg listPerson listPlace location nameLink nationality object objectName occupation org orgName persName person persona place placeName residence roleName sex surname"/>
           
           <elementSpec ident="person" module="namesdates" mode="change">
+            <classes mode="change">
+                <memberOf key="att.global.linking" mode="add"/>
+            </classes>
             <content>
               <macroRef key="lim.personMacro"/>
               <!--Add linkGrp optionally only for person, not persona-->
@@ -367,13 +449,13 @@
             <constraintSpec ident="person.constraints" scheme="schematron">
               <desc>Various constraints for the different models for contributors and non-contributors.</desc>
               <constraint>
-                <sch:rule context="tei:person[not(@role='contributor')]">
+                <sch:rule context="/tei:person[not(@role='contributor')]">
                   <sch:assert
                     test="matches(@xml:id,concat('^', $persIdPattern, '$'))">ERROR: All people must have an @xml:id of 5 uppercase letters and a number (e.g. FORBR1).</sch:assert>
                   <sch:assert
                     test="tei:langKnowledge">ERROR: People must contain a langKnowledge element.</sch:assert>
                 </sch:rule>
-                <sch:rule context="tei:person[@role='contributor']">
+                <sch:rule context="/tei:person[@role='contributor']">
                   <sch:assert
                     test="matches(@xml:id, '^[A-Z]{2}\d+$')">ERROR: All contributors must have an @xml:id of 2 uppercase letters and a number (e.g. LD1).</sch:assert>
                   <sch:assert
@@ -382,7 +464,6 @@
               </constraint>
             </constraintSpec>
             <attList>
-              <attDef ident="xml:id" mode="change" usage="req"/>
               <attDef ident="age" mode="delete"/>
               <!--Remove @sex, since we use the element instead-->
               <attDef ident="sex" mode="delete"/>
@@ -407,23 +488,24 @@
           
           <macroSpec ident="lim.personMacro" module="lim" mode="add">
             <content>
-              <elementRef key="persName" minOccurs="1" maxOccurs="unbounded"/>
-              <!--NOTE: preserveORder doesn't actually work, but there
+                  <elementRef key="persName" minOccurs="1" maxOccurs="unbounded"/>
+                  <!--NOTE: preserveORder doesn't actually work, but there
                 may be a new element coming: see
                 https://github.com/TEIC/TEI/issues/2154 -->
-              <sequence preserveOrder="false">
-                <elementRef key="sex" minOccurs="0" maxOccurs="1"/>
-                <elementRef key="birth" minOccurs="0" maxOccurs="1"/>
-                <elementRef key="death" minOccurs="0" maxOccurs="1"/>
-                <elementRef key="faith" minOccurs="0" maxOccurs="unbounded"/>
-                <elementRef key="affiliation" minOccurs="0" maxOccurs="unbounded"/>
-                <elementRef key="occupation" minOccurs="0" maxOccurs="unbounded"/>
-                <elementRef key="nationality" minOccurs="0" maxOccurs="unbounded"/>
-                <elementRef key="residence" minOccurs="0" maxOccurs="unbounded"/>
-              </sequence>
-              <!--Always make langKnowledge and note come last-->
-              <elementRef key="langKnowledge" minOccurs="0" maxOccurs="1"/>
-              <elementRef key="note"/>
+                  <sequence preserveOrder="false">
+                    <elementRef key="sex" minOccurs="0" maxOccurs="1"/>
+                    <elementRef key="birth" minOccurs="0" maxOccurs="1"/>
+                    <elementRef key="death" minOccurs="0" maxOccurs="1"/>
+                    <elementRef key="faith" minOccurs="0" maxOccurs="unbounded"/>
+                    <elementRef key="affiliation" minOccurs="0" maxOccurs="unbounded"/>
+                    <elementRef key="occupation" minOccurs="0" maxOccurs="unbounded"/>
+                    <elementRef key="nationality" minOccurs="0" maxOccurs="unbounded"/>
+                    <elementRef key="residence" minOccurs="0" maxOccurs="unbounded"/>
+                  </sequence>
+                  <!--Always make langKnowledge and note come last-->
+                  <elementRef key="langKnowledge" minOccurs="0" maxOccurs="1"/>
+                  <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+                
             </content>
           </macroSpec>
           
@@ -468,7 +550,7 @@
               <memberOf key="att.dimensions" mode="delete"/>
               <memberOf key="att.naming" mode="delete"/>
               <memberOf key="att.canonical" mode="delete"/>
-              <memberOf key="att.locatable" mode="add"/>
+              <memberOf key="lim.att.locatable" mode="add"/>
               <memberOf key="att.typed" mode="delete"/>
             </classes>
             <attList>
@@ -483,7 +565,7 @@
               <memberOf key="att.dimensions" mode="delete"/>
               <memberOf key="att.naming" mode="delete"/>
               <memberOf key="att.canonical" mode="delete"/>
-              <memberOf key="att.locatable" mode="add"/>
+              <memberOf key="lim.att.locatable" mode="add"/>
               <memberOf key="att.typed" mode="delete"/>
             </classes>
             <attList>
@@ -495,7 +577,7 @@
             <classes mode="change">
               <memberOf key="att.global" mode="delete"/>
               <!--Add custom att.locatable-->
-              <memberOf key="att.locatable" mode="add"/>
+              <memberOf key="lim.att.locatable" mode="add"/>
               <memberOf key="att.naming" mode="delete"/>
             </classes>
             <attList>
@@ -634,8 +716,23 @@
             </attList>
           </elementSpec>
           
+          <elementSpec ident="object" module="namesdates" mode="change">
+            <content>
+              <elementRef key="objectName" minOccurs="0" maxOccurs="1"/>
+              <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+              <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
+            </content>
+            <remarks mode="add">
+              <p>Our use of object is not TEI conformant, but the break is fairly
+                trivial: where objectName is simply used
+              instead of objectIdentifier/objectName.</p>
+            </remarks>
+          </elementSpec>          
           <!--ORGS -->
           <elementSpec ident="org" module="namesdates" mode="change">
+            <classes mode="change">
+              <memberOf key="att.global.linking" mode="add"/>
+            </classes>
             <content>
               <!--Orgs must have an orgName-->
               <elementRef key="orgName" minOccurs="1" maxOccurs="unbounded"/>
@@ -691,24 +788,23 @@
               <memberOf key="att.typed" mode="delete"/>
               <memberOf key="att.global.analytic" mode="delete"/>
               <memberOf key="att.global.source" mode="delete"/>
+              <memberOf key="att.global.linking" mode="add"/>
             </classes>
             <content>
-              <elementRef key="placeName" minOccurs="1" maxOccurs="unbounded"/>
+              <elementRef key="placeName" minOccurs="0" maxOccurs="unbounded"/>
               <elementRef key="note" minOccurs="0" maxOccurs="1"/>
               <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
             </content>
             <constraintSpec ident="place.mustHaveProperId" scheme="schematron">
               <desc>All people must have a proper id.</desc>
               <constraint>
-                <sch:rule context="tei:place">
+                <sch:rule context="/tei:place">
                   <sch:assert
                     test="matches(@xml:id,concat('^', $placeIdPattern, '$'))">ERROR: All people must have an @xml:id of 4 uppercase letters and a number (e.g. LEIT1).</sch:assert>
+                  <sch:assert test="tei:placeName">ERROR: All places must have a placeName.</sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <attList>
-              <attDef ident="xml:id" mode="change" usage="req"/>
-            </attList>
           </elementSpec>
           
           <elementSpec ident="placeName" module="namesdates" mode="change">
@@ -807,6 +903,26 @@
             mode="delete"/>
           <classSpec ident="att.datcat" module="tei"
             type="atts" mode="delete"/>
+          <classSpec ident="att.docStatus" module="tei" type="atts" mode="change">
+            <attList>
+              <attDef ident="status" mode="change" usage="rec">
+                <valList>
+                  <valItem ident="empty" mode="add">
+                    <desc>empty</desc>
+                    <gloss>empty/not yet worked on.</gloss>
+                  </valItem>
+                  <valItem ident="metadataInProgress" mode="add">
+                    <desc>metadata in progress</desc>
+                    <gloss>currently being worked on, but not yet "done"</gloss>
+                  </valItem>
+                  <valItem ident="metadataDone" mode="add">
+                    <desc>metadata done</desc>
+                    <gloss>Metadata for this item has been completed.</gloss>
+                  </valItem>
+                </valList>
+              </attDef>
+            </attList>
+          </classSpec>
           <classSpec ident="att.declarable" module="tei" type="atts"
             mode="delete"/>
           <classSpec ident="att.declaring" module="tei" type="atts"
@@ -886,7 +1002,6 @@
             <attList>
               <attDef ident="synch" mode="delete"/>
               <attDef ident="sameAs" mode="delete"/>
-              <attDef ident="copyOf" mode="delete"/>
               <attDef ident="next" mode="delete"/>
               <attDef ident="prev" mode="delete"/>
               <attDef ident="exclude" mode="delete"/>
@@ -1019,6 +1134,10 @@
                     <desc>ghc</desc>
                     <gloss>Hiberno-Scottish Gaelic</gloss>
                   </valItem>
+                  <valItem ident="it">
+                    <desc>it</desc>
+                    <gloss>Italian</gloss>
+                  </valItem>
                 </valList>
               </alternate>
             </content>
@@ -1122,7 +1241,7 @@
           
           <!-- CUSTOM CLASS SPECIFICATION:
             att.locatable-->
-          <classSpec ident="att.locatable" module="lim" type="atts" mode="add">
+          <classSpec ident="lim.att.locatable" module="lim" type="atts" mode="add">
            <attList>
              <attDef ident="where" usage="opt">
                <desc versionDate="2007-06-11" xml:lang="en">indicates the location of an event by pointing to a <gi>place</gi> element</desc>
@@ -1132,6 +1251,362 @@
              </attDef>
            </attList> 
           </classSpec>
+          
+          
+          <elementSpec ident="noteGrp" module="core" mode="change">
+            <classes mode="change">
+              <memberOf key="lim.att.boolean" mode="add"/>
+            </classes>
+            <content>
+              <elementRef key="note" minOccurs="0" maxOccurs="unbounded"/>
+            </content>
+            
+          </elementSpec>
+          
+          <classSpec ident="lim.att.boolean" mode="add" module="lim" type="atts">
+            <attList>
+              <attDef ident="value" usage="rec">
+                <datatype>
+                  <dataRef key="teidata.xTruthValue"/>
+                </datatype>
+              </attDef>
+            </attList>
+            
+          </classSpec>
+          
+          
+          
+          <elementSpec ident="profileDesc" module="header" mode="change">
+            <content>
+              <!--Must have a textClass-->
+              <elementRef key="locus" minOccurs="1" maxOccurs="2"/>
+              <elementRef key="abstact" minOccurs="0" maxOccurs="1"/>
+              <elementRef key="limItem"/>
+            </content>
+          </elementSpec>
+          
+          <elementSpec ident="textClass" module="header" mode="change">
+            <!--Add constraints to force either a correspDesc or a settingDesc-->
+          </elementSpec>
+          
+          <elementSpec ident="limItem" module="lim" mode="add">
+            <desc>contains a set of descriptional elements for a text that serves as the basis for a containing text.</desc>
+            <classes>
+              <memberOf key="att.typed"/>
+            </classes>
+            <content>
+                <sequence preserveOrder="false">
+                  <alternate>
+                    <elementRef key="correspDesc" minOccurs="0" maxOccurs="1"/>
+                    <elementRef key="settingDesc" minOccurs="0" maxOccurs="1"/>
+                  </alternate>
+                  <elementRef key="noteGrp" minOccurs="0" maxOccurs="unbounded"/>
+                  <elementRef key="placeName" minOccurs="0" maxOccurs="unbounded"/>
+                  <elementRef key="date" minOccurs="0" maxOccurs="1"/>
+                  <elementRef key="author" minOccurs="0" maxOccurs="unbounded"/>
+                  <elementRef key="limItem" minOccurs="0" maxOccurs="unbounded"/>
+                  <elementRef key="note" minOccurs="0" maxOccurs="unbounded"/>
+                  <elementRef key="bibl" minOccurs="0" maxOccurs="1"/>
+                </sequence>
+            </content>
+            
+          </elementSpec>
+          
+          <constraintSpec ident="metadataContraints" module="lim" mode="add" scheme="schematron">
+            <desc>Set of constraints for profileDesc / premediation.</desc>
+            <constraint>
+              <sch:pattern>
+                <sch:rule context="tei:limItem">
+                  <sch:let name="genre" value="@type"/>
+                  <sch:assert test="if (matches($genre, 'Letter')) then tei:correspDesc else true()">
+                    ERROR: All letters must have a correspDesc.
+                  </sch:assert>
+                  <sch:assert test="if (matches($genre,'Speech|Account|Conversation')) then tei:settingDesc else true()">
+                    ERROR: All <sch:value-of select="$genre"/> must have a settingDesc.
+                  </sch:assert>
+                </sch:rule>
+              </sch:pattern>
+            </constraint>
+            
+          </constraintSpec>
+          
+          
+          <elementSpec ident="settingDesc" module="corpus" mode="change">
+            <content>
+                <elementRef key="setting"/>
+            </content>
+          </elementSpec>
+          
+          <elementSpec ident="setting" module="corpus" mode="change">
+            <constraintSpec ident="scaffold.mustHaveTrialPlace" scheme="schematron">
+              <constraint>
+                <sch:pattern>
+                  <sch:rule context="tei:setting[../../tei:textClass/tei:catRef[matches(@target,'Speech')]]">
+                    <sch:assert test="tei:scaffold">
+                      ERROR: All speeches must have a scaffold element.
+                    </sch:assert>
+                  </sch:rule>
+                </sch:pattern>
+              </constraint>
+            </constraintSpec>
+            
+          </elementSpec>
+          
+          <elementSpec ident="duration" module="lim" mode="add">
+            <classes>
+              <memberOf key="model.settingPart"/>
+            </classes>
+            <content>
+              <macroRef key="macro.paraContent"/>
+            </content>         
+          </elementSpec>
+          
+          
+          <elementSpec ident="scaffold" module="lim" mode="add">
+            <classes>
+              <memberOf key="model.settingPart"/>
+            </classes>
+            <content>
+              <elementRef key="placeName" minOccurs="0" maxOccurs="1"/>
+            </content>
+            <constraintSpec ident="scaffold.mustHaveTrialPlace" scheme="schematron">
+              <constraint>
+                <sch:pattern>
+                  <sch:rule context="tei:scaffold[@value = 'true']">
+                    <sch:assert test="tei:placeName">
+                      ERROR: If this is a scaffold speech, then it must have a placeName associated
+                      for the location of the trial.
+                    </sch:assert>
+                  </sch:rule>
+                </sch:pattern>
+              </constraint>
+            </constraintSpec>
+            <attList>
+              <attDef ident="value">
+                <datatype>
+                  <dataRef key="teidata.xTruthValue"/>
+                </datatype>
+              </attDef>
+            </attList>
+          </elementSpec>
+          
+          <elementSpec ident="standOff" module="linking" mode="change">
+            <constraintSpec ident="standoff.elementsMustUseCopyOfORHaveAPersName" scheme="schematron">
+              <constraint>
+                <sch:pattern>
+                  <sch:rule context="tei:standOff/tei:*[not(self::tei:listQuote)]/tei:*[not(self::tei:head)]">
+                    <sch:assert test="@copyOf or tei:*">
+                      ERROR: <sch:name/> elements need either a @copyOf that points to an existing <sch:name/> OR content.
+                    </sch:assert>
+                    <sch:assert test="not(@copyOf and tei:*)">
+                      ERROR: <sch:name/> elements should have either a <sch:name/>Name element OR a @copyOf, but not both.
+                    </sch:assert>
+                  </sch:rule>
+                </sch:pattern>
+              </constraint>
+            </constraintSpec>
+          </elementSpec>
+          
+          <elementSpec ident="listPerson" mode="change" module="namesdates">
+            <content>
+              <sequence>
+                <elementRef key="head" minOccurs="0" maxOccurs="1"/>
+                <elementRef key="person" minOccurs="0" maxOccurs="unbounded"/>
+              </sequence>
+            </content>
+          </elementSpec>
+          
+          <elementSpec ident="listPlace" mode="change" module="namesdates">
+            <content>
+              <sequence>
+                <elementRef key="head" minOccurs="0" maxOccurs="1"/>
+                <elementRef key="place" minOccurs="0" maxOccurs="unbounded"/>
+              </sequence>
+            </content>
+          </elementSpec>
+          
+          <elementSpec ident="listObject" mode="change" module="namesdates">
+            <content>
+              <sequence>
+                <elementRef key="head" minOccurs="0" maxOccurs="1"/>
+                <elementRef key="object" minOccurs="0" maxOccurs="unbounded"/>
+              </sequence>
+            </content>
+          </elementSpec>
+ 
+          <elementSpec ident="listQuote" module="lim" mode="add">
+            <gloss>list of quotations</gloss>
+            <desc>contains a list of quotations from the item</desc>
+            <content>
+              <elementRef key="quote" minOccurs="0" maxOccurs="unbounded"/>
+            </content>
+          </elementSpec>
+          
+          <elementSpec ident="quote" module="core" mode="change">
+            <classes mode="change">
+              <memberOf key="att.citing"/>
+            </classes>
+          </elementSpec>
+          
+          
+        <!--  <elementSpec ident="textClass" module="header" mode="change">
+            <content>
+              <sequence>
+                <elementRef key="genre"/>
+                <alternate>
+                  <sequence>
+                      <elementRef key="compliments"/>
+                      <elementRef key="requests"/>
+                  </sequence>
+                  <elementRef key="placeName"/>
+                </alternate>
+                <elementRef key="enclosures" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+            </content>
+          </elementSpec>
+<!-\-         
+          
+          <elementSpec ident="genre" module="lim" mode="add">
+            <content>
+              <empty/>
+            </content>
+            <attList org="choice">
+              <attList org="group">
+                <attDef ident="type" mode="add" usage="req">
+                  <valList type="closed">
+                    <valItem ident="educator"/>
+                  </valList>
+                </attDef>
+                <attDef ident="subtype" mode="add" usage="opt">
+                  <datatype>
+                    <dataRef name="string"/>
+                  </datatype>
+                  <valList type="semi">
+                    <valItem ident="teacher">
+                      <gloss>with type="educator".</gloss>
+                    </valItem>
+                    <valItem ident="schoolHead">
+                      <gloss>with type="educator". (for headmistress, schoolmaster, etc.)</gloss>
+                    </valItem>
+                    <valItem ident="governess">
+                      <gloss>with type="educator".</gloss>
+                    </valItem>
+                    <valItem ident="tutor">
+                      <gloss>with type="educator".</gloss>
+                    </valItem>
+                    <valItem ident="lecturer">
+                      <gloss>with type="educator". For public lecturers on educational topics.</gloss>
+                    </valItem>                          
+                  </valList>
+                </attDef>
+              </attList>
+              <attList org="group">
+                <attDef ident="type" mode="add" usage="req">
+                  <valList type="closed">
+                    <valItem ident="explorer"/>
+                  </valList>
+                </attDef>
+                <attDef ident="subtype" mode="add" usage="opt">
+                  <datatype>
+                    <dataRef name="string"/>
+                  </datatype>
+                  <valList type="semi">
+                    <valItem ident="traveller">
+                      <gloss>with type="explorer".</gloss>
+                    </valItem>
+                    <valItem ident="navigator">
+                      <gloss>with type="explorer".</gloss>
+                    </valItem>
+                    <valItem ident="cartographer">
+                      <gloss>with type="explorer".</gloss>
+                    </valItem>
+                    <valItem ident="seaCaptain"> 
+                      <gloss>with type="explorer". Commands a ship, distinct from military post.</gloss>
+                    </valItem>
+                  </valList>
+                </attDef>
+              </attList>
+              <attList org="group">
+                <attDef ident="type" mode="add" usage="req">
+                  <valList type="closed">
+                    <valItem ident="scholar"/>
+                  </valList>
+                </attDef>
+                <attDef ident="subtype" mode="add" usage="opt">
+                  <datatype>
+                    <dataRef name="string"/>
+                  </datatype>
+                  <valList type="semi"> 
+                    <valItem ident="philosopher">
+                      <gloss>with type="scholar". Distinct from natural philosopher.</gloss>
+                    </valItem>
+                    <valItem ident="naturalist">
+                      <gloss>with type="scholar". Covers the natural sciences and earth sciences, and includes biologist, botanist, ornithologist, geologist, etc.</gloss>
+                    </valItem>
+                    <valItem ident="astronomer">
+                      <gloss>with type="scholar".</gloss>
+                    </valItem></valList>
+                </attDef>
+              </attList>
+            </attList>
+          </elementSpec>-\->-->
+          
+          <elementSpec ident="enclosures" module="lim" mode="add">
+            <classes>
+              <memberOf key="model.correspDescPart"/>
+            </classes>
+            <content>
+              <elementRef key="enclosure" minOccurs="0" maxOccurs="unbounded"/>
+            </content>
+          </elementSpec>
+          
+          <elementSpec ident="compliments" module="lim" mode="add">
+            <classes>
+              <memberOf key="model.correspDescPart"/>
+            </classes>
+            <content>
+              <elementRef key="compliment" minOccurs="0" maxOccurs="unbounded"/>
+            </content>
+          </elementSpec>
+          
+          <elementSpec ident="requests" module="lim" mode="add">
+            <classes>
+              <memberOf key="model.correspDescPart"/>
+            </classes>
+             <content>
+               <elementRef key="request" minOccurs="0" maxOccurs="unbounded"/>
+             </content>
+          </elementSpec>
+          
+          <elementSpec ident="compliment" module="lim" mode="add">
+            <classes>
+              <memberOf key="att.global"/>
+              <memberOf key="att.ascribed.directed"/>
+            </classes>
+            <content>
+              <macroRef key="macro.specialPara"/>
+            </content>
+          </elementSpec>
+          
+          <elementSpec ident="enclosure" module="lim" mode="add">
+            <classes>
+              <memberOf key="att.global"/>
+            </classes>
+            <content>
+              <macroRef key="macro.specialPara"/>
+            </content>
+          </elementSpec>
+          
+          <elementSpec ident="request" module="lim" mode="add">
+            <classes>
+              <memberOf key="att.global"/>
+              <memberOf key="att.ascribed.directed"/>
+            </classes>
+            <content>
+              <macroRef key="macro.specialPara"/>
+            </content>
+          </elementSpec>
+          
           
 
           
