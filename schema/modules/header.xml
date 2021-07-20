@@ -24,7 +24,8 @@
             <head>header</head>
             <schemaSpec ident="lim_header">
                <moduleRef key="header"
-                          include="abstract catDesc catRef category change correspAction correspContext correspDesc encodingDesc fileDesc handNote idno listChange listPrefixDef notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
+                  include="abstract catDesc catRef category change correspAction correspContext correspDesc encodingDesc fileDesc handNote idno listChange listPrefixDef notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
+               
                <elementSpec ident="correspAction" module="header" mode="change">
                   <classes mode="change">
                      <memberOf key="att.datable" mode="add"/>
@@ -32,21 +33,22 @@
                      <memberOf key="att.ascribed" mode="add"/>
                   </classes>
                   <content>
-              <!--Allow for empty content-->
+                     <!--Allow for empty content-->
                      <alternate>
                         <classRef key="model.correspActionPart" minOccurs="0" maxOccurs="unbounded"/>
                         <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
                      </alternate>
                   </content>
                </elementSpec>
+               
                <elementSpec ident="change" mode="change" module="header">
                   <constraintSpec ident="changeMustPointToTeam" scheme="schematron">
                      <constraint>
                         <sch:pattern>
                            <sch:rule context="tei:change">
                               <sch:assert test="every $ptr in tokenize(@who,'\s+') satisfies matches($ptr,'^team:')">
-                      ERROR: Every pointer in change/@who must start with 'team:'.
-                    </sch:assert>
+                                 ERROR: Every pointer in change/@who must start with 'team:'.
+                              </sch:assert>
                            </sch:rule>
                         </sch:pattern>
                      </constraint>
@@ -57,14 +59,16 @@
                      <attDef ident="when" mode="change" usage="req"/>
                   </attList>
                </elementSpec>
+               
                <elementSpec ident="profileDesc" module="header" mode="change">
                   <content>
-              <!--Must have a textClass-->
+                     <!--Must have a textClass-->
                      <elementRef key="locus" minOccurs="1" maxOccurs="2"/>
                      <elementRef key="abstact" minOccurs="0" maxOccurs="1"/>
                      <elementRef key="limItem"/>
                   </content>
                </elementSpec>
+               
                <elementSpec ident="revisionDesc" mode="change" module="header">
                   <content>
                      <elementRef key="change" minOccurs="1" maxOccurs="unbounded"/>
@@ -76,8 +80,8 @@
                               <sch:let name="thisStatus" value="@status"/>
                               <sch:let name="firstChange" value="tei:change[@status][1]"/>
                               <sch:assert test="$firstChange/@status = $thisStatus">
-                      ERROR: The status attribute must match the @status of the latest change element.
-                    </sch:assert>
+                                 ERROR: The status attribute must match the @status of the latest change element.
+                              </sch:assert>
                            </sch:rule>
                         </sch:pattern>
                      </constraint>
@@ -89,12 +93,12 @@
                               <sch:let name="firstChange" value="tei:change[1]"/>
                               <sch:let name="secondChange" value="tei:change[2]"/>
                               <sch:let name="firstDate"
-                                       value="xs:date(string-join((tokenize($firstChange/@when,'-'),'01','01')[position() lt 4],'-'))"/>
+                                 value="xs:date(string-join((tokenize($firstChange/@when,'-'),'01','01')[position() lt 4],'-'))"/>
                               <sch:let name="secondDate"
-                                       value="xs:date(string-join((tokenize($firstChange/@when,'-'),'01','01')[position() lt 4],'-'))"/>
+                                 value="xs:date(string-join((tokenize($firstChange/@when,'-'),'01','01')[position() lt 4],'-'))"/>
                               <sch:assert test="($firstDate gt $secondDate) or ($firstDate = $secondDate)">
-                      ERROR: Change elements should be ordered reverse chronologically (latest first).
-                    </sch:assert>
+                                 ERROR: Change elements should be ordered reverse chronologically (latest first).
+                              </sch:assert>
                            </sch:rule>
                         </sch:pattern>
                      </constraint>
@@ -104,8 +108,8 @@
                   </attList>
                </elementSpec>
                <elementSpec ident="textClass" module="header" mode="change">
-            <!--Add constraints to force either a correspDesc or a settingDesc-->
-          </elementSpec>
+                  <!--Add constraints to force either a correspDesc or a settingDesc-->
+               </elementSpec>
             </schemaSpec>
          </div>
       </body>

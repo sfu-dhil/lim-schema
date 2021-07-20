@@ -50,6 +50,7 @@
                      <attDef ident="force" mode="change" usage="req"/>
                   </attList>
                </elementSpec>
+               
                <classSpec ident="att.linguistic"
                           module="analysis"
                           type="atts"

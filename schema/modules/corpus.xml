@@ -23,7 +23,8 @@
          <div>
             <head>corpus</head>
             <schemaSpec ident="lim_corpus">
-               <moduleRef key="corpus"/>
+               <moduleRef key="corpus" include="activity setting settingDesc"/>
+               
                <elementSpec ident="settingDesc" module="corpus" mode="change">
                   <content>
                      <elementRef key="setting" minOccurs="1" maxOccurs="unbounded"/>
@@ -34,9 +35,7 @@
                      <constraint>
                         <sch:pattern>
                            <sch:rule context="tei:setting[ancestor::tei:limItem[matches(@type,'speech')]]">
-                              <sch:assert test="tei:scaffold">
-                      ERROR: All speeches must have a scaffold element.
-                    </sch:assert>
+                              <sch:assert test="tei:scaffold">ERROR: All speeches must have a scaffold element.</sch:assert>
                            </sch:rule>
                         </sch:pattern>
                      </constraint>

@@ -23,13 +23,9 @@
          <div>
             <head>lim</head>
             <schemaSpec ident="lim_lim">
-               <elementSpec ident="listQuote" module="lim" mode="add">
-                  <gloss>list of quotations</gloss>
-                  <desc>contains a list of quotations from the item</desc>
-                  <content>
-                     <elementRef key="quote" minOccurs="0" maxOccurs="unbounded"/>
-                  </content>
-               </elementSpec>
+               
+               <moduleSpec ident="lim"/>
+               
                <elementSpec ident="limItem" module="lim" mode="add">
                   <desc>contains a set of descriptional elements for a text that serves as the basis for a containing text.</desc>
                   <classes>
@@ -122,6 +118,7 @@
                <elementSpec ident="scaffold" module="lim" mode="add">
                   <classes>
                      <memberOf key="model.settingPart"/>
+                     <memberOf key="lim.att.locatable"/>
                   </classes>
                   <content>
                      <elementRef key="placeName" minOccurs="0" maxOccurs="1"/>
@@ -143,6 +140,37 @@
                         <datatype>
                            <dataRef key="teidata.xTruthValue"/>
                         </datatype>
+                     </attDef>
+                     <attDef ident="where" mode="change">
+                        <datatype>
+                           <dataRef key="teidata.pointer"/>
+                        </datatype>
+                        <valList mode="add" type="semi">
+                           <valItem ident="plc:TOWE1" mode="add">
+                              <desc>Tower of London</desc>
+                              <gloss>Tower of London</gloss>
+                           </valItem>
+                           <valItem ident="plc:KENN1" mode="add">
+                              <desc>Kennington Common</desc>
+                              <gloss>Kennington Common</gloss>
+                           </valItem>
+                           <valItem ident="plc:CARL2" mode="add">
+                              <desc>Carlisle</desc>
+                              <gloss>Carlisle</gloss>
+                           </valItem>
+                           <valItem ident="plc:BRAM1" mode="add">
+                              <desc>Brampton</desc>
+                              <gloss>Brampton</gloss>
+                           </valItem>
+                           <valItem ident="plc:PENR1" mode="add">
+                              <desc>Penrith</desc>
+                              <gloss>Penrith</gloss>
+                           </valItem>
+                           <valItem ident="plc:YORK1" mode="add">
+                              <desc>York</desc>
+                              <gloss>York</gloss>
+                           </valItem>
+                        </valList>
                      </attDef>
                   </attList>
                </elementSpec>
@@ -170,19 +198,7 @@
                      <elementRef key="enclosure" minOccurs="0" maxOccurs="unbounded"/>
                   </content>
                </elementSpec>
-               <classSpec ident="att.global.facs" type="atts" mode="change">
-            <!--Restrict the use of @facs to only allow lib:-->
-                  <attList>
-                     <attDef ident="facs" mode="change">
-                        <datatype maxOccurs="1">
-                           <dataRef name="token" restriction="lib:\d+"/>
-                        </datatype>
-                     </attDef>
-                  </attList>
-                  <remarks>
-                     <p>The facs attribute should contain only a single pointer of the form lib:\d+ (i.e. lib: followed by 1 or more digit).</p>
-                  </remarks>
-               </classSpec>
+  
                <constraintSpec scheme="schematron" ident="global.rootIdMustMatchDocument">
                   <desc>The rootid must be the same as the document's name.</desc>
                   <constraint>
@@ -255,7 +271,38 @@
                      </sch:pattern>
                   </constraint>
                </constraintSpec>
-               <moduleSpec ident="lim"/>
+               <constraintSpec ident="metadataContraints"
+                  module="lim"
+                  mode="add"
+                  scheme="schematron">
+                  <desc>Set of constraints for profileDesc / premediation.</desc>
+                  <constraint>
+                     <sch:pattern>
+                        <sch:rule context="tei:limItem">
+                           <sch:let name="genre" value="@type"/>
+                           <sch:assert test="if (matches($genre, 'letter','i')) then tei:correspDesc else true()">
+                              ERROR: All letters must have a correspDesc.
+                           </sch:assert>
+                           <sch:assert test="if (matches($genre,'Speech|Account|Conversation','i')) then tei:settingDesc else true()">
+                              ERROR: All <sch:value-of select="$genre"/> must have a settingDesc.
+                           </sch:assert>
+                        </sch:rule>
+                     </sch:pattern>
+                  </constraint>
+               </constraintSpec>
+               <classSpec ident="att.global.facs" type="atts" mode="change">
+                  <!--Restrict the use of @facs to only allow lib:-->
+                  <attList>
+                     <attDef ident="facs" mode="change">
+                        <datatype maxOccurs="1">
+                           <dataRef name="token" restriction="lib:\d+"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+                  <remarks>
+                     <p>The facs attribute should contain only a single pointer of the form lib:\d+ (i.e. lib: followed by 1 or more digit).</p>
+                  </remarks>
+               </classSpec>
                <classSpec ident="lim.att.boolean" mode="add" module="lim" type="atts">
                   <attList>
                      <attDef ident="value" usage="rec">
@@ -296,25 +343,7 @@
                      <elementRef key="note" minOccurs="0" maxOccurs="1"/>
                   </content>
                </macroSpec>
-               <constraintSpec ident="metadataContraints"
-                               module="lim"
-                               mode="add"
-                               scheme="schematron">
-                  <desc>Set of constraints for profileDesc / premediation.</desc>
-                  <constraint>
-                     <sch:pattern>
-                        <sch:rule context="tei:limItem">
-                           <sch:let name="genre" value="@type"/>
-                           <sch:assert test="if (matches($genre, 'letter','i')) then tei:correspDesc else true()">
-                    ERROR: All letters must have a correspDesc.
-                  </sch:assert>
-                           <sch:assert test="if (matches($genre,'Speech|Account|Conversation','i')) then tei:settingDesc else true()">
-                    ERROR: All <sch:value-of select="$genre"/> must have a settingDesc.
-                  </sch:assert>
-                        </sch:rule>
-                     </sch:pattern>
-                  </constraint>
-               </constraintSpec>
+               
             </schemaSpec>
          </div>
       </body>
