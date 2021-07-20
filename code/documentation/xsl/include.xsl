@@ -20,7 +20,7 @@
     
     <xsl:variable name="docUri" select="document-uri(/)"/>
     
-    <xsl:template match="/">
+    <xsl:template match="/" priority="0">
         <xsl:apply-templates mode="include"/>
     </xsl:template>
     
