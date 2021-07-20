@@ -9,7 +9,7 @@
     <property name="lib.dir" value="${basedir}/lib"/>
     <property name="dataDir" value="${basedir}/data"/>
     <property name="schemaDir" value="${basedir}/schema"/>
-    <property name="TEIStylesheets" value="https://raw.githubusercontent.com/TEIC/Stylesheets/released"/>
+    <property name="TEIStylesheets" value="${basedir}/Stylesheets/"/>
     <property name="saxon" value="${lib.dir}/saxon10HE.jar"/>
     
     <target name="install">
@@ -33,10 +33,16 @@
             Creates the schema using the TEI Stylesheets repository
             (first expanding, and then convert to RelaxNG)
         </description>
-        <echo>Expanding ODD...</echo>
+        <echo>Fetching modules</echo>
+        <java jar="${saxon}" fork="true">
+            <arg line="-xsl:${basedir}/code/documentation/xsl/include.xsl"/>
+            <arg line="-s:${schemaDir}/lim.odd"/>
+            <arg line="-o:${schemaDir}/lim.included.odd"/>
+        </java>
+        <echo>Expanding ODD</echo>
         <java jar="${saxon}" fork="true">
             <arg line="-xsl:${TEIStylesheets}/odds/odd2odd.xsl"/>
-            <arg line="-s:${schemaDir}/lim.odd"/>
+            <arg line="-s:${schemaDir}/lim.included.odd"/>
             <arg line="-o:${schemaDir}/lim.expanded.odd"/>
         </java>
         <echo>Building RNG</echo>

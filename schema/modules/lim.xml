@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     xml:id="lim">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>LiM Schema: lim</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>See lim.odd</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Born Digital.</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <div>
+            <head>lim</head>
+            <schemaSpec ident="lim_lim">
+               <elementSpec ident="listQuote" module="lim" mode="add">
+                  <gloss>list of quotations</gloss>
+                  <desc>contains a list of quotations from the item</desc>
+                  <content>
+                     <elementRef key="quote" minOccurs="0" maxOccurs="unbounded"/>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="limItem" module="lim" mode="add">
+                  <desc>contains a set of descriptional elements for a text that serves as the basis for a containing text.</desc>
+                  <classes>
+                     <memberOf key="att.typed"/>
+                  </classes>
+                  <content>
+                     <sequence preserveOrder="false">
+                        <alternate>
+                           <elementRef key="correspDesc" minOccurs="0" maxOccurs="1"/>
+                           <elementRef key="settingDesc" minOccurs="0" maxOccurs="1"/>
+                        </alternate>
+                        <elementRef key="noteGrp" minOccurs="0" maxOccurs="unbounded"/>
+                        <elementRef key="placeName" minOccurs="0" maxOccurs="unbounded"/>
+                        <elementRef key="date" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="author" minOccurs="0" maxOccurs="unbounded"/>
+                        <elementRef key="limItem" minOccurs="0" maxOccurs="unbounded"/>
+                        <elementRef key="note" minOccurs="0" maxOccurs="unbounded"/>
+                        <elementRef key="bibl" minOccurs="0" maxOccurs="1"/>
+                     </sequence>
+                  </content>
+                  <attList>
+                     <attDef ident="type" mode="change">
+                        <valList type="closed" mode="add">
+                           <valItem ident="poemSongEpitaph" mode="add">
+                              <desc>poemSongEpitaph</desc>
+                              <gloss>poemSongEpitaph</gloss>
+                           </valItem>
+                           <valItem ident="letter" mode="add">
+                              <desc>letter</desc>
+                              <gloss>letter</gloss>
+                           </valItem>
+                           <valItem ident="accountNarrative" mode="add">
+                              <desc>accountNarrative</desc>
+                              <gloss>accountNarrative</gloss>
+                           </valItem>
+                           <valItem ident="speech" mode="add">
+                              <desc>speech</desc>
+                              <gloss>speech</gloss>
+                           </valItem>
+                           <valItem ident="conversation" mode="add">
+                              <desc>conversation</desc>
+                              <gloss>conversation</gloss>
+                           </valItem>
+                           <valItem ident="insert" mode="add">
+                              <desc>insert</desc>
+                              <gloss>insert</gloss>
+                           </valItem>
+                           <valItem ident="misc" mode="add">
+                              <desc>misc</desc>
+                              <gloss>misc</gloss>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <elementSpec ident="compliment" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="att.global"/>
+                     <memberOf key="att.ascribed.directed"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.specialPara"/>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="request" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="att.global"/>
+                     <memberOf key="att.ascribed.directed"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.specialPara"/>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="requests" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="model.correspDescPart"/>
+                  </classes>
+                  <content>
+                     <elementRef key="request" minOccurs="0" maxOccurs="unbounded"/>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="duration" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="model.settingPart"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.paraContent"/>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="scaffold" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="model.settingPart"/>
+                  </classes>
+                  <content>
+                     <elementRef key="placeName" minOccurs="0" maxOccurs="1"/>
+                  </content>
+                  <constraintSpec ident="scaffold.mustHaveTrialPlace" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:scaffold[@value = 'true']">
+                              <sch:assert test="tei:placeName">
+                      ERROR: If this is a scaffold speech, then it must have a placeName associated
+                      for the location of the trial.
+                    </sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="value">
+                        <datatype>
+                           <dataRef key="teidata.xTruthValue"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <elementSpec ident="compliments" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="model.correspDescPart"/>
+                  </classes>
+                  <content>
+                     <elementRef key="compliment" minOccurs="0" maxOccurs="unbounded"/>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="enclosure" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="att.global"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.specialPara"/>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="enclosures" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="model.correspDescPart"/>
+                  </classes>
+                  <content>
+                     <elementRef key="enclosure" minOccurs="0" maxOccurs="unbounded"/>
+                  </content>
+               </elementSpec>
+               <classSpec ident="att.global.facs" type="atts" mode="change">
+            <!--Restrict the use of @facs to only allow lib:-->
+                  <attList>
+                     <attDef ident="facs" mode="change">
+                        <datatype maxOccurs="1">
+                           <dataRef name="token" restriction="lib:\d+"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+                  <remarks>
+                     <p>The facs attribute should contain only a single pointer of the form lib:\d+ (i.e. lib: followed by 1 or more digit).</p>
+                  </remarks>
+               </classSpec>
+               <constraintSpec scheme="schematron" ident="global.rootIdMustMatchDocument">
+                  <desc>The rootid must be the same as the document's name.</desc>
+                  <constraint>
+                     <sch:pattern>
+                        <sch:rule context="/tei:*">
+                           <sch:let name="rootEl" value="local-name()"/>
+                           <sch:let name="correctDir"
+                                    value="                     if (self::tei:person and @role='contributor') then 'contributors'                     else if (self::tei:person) then 'people'                     else if (self::tei:place) then 'places'                     else if (self::tei:org) then 'orgs'                     else $dirName"/>
+                           <sch:assert test="$basename = $id">
+                    ERROR: Document's @xml:id (<sch:value-of select="$id"/>) must match the document's base filename
+                    (<sch:value-of select="$basename"/>)
+                  </sch:assert>
+                           <sch:assert test="$dirName = $correctDir">
+                    ERROR: All <sch:value-of select="if (self::person/@role) then @role else local-name()"/> files should added to the <sch:value-of select="$correctDir"/> folder. This file (<sch:value-of select="$id"/>) is in the <sch:value-of select="$dirName"/> folder.
+                  </sch:assert>
+                           <!--<sch:rule context="/tei:person[not(@role='contributor')]">
+                    <sch:assert test="$dirName = 'people'">
+                      ERROR: All people should be added to the /people/ folder. This is in the <sch:value-of select="$dirName"/> folder.
+                    </sch:assert>
+                  </sch:rule>
+                  <sch:rule context="/tei:person[@role='contributor']">
+                    <sch:assert test="$dirName = 'people'">
+                      ERROR: All contributors should be added to the /contributors/ folder. This is in the <sch:value-of select="$dirName"/> folder.
+                    </sch:assert>
+                  </sch:rule>
+                  <sch:rule context="/tei:org">
+                    <sch:assert test="$dirName = 'orgs'">
+                      ERROR: All orgs should be added to the /orgs/ folder. This is in the <sch:value-of select="$dirName"/> folder.
+                    </sch:assert>
+                  </sch:rule>
+                  <sch:rule context="/tei:place">
+                    <sch:assert test="$dirName = 'places'">
+                      ERROR: All places should be added to the /places/ folder. This is in the <sch:value-of select="$dirName"/> folder.
+                    </sch:assert>
+                  </sch:rule>-->
+                        </sch:rule>
+                     </sch:pattern>
+                  </constraint>
+               </constraintSpec>
+               <constraintSpec scheme="schematron" ident="global.variables">
+                  <desc>Global variables for use across the schematron.</desc>
+                  <constraint>
+                     <sch:pattern>
+                        <sch:let name="id" value="/tei:*/@xml:id"/>
+                        <sch:let name="uri" value="document-uri(/)"/>
+                        <sch:let name="tokens" value="tokenize($uri,'[/\\]')"/>
+                        <sch:let name="basename" value="replace($tokens[last()],'\.xm[l_]$','')"/>
+                        <sch:let name="dirName" value="$tokens[last() - 1]"/>
+                        <sch:let name="placeIdPattern" value="'[A-Z]{4}\d+'"/>
+                        <sch:let name="orgIdPattern" value="'[A-Z]{4}\d+(_[^_]+)*'"/>
+                        <sch:let name="persIdPattern" value="'[A-Z]{5}\d+'"/>
+                        <sch:let name="cutoff" value="xs:date('1752-09-02')"/>
+                        <!-- <sch:let name="pd" value="replace($uri,'^(.+[/\\]lim-tei[\\/]).+$', '$1')"/>
+                <sch:let name="dataDir" value="replace($pd,'(.+(.))$','$1data$2')"/>
+                <sch:let name="glyphs"
+                  value="document($dataDir || 'glyphs.xml')//tei:glyph[@xml:id]"/> -->
+                     </sch:pattern>
+                  </constraint>
+               </constraintSpec>
+               <constraintSpec scheme="schematron" ident="inlineElementsNoSpaces">
+                  <desc>Inline elements should not begin or end with spaces.</desc>
+                  <constraint>
+                     <sch:pattern>
+                        <sch:rule context="tei:title | tei:num | tei:ref | tei:rs | tei:placeName[not(parent::tei:place)] | tei:persName[not(parent::tei:person)]">
+                           <sch:let name="text" value="string(.)"/>
+                           <sch:assert test="not(matches($text, '^\s+|\s+$'))">
+                    ERROR: <sch:name/> should not begin or end with spaces.
+                  </sch:assert>
+                        </sch:rule>
+                     </sch:pattern>
+                  </constraint>
+               </constraintSpec>
+               <moduleSpec ident="lim"/>
+               <classSpec ident="lim.att.boolean" mode="add" module="lim" type="atts">
+                  <attList>
+                     <attDef ident="value" usage="rec">
+                        <datatype>
+                           <dataRef key="teidata.xTruthValue"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </classSpec>
+               <classSpec ident="lim.att.locatable" module="lim" type="atts" mode="add">
+                  <attList>
+                     <attDef ident="where" usage="opt">
+                        <desc versionDate="2007-06-11" xml:lang="en">indicates the location of an event by pointing to a <gi>place</gi> element</desc>
+                        <datatype>
+                           <dataRef key="teidata.pointer"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </classSpec>
+               <macroSpec ident="lim.personMacro" module="lim" mode="add">
+                  <content>
+                     <elementRef key="persName" minOccurs="1" maxOccurs="unbounded"/>
+                     <!--NOTE: preserveORder doesn't actually work, but there
+                may be a new element coming: see
+                https://github.com/TEIC/TEI/issues/2154 -->
+                     <sequence preserveOrder="false">
+                        <elementRef key="sex" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="birth" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="death" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="faith" minOccurs="0" maxOccurs="unbounded"/>
+                        <elementRef key="affiliation" minOccurs="0" maxOccurs="unbounded"/>
+                        <elementRef key="occupation" minOccurs="0" maxOccurs="unbounded"/>
+                        <elementRef key="nationality" minOccurs="0" maxOccurs="unbounded"/>
+                        <elementRef key="residence" minOccurs="0" maxOccurs="unbounded"/>
+                     </sequence>
+                     <!--Always make langKnowledge and note come last-->
+                     <elementRef key="langKnowledge" minOccurs="0" maxOccurs="1"/>
+                     <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+                  </content>
+               </macroSpec>
+               <constraintSpec ident="metadataContraints"
+                               module="lim"
+                               mode="add"
+                               scheme="schematron">
+                  <desc>Set of constraints for profileDesc / premediation.</desc>
+                  <constraint>
+                     <sch:pattern>
+                        <sch:rule context="tei:limItem">
+                           <sch:let name="genre" value="@type"/>
+                           <sch:assert test="if (matches($genre, 'letter','i')) then tei:correspDesc else true()">
+                    ERROR: All letters must have a correspDesc.
+                  </sch:assert>
+                           <sch:assert test="if (matches($genre,'Speech|Account|Conversation','i')) then tei:settingDesc else true()">
+                    ERROR: All <sch:value-of select="$genre"/> must have a settingDesc.
+                  </sch:assert>
+                        </sch:rule>
+                     </sch:pattern>
+                  </constraint>
+               </constraintSpec>
+            </schemaSpec>
+         </div>
+      </body>
+   </text>
+</TEI>

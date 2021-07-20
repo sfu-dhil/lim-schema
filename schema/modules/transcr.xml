@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     xml:id="transcr">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>LiM Schema: transcr</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>See lim.odd</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Born Digital.</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <div>
+            <head>transcr</head>
+            <schemaSpec ident="lim_transcr">
+               <moduleRef key="transcr"
+                          include="damage facsimile fw handNotes handShift supplied surface surfaceGrp zone"/>
+               <elementSpec ident="facsimile" module="transcr" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global.linking" mode="add"/>
+                  </classes>
+               </elementSpec>
+               <elementSpec ident="fw" module="transcr" mode="change">
+                  <constraintSpec ident="fw.pageNum.mustHavePlace" scheme="schematron">
+                     <desc>All pageNum formeworks must have an @place</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:fw[@type=('pageNum', 'folioNum')]">
+                              <sch:assert test="@place">ERROR: Missing required @place attribute for page number formework.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="type" mode="change" usage="req">
+                        <valList mode="add" type="closed">
+                           <valItem ident="pageNum">
+                              <gloss>page number</gloss>
+                              <desc>A page number, usually written on the top left or right hand sides of a page.</desc>
+                           </valItem>
+                           <valItem ident="catchword">
+                              <gloss>catchword</gloss>
+                              <desc>A catchword, usually on the bottom right of the page.</desc>
+                           </valItem>
+                           <valItem ident="sig">
+                              <gloss>signature</gloss>
+                              <desc>A page signature, usually on the bottom center of the page.</desc>
+                           </valItem>
+                           <valItem ident="folioNum">
+                              <gloss>folio number</gloss>
+                              <desc>A folio number, usually written on the top left or right hand sides of a page.</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <classSpec ident="att.global.change"
+                          module="transcr"
+                          type="atts"
+                          mode="delete"/>
+            </schemaSpec>
+         </div>
+      </body>
+   </text>
+</TEI>

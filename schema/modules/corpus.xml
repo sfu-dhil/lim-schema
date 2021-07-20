@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     xml:id="corpus">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>LiM Schema: corpus</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>See lim.odd</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Born Digital.</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <div>
+            <head>corpus</head>
+            <schemaSpec ident="lim_corpus">
+               <moduleRef key="corpus"/>
+               <elementSpec ident="settingDesc" module="corpus" mode="change">
+                  <content>
+                     <elementRef key="setting" minOccurs="1" maxOccurs="unbounded"/>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="setting" module="corpus" mode="change">
+                  <constraintSpec ident="scaffold.mustHaveTrialPlace" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:setting[ancestor::tei:limItem[matches(@type,'speech')]]">
+                              <sch:assert test="tei:scaffold">
+                      ERROR: All speeches must have a scaffold element.
+                    </sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+               </elementSpec>
+            </schemaSpec>
+         </div>
+      </body>
+   </text>
+</TEI>

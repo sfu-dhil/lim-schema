@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     xml:id="textstructure">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>LiM Schema: textstructure</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>See lim.odd</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Born Digital.</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <div>
+            <head>textstructure</head>
+            <schemaSpec ident="lim_textstructure">
+               <moduleRef key="textstructure"
+                          include="TEI body byline closer dateline div docAuthor docDate docEdition docImprint docTitle epigraph front imprimatur opener postscript salute signed titlePage titlePart text trailer"/>
+               <elementSpec ident="item" mode="change" module="textstructure">
+                  <constraintSpec ident="item.indexItemsMustHaveTitleAndNum"
+                                  scheme="schematron"
+                                  mode="add">
+                     <desc>All index items must contain a title and a number</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:div[@type='index']/tei:list/tei:item">
+                              <sch:assert test="count(tei:num) gt 0">ERROR: All index items must contain at least one num element.</sch:assert>
+                              <sch:assert test="count(descendant::tei:title) gt 0">ERROR: All index items must contain at least one title element.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+               </elementSpec>
+               <elementSpec ident="div" mode="change" module="textstructure">
+                  <constraintSpec ident="div.onlyRootWithIndexAndVolume11"
+                                  scheme="schematron"
+                                  mode="add">
+                     <desc>Only index divs are allowed as a root div element and only for vol 11.</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="/tei:div">
+                              <sch:assert test="@type = 'index'">ERROR: Only divisions with @type='index' are allowed
+                      as root elements.</sch:assert>
+                              <sch:assert test="matches($uri,'vol11_')">ERROR: Only use root divs for volume 11.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="type" mode="change">
+                        <valList mode="add" type="closed">
+                           <valItem ident="index">
+                              <gloss>index</gloss>
+                              <desc>An index/table of contents for a single volume.</desc>
+                           </valItem>
+                           <valItem ident="preface">
+                              <gloss>preface</gloss>
+                              <desc>A preface or some prefatory matter to a volume or text.</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+            </schemaSpec>
+         </div>
+      </body>
+   </text>
+</TEI>

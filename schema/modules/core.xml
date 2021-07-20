@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     xml:id="core">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>LiM Schema: core</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>See lim.odd</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Born Digital.</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <div>
+            <head>core</head>
+            <schemaSpec ident="lim_core">
+               <moduleRef key="core"
+                          include="abbr author bibl biblStruct choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note noteGrp num orig p pb ptr pubPlace publisher quote ref reg resp respStmt rs sic term time title unclear"/>
+               <elementSpec ident="pb" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global" mode="delete"/>
+                     <memberOf key="att.typed" mode="delete"/>
+                     <memberOf key="att.global.facs" mode="add"/>
+                  </classes>
+                  <attList>
+                <!--Make @facs required-->
+                     <attDef ident="facs" mode="change" usage="req"/>
+                  </attList>
+               </elementSpec>
+               <elementSpec ident="name" module="core" mode="change">
+                  <constraintSpec ident="name.notForPeopleOrPlaces" mode="change" scheme="schematron">
+                     <desc>Name should only be used if there isn't a more specific element.</desc>
+                     <constraint>
+                <!--TODO: Remove @ref once feasible-->
+                        <sch:rule context="tei:name[@ref]">
+                           <sch:assert test="not(matches(@ref,'^prs:'))">ERROR: Use &lt;persName&gt; to tag names of people.</sch:assert>
+                           <sch:assert test="not(matches(@ref,'^plc:'))">ERROR: Use &lt;placeName&gt; to tag names of places.</sch:assert>
+                           <sch:assert test="not(matches(@ref,'^org:'))">ERROR: Use &lt;orgName&gt; to tag names of organizations.</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="type" mode="change" usage="opt">
+                        <valList type="closed" mode="add">
+                           <valItem ident="event" mode="add">
+                              <gloss>event</gloss>
+                              <desc>The name of an event (e.g. "The Battle of Prestonpans")</desc>
+                           </valItem>
+                           <valItem ident="object" mode="add">
+                              <gloss>object</gloss>
+                              <desc>The name of an object (e.g. "Excalibur")</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <elementSpec ident="rs" module="core" mode="change">
+                  <constraintSpec ident="rs.familyNoRef" mode="change" scheme="schematron">
+                     <desc>Family references should not have a ref.</desc>
+                     <constraint>
+                <!--TODO: Remove @ref once feasible-->
+                        <sch:rule context="tei:rs[@type='family']">
+                           <sch:assert test="not(@ref)">ERROR: Do not use a @ref attribute on for a family reference since it can't point to anything.</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="type" mode="change" usage="req">
+                        <valList mode="change">
+                           <valItem mode="add" ident="person">
+                              <gloss>person</gloss>
+                              <desc>An indirect reference to a person (e.g. "his father"); use &lt;persName&gt; for direct references (i.e. "John Smith").</desc>
+                           </valItem>
+                           <valItem mode="add" ident="event">
+                              <gloss>event</gloss>
+                              <desc>An indirect reference to an event (e.g. "the day"); use &lt;name type="event"&gt; for direct references to events.</desc>
+                           </valItem>
+                           <valItem mode="add" ident="place">
+                              <gloss>place</gloss>
+                              <desc>An indirect reference to a place (e.g. "over there"); use &lt;placeName&gt; for direct references to places (i.e. "Edinburgh").</desc>
+                           </valItem>
+                           <valItem mode="add" ident="object">
+                              <gloss>object</gloss>
+                              <desc>An indirect reference to an object (e.g. "that thing"); use &lt;name type="object"&gt; for direct references to objects (i.e. "Excalibur").</desc>
+                           </valItem>
+                           <valItem mode="add" ident="family">
+                              <gloss>family</gloss>
+                              <desc>An reference to a family (e.g. "To my family").</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <elementSpec ident="lb" module="core" mode="change">
+                  <constraintSpec ident="lb.noSpaces" scheme="schematron">
+                     <constraint>
+                        <sch:rule context="tei:lb[preceding-sibling::node()[1][self::tei:pc]]">
+                           <sch:assert test="matches(following::text()[1],'^\S')">ERROR: All punctuation separated words in lines should not have any spaces after the line beginning element.</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+               </elementSpec>
+               <elementSpec ident="corr" module="core" mode="change">
+                  <classes mode="change">
+              <!--Remove from pPart.transcriptional, since it should only be in <choice>-->
+                     <memberOf key="model.pPart.transcriptional" mode="delete"/>
+                     <!--Add cert and resp-->
+                     <memberOf key="att.global.responsibility" mode="add"/>
+                  </classes>
+               </elementSpec>
+               <elementSpec ident="expan" module="core" mode="change">
+                  <classes mode="change">
+              <!--Remove from pPart.editorial, since it should only be in <choice>-->
+                     <memberOf key="model.pPart.editorial" mode="delete"/>
+                     <!--Add cert and resp-->
+                     <memberOf key="att.global.responsibility" mode="add"/>
+                  </classes>
+               </elementSpec>
+               <elementSpec ident="sic" module="core" mode="change">
+                  <classes mode="change">
+              <!--Remove from pPart.transcriptional, since it should only be in <choice>-->
+                     <memberOf key="model.pPart.transcriptional" mode="delete"/>
+                     <!--Add cert and resp-->
+                     <memberOf key="att.global.responsibility" mode="add"/>
+                  </classes>
+               </elementSpec>
+               <elementSpec ident="note" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.pointer" mode="delete"/>
+                  </classes>
+                  <constraintSpec ident="note.co-occurence" scheme="schematron">
+                     <desc>Various co-occurence constraints</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:note[@type='marginalia']">
+                              <sch:assert test="@place">ERROR: All marginalia must have an @place.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="note.mustHaveTypeInText" scheme="schematron">
+                     <desc>Notes must be typed in the body</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:note[ancestor::tei:text]">
+                              <sch:assert test="@type">ERROR: All notes in transcriptions must have a @type.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="type" mode="change" usage="opt">
+                        <valList type="closed">
+                           <valItem ident="editorial">
+                              <gloss>editorial note</gloss>
+                              <desc>An editorial note written by a team member.</desc>
+                           </valItem>
+                           <valItem ident="marginalia">
+                              <gloss>marginalia</gloss>
+                              <desc>A note that's not a footnote, but is some sort of marginal note.</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <elementSpec ident="noteGrp" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="lim.att.boolean" mode="add"/>
+                  </classes>
+                  <content>
+                     <elementRef key="note" minOccurs="0" maxOccurs="unbounded"/>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="quote" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.citing"/>
+                  </classes>
+               </elementSpec>
+               <elementSpec ident="abbr" module="core" mode="change">
+                  <classes mode="change">
+              <!--Remove from pPart.editorial, since it should only be in <choice>-->
+                     <memberOf key="model.pPart.editorial" mode="delete"/>
+                     <!--Add cert and resp-->
+                     <memberOf key="att.global.responsibility" mode="add"/>
+                  </classes>
+                  <constraintSpec ident="abbr.shouldntContainJustAmp" scheme="schematron" mode="add">
+                     <desc>Don't expand the ampersand only.</desc>
+                     <constraint>
+                <!--TODO: Remove @ref once feasible-->
+                        <sch:rule context="tei:abbr">
+                           <sch:let name="content" value="string(.)"/>
+                           <sch:assert test="not(matches($content, '^\s*&amp;\s*$'))">ERROR: There is no need to tag ampersands when it means "and".</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+               </elementSpec>
+            </schemaSpec>
+         </div>
+      </body>
+   </text>
+</TEI>

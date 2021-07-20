@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     xml:id="analysis">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>LiM Schema: analysis</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>See lim.odd</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Born Digital.</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <div>
+            <head>analysis</head>
+            <schemaSpec ident="lim_analysis">
+               <moduleRef key="analysis" include="pc"/>
+               <elementSpec ident="pc" mode="change" module="analysis">
+            <!--Remove all other attributes-->
+                  <classes mode="change">
+                     <memberOf key="att.global" mode="delete"/>
+                     <memberOf key="att.segLike" mode="delete"/>
+                     <memberOf key="att.typed" mode="delete"/>
+                  </classes>
+                  <content>
+                     <textNode/>
+                  </content>
+                  <constraintSpec ident="pc.onlyPunct" scheme="schematron" mode="add">
+                     <desc>Only punctuation in pc.</desc>
+                     <constraint>
+                <!--TODO: Remove @ref once feasible-->
+                        <sch:rule context="tei:pc">
+                           <sch:assert test="matches(text(),'^[\p{P}=]$')">ERROR: Only a single punctuation character is allowed in pc</sch:assert>
+                           <sch:assert test="following-sibling::node()[1][self::tei:lb]">ERROR: All pc elements must be followed immediately by an lb element.</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="unit" mode="delete"/>
+                     <attDef ident="pre" mode="delete"/>
+                     <attDef ident="force" mode="change" usage="req"/>
+                  </attList>
+               </elementSpec>
+               <classSpec ident="att.linguistic"
+                          module="analysis"
+                          type="atts"
+                          mode="delete"/>
+            </schemaSpec>
+         </div>
+      </body>
+   </text>
+</TEI>

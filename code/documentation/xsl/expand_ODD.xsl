@@ -20,6 +20,8 @@
     
     <xsl:param name="docsDir"/>
     
+    <xsl:include href="include.xsl"/>
+    
     <xsl:variable name="egNS">http://www.tei-c.org/ns/Examples</xsl:variable>
     
     <xsl:mode name="pandoc" on-no-match="shallow-copy" exclude-result-prefixes="#all"/>
@@ -38,7 +40,10 @@
     <xsl:template match="div[divGen[@xml:id='index']]" mode="odd">
         <xsl:apply-templates mode="#current"/>
     </xsl:template>
-    
+
+    <xsl:template match="processing-instruction('module')" mode="odd">
+        <xsl:apply-templates select="." mode="include"/>
+    </xsl:template>
     
     <xd:doc>
         <xd:desc>Template to match the index</xd:desc>

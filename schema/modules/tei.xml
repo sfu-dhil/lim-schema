@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     xml:id="tei">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>LiM Schema: tei</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>See lim.odd</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Born Digital.</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <div>
+            <head>tei</head>
+            <schemaSpec ident="lim_tei">
+               <moduleRef key="tei"/>
+               <classSpec ident="att.anchoring" type="atts" module="tei" mode="change">
+                  <attList>
+                     <attDef ident="targetEnd" mode="delete"/>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.breaking" type="atts" module="tei" mode="delete"/>
+               <classSpec ident="att.cReferencing" module="tei" type="atts" mode="delete"/>
+               <classSpec ident="att.canonical" type="atts" module="tei" mode="change">
+                  <attList>
+                     <attDef ident="key" mode="delete"/>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.coordinated" type="atts" module="tei" mode="delete"/>
+               <classSpec ident="att.damaged" type="atts" module="tei" mode="change">
+                  <attList>
+                     <attDef ident="group" mode="delete"/>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.datable" module="tei" type="atts" mode="change">
+                  <attList>
+                     <attDef ident="period" mode="delete"/>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.datable.iso" module="tei" type="atts" mode="delete"/>
+               <classSpec ident="att.datcat" module="tei" type="atts" mode="delete"/>
+               <classSpec ident="att.declarable" module="tei" type="atts" mode="delete"/>
+               <classSpec ident="att.declaring" module="tei" type="atts" mode="delete"/>
+               <classSpec ident="att.divLike" module="tei" type="atts" mode="delete"/>
+               <classSpec ident="att.docStatus" module="tei" type="atts" mode="change">
+                  <attList>
+                     <attDef ident="status" mode="change" usage="rec">
+                        <valList mode="add">
+                           <valItem ident="empty" mode="add">
+                              <desc>empty</desc>
+                              <gloss>empty/not yet worked on</gloss>
+                           </valItem>
+                           <valItem ident="metadataInProgress" mode="add">
+                              <desc>metadata in progress</desc>
+                              <gloss>currently being worked on, but not yet "done"</gloss>
+                           </valItem>
+                           <valItem ident="metadataDone" mode="add">
+                              <desc>metadata done</desc>
+                              <gloss>Metadata for this item has been completed</gloss>
+                           </valItem>
+                           <valItem ident="transcriptionInProgress" mode="add">
+                              <desc>transcription in progress</desc>
+                              <gloss>Transcription in progress, but not yet "done"</gloss>
+                           </valItem>
+                           <valItem ident="transcriptionDone" mode="add">
+                              <desc>transcription done</desc>
+                              <gloss>The transcription for this item has been completed</gloss>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.editLike" module="tei" type="atts" mode="change">
+                  <attList>
+                     <attDef ident="instant" mode="delete"/>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.edition" module="tei" type="atts" mode="delete"/>
+               <classSpec ident="att.global" module="tei" type="atts" mode="change">
+                  <classes mode="change">
+              <!--Remove facs and responsibility from the global modules,
+                so we can add them on the individual elements that we need-->
+                     <memberOf key="att.global.facs" mode="delete"/>
+                     <memberOf key="att.global.responsibility" mode="delete"/>
+                     <memberOf key="att.global.linking" mode="delete"/>
+                  </classes>
+                  <attList>
+              <!--We'll never need space or base, afaik-->
+                     <attDef ident="xml:space" mode="delete"/>
+                     <attDef ident="xml:base" mode="delete"/>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.global.linking"
+                          module="tei"
+                          type="atts"
+                          mode="change">
+                  <attList>
+                     <attDef ident="synch" mode="delete"/>
+                     <attDef ident="sameAs" mode="delete"/>
+                     <attDef ident="next" mode="delete"/>
+                     <attDef ident="prev" mode="delete"/>
+                     <attDef ident="exclude" mode="delete"/>
+                     <attDef ident="select" mode="delete"/>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.global.rendition"
+                          module="tei"
+                          type="atts"
+                          mode="change">
+                  <attList>
+              <!--Delete @rend, since it's too ambiguous to be useful-->
+                     <attDef ident="rend" mode="delete"/>
+                     <!--Delete style unless we think that's important-->
+                     <attDef ident="style" mode="delete"/>
+                     <!--And constraint rendition-->
+                     <attDef ident="rendition" mode="change">
+                        <valList type="closed" mode="add">
+                           <valItem ident="rnd:super">
+                              <desc>superscript</desc>
+                              <gloss>superscript</gloss>
+                           </valItem>
+                           <valItem ident="rnd:sub">
+                              <desc>subscript</desc>
+                              <gloss>subscript</gloss>
+                           </valItem>
+                           <valItem ident="rnd:underlined">
+                              <gloss>underlined</gloss>
+                              <desc>underlined (NOTE: This should be used almost exclusively with emph or title)</desc>
+                           </valItem>
+                           <valItem ident="rnd:right-braced">
+                              <gloss>right-braced</gloss>
+                              <desc>An item that has a curly right brace.</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.naming" module="tei" type="atts" mode="change">
+                  <attList>
+                     <attDef ident="nymRef" mode="delete"/>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.notated" module="tei" type="atts" mode="delete"/>
+               <classSpec ident="att.personal" module="tei" type="atts" mode="change">
+                  <attList>
+                     <attDef ident="full" mode="delete"/>
+                     <attDef ident="sort" mode="delete"/>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.placement" module="tei" type="atts" mode="change">
+                  <attList>
+                     <attDef ident="place" mode="change">
+                        <valList type="closed" mode="replace">
+                           <valItem ident="left" mode="add">
+                              <gloss>left</gloss>
+                              <desc>in the left margin</desc>
+                           </valItem>
+                           <valItem ident="right" mode="add">
+                              <gloss>right</gloss>
+                              <desc>in the right margin</desc>
+                           </valItem>
+                           <valItem ident="above" mode="add">
+                              <gloss>above</gloss>
+                              <desc>above the line</desc>
+                           </valItem>
+                           <valItem ident="below" mode="add">
+                              <gloss>below</gloss>
+                              <desc>below the line</desc>
+                           </valItem>
+                           <valItem ident="inline" mode="add">
+                              <gloss>inline</gloss>
+                              <desc>an inline note</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.pointing" module="tei" type="atts" mode="change">
+                  <attList>
+                     <attDef ident="targetLang" mode="delete"/>
+                     <attDef ident="evaluate" mode="delete"/>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.pointing.group"
+                          mode="delete"
+                          module="tei"
+                          type="atts"/>
+               <classSpec ident="att.segLike" module="tei" mode="change" type="atts">
+                  <attList>
+                     <attDef ident="function" mode="delete"/>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.sortable" module="tei" type="atts" mode="delete"/>
+               <classSpec ident="att.spanning" module="tei" type="atts" mode="delete"/>
+               <classSpec ident="att.timed" module="tei" type="atts" mode="delete"/>
+               <classSpec ident="att.transcriptional"
+                          module="tei"
+                          type="atts"
+                          mode="delete"/>
+               <classSpec ident="att.typed" module="tei" type="atts" mode="change">
+                  <attList>
+              <!--Remove subtype for now-->
+                     <attDef ident="subtype" mode="delete"/>
+                  </attList>
+               </classSpec>
+               <dataSpec module="tei" ident="teidata.language" mode="change">
+                  <content>
+                     <alternate>
+                        <dataRef name="language"/>
+                        <!--Add the subset of languages we know we might use
+                  so far-->
+                        <valList mode="add" type="semi">
+                           <valItem ident="la">
+                              <desc>la</desc>
+                              <gloss>Latin</gloss>
+                           </valItem>
+                           <valItem ident="en">
+                              <desc>en</desc>
+                              <gloss>English</gloss>
+                           </valItem>
+                           <valItem ident="fr">
+                              <desc>fr</desc>
+                              <gloss>French</gloss>
+                           </valItem>
+                           <valItem ident="gr">
+                              <desc>gr</desc>
+                              <gloss>Greek</gloss>
+                           </valItem>
+                           <valItem ident="ga">
+                              <desc>ga</desc>
+                              <gloss>Irish</gloss>
+                           </valItem>
+                           <valItem ident="gd">
+                              <desc>gd</desc>
+                              <gloss>Scottish Gaelic</gloss>
+                           </valItem>
+                           <valItem ident="de">
+                              <desc>de</desc>
+                              <gloss>German</gloss>
+                           </valItem>
+                           <valItem ident="es">
+                              <desc>es</desc>
+                              <gloss>Spanish</gloss>
+                           </valItem>
+                           <valItem ident="sco">
+                              <desc>sco</desc>
+                              <gloss>Scots</gloss>
+                           </valItem>
+                           <valItem ident="ghc">
+                              <desc>ghc</desc>
+                              <gloss>Hiberno-Scottish Gaelic</gloss>
+                           </valItem>
+                           <valItem ident="it">
+                              <desc>it</desc>
+                              <gloss>Italian</gloss>
+                           </valItem>
+                        </valList>
+                     </alternate>
+                  </content>
+               </dataSpec>
+            </schemaSpec>
+         </div>
+      </body>
+   </text>
+</TEI>
