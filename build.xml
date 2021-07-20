@@ -7,7 +7,7 @@
     </description>
     
     <property name="lib.dir" value="${basedir}/lib"/>
-    <property name="dataDir" value="${basedir}/data"/>
+    <property name="dataDir" value="${basedir}/data/sfu-dhil/data"/>
     <property name="schemaDir" value="${basedir}/schema"/>
     <property name="TEIStylesheets" value="${basedir}/Stylesheets/"/>
     <property name="saxon" value="${lib.dir}/saxon10HE.jar"/>
@@ -59,6 +59,35 @@
             <arg line="-s:${schemaDir}/lim.rng.tmp"/>
             <arg line="-o:${schemaDir}/lim.rng"/>
         </java>
+    </target>
+    
+    <target name="createTestDocs">
+        <description>
+            target: createTestDocs
+            
+            A simple target to create a test directory that 
+            uses the freshly built schema rather than the live one.
+        </description>
+        <delete dir="test_data"/>
+        <mkdir dir="test_data"/>
+        <copy todir="test_data">
+            <fileset dir="${dataDir}">
+                <include name="**/**.xml"/>
+            </fileset>
+            
+            <filterchain>
+                <tokenfilter>
+                    <!--Now replace the URI to point to the local version-->
+                    <replacestring
+                        from="https://github.com/sfu-dhil/lim-schema/releases/latest/download/lim.rng"
+                        to="${schemaDir}/lim.rng"/>
+                </tokenfilter>
+             
+            </filterchain>
+        </copy>
+            
+        
+        
     </target>
     
     <target name="validate">
