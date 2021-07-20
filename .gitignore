@@ -9,5 +9,7 @@ tmp
 data
 dist
 github
+lim.included.odd
 lim.expanded.odd
 lib
+test_data
