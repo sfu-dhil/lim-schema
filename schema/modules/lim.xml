@@ -50,16 +50,16 @@
                      <attDef ident="type" mode="change">
                         <valList type="closed" mode="add">
                            <valItem ident="poemSongEpitaph" mode="add">
-                              <desc>poemSongEpitaph</desc>
-                              <gloss>poemSongEpitaph</gloss>
+                              <gloss>poem / song / epitaph</gloss>
+                              <desc>poem / song / epitaph</desc>
                            </valItem>
                            <valItem ident="letter" mode="add">
                               <desc>letter</desc>
                               <gloss>letter</gloss>
                            </valItem>
                            <valItem ident="accountNarrative" mode="add">
-                              <desc>accountNarrative</desc>
-                              <gloss>accountNarrative</gloss>
+                              <desc>account / narrative</desc>
+                              <gloss>account / narrative</gloss>
                            </valItem>
                            <valItem ident="speech" mode="add">
                               <desc>speech</desc>
@@ -74,8 +74,8 @@
                               <gloss>insert</gloss>
                            </valItem>
                            <valItem ident="misc" mode="add">
-                              <desc>misc</desc>
-                              <gloss>misc</gloss>
+                              <desc>miscellaneous</desc>
+                              <gloss>miscellaneous</gloss>
                            </valItem>
                         </valList>
                      </attDef>
