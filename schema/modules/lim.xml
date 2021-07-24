@@ -127,9 +127,9 @@
                      <constraint>
                         <sch:pattern>
                            <sch:rule context="tei:scaffold[@value = 'true']">
-                              <sch:assert test="tei:placeName">
-                      ERROR: If this is a scaffold speech, then it must have a placeName associated
-                      for the location of the trial.
+                              <sch:assert test="tei:placeName or @where">
+                      ERROR: If this is a scaffold speech, then it must have a place associated
+                      for the location of the execution (either using a @where or a child placeName element).
                     </sch:assert>
                            </sch:rule>
                         </sch:pattern>
