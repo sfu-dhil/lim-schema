@@ -23,7 +23,7 @@
          <div>
             <head>msdescription</head>
             <schemaSpec ident="lim_msdescription">
-               <moduleRef key="msdescription" include="locus"/>
+               <moduleRef key="msdescription" include="locus locusGrp"/>
             </schemaSpec>
          </div>
       </body>
