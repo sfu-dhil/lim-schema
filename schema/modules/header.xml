@@ -24,7 +24,7 @@
             <head>header</head>
             <schemaSpec ident="lim_header">
                <moduleRef key="header"
-                  include="abstract catDesc catRef category change correspAction correspContext correspDesc encodingDesc fileDesc handNote idno listChange listPrefixDef notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
+                  include="abstract catDesc catRef category change correspAction correspContext correspDesc creation encodingDesc fileDesc handNote idno listChange listPrefixDef notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
                
                <elementSpec ident="correspAction" module="header" mode="change">
                   <classes mode="change">
@@ -60,6 +60,29 @@
                   </attList>
                </elementSpec>
                
+               <elementSpec ident="creation" module="header" mode="change">
+                  <content>
+                     <sequence>
+                        <elementRef key="placeName" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="date" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+                     </sequence>
+                  </content>
+                  <constraintSpec ident="onlyUseCreationForAccountsNarratives" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:creation">
+                              <sch:assert 
+                                 test="ancestor::tei:profileDesc/tei:limItem[@type=
+                                 ('accountNarrative','conversation','misc', 'speech')]">ERROR: The creation element should only be used for account/narratives, conversations, and speeches, since the date/place of the transcription may differ from the setting.</sch:assert>
+                              <sch:assert test="count(tei:*) gt 0">ERROR: The creation element requires at least one of placeName, date, or note.</sch:assert>
+                           </sch:rule>
+                           
+                        </sch:pattern>
+                        
+                     </constraint>
+                  </constraintSpec>                  
+               </elementSpec>
                <elementSpec ident="profileDesc" module="header" mode="change">
                   <content>
                      <!--Must have a textClass-->

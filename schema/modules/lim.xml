@@ -37,6 +37,7 @@
                            <elementRef key="correspDesc" minOccurs="0" maxOccurs="1"/>
                            <elementRef key="settingDesc" minOccurs="0" maxOccurs="1"/>
                         </alternate>
+                        <elementRef key="creation" minOccurs="0" maxOccurs="1"/>
                         <elementRef key="noteGrp" minOccurs="0" maxOccurs="unbounded"/>
                         <elementRef key="placeName" minOccurs="0" maxOccurs="unbounded"/>
                         <elementRef key="date" minOccurs="0" maxOccurs="1"/>
@@ -80,6 +81,7 @@
                         </valList>
                      </attDef>
                   </attList>
+                  
                </elementSpec>
                <elementSpec ident="compliment" module="lim" mode="add">
                   <classes>
