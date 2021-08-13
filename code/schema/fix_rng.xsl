@@ -25,7 +25,7 @@
     <xd:doc>
         <xd:desc>Convert the lim.personMacro group to an interleave.</xd:desc>
     </xd:doc>
-    <xsl:template match="define[@name='lim.personMacro']/group | define[@name='limItem']/element[@name='limItem']/group">
+    <xsl:template match="define[@name='lim.personMacro']/group | define[@name='limItem']/element[@name='limItem']/group | define[@name='creation']/element[@name='creation']/group">
         <interleave>
             <xsl:apply-templates select="@*|node()"/>
         </interleave>
