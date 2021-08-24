@@ -295,7 +295,7 @@
     <xsl:function name="dhil:getMarkdownDoc" as="element(body)">
         <xsl:param name="basename" as="xs:string"/>
         <xsl:variable name="uri"
-            select="$docsDir || '/' || replace($basename,'\.md$','.xml')"
+            select="$docsDir || '/' || replace(normalize-space($basename),'\.md$','.xml')"
             as="xs:string"/>
         <xsl:message use-when="$verbose">Processing <xsl:value-of select="$uri"/></xsl:message>
         <xsl:try>
