@@ -24,7 +24,7 @@
             <head>header</head>
             <schemaSpec ident="lim_header">
                <moduleRef key="header"
-                  include="abstract catDesc catRef category change correspAction correspContext correspDesc creation encodingDesc fileDesc handNote idno listChange listPrefixDef notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
+                  include="abstract catDesc catRef category change correspAction correspContext correspDesc creation encodingDesc fileDesc handNote idno langUsage listChange listPrefixDef language notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
                
                <elementSpec ident="correspAction" module="header" mode="change">
                   <classes mode="change">
@@ -93,7 +93,10 @@
                         </sequence>
                         <elementRef key="locus" minOccurs="1" maxOccurs="2"/>
                      </alternate>
-                     <elementRef key="abstact" minOccurs="0" maxOccurs="1"/>
+                     <elementRef key="abstact" 
+                        minOccurs="0" maxOccurs="1"/>
+                     <elementRef key="langUsage" minOccurs="0" maxOccurs="1"/>
+                     
                      <elementRef key="limItem"/>
                   </content>
                   <constraintSpec ident="locusGrpVsLocus" scheme="schematron">
@@ -149,6 +152,12 @@
                </elementSpec>
                <elementSpec ident="textClass" module="header" mode="change">
                   <!--Add constraints to force either a correspDesc or a settingDesc-->
+               </elementSpec>
+               
+               <elementSpec ident="langUsage" module="header" mode="change">
+                  <content>
+                     <elementRef key="language" minOccurs="1" maxOccurs="unbounded"/>
+                  </content>
                </elementSpec>
             </schemaSpec>
          </div>
