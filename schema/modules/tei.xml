@@ -36,7 +36,6 @@
                      <attDef ident="key" mode="delete"/>
                   </attList>
                </classSpec>
-               <classSpec ident="att.coordinated" type="atts" module="tei" mode="delete"/>
                <classSpec ident="att.damaged" type="atts" module="tei" mode="change">
                   <attList>
                      <attDef ident="group" mode="delete"/>

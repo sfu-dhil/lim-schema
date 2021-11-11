@@ -23,7 +23,7 @@
          <div>
             <head>linking</head>
             <schemaSpec ident="lim_linking">
-               <moduleRef key="linking" include="standOff linkGrp ptr"/>
+               <moduleRef key="linking" include="ab standOff linkGrp ptr"/>
                <elementSpec ident="standOff" module="linking" mode="change">
                   <constraintSpec ident="standoff.elementsMustUseCopyOfORHaveAPersName"
                                   scheme="schematron">
