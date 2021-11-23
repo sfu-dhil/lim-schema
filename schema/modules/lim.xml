@@ -292,19 +292,6 @@
                      </sch:pattern>
                   </constraint>
                </constraintSpec>
-               <classSpec ident="att.global.facs" type="atts" mode="change">
-                  <!--Restrict the use of @facs to only allow lib:-->
-                  <attList>
-                     <attDef ident="facs" mode="change">
-                        <datatype maxOccurs="1">
-                           <dataRef name="token" restriction="lib:\d+"/>
-                        </datatype>
-                     </attDef>
-                  </attList>
-                  <remarks>
-                     <p>The facs attribute should contain only a single pointer of the form lib:\d+ (i.e. lib: followed by 1 or more digit).</p>
-                  </remarks>
-               </classSpec>
                <classSpec ident="lim.att.boolean" mode="add" module="lim" type="atts">
                   <attList>
                      <attDef ident="value" usage="rec">

@@ -78,7 +78,35 @@
                   </catDesc>
                </category>
             </taxonomy>
+            <taxonomy xml:id="docStatus">
+               <bibl>Document Status taxonomy</bibl>
+               <category xml:id="docStatus_empty">
+                  <catDesc>
+                     <term>empty</term>
+                     <gloss>empty / not yet worked on or edited</gloss>
+                  </catDesc>
+                  <category xml:id="docStatus_inProgress">
+                     <catDesc>
+                        <term>in progress</term>
+                        <gloss>currently being worked on, but not yet "done"</gloss>
+                     </catDesc>
+                  </category>
+                  <category xml:id="docStatus_readyForProof">
+                     <catDesc>
+                        <term>ready for proof</term>
+                        <gloss>corrected and encoded, and is now ready to be proofed</gloss>
+                     </catDesc>
+                  </category>
+                  <category xml:id="docStatus_proofed">
+                     <catDesc>
+                        <term>proofed</term>
+                        <gloss>proofed and checked</gloss>
+                     </catDesc>
+                  </category>
+               </category>
+            </taxonomy>
          </classDecl>
+
          <tagsDecl>
             <rendition xml:id="rnd_code">
            font-family: monospace;

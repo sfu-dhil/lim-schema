@@ -51,40 +51,65 @@
                <classSpec ident="att.declarable" module="tei" type="atts" mode="delete"/>
                <classSpec ident="att.declaring" module="tei" type="atts" mode="delete"/>
                <classSpec ident="att.divLike" module="tei" type="atts" mode="delete"/>
-               <classSpec ident="att.docStatus" module="tei" type="atts" mode="replace">
-                  <desc versionDate="2010-05-06" xml:lang="en">provides attributes for use on metadata elements
-                     describing the status of a document.</desc>
-                  <desc xml:lang="ja" versionDate="2019-05-10">文書のステータスを記述するメタデータ要素用の属性を提供する．</desc>
+               <!--We remove docStatus, but create our own thing-->
+               <classSpec ident="att.docStatus" module="tei" type="atts" mode="change">
                   <attList>
-                     <attDef ident="status" mode="replace" usage="rec">
-                        <desc versionDate="2010-05-06" xml:lang="en">describes the status of a document either currently or, when
-                           associated with a dated element, at the time indicated.</desc>
-                        <desc versionDate="2019-05-10" xml:lang="ja">現在の、もしくは日時に関連づけられた要素にあっては、指定された時点における文書のステータスを記述する．</desc>
-                        <defaultVal mode="delete"/>
-                        <valList mode="replace" type="closed">
+                     <attDef ident="status" mode="delete"/>
+                     <attDef ident="docStatus" mode="add" usage="opt">
+                        <desc versionDate="2010-05-06" xml:lang="en">describes the status of the transcription at the time indicated.</desc>
+                        
+                        <valList type="closed" mode="add">
                            <valItem ident="empty" mode="add">
                               <desc>empty</desc>
-                              <gloss>empty/not yet worked on</gloss>
+                              <gloss>empty / not yet worked on or edited</gloss>
                            </valItem>
-                           <valItem ident="metadataInProgress" mode="add">
-                              <desc>metadata in progress</desc>
+                           <valItem ident="inProgress" mode="add">
+                              
+                              <desc>in progress</desc>
                               <gloss>currently being worked on, but not yet "done"</gloss>
+                              
                            </valItem>
-                           <valItem ident="metadataDone" mode="add">
-                              <desc>metadata done</desc>
-                              <gloss>Metadata for this item has been completed</gloss>
+                           <valItem ident="readyForProof" mode="add">
+                              
+                              <desc>ready for proof</desc>
+                              <gloss>corrected and encoded, and is now ready to be proofed</gloss>
+                              
                            </valItem>
-                           <valItem ident="transcriptionInProgress" mode="add">
-                              <desc>transcription in progress</desc>
-                              <gloss>Transcription in progress, but not yet "done"</gloss>
-                           </valItem>
-                           <valItem ident="transcriptionDone" mode="add">
-                              <desc>transcription done</desc>
-                              <gloss>The transcription for this item has been completed</gloss>
+                           <valItem ident="proofed" mode="add">
+                              
+                              <desc>proofed</desc>
+                              <gloss>proofed and checked</gloss>
+                              
                            </valItem>
                         </valList>
                      </attDef>
+                     <attDef ident="metaStatus" mode="add" usage="opt">
+                        <desc versionDate="2010-05-06" xml:lang="en">describes the status of the metadata for a document at the time indicated.</desc>
+                        <datatype>
+                           <dataRef key="teidata.word"/>
+                        </datatype>
+                        <valList type="closed" mode="add">
+                           <valItem ident="empty" mode="add">
+                              <desc>empty</desc>
+                              <gloss>empty / not yet worked on or edited</gloss>
+                           </valItem>
+                           <valItem ident="inProgress" mode="add">
+                              
+                              <desc>in progress</desc>
+                              <gloss>currently being worked on, but not yet "done"</gloss>
+                              
+                           </valItem>
+                           <valItem ident="done" mode="add">
+                              
+                              <desc>done</desc>
+                              <gloss>Metadata work is completed</gloss>
+                              
+                           </valItem>
+
+                        </valList>
+                     </attDef>
                   </attList>
+                  
                </classSpec>
                <classSpec ident="att.editLike" module="tei" type="atts" mode="change">
                   <attList>
@@ -105,6 +130,19 @@
                      <attDef ident="xml:space" mode="delete"/>
                      <attDef ident="xml:base" mode="delete"/>
                   </attList>
+               </classSpec>
+               <classSpec ident="att.global.facs" type="atts" mode="change">
+                  <!--Restrict the use of @facs to only allow lib:-->
+                  <attList>
+                     <attDef ident="facs" mode="change">
+                        <datatype maxOccurs="1">
+                           <dataRef name="token" restriction="lib:\d+(.\d+)?"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+                  <remarks>
+                     <p>The facs attribute should contain only a single pointer of the form lib:\d+ (i.e. lib: followed by 1 or more digit).</p>
+                  </remarks>
                </classSpec>
                <classSpec ident="att.global.linking"
                           module="tei"

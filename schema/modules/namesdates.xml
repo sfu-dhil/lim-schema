@@ -216,6 +216,9 @@
                   </attList>
                </elementSpec>
                <elementSpec ident="object" module="namesdates" mode="change">
+                  <classes>
+                     <memberOf key="att.docStatus" mode="delete"/>
+                  </classes>
                   <content>
                      <elementRef key="objectName" minOccurs="0" maxOccurs="1"/>
                      <elementRef key="note" minOccurs="0" maxOccurs="1"/>

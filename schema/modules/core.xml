@@ -25,16 +25,30 @@
             <schemaSpec ident="lim_core">
                <moduleRef key="core"
                           include="abbr author bibl biblStruct choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note noteGrp num orig p pb ptr pubPlace publisher quote ref reg resp respStmt rs sic term time title unclear"/>
+               <elementSpec ident="bibl" module="core" mode="change">
+                  <classes>
+                     <memberOf key="att.docStatus" mode="delete"/>
+                  </classes>
+               </elementSpec>
+               
                <elementSpec ident="pb" module="core" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global" mode="delete"/>
                      <memberOf key="att.typed" mode="delete"/>
                      <memberOf key="att.global.facs" mode="add"/>
                   </classes>
+                  <constraintSpec ident="pb.noDecimal" scheme="schematron">
+                     <constraint>
+                        <sch:rule context="tei:pb[@facs]">
+                           <sch:assert test="matches(@facs,'^lib:\d+$')">ERROR: pb/@facs should be in the lib:pageNum (i.e. lib:22).</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
                   <attList>
                 <!--Make @facs required-->
                      <attDef ident="facs" mode="change" usage="req"/>
                   </attList>
+                  
                </elementSpec>
                <elementSpec ident="name" module="core" mode="change">
                   <constraintSpec ident="name.notForPeopleOrPlaces" mode="change" scheme="schematron">
@@ -101,10 +115,20 @@
                   </attList>
                </elementSpec>
                <elementSpec ident="lb" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global.facs" mode="add"/>
+                  </classes>
                   <constraintSpec ident="lb.noSpaces" scheme="schematron">
                      <constraint>
                         <sch:rule context="tei:lb[preceding-sibling::node()[1][self::tei:pc]]">
                            <sch:assert test="matches(following::text()[1],'^\S')">ERROR: All punctuation separated words in lines should not have any spaces after the line beginning element.</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="lb.shouldUseDecimal" scheme="schematron">
+                     <constraint>
+                        <sch:rule context="tei:lb[@facs]">
+                           <sch:assert test="matches(@facs,'lib:\d+\.\d+')">ERROR: lb elements with facs must specify the line in the form page.lineNum (e.g. lib:23.2)</sch:assert>
                         </sch:rule>
                      </constraint>
                   </constraintSpec>

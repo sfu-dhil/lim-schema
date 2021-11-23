@@ -52,9 +52,21 @@
                            </sch:rule>
                         </sch:pattern>
                      </constraint>
+                     
+                  </constraintSpec>
+                  <constraintSpec ident="changeMustHaveContent" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:change">
+                              <sch:assert test="not(normalize-space(string-join(descendant::text(),'')) = '')">
+                                 ERROR: change elements must contain meaningful content.
+                              </sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                     
                   </constraintSpec>
                   <attList>
-                     <attDef ident="status" mode="change" usage="req"/>
                      <attDef ident="who" mode="change" usage="req"/>
                      <attDef ident="when" mode="change" usage="req"/>
                   </attList>
@@ -119,16 +131,31 @@
                   <constraintSpec ident="revisionDescStatusMustMatch" scheme="schematron">
                      <constraint>
                         <sch:pattern>
-                           <sch:rule context="tei:revisionDesc[@status]">
-                              <sch:let name="thisStatus" value="@status"/>
-                              <sch:let name="firstChange" value="tei:change[@status][1]"/>
-                              <sch:assert test="$firstChange/@status = $thisStatus">
-                                 ERROR: The status attribute must match the @status of the latest change element.
+                           <sch:rule context="tei:revisionDesc">
+                              <sch:let name="firstChangeWithDocStatus" value="tei:change[@docStatus][1]"/>
+                              <sch:let name="firstChangeWithMetaStatus" value="tei:change[@metaStatus][1]"/>
+                              <sch:let name="docStatus" value="@docStatus"/>
+                              <sch:let name="metaStatus" value="@metaStatus"/>
+                              <sch:assert test="exists($firstChangeWithDocStatus) = exists($metaStatus)">
+                                 ERROR: If @docStatus appears on a change element or on a revisionDesc, then both the revisionDesc element and at least one change element must feature @docStatus.  
+                              </sch:assert>
+                              <sch:assert test="exists($firstChangeWithMetaStatus) = exists($metaStatus)">
+                                 ERROR: If @metaStatus appears on a change element or on a revisionDesc, then both the revisionDesc element and at least one change element must feature @metaStatus.  
+                              </sch:assert>
+                              <sch:assert test="exists($docStatus) or exists($metaStatus)">
+                                 ERROR: At least one of @docStatus or @metaStatus must be present.
+                              </sch:assert>
+                              <sch:assert test="$docStatus = $firstChangeWithDocStatus/@docStatus">
+                                 ERROR: The docStatus of the revisionDesc must match the latest change/@docStatu
+                              </sch:assert>
+                              <sch:assert test="$metaStatus = $firstChangeWithMetaStatus/@metaStatus">
+                                 ERROR: The metaStatus of the revisionDesc must match the latest change/@metaStatus
                               </sch:assert>
                            </sch:rule>
                         </sch:pattern>
                      </constraint>
                   </constraintSpec>
+                 
                   <constraintSpec ident="revisionDescEarliest" scheme="schematron">
                      <constraint>
                         <sch:pattern>
@@ -146,9 +173,6 @@
                         </sch:pattern>
                      </constraint>
                   </constraintSpec>
-                  <attList>
-                     <attDef ident="status" mode="change" usage="req"/>
-                  </attList>
                </elementSpec>
                <elementSpec ident="textClass" module="header" mode="change">
                   <!--Add constraints to force either a correspDesc or a settingDesc-->
