@@ -63,6 +63,11 @@
                               <desc>empty</desc>
                               <gloss>empty / not yet worked on or edited</gloss>
                            </valItem>
+                           <valItem ident="uneditedHTR" mode="add">
+                              <desc>unedited</desc>
+                              <gloss>transcription has not yet been edited from the conversion
+                              from Transkribus</gloss>
+                           </valItem>
                            <valItem ident="inProgress" mode="add">
                               
                               <desc>in progress</desc>
