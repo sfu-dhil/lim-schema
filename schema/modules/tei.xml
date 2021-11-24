@@ -214,6 +214,10 @@
                               <gloss>left</gloss>
                               <desc>in the left margin</desc>
                            </valItem>
+                           <valItem ident="center" mode="add">
+                              <gloss>center</gloss>
+                              <desc>in the center</desc>
+                           </valItem>
                            <valItem ident="right" mode="add">
                               <gloss>right</gloss>
                               <desc>in the right margin</desc>
