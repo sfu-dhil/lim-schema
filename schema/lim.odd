@@ -130,6 +130,9 @@
             <prefixDef ident="plc" matchPattern="(.+)" replacementPattern="places.xml#$1">
                <p>Resolves links to a place to the geography.</p>
             </prefixDef>
+            <prefixDef ident="team" matchPattern="(.+)" replacementPattern="contributors.xml#$1">
+               <p>Resolve links to team members.</p>
+            </prefixDef>
             <prefixDef ident="org"
                        matchPattern="(.+)"
                        replacementPattern="organizations.xml#$1">
