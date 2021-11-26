@@ -24,6 +24,124 @@
             <head>msdescription</head>
             <schemaSpec ident="lim_msdescription">
                <moduleRef key="msdescription" include="locus locusGrp"/>
+               <elementSpec ident="locusGrp" module="msdescription" mode="change">
+                  <constraintSpec ident="locusGrpVsLocus" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:locusGrp/tei:locus">
+                              <sch:assert test="self::tei:locus[@type='Forbes']">
+                                 ERROR: Every locus in a locusGrp must be of type "Forbes"
+                              </sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+               </elementSpec>
+               
+               <!--NOTE: locus is completely replaced
+                  in order to handle the grouped attLists:
+                   * We want all locus to need from/to
+                   * We only want Paton locus to need an n
+                   -->
+               <elementSpec ident="locus" module="msdescription" mode="replace">
+
+                  <gloss xml:lang="en" versionDate="2007-06-12">locus</gloss>
+                  <desc versionDate="2019-01-17" xml:lang="en" xml:id="locus.desc">defines a location within a manuscript, manuscript part, or other object typically 
+                     as a (possibly discontinuous) sequence of folio references.</desc>
+                  <constraintSpec ident="locus.rangesMustMakeSense" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:locus[@from and @to]">
+                              <sch:let name="from" value="xs:integer(replace(@from,'[^\d]+',''))"/>
+                              <sch:let name="to" value="xs:integer(replace(@from,'[^\d]+',''))"/>
+                              <sch:assert test="not($to gt $from)">
+                                 ERROR: @to value should not be larger than @from. If you need to specify
+                                 a set of discontinuous pages (i.e. spanning across a pageGroup), use a locusGrp.
+                              </sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="PatonLocus.mustBeWithinBounds" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:locus[@type='Paton'][@n and @from and @to]">
+                              <sch:let name="n" value="@n"/>
+                              <sch:let name="max" value="if (@n = '1') then 382 
+                                 else if (@n = '2') then 380 else 416"/>
+                              <sch:let name="from" value="xs:integer(replace(@from,'[^\d]+',''))"/>
+                              <sch:let name="to" value="xs:integer(replace(@from,'[^\d]+',''))"/>
+                              <sch:assert test="$from lt ($max + 1)">
+                                 ERROR: @from value out of range: Paton volume <sch:value-of select="$n"/> contains <sch:value-of select="$max"/> pages.
+                              </sch:assert>
+                              <sch:assert test="$to lt ($max + 1)">
+                                 ERROR: @to value out of range: Paton volume <sch:value-of select="$n"/> contains <sch:value-of select="$max"/> pages.
+                              </sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                     
+                  </constraintSpec>
+                  <attList org="group">
+                     <attDef ident="from" usage="req">
+                        <gloss xml:lang="en" versionDate="2007-06-12">from</gloss>
+                        <desc versionDate="2013-12-21" xml:lang="en">specifies the
+                           starting point of the location in a normalized form, typically a
+                           page number.</desc>
+                        <datatype><dataRef key="teidata.word"/></datatype>
+                     </attDef>
+                     <attDef ident="to" usage="req">
+                        <gloss xml:lang="en" versionDate="2007-06-12">to</gloss>
+                        
+                        <desc versionDate="2013-12-21" xml:lang="en">specifies the
+                           end-point of the location in a normalized form, typically as a
+                           page number.</desc>
+                        <datatype><dataRef key="teidata.word"/></datatype>
+                     </attDef>
+                     <attList org="choice">
+                        <attList org="group">
+                           <attDef ident="type" usage="req" mode="replace">
+                              <valList type="closed">
+                                 <valItem ident="Forbes" mode="add">
+                                    <desc>Forbes</desc>
+                                    <gloss>A Forbes page range</gloss>
+                                 </valItem>
+                              </valList>
+                           </attDef>
+                        </attList>
+                        <attList org="group">
+                           <attDef ident="type" usage="req" mode="replace">
+                              <valList type="closed">
+                                 <valItem ident="Paton" mode="add">
+                                    <desc>Paton</desc>
+                                    <gloss>A Paton page range</gloss>
+                                 </valItem>
+                              </valList>
+                           </attDef>
+                           <attDef ident="n" usage="req">
+                              <gloss versionDate="2007-07-02" xml:lang="en">number</gloss>
+                              
+                              <desc versionDate="2005-10-10" xml:lang="en">gives a number (or other label) for an element, which is not necessarily unique within
+                                 the document.</desc>
+                              <datatype maxOccurs="1">
+                                 <dataRef name="positiveInteger">
+                                    <dataFacet name="maxInclusive" value="3"/>
+                                 </dataRef>
+                              </datatype>
+                              <remarks versionDate="2013-12-06" xml:lang="en">
+                                 <p>The value of this attribute is always understood to be a single token, even if it contains space or other punctuation characters, and need not be composed of numbers only. It is typically used to specify the numbering of chapters, sections,
+                                    list items, etc.; it may also be used in the specification of a standard reference system
+                                    for the text.</p>
+                              </remarks>
+                              
+                           </attDef>
+                        </attList>
+                     </attList>
+                  </attList>
+                  
+               </elementSpec>
+               
+               
             </schemaSpec>
          </div>
       </body>

@@ -111,17 +111,7 @@
                      
                      <elementRef key="limItem"/>
                   </content>
-                  <constraintSpec ident="locusGrpVsLocus" scheme="schematron">
-                     <constraint>
-                        <sch:pattern>
-                           <sch:rule context="tei:locusGrp/tei:locus">
-                              <sch:assert test="self::tei:locus[@type='Forbes']">
-                                 ERROR: Every locus in a locusGrp must be of type "Forbes"
-                              </sch:assert>
-                           </sch:rule>
-                        </sch:pattern>
-                     </constraint>
-                  </constraintSpec>
+                  
                </elementSpec>
                
                <elementSpec ident="revisionDesc" mode="change" module="header">
