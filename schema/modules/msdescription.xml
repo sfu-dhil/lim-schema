@@ -53,9 +53,9 @@
                         <sch:pattern>
                            <sch:rule context="tei:locus[@from and @to]">
                               <sch:let name="from" value="xs:integer(replace(@from,'[^\d]+',''))"/>
-                              <sch:let name="to" value="xs:integer(replace(@from,'[^\d]+',''))"/>
-                              <sch:assert test="not($to gt $from)">
-                                 ERROR: @to value should not be larger than @from. If you need to specify
+                              <sch:let name="to" value="xs:integer(replace(@to,'[^\d]+',''))"/>
+                              <sch:assert test="$from lt ($to + 1)">
+                                 ERROR: @to value should not be less than @from. If you need to specify
                                  a set of discontinuous pages (i.e. spanning across a pageGroup), use a locusGrp.
                               </sch:assert>
                            </sch:rule>

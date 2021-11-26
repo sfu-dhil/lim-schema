@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xlink="http://www.w3.org/1999/xlink" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2021-11-26T03:49:37Z. .
+Schema generated from ODD source 2021-11-26T03:56:32Z. .
 TEI Edition: Version 4.2.2. Last updated on
 	9th April 2021, revision 609a109b1
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.2.2/
@@ -4221,9 +4221,9 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
          <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
             <sch:rule context="tei:locus[@from and @to]">
                <sch:let name="from" value="xs:integer(replace(@from,'[^\d]+',''))"/>
-               <sch:let name="to" value="xs:integer(replace(@from,'[^\d]+',''))"/>
-               <sch:assert test="not($to gt $from)">
-                                 ERROR: @to value should not be larger than @from. If you need to specify
+               <sch:let name="to" value="xs:integer(replace(@to,'[^\d]+',''))"/>
+               <sch:assert test="$from lt ($to + 1)">
+                                 ERROR: @to value should not be less than @from. If you need to specify
                                  a set of discontinuous pages (i.e. spanning across a pageGroup), use a locusGrp.
                               </sch:assert>
             </sch:rule>
