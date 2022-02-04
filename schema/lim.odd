@@ -124,6 +124,7 @@
             <prefixDef ident="lib" matchPattern="(\d+)" replacementPattern="#sfu_pg_$1">
                <p>Resolves links from a page in a volume to a facsimile element.</p>
             </prefixDef>
+            <prefixDef ident="lim" matchPattern="(.+)" replacementPattern="lim.odd#$1"/>
             <prefixDef ident="prs" matchPattern="(.+)" replacementPattern="people.xml#$1">
                <p>Resolves links to a person to the personography.</p>
             </prefixDef>
@@ -146,6 +147,9 @@
                        replacementPattern="bibliography.xml$1">
                <p>Resolves links to a bibliographic item.</p>
             </prefixDef>
+            <prefixDef ident="img"
+                       matchPattern="(.+)"
+                       replacementPattern="images/$1"/>
          </listPrefixDef>
       </encodingDesc>
    </teiHeader>
@@ -167,6 +171,7 @@
             <schemaSpec ident="lim"
                         start="TEI div person place org biblStruct"
                         source="tei:4.2.2">
+               
                <?module analysis?>
                
                <?module core?>

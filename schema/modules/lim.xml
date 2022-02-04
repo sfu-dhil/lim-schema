@@ -253,6 +253,9 @@
                         <sch:let name="orgIdPattern" value="'[A-Z]{4}\d+(_[^_]+)*'"/>
                         <sch:let name="persIdPattern" value="'[A-Z]{5}\d+'"/>
                         <sch:let name="cutoff" value="xs:date('1752-09-02')"/>
+                        <sch:let name="root" value="root(.)"/>
+                        <sch:let name="isBornDigital" value="exists($root//tei:catRef[matches(@target,'bornDigital')])"/>
+                        <sch:let name="isItem" value="exists($root//tei:limItem)"/>
                         <!-- <sch:let name="pd" value="replace($uri,'^(.+[/\\]lim-tei[\\/]).+$', '$1')"/>
                 <sch:let name="dataDir" value="replace($pd,'(.+(.))$','$1data$2')"/>
                 <sch:let name="glyphs"

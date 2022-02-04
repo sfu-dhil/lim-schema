@@ -196,6 +196,49 @@
                      </attDef>
                   </attList>
                </elementSpec>
+               <elementSpec ident="list" module="core" mode="change">
+                  <constraintSpec scheme="schematron" ident="list.bornDigitalNeedsRendition">
+                     <constraint>
+                        <sch:rule context="tei:list[not(@rendition)]">
+                           <sch:assert test="not($isBornDigital)">ERROR: All lists in born digital document require the rendition attribute.</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="rendition" mode="change">
+                        <valList type="closed" mode="change">
+                           <valItem mode="add" ident="rnd:list_ordered">
+                              <desc>An ordered list</desc>
+                           </valItem>
+                           <valItem mode="add" ident="rnd:list_unordered">
+                              <desc>An unordered list</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <elementSpec ident="head" module="core" mode="change">
+                  <constraintSpec scheme="schematron" ident="list.bornDigitalNeedsRendition">
+                     <constraint>
+                        <sch:rule context="tei:head[matches(@rendition,'rnd:hidden')]">
+                           <sch:assert
+                              test="$isBornDigital">ERROR: Only use rnd:hidden in born digital documents.</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="rendition" mode="change">
+                        <valList type="closed" mode="change">
+                           <valItem mode="add" ident="rnd:hidden">
+                              <gloss>hidden</gloss>
+                              <desc>A heading that is
+                                 hidden (for accessibility purposes).</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+                  
+               </elementSpec>
                <elementSpec ident="noteGrp" module="core" mode="change">
                   <classes mode="change">
                      <memberOf key="lim.att.boolean" mode="add"/>
