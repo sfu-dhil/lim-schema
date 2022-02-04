@@ -175,6 +175,8 @@
                
                <?module header?>
                
+               <?module figures?>
+               
                <?module lim?>
                
                <?module linking?>

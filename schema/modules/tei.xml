@@ -166,6 +166,16 @@
                           module="tei"
                           type="atts"
                           mode="change">
+                  <constraintSpec scheme="schematron" ident="rendition.onlyInBornDigital" mode="add">
+                     <desc>Constraints for renditions that should only be used in
+                     born digital documents</desc>
+                     <constraint>
+                        <sch:rule  context="tei:*[contains-token(@rendition,'rnd:hidden')]">
+                           <sch:assert test="self::tei:head and ancestor::tei:TEI/descendant::tei:catRef[matches(@target,'bornDigital')]">ERROR: rnd:hidden is meant only for born digital document headings.</sch:assert>
+                        </sch:rule>
+                        
+                     </constraint>
+                  </constraintSpec>
                   <attList>
               <!--Delete @rend, since it's too ambiguous to be useful-->
                      <attDef ident="rend" mode="delete"/>
@@ -198,6 +208,7 @@
                         </valList>
                      </attDef>
                   </attList>
+                  
                </classSpec>
                <classSpec ident="att.naming" module="tei" type="atts" mode="change">
                   <attList>
