@@ -7,7 +7,7 @@
     </description>
     
     <property name="lib.dir" value="${basedir}/lib"/>
-    <property name="dataDir" value="${basedir}/../lim-data"/>
+    <property name="dataDir" value="${basedir}/../lim-data/data"/>
     <property name="repo" value="sfu-dhil"/>
     <property name="schemaDir" value="${basedir}/schema"/>
     <property name="TEIStylesheets" value="${basedir}/Stylesheets/"/>
