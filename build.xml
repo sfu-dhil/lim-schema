@@ -7,7 +7,8 @@
     </description>
     
     <property name="lib.dir" value="${basedir}/lib"/>
-    <property name="dataDir" value="${basedir}/data/sfu-dhil/data"/>
+    <property name="dataDir" value="${basedir}/../lim-data"/>
+    <property name="repo" value="sfu-dhil"/>
     <property name="schemaDir" value="${basedir}/schema"/>
     <property name="TEIStylesheets" value="${basedir}/Stylesheets/"/>
     <property name="saxon" value="${lib.dir}/saxon10HE.jar"/>
@@ -61,6 +62,14 @@
         </java>
     </target>
     
+    <target name="checkoutData" if="dataDirIsLocal">
+        <delete dir="${dataDir}"/>
+        <mkdir dir="${dataDir}"/>
+        <exec executable="git">
+            <arg line="clone https://github.com/${repo}/lim-data ${dataDir}"/>
+        </exec>
+    </target>
+    
     <target name="createTestDocs">
         <description>
             target: createTestDocs
@@ -71,10 +80,9 @@
         <delete dir="test_data"/>
         <mkdir dir="test_data"/>
         <copy todir="test_data">
-            <fileset dir="${dataDir}">
+            <fileset dir="${dataDir}/data">
                 <include name="**/**.xml"/>
             </fileset>
-            
             <filterchain>
                 <tokenfilter>
                     <!--Now replace the URI to point to the local version-->
@@ -85,9 +93,11 @@
              
             </filterchain>
         </copy>
-            
-        
-        
+        <ant antfile="${basedir}/xml-validate-action/build.xml" dir="${basedir}">
+            <property name="dir" value="${basedir}/test_data"/>
+            <property name="rng" value="${schemaDir}/lim.rng"/>
+            <property name="saxon" value="${saxon}"/>
+        </ant>
     </target>
     
     <target name="validate">
