@@ -190,6 +190,11 @@
                               <gloss>right-braced</gloss>
                               <desc>An item that has a curly right brace.</desc>
                            </valItem>
+                           <valItem ident="rnd:hidden">
+                              <gloss>hidden</gloss>
+                              <desc>BORN DIGITAL DOCUMENTS ONLY: A heading that is
+                              hidden (for accessibility purposes).</desc>
+                           </valItem>
                         </valList>
                      </attDef>
                   </attList>

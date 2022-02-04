@@ -97,21 +97,23 @@
                </elementSpec>
                <elementSpec ident="profileDesc" module="header" mode="change">
                   <content>
-                     <!--Must have a textClass-->
                      <alternate>
                         <sequence>
-                           <elementRef key="locusGrp"/>
-                           <elementRef key="locus" minOccurs="0" maxOccurs="1"/>
+                           <alternate>
+                              <sequence>
+                                 <elementRef key="locusGrp"/>
+                                 <elementRef key="locus" minOccurs="0" maxOccurs="1"/>
+                              </sequence>
+                              <elementRef key="locus" minOccurs="1" maxOccurs="2"/>
+                           </alternate>
+                           <elementRef key="abstact" 
+                              minOccurs="0" maxOccurs="1"/>
+                           <elementRef key="langUsage" minOccurs="0" maxOccurs="1"/>
+                           <elementRef key="limItem"/>
                         </sequence>
-                        <elementRef key="locus" minOccurs="1" maxOccurs="2"/>
+                        <elementRef key="catRef"/>
                      </alternate>
-                     <elementRef key="abstact" 
-                        minOccurs="0" maxOccurs="1"/>
-                     <elementRef key="langUsage" minOccurs="0" maxOccurs="1"/>
-                     
-                     <elementRef key="limItem"/>
-                  </content>
-                  
+                  </content>                  
                </elementSpec>
                
                <elementSpec ident="revisionDesc" mode="change" module="header">
