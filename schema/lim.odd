@@ -108,9 +108,80 @@
          </classDecl>
 
          <tagsDecl>
-            <rendition xml:id="rnd_code">
-           font-family: monospace;
-        </rendition>
+            <!--HOW THIS WORKS:
+               @xml:id = the rendition pointer,
+               desc / gloss = the desc and gloss in the ODD
+               outputRendition = the CSS styling-->
+            <rendition xml:id="rnd_super">
+               <desc>Superscript</desc>
+               <gloss>Superscripted letters</gloss>
+               <outputRendition>text-align:super;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_sub">
+               <desc>Subscript</desc>
+               <gloss>Subscripted letters</gloss>
+               <outputRendition>text-align:sub;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_underlined">
+               <desc>Underlined</desc>
+               <gloss>Items that are underlined; note that since underlining often denotes
+               emphasis, this should usually be used with more precise elements (persName, emph, etc)</gloss>
+               <outputRendition>text-decoration:underlined</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_right-braced">
+               <desc>Right braced</desc>
+               <gloss>A set of elements with a CURLY right brace</gloss>
+            </rendition>
+            <rendition xml:id="rnd_bordered-left">
+               <desc>Left bordered</desc>
+               <gloss>Items that have a left border (straight or ragged)</gloss>
+               <outputRendition>border-left:1px solid black;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_bordered-right">
+               <desc>Right bordered</desc>
+               <gloss>An element with a right border (straight or ragged)</gloss>
+               <outputRendition>border-right:1px solid black;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_bold">
+               <desc>Bold</desc>
+               <gloss>Bold or heavier weight. TODO: What is the difference between
+               bold and a shift in ink?</gloss>
+               <outputRendition>font-weight:bold;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_indent">
+               <desc>Indent</desc>
+               <gloss>A paragraph or block that is indented (for paragraphs, tag the whole paragraph;
+               for poetic lines, tag each indented line)</gloss>
+               <outputRendition>text-indent: 1rem;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_overline">
+               <desc>Overline</desc>
+               <gloss>An element with a line above. Note: this should NOT be used for letters with macrons (i.e. ō);
+                  if those ever appear, use the actual letter.</gloss>
+               <outputRendition>text-decoration: overline;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_small">
+               <desc>Small text</desc>
+               <gloss>Use for marginal notes etc, if they are smaller</gloss>
+               <outputRendition>font-size: 0.8em;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_large" select="head">
+               <desc>Larger text (i.e. headings)</desc>
+               <gloss>Use this for headings or other large text</gloss>
+               <outputRendition>font-size: 1.5em;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_strikethrough" selector="del">
+               <desc>Strikethrough</desc>
+               <gloss>Use this for text that is struck through; note that,
+               by default, you do not need to put this element for dels.</gloss>
+               <outputRendition>text-decoration:line-through</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_normal">
+               <desc>Normal</desc>
+               <gloss>This text should NOT follow any of the default assumptions
+               about its styling (i.e. a heading that is NOT large; a deletion that is
+               not struck through)</gloss>
+            </rendition>
          </tagsDecl>
          <listPrefixDef>
             <prefixDef ident="doc" matchPattern="(.+)(#.+)?" replacementPattern="$1.xml$2">

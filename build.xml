@@ -27,32 +27,46 @@
         </ant>
     </target>
     
-    <target name="makeRng" depends="install">
-        <description>
-            target: makeRng
-            
-            Creates the schema using the TEI Stylesheets repository
-            (first expanding, and then convert to RelaxNG)
-        </description>
+    
+    <target name="fetch">
+        <description>Fetches all of the modules and creates one full ODD</description>
         <echo>Fetching modules</echo>
         <java jar="${saxon}" fork="true">
             <arg line="-xsl:${basedir}/code/documentation/xsl/include.xsl"/>
             <arg line="-s:${schemaDir}/lim.odd"/>
             <arg line="-o:${schemaDir}/lim.included.odd"/>
         </java>
+    </target>
+    
+    <target name="populate">
+        <description>Populates the ODD with values from taxonomies</description>
+        <echo>Populating ODD values from the taxonomies</echo>
+        <java jar="${saxon}" fork="true">
+            <arg line="-xsl:${basedir}/code/schema/fill_odd.xsl"/>
+            <arg line="-s:${schemaDir}/lim.included.odd"/>
+            <arg line="-o:${schemaDir}/lim.full.odd"/>
+        </java>
+    </target>
+    
+    <target name="expand">
+        <description>Expands the ODD, combining with P5, 
+            using the TEI stylesheets</description>
         <echo>Expanding ODD</echo>
         <java jar="${saxon}" fork="true">
             <arg line="-xsl:${TEIStylesheets}/odds/odd2odd.xsl"/>
-            <arg line="-s:${schemaDir}/lim.included.odd"/>
+            <arg line="-s:${schemaDir}/lim.full.odd"/>
             <arg line="-o:${schemaDir}/lim.expanded.odd"/>
         </java>
+    </target>
+    
+    <target name="rng">
+        <description>Creates the RNG from the expanded ODD</description>
         <echo>Building RNG</echo>
         <java jar="${saxon}" fork="true">
             <arg line="-xsl:${TEIStylesheets}/odds/odd2relax.xsl"/>
             <arg line="-s:${schemaDir}/lim.expanded.odd"/>
             <arg line="-o:${schemaDir}/lim.rng"/>
         </java>
-        
         <!--And now adjust the RNG to allow person elements in any order-->
         <move file="${schemaDir}/lim.rng" tofile="${schemaDir}/lim.rng.tmp"/>
         <java jar="${saxon}" fork="true">
@@ -60,6 +74,17 @@
             <arg line="-s:${schemaDir}/lim.rng.tmp"/>
             <arg line="-o:${schemaDir}/lim.rng"/>
         </java>
+    </target>
+    
+
+    
+    <target name="makeRng" depends="install, fetch, populate, expand, rng">
+        <description>
+            target: makeRng
+            
+            Creates the schema using the TEI Stylesheets repository
+            (first expanding, and then convert to RelaxNG)
+        </description>
     </target>
     
     <target name="checkoutData" if="dataDirIsLocal">

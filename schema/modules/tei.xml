@@ -63,8 +63,13 @@
                               <desc>transcription empty</desc>
                               <gloss>empty / not yet worked on or edited</gloss>
                            </valItem>
+                           <valItem ident="uneditedTranscription" mode="add">
+                              <desc>Converted and unedited transcription</desc>
+                              <gloss>The transcription has been converted from a word doc (or similar)
+                              and has yet to be edited.</gloss>
+                           </valItem>
                            <valItem ident="uneditedHTR" mode="add">
-                              <desc>transcription unedited</desc>
+                              <desc>HTR transcription unedited</desc>
                               <gloss>transcription has not yet been edited from the conversion
                               from Transkribus</gloss>
                            </valItem>

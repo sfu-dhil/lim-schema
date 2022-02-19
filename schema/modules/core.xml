@@ -254,21 +254,48 @@
                </elementSpec>
                <elementSpec ident="abbr" module="core" mode="change">
                   <classes mode="change">
-              <!--Remove from pPart.editorial, since it should only be in <choice>-->
-                     <memberOf key="model.pPart.editorial" mode="delete"/>
                      <!--Add cert and resp-->
                      <memberOf key="att.global.responsibility" mode="add"/>
                   </classes>
                   <constraintSpec ident="abbr.shouldntContainJustAmp" scheme="schematron" mode="add">
                      <desc>Don't expand the ampersand only.</desc>
                      <constraint>
-                <!--TODO: Remove @ref once feasible-->
                         <sch:rule context="tei:abbr">
                            <sch:let name="content" value="string(.)"/>
                            <sch:assert test="not(matches($content, '^\s*&amp;\s*$'))">ERROR: There is no need to tag ampersands when it means "and".</sch:assert>
                         </sch:rule>
                      </constraint>
                   </constraintSpec>
+                  <constraintSpec ident="abbr.shouldntContainJustAmp" scheme="schematron" mode="add">
+                     <desc>Type is required when not in choice</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <!--TODO: Remove @ref once feasible-->
+                           <sch:rule context="tei:choice/tei:abbr">
+                              <sch:assert test="not(@type)">ERROR: Do not put a type attribute on abbrs in choice.</sch:assert>
+                           </sch:rule>
+                           <sch:rule context="tei:abbr[not(parent::tei:choice)]">
+                              <sch:assert test="@type">ERROR: @type is required when abbr is not in a choice.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef mode="change" ident="type">
+                        <valList mode="replace" type="closed">
+                           <valItem ident="the" mode="add">
+                              <desc>the</desc>
+                           </valItem>
+                           <valItem ident="that" mode="add">
+                              <desc>that</desc>
+                           </valItem>
+                           <valItem ident="with" mode="add">
+                              <desc>with</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                     
+                  </attList>
                </elementSpec>
             </schemaSpec>
          </div>
