@@ -24,11 +24,21 @@
             <head>transcr</head>
             <schemaSpec ident="lim_transcr">
                <moduleRef key="transcr"
-                          include="damage facsimile fw handNotes handShift supplied surface surfaceGrp zone"/>
+                          include="damage facsimile fw handNotes handShift subst supplied surface surfaceGrp zone"/>
                <elementSpec ident="facsimile" module="transcr" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global.linking" mode="add"/>
                   </classes>
+               </elementSpec>
+               <elementSpec ident="supplied" module="transcr" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global.responsibility" mode="add"/>
+                     <memberOf key="att.dimensions" mode="delete"/>
+                     <memberOf key="att.ranging" mode="delete"/>
+                     <memberOf key="att.global" mode="delete"/>
+                     <memberOf key="att.editLike" mode="delete"/>
+                  </classes>
+                  
                </elementSpec>
                <elementSpec ident="fw" module="transcr" mode="change">
                   <constraintSpec ident="fw.pageNum.mustHavePlace" scheme="schematron">

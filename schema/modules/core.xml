@@ -24,7 +24,7 @@
             <head>core</head>
             <schemaSpec ident="lim_core">
                <moduleRef key="core"
-                          include="abbr author bibl biblStruct choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note noteGrp num orig p pb ptr pubPlace publisher quote ref reg resp respStmt rs sic term time title unclear"/>
+                          include="abbr add author bibl biblStruct choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note noteGrp num orig p pb ptr pubPlace publisher quote ref reg resp respStmt rs sic term time title unclear"/>
                <elementSpec ident="bibl" module="core" mode="change">
                   <classes>
                      <memberOf key="att.docStatus" mode="delete"/>
@@ -118,13 +118,13 @@
                   <classes mode="change">
                      <memberOf key="att.global.facs" mode="add"/>
                   </classes>
-                  <constraintSpec ident="lb.noSpaces" scheme="schematron">
+<!--                  <constraintSpec ident="lb.noSpaces" scheme="schematron">
                      <constraint>
                         <sch:rule context="tei:lb[preceding-sibling::node()[1][self::tei:pc]]">
                            <sch:assert test="matches(following::text()[1],'^\S')">ERROR: All punctuation separated words in lines should not have any spaces after the line beginning element.</sch:assert>
                         </sch:rule>
                      </constraint>
-                  </constraintSpec>
+                  </constraintSpec>-->
                   <constraintSpec ident="lb.shouldUseDecimal" scheme="schematron">
                      <constraint>
                         <sch:rule context="tei:lb[@facs]">
@@ -291,6 +291,9 @@
                            </valItem>
                            <valItem ident="with" mode="add">
                               <desc>with</desc>
+                           </valItem>
+                           <valItem ident="them" mode="add">
+                              <desc>them</desc>
                            </valItem>
                         </valList>
                      </attDef>

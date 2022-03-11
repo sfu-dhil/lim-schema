@@ -40,7 +40,7 @@
                 <!--TODO: Remove @ref once feasible-->
                         <sch:rule context="tei:pc">
                            <sch:assert test="matches(text(),'^[\p{P}=]$')">ERROR: Only a single punctuation character is allowed in pc</sch:assert>
-                           <sch:assert test="following-sibling::node()[1][self::tei:lb]">ERROR: All pc elements must be followed immediately by an lb element.</sch:assert>
+                           <!--<sch:assert test="following-sibling::node()[1][self::tei:lb]">ERROR: All pc elements must be followed immediately by an lb element.</sch:assert>-->
                         </sch:rule>
                      </constraint>
                   </constraintSpec>
