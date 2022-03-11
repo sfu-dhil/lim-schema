@@ -13,13 +13,34 @@ To add an editorial note, use the `<note>` tag with an `@type`=`"editorial"`:
 
 ## Abbreviations and Expansions
 
+In the project, we have two methods for encoding abbreviations.
+
+### Uncommon abbreviations
+
+
 Uncommon or unfamiliar abbreviations—like Revt—will often need to be expanded in order to provide clarity and to facilitate searching. To do so, first tag the abbreviation with the `<abbr>` element, then tag your expansion with an `<expan>`, and then wrap both in a `<choice>` element. For example: 
+
 ```
 <title>Letter from the <choice><abbr>Revt.</abbr><expan>Reverend</expan></choice> Mr. <persName>Lyon</persName></title>
 ```
 
 
-The `<choice>` element is known in TEI-speak as a Janus element: it always contains two elements—one original, and one editorially supplied.
+### Common abbreviations: the, that, ampersands
+
+For common abbreviations like "yt" for "that", "ye" for "the" that appear often throughout the text, you do not need to use `<choice>` or `<expan>`; instead, you can simply tag the abbreviation using the `<abbr>` tag with a `@type` value with the correct word:
+
+```
+<abbr type="the">ye</abbr>
+```
+
+In most cases, ampersands *do not* need to be tagged at all--they will be automatically expanded in processing. However, do note that ampersands are special characters in XML and cannot be represented simply by the & character and must be typed in as `&amp;`
+
+However, if the ampersand does not expand to "and", then you must tag the abbreviation using the full `<choice>`, `<abbr>`, and `<expan>` method above:
+
+```
+<choice><abbr>&amp;c.</abbr><expan>et cetera</expan></choice>
+```
+
 
 ## Corrections
 
@@ -55,7 +76,29 @@ If you are unable to transcribe the text at all or the text has been removed com
 ```
 
 
-## Deletions
+## Additions, Deletions, and Substitutions
+
+Additions and deletions in text may appear in the text either in isolation or as part of a single textual event. 
+
+### Additions
+
+In all cases, additions should be marked with the `<add>` tag with its location encoded using the `@place` attribute. For example:
+
+![Example from v02.0221.01](images/addition_example.png)
+
+In this case, text has been added above the line, which would be encoded like so: 
+
+```
+<lb/>Donell, <add place="above">George Moir the</add> Laird of Leckie,
+```
+
+Here, we can also tag the "George Moir the Laird of Leckie" as a `<persName>` and point to his `@xml:id`:
+
+```
+<lb/>Donell, <persName ref="prs:MOIRG1"><add place="above">George Moir the</add> Laird of Leckie</persName>
+```
+
+### Deletions
 
 Tag text that has been marked for deleting using the `<del>` element: 
 ```
@@ -72,6 +115,28 @@ If the text is rendered completely illegible, then use a `<gap>` element with an
 <title>While I pondered weak and <del><gap><desc>Illegible</desc></gap></del></title>
 ```
 
+### Substitutions
+
+When an addition and deletion are related (i.e. the additional text should take the place of the deleted text), then we can encode that relationship by wrapping the `<add>` and `<del>` with the substitution element `<subst>`. For example:
+
+![Example from v02.0221.01](images/substitution_example.png)
+
+The substitions are highlighted above; in each case, there is a deletion (with illegible content) and an addition above. In the first example, we would encode the additional "some" using the `add` element:
+
+```
+<add place="above">some</add>
+```
+and the deleted word using `<del>` with a nested `<gap>` that examples the extent of the cancelled text:
+
+```
+<del><gap reason="deleted" quantity="1" unit="word"/></del>
+```
+
+To signal that these are a related substitution, we wrap the `add` and the `del` in a `<subst>`. So putting this all together:
+
+```
+<subst><add place="above">some</add><del><gap reason="deleted" quantity="1" unit="word"/></del></subst>
+```
 
 ## Foreign Language
 
@@ -85,4 +150,5 @@ How and where you attach that `@xml:lang` depends on whether the segment of fore
 ```
 <item><title>This example was created <foreign xml:lang="la">ex nihilo</foreign></title></item>
 ```
+
 
