@@ -42,13 +42,24 @@
                         <sch:rule context="tei:pb[@facs]">
                            <sch:assert test="matches(@facs,'^lib:\d+$')">ERROR: pb/@facs should be in the lib:pageNum (i.e. lib:22).</sch:assert>
                         </sch:rule>
+                        
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="pb.unique" scheme="schematron">
+                     <constraint>
+                        <sch:rule context="tei:pb[@facs][not(ancestor::tei:TEI[@xml:id = 'vol11'])]">
+                           <sch:let name="facsPtr" value="@facs"/>
+                           <sch:let name="allFacs" value="//tei:pb[@facs]"/>
+                           <sch:assert test="count($allFacs[contains-token(@facs, $facsPtr)]) = 1">
+                              ERROR: Duplicate page beginning: <sch:value-of select="$facsPtr"/>
+                           </sch:assert>
+                        </sch:rule>
                      </constraint>
                   </constraintSpec>
                   <attList>
                 <!--Make @facs required-->
                      <attDef ident="facs" mode="change" usage="req"/>
                   </attList>
-                  
                </elementSpec>
                <elementSpec ident="name" module="core" mode="change">
                   <constraintSpec ident="name.notForPeopleOrPlaces" mode="change" scheme="schematron">
@@ -177,6 +188,17 @@
                         <sch:pattern>
                            <sch:rule context="tei:note[ancestor::tei:text]">
                               <sch:assert test="@type">ERROR: All notes in transcriptions must have a @type.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="note.unknownsShouldBeFixed" scheme="schematron">
+                     <desc>Notes must be typed in the body</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:note[@type = 'unknown']">
+                              <sch:assert test="//tei:revisionDesc[@docStatus=('empty','uneditedTranscription')]">WARNING: Unknown notes should be replaced by either
+                              the appropriate encoding (usually supplied, gap, del, etc) or should become a @type='editorial'.</sch:assert>
                            </sch:rule>
                         </sch:pattern>
                      </constraint>

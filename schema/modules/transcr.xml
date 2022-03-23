@@ -48,6 +48,9 @@
                            <sch:rule context="tei:fw[@type=('pageNum', 'folioNum')]">
                               <sch:assert test="@place">ERROR: Missing required @place attribute for page number formework.</sch:assert>
                            </sch:rule>
+                           <sch:rule context="tei:fw[@type='catchword']">
+                              <sch:assert test="following-sibling::*[1]/self::tei:pb">ERROR: All catchwords should have a page beginning after</sch:assert>
+                           </sch:rule>
                         </sch:pattern>
                      </constraint>
                   </constraintSpec>
