@@ -10,6 +10,14 @@ To add an editorial note, use the `<note>` tag with an `@type`=`"editorial"`:
 <note type="editorial">An editorially supplied note.</note>
 ```
  The `@type` is important here: it distinguishes the editorially supplied note from other notes and annotations made by Forbes or later editors.
+ 
+## Adding Marginal Notes
+
+Here is the documentation for adding marginal notes. 
+
+```
+<note type="marginal" place="margin">This is the marginal note</note>
+```
 
 ## Abbreviations and Expansions
 
