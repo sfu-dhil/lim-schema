@@ -42,11 +42,11 @@ Here is the documentation for adding marginal notes.
 
 **B. How to add a new file.**
 1. Click on **“Add file”**. 
-![image 2B1](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.7%20marginal%20notes.png)
+![image 2B1](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.B.1.png)
 2. In the drop-down menu, select **“Create new file”**. 
-![image 2B2](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.7%20marginal%20notes.png)
+![image 2B2](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.B.2.png)
 3. Add a title to save your file, for instance **“writing_documentation.md”**. 
-![image 2B3](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.7%20marginal%20notes.png)
+![image 2B3](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.B.3.png)
 4. 4. Click on **“Edit new file”** and add your text. For example:
 “#Writing Documentation 
 ##Why Write Documentation
@@ -54,8 +54,8 @@ Here is the documentation for adding marginal notes.
 ###Editing existing documents
 ###Adding new documents 
 ###Re-arranging documents” 
-![image 2B4](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.7%20marginal%20notes.png)
+![image 2B4](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.B.4.png)
 5. To save the changes, scroll to the bottom of the page and click on **“Commit new file”**. 
-![image 2B5](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.7%20marginal%20notes.png)
+![image 2B5](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.B.5.png)
 6. The new file will now be visible in your folder. 
-![image 2B6](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.7%20marginal%20notes.png)
+![image 2B6](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.B.6.png)
