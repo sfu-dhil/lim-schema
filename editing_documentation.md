@@ -113,3 +113,25 @@ Here is the documentation for adding marginal notes.
 
 5. To save the changes, scroll to the bottom of the page and click on **“Commit changes”**. 
 
+
+**E. How to create a pull request and commit changes to the main website.**
+1. Go to **“yourname/lim-schema”** and click on **“Contribute”**. A pop-up message will appear. Click on **“Open pull request”**. 
+![image 2E1](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.E.1.png)
+
+2. You will be redirected to a page where your changes are highlighted in green. 
+![image 2E2](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.E.2.png)
+
+3. Click on **“Create pull request”**. 
+![image 2E3](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.E.3.png)
+
+4. To, go to your main page **(“yourname/lim-schema”)** and click on the **Settings** icon. 
+![image 2E4](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.E.4.png)
+
+5. Next, click on the **“Pages”** button in the sidebar. 
+![image 2E5](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.E.5.png)
+
+6. Click on the dropdown menu under **“Source”** and select **“gh-pages”**, and then click on the **“Save”** button.
+![image 2D4](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.E.6.png)
+ 
+7. You can now click on the link to see your published site (eg. https://leithdavis.github.io/lim-schema/) 
+![image 2D4](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.E.7.png)
