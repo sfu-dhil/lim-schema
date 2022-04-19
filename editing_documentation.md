@@ -98,3 +98,18 @@ Here is the documentation for adding marginal notes.
 6. Similarly, to insert a **link**, add the title of the link in square brackets, followed by the hyperlink in parenthesis. For example: **“[Simon Fraser University] (https://sfu.ca)**” 
 ![image 2C6](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.C.6.png)
 
+**D. How to add a file to the index.** 
+
+1. Open **“yourname/lim-schema/docs/”** and click on **“index.md”** 
+![image 2D1](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.D.1.png)
+2. Click on the **pencil** icon to edit. 
+![image 2D2](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.D.2.png)
+
+3. Click on the **“edit file”** tab and add to the list. A bulleted list begins with an asterisk icon (*). The link has two components: the title (within square brackets) and the link (within parenthesis). For eg. **“*[Writing Documentation] (writing_documentation.md)”**. 
+![image 2D3](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.D.3.png)
+
+4. Click on the **“Preview”** tab to view your changes. 
+![image 2D4](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.D.4.png)
+
+5. To save the changes, scroll to the bottom of the page and click on **“Commit changes”**. 
+![image 2D5](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.D.5.png)
