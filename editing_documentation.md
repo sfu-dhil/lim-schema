@@ -1,14 +1,14 @@
 **This file contains instructions on the following:** 
 
-A.	How to edit documentation 
+_A.	How to edit documentation_ 
 
-B.	How to add a new file
+_B.	How to add a new file_
 
-C.	How to add an image/hyperlink 
+_C.	How to add an image/hyperlink_ 
 
-D.	How to add a file to the index
+_D.	How to add a file to the index_
 
-E.	How to create a pull request and commit changes to the main website. 
+_E.	How to create a pull request and commit changes to the main website._ 
 
 **A. How to Edit Documentation.**
 1. Open your page by visiting www.github.com/sfu-dhil/lim-schema. Click on **“fork”**. This will redirect to your own repository – eg. shaunajudithirani/lim-schema 
@@ -39,3 +39,23 @@ Here is the documentation for adding marginal notes.
 10. To save your work, scroll to the bottom of the page, and click on **“commit changes”**. 
 ![image 10](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.10%20commit%20changes.png)
 
+
+**B. How to add a new file.**
+1. Click on **“Add file”**. 
+![image 2B1](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.7%20marginal%20notes.png)
+2. In the drop-down menu, select **“Create new file”**. 
+![image 2B2](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.7%20marginal%20notes.png)
+3. Add a title to save your file, for instance **“writing_documentation.md”**. 
+![image 2B3](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.7%20marginal%20notes.png)
+4. 4. Click on **“Edit new file”** and add your text. For example:
+“#Writing Documentation 
+##Why Write Documentation
+##Forking the Repository 
+###Editing existing documents
+###Adding new documents 
+###Re-arranging documents” 
+![image 2B4](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.7%20marginal%20notes.png)
+5. To save the changes, scroll to the bottom of the page and click on **“Commit new file”**. 
+![image 2B5](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.7%20marginal%20notes.png)
+6. The new file will now be visible in your folder. 
+![image 2B6](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.7%20marginal%20notes.png)
