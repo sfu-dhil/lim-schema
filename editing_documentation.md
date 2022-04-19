@@ -112,3 +112,4 @@ Here is the documentation for adding marginal notes.
 ![image 2D4](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.D.4.png)
 
 5. To save the changes, scroll to the bottom of the page and click on **“Commit changes”**. 
+
