@@ -78,3 +78,23 @@ Here is the documentation for adding marginal notes.
 
 ![image 2B6](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.B.6.png)
 
+**C. How to add an image or a hyperlink.**
+
+1. Go to yourname/lim-schema/ and open the **“docs”** folder. 
+![image 2C1](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.C.1.png)
+
+2. Next, open the **“images”** folder. 
+![image 2C2](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.C.2.png)
+
+3. Upload a file by clicking on **“add file”** and then select **“upload files”**. Alternatively, you can drag and drop an image directly into the folder. 
+![image 2C3](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.C.3.png)
+
+4. Next, go to the **“docs”** folder **(yourname/lim-schema/docs)**, and open a file of your choice **(eg. “writing_documentation.md”)**.
+![image 2C4](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.C.4.png)
+
+5. Once the file is open, click on the **pencil** button to edit. Select the **“edit file”** tab and begin writing your text. To insert an image, use the following command: **“![Screenshot of the documentation] (images/documentation_screenshot.png)”**. The title of the image is in square brackets, while the pathway is listed in parenthesis. 
+![image 2C5](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.C.5.png)
+
+6. Similarly, to insert a **link**, add the title of the link in square brackets, followed by the hyperlink in parenthesis. For example: **“[Simon Fraser University] (https://sfu.ca)**” 
+![image 2C6](https://github.com/shaunajudith/lim-schema/blob/main/docs/images/2.C.6.png)
+
