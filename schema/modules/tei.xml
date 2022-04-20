@@ -146,7 +146,7 @@
                   <attList>
                      <attDef ident="facs" mode="change">
                         <datatype maxOccurs="1">
-                           <dataRef name="token" restriction="lib:\d+(.\d+)?"/>
+                           <dataRef name="token" restriction="(lib|pg):\d+(.\d+)?"/>
                         </datatype>
                      </attDef>
                   </attList>

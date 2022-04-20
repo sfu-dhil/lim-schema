@@ -305,6 +305,9 @@
                   </attList>
                </classSpec>
                <classSpec ident="lim.att.locatable" module="lim" type="atts" mode="add">
+                  <classes>
+                     <memberOf key="lim.att.locatable.directed"/>
+                  </classes>
                   <attList>
                      <attDef ident="where" usage="opt">
                         <desc versionDate="2007-06-11" xml:lang="en">indicates the location of an event by pointing to a <gi>place</gi> element</desc>
@@ -314,6 +317,17 @@
                      </attDef>
                   </attList>
                </classSpec>
+               <classSpec ident="lim.att.locatable.directed" module="lim" type="atts" mode="add">
+                  <attList>
+                     <attDef ident="toWhere" usage="opt">
+                        <desc>indicates the location of something being sent.</desc>
+                        <datatype>
+                           <dataRef key="teidata.pointer"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </classSpec>
+               
                <macroSpec ident="lim.personMacro" module="lim" mode="add">
                   <content>
                      <elementRef key="persName" minOccurs="1" maxOccurs="unbounded"/>

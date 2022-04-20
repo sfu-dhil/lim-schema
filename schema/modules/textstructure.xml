@@ -66,6 +66,10 @@
                               <gloss>preface</gloss>
                               <desc>A preface or some prefatory matter to a volume or text.</desc>
                            </valItem>
+                           <valItem ident="footnotes">
+                              <gloss>footnotes</gloss>
+                              <desc>A set of footnotes</desc>
+                           </valItem>
                         </valList>
                      </attDef>
                   </attList>
