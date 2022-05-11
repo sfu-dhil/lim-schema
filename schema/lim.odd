@@ -168,7 +168,7 @@
             <rendition xml:id="rnd_large" select="head">
                <desc>Larger text (i.e. headings)</desc>
                <gloss>Use this for headings or other large text</gloss>
-               <outputRendition>font-size: 16px;</outputRendition>
+               <outputRendition>font-size: 1.5rem;</outputRendition>
             </rendition>
             <rendition xml:id="rnd_strikethrough" selector="del">
                <desc>Strikethrough</desc>
