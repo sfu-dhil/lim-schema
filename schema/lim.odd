@@ -182,6 +182,21 @@
                about its styling (i.e. a heading that is NOT large; a deletion that is
                not struck through)</gloss>
             </rendition>
+            <rendition xml:id="rnd_left">
+               <desc>Left aligned</desc>
+               <gloss>Left aligned text</gloss>
+               <outputRendition>text-align: left;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_right">
+               <desc>Right aligned</desc>
+               <gloss>Left aligned text</gloss>
+               <outputRendition>text-align: right;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_center">
+               <desc>Centered</desc>
+               <gloss>Centered text</gloss>
+               <outputRendition>text-align: center;</outputRendition>
+            </rendition>
          </tagsDecl>
          <listPrefixDef>
             <prefixDef ident="doc" matchPattern="(.+)(#.+)?" replacementPattern="$1.xml$2">
