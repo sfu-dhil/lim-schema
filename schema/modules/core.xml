@@ -279,7 +279,7 @@
                   </attList>
                </elementSpec>
                <elementSpec ident="head" module="core" mode="change">
-                  <constraintSpec scheme="schematron" ident="list.bornDigitalNeedsRendition">
+                  <constraintSpec scheme="schematron" ident="head.bdHidden">
                      <constraint>
                         <sch:rule context="tei:head[matches(@rendition,'rnd:hidden')]">
                            <sch:assert
@@ -431,7 +431,7 @@
                         </sch:rule>
                      </constraint>
                   </constraintSpec>
-                  <constraintSpec ident="abbr.shouldntContainJustAmp" scheme="schematron" mode="add">
+                  <constraintSpec ident="abbr.typeCheck" scheme="schematron" mode="add">
                      <desc>Type is required when not in choice</desc>
                      <constraint>
                         <sch:pattern>
@@ -446,19 +446,70 @@
                      </constraint>
                   </constraintSpec>
                   <attList>
+
+            
+                     
                      <attDef mode="change" ident="type">
                         <valList mode="replace" type="closed">
-                           <valItem ident="the" mode="add">
-                              <desc>the</desc>
+                           <valItem ident="another" mode="add">
+                              <desc>anoyr</desc>
+                              <gloss>Abbreviation for <mentioned>another</mentioned></gloss>
                            </valItem>
-                           <valItem ident="that" mode="add">
-                              <desc>that</desc>
+                           <valItem ident="Brother" mode="add">
+                              <desc>Broyr</desc>
+                              <gloss>Abbreviation for <mentioned>Brother</mentioned></gloss>
+                           </valItem>
+                           <valItem ident="which" mode="add">
+                              <desc>qch</desc>
+                              <gloss>Abbreviation for <mentioned>which</mentioned></gloss>
+                           </valItem>
+                           <valItem ident="whom" mode="add">
+                              <desc>qm</desc>
+                              <gloss>Abbreviation for <mentioned>whom</mentioned></gloss>
+                           </valItem>
+                           <valItem ident="when" mode="add">
+                              <desc>qn</desc>
+                              <gloss>Abbreviation for <mentioned>when</mentioned></gloss>
+                           </valItem>
+                           <valItem ident="who" mode="add">
+                              <desc>qo</desc>
+                              <gloss>Abbreviation for <mentioned>who</mentioned></gloss>
+                           </valItem>
+                           <valItem ident="what" mode="add">
+                              <desc>qt</desc>
+                              <gloss>Abbreviation for <mentioned>what</mentioned></gloss>
                            </valItem>
                            <valItem ident="with" mode="add">
-                              <desc>with</desc>
+                              <desc>wt</desc>
+                              <gloss>Abbreviation for <mentioned>with</mentioned></gloss>
+                           </valItem>
+                           <valItem ident="the" mode="add">
+                              <desc>ye</desc>
+                              <gloss>Abbreviation for <mentioned>the</mentioned></gloss>
+                           </valItem>
+                           <valItem ident="then" mode="add">
+                              <desc>yn</desc>
+                              <gloss>Abbreviation for <mentioned>then</mentioned></gloss>
+                           </valItem>
+                           <valItem ident="your" mode="add">
+                              <desc>yr</desc>
+                              <gloss>Abbreviation for <mentioned>your</mentioned></gloss>
+                           </valItem>
+                           <valItem ident="that" mode="add">
+                              <desc>yt</desc>
+                              <gloss>Abbreviation for <mentioned>that</mentioned></gloss>
                            </valItem>
                            <valItem ident="them" mode="add">
-                              <desc>them</desc>
+                              <desc>ym</desc>
+                              <gloss>Abbreviation for <mentioned>them</mentioned></gloss>
+                           </valItem>
+                           <valItem ident="there" mode="add">
+                              <desc>yre</desc>
+                              <gloss>Abbreviation for <mentioned>there</mentioned></gloss>
+                           </valItem>
+                           <valItem ident="this" mode="add">
+                              <desc>ys</desc>
+                              <gloss>Abbreviation for <mentioned>this</mentioned></gloss>
                            </valItem>
                         </valList>
                      </attDef>
