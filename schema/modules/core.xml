@@ -286,6 +286,7 @@
                               test="$isBornDigital">ERROR: Only use rnd:hidden in born digital documents.</sch:assert>
                         </sch:rule>
                      </constraint>
+                     
                   </constraintSpec>
                   <attList>
                      <attDef ident="rendition" mode="change">

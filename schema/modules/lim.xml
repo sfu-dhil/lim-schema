@@ -200,6 +200,63 @@
                      <elementRef key="enclosure" minOccurs="0" maxOccurs="unbounded"/>
                   </content>
                </elementSpec>
+               
+               <classSpec ident="lim.att.boolean" mode="add" module="lim" type="atts">
+                  <attList>
+                     <attDef ident="value" usage="rec">
+                        <datatype>
+                           <dataRef key="teidata.xTruthValue"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </classSpec>
+               <classSpec ident="lim.att.locatable" module="lim" type="atts" mode="add">
+                  <classes>
+                     <memberOf key="lim.att.locatable.directed"/>
+                  </classes>
+                  <attList>
+                     <attDef ident="where" usage="opt">
+                        <desc versionDate="2007-06-11" xml:lang="en">indicates the location of an event by pointing to a <gi>place</gi> element</desc>
+                        <datatype>
+                           <dataRef key="teidata.pointer"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </classSpec>
+               <classSpec ident="lim.att.locatable.directed" module="lim" type="atts" mode="add">
+                  <attList>
+                     <attDef ident="toWhere" usage="opt">
+                        <desc>indicates the location of something being sent.</desc>
+                        <datatype>
+                           <dataRef key="teidata.pointer"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </classSpec>
+               
+               <macroSpec ident="lim.personMacro" module="lim" mode="add">
+                  <content>
+                     <elementRef key="persName" minOccurs="1" maxOccurs="unbounded"/>
+                     <!--NOTE: preserveORder doesn't actually work, but there
+                may be a new element coming: see
+                https://github.com/TEIC/TEI/issues/2154 -->
+                     <sequence preserveOrder="false">
+                        <elementRef key="sex" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="birth" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="death" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="faith" minOccurs="0" maxOccurs="unbounded"/>
+                        <elementRef key="affiliation" minOccurs="0" maxOccurs="unbounded"/>
+                        <elementRef key="occupation" minOccurs="0" maxOccurs="unbounded"/>
+                        <elementRef key="nationality" minOccurs="0" maxOccurs="unbounded"/>
+                        <elementRef key="residence" minOccurs="0" maxOccurs="unbounded"/>
+                     </sequence>
+                     <!--Always make langKnowledge and note come last-->
+                     <elementRef key="langKnowledge" minOccurs="0" maxOccurs="1"/>
+                     <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+                  </content>
+               </macroSpec>
+               
+               
   
                <constraintSpec scheme="schematron" ident="global.rootIdMustMatchDocument">
                   <desc>The rootid must be the same as the document's name.</desc>
@@ -295,61 +352,43 @@
                      </sch:pattern>
                   </constraint>
                </constraintSpec>
-               <classSpec ident="lim.att.boolean" mode="add" module="lim" type="atts">
-                  <attList>
-                     <attDef ident="value" usage="rec">
-                        <datatype>
-                           <dataRef key="teidata.xTruthValue"/>
-                        </datatype>
-                     </attDef>
-                  </attList>
-               </classSpec>
-               <classSpec ident="lim.att.locatable" module="lim" type="atts" mode="add">
-                  <classes>
-                     <memberOf key="lim.att.locatable.directed"/>
-                  </classes>
-                  <attList>
-                     <attDef ident="where" usage="opt">
-                        <desc versionDate="2007-06-11" xml:lang="en">indicates the location of an event by pointing to a <gi>place</gi> element</desc>
-                        <datatype>
-                           <dataRef key="teidata.pointer"/>
-                        </datatype>
-                     </attDef>
-                  </attList>
-               </classSpec>
-               <classSpec ident="lim.att.locatable.directed" module="lim" type="atts" mode="add">
-                  <attList>
-                     <attDef ident="toWhere" usage="opt">
-                        <desc>indicates the location of something being sent.</desc>
-                        <datatype>
-                           <dataRef key="teidata.pointer"/>
-                        </datatype>
-                     </attDef>
-                  </attList>
-               </classSpec>
-               
-               <macroSpec ident="lim.personMacro" module="lim" mode="add">
-                  <content>
-                     <elementRef key="persName" minOccurs="1" maxOccurs="unbounded"/>
-                     <!--NOTE: preserveORder doesn't actually work, but there
-                may be a new element coming: see
-                https://github.com/TEIC/TEI/issues/2154 -->
-                     <sequence preserveOrder="false">
-                        <elementRef key="sex" minOccurs="0" maxOccurs="1"/>
-                        <elementRef key="birth" minOccurs="0" maxOccurs="1"/>
-                        <elementRef key="death" minOccurs="0" maxOccurs="1"/>
-                        <elementRef key="faith" minOccurs="0" maxOccurs="unbounded"/>
-                        <elementRef key="affiliation" minOccurs="0" maxOccurs="unbounded"/>
-                        <elementRef key="occupation" minOccurs="0" maxOccurs="unbounded"/>
-                        <elementRef key="nationality" minOccurs="0" maxOccurs="unbounded"/>
-                        <elementRef key="residence" minOccurs="0" maxOccurs="unbounded"/>
-                     </sequence>
-                     <!--Always make langKnowledge and note come last-->
-                     <elementRef key="langKnowledge" minOccurs="0" maxOccurs="1"/>
-                     <elementRef key="note" minOccurs="0" maxOccurs="1"/>
-                  </content>
-               </macroSpec>
-               
+               <constraintSpec ident="fwPbConstraints"
+                  module="lim"
+                  mode="add"
+                  scheme="schematron">
+                  <desc>Set of constraints for formeworks and page beginnings.</desc>
+                  <constraint>
+                     <sch:pattern>
+                        <sch:rule context="tei:fw | tei:pb">
+                           <sch:assert test="parent::tei:ab | parent::tei:back | parent::tei:body | parent::tei:div | parent::tei:front | parent::tei:list | parent::tei:p | parent::tei:text | parent::tei:q">
+                              ERROR: <sch:name/> should not appear within <sch:value-of select="local-name(parent::*)"/>.
+                           </sch:assert>
+                        </sch:rule>
+                        <sch:rule context="tei:fw">
+                           <sch:assert test="not(tei:lb)">ERROR: <sch:name/> should not contain line beginnings 
+                              (since they are usually a single line)</sch:assert>
+                        </sch:rule>
+                     </sch:pattern>
+                  </constraint>
+               </constraintSpec>
+               <constraintSpec ident="textConstraints"
+                  module="lim"
+                  mode="add"
+                  scheme="schematron">
+                  <desc>Set of constraints for text and punctuation</desc>
+                  <constraint>
+                     <sch:pattern>
+                        <sch:rule context="text()[matches(.,'\S')]">
+                           <sch:assert test="not(matches(.,'(--+)|(––+)'))">
+                              ERROR: Do not use multiple hyphens or en-dashes to represent an em-dash (—) 
+                           </sch:assert>
+                          <!-- <sch:assert test="not(matches(., $sq)) and not(ancestor::tei:code | ancestor::*:egXML)">
+                              ERROR: Straight quotation marks should be replaced by curly ones
+                           </sch:assert>-->
+                        </sch:rule>
+                     </sch:pattern>
+                  </constraint>
+               </constraintSpec>
             </schemaSpec>
          </div>
       </body>

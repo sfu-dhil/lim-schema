@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xlink="http://www.w3.org/1999/xlink" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-05-12T04:48:59Z. .
+Schema generated from ODD source 2022-05-13T17:56:25Z. .
 TEI Edition: Version 4.2.2. Last updated on
 	9th April 2021, revision 609a109b1
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.2.2/
@@ -6950,6 +6950,24 @@ Suggested values include: 1] plc:TOWE1 (Tower of London); 2] plc:KENN1 (Kenningt
                            </sch:assert>
          <sch:assert test="if (matches($genre,'Speech|Account|Conversation','i')) then tei:settingDesc else true()">
                               ERROR: All <sch:value-of select="$genre"/> must have a settingDesc.
+                           </sch:assert>
+      </sch:rule>
+   </sch:pattern>
+   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+      <sch:rule context="tei:fw | tei:pb">
+         <sch:assert test="parent::tei:ab | parent::tei:back | parent::tei:body | parent::tei:div | parent::tei:front | parent::tei:list | parent::tei:p | parent::tei:text | parent::tei:q">
+                              ERROR: <sch:name/> should not appear within <sch:value-of select="local-name(parent::*)"/>.
+                           </sch:assert>
+      </sch:rule>
+      <sch:rule context="tei:fw">
+         <sch:assert test="not(tei:lb)">ERROR: <sch:name/> should not contain line beginnings 
+                              (since they are usually a single line)</sch:assert>
+      </sch:rule>
+   </sch:pattern>
+   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+      <sch:rule context="text()[matches(.,'\S')]">
+         <sch:assert test="not(matches(.,'(--+)|(––+)'))">
+                              ERROR: Do not use multiple hyphens or en-dashes to represent an em-dash (—) 
                            </sch:assert>
       </sch:rule>
    </sch:pattern>
