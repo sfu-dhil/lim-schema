@@ -142,6 +142,21 @@
                <gloss>An element with a right border (straight or ragged)</gloss>
                <outputRendition>border-right:1px solid black;</outputRendition>
             </rendition>
+            <rendition xml:id="rnd_bordered-bottom">
+               <desc>Bottom bordered</desc>
+               <gloss>An element with a bottom border (straight or ragged)</gloss>
+               <outputRendition>border-bottom:1px solid black;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_bordered-bottom-dashed">
+               <desc>Bottom bordered</desc>
+               <gloss>An element with a dashed bottom border</gloss>
+               <outputRendition>border-bottom:1px dashed black;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_bordered-top">
+               <desc>Top bordered</desc>
+               <gloss>An element with a bottom border (straight or ragged)</gloss>
+               <outputRendition>border-top:1px solid black;</outputRendition>
+            </rendition>
             <rendition xml:id="rnd_bold">
                <desc>Bold</desc>
                <gloss>Bold or heavier weight. TODO: What is the difference between
@@ -196,6 +211,11 @@
                <desc>Centered</desc>
                <gloss>Centered text</gloss>
                <outputRendition>text-align: center;</outputRendition>
+            </rendition>
+
+            <rendition xml:id="rnd_embellished">
+               <desc>Embellished letter</desc>
+               <gloss>Use this when some letter/character is embellished.</gloss>
             </rendition>
          </tagsDecl>
          <listPrefixDef>
