@@ -127,6 +127,8 @@
                   </attList>
                </classSpec>
                <classSpec ident="att.edition" module="tei" type="atts" mode="delete"/>
+               <!--REMOVE att.fragmentable, but add it globally-->
+               <classSpec ident="att.fragmentable" module="tei" type="atts" mode="delete"/>
                <classSpec ident="att.global" module="tei" type="atts" mode="change">
                   <classes mode="change">
               <!--Remove facs and responsibility from the global modules,
@@ -134,6 +136,7 @@
                      <memberOf key="att.global.facs" mode="delete"/>
                      <memberOf key="att.global.responsibility" mode="delete"/>
                      <memberOf key="att.global.linking" mode="delete"/>
+                     <memberOf key="lim.att.global.fragmentable" mode="add"/>
                   </classes>
                   <attList>
               <!--We'll never need space or base, afaik-->
@@ -141,6 +144,7 @@
                      <attDef ident="xml:base" mode="delete"/>
                   </attList>
                </classSpec>
+               
                <classSpec ident="att.global.facs" type="atts" mode="change">
                   <!--Restrict the use of @facs to only allow lib:-->
                   <attList>

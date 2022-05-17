@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xlink="http://www.w3.org/1999/xlink" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-05-13T17:56:25Z. .
+Schema generated from ODD source 2022-05-17T23:25:53Z. .
 TEI Edition: Version 4.2.2. Last updated on
 	9th April 2021, revision 609a109b1
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.2.2/
@@ -480,28 +480,6 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
               <sch:name/> element has no textual content.</sch:assert>
       </sch:rule>
    </pattern>
-   <define name="att.fragmentable.attributes">
-      <ref name="att.fragmentable.attribute.part"/>
-   </define>
-   <define name="att.fragmentable.attribute.part">
-      <optional>
-         <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="part" a:defaultValue="N">
-            <a:documentation>specifies whether or not its parent element is fragmented in some way, typically by some other overlapping structure: for example a speech which is divided between two or more verse stanzas, a paragraph which is split across a page division, a verse line which is divided between two speakers.</a:documentation>
-            <choice>
-               <value>Y</value>
-               <a:documentation>(yes) the element is fragmented in some (unspecified) respect</a:documentation>
-               <value>N</value>
-               <a:documentation>(no) the element is not fragmented, or no claim is made as to its completeness</a:documentation>
-               <value>I</value>
-               <a:documentation>(initial) this is the initial part of a fragmented element</a:documentation>
-               <value>M</value>
-               <a:documentation>(medial) this is a medial part of a fragmented element</a:documentation>
-               <value>F</value>
-               <a:documentation>(final) this is the final part of a fragmented element</a:documentation>
-            </choice>
-         </attribute>
-      </optional>
-   </define>
    <define name="att.docStatus.attributes">
       <ref name="att.docStatus.attribute.docStatus"/>
       <ref name="att.docStatus.attribute.metaStatus"/>
@@ -628,6 +606,12 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
                      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Left bordered) bordered-left</a:documentation>
                      <value>rnd:bordered-right</value>
                      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Right bordered) bordered-right</a:documentation>
+                     <value>rnd:bordered-bottom</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Bottom bordered) bordered-bottom</a:documentation>
+                     <value>rnd:bordered-bottom-dashed</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Bottom bordered) bordered-bottom-dashed</a:documentation>
+                     <value>rnd:bordered-top</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Top bordered) bordered-top</a:documentation>
                      <value>rnd:bold</value>
                      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Bold) bold</a:documentation>
                      <value>rnd:indent</value>
@@ -648,6 +632,8 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
                      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Right aligned) right</a:documentation>
                      <value>rnd:center</value>
                      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Centered) center</a:documentation>
+                     <value>rnd:embellished</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Embellished letter) embellished</a:documentation>
                   </choice>
                </oneOrMore>
             </list>
@@ -675,6 +661,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
       </optional>
    </define>
    <define name="att.global.attributes">
+      <ref name="lim.att.global.fragmentable.attributes"/>
       <ref name="att.global.rendition.attributes"/>
       <ref name="att.global.analytic.attributes"/>
       <ref name="att.global.source.attributes"/>
@@ -2493,7 +2480,6 @@ Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] cant
             </rule>
          </pattern>
          <ref name="att.global.attributes"/>
-         <ref name="att.fragmentable.attributes"/>
          <ref name="att.written.attributes"/>
          <empty/>
       </element>
@@ -3158,6 +3144,7 @@ attributes @target and @cRef may be supplied on <name/>.</report>
          <ref name="att.global.attribute.xmlid"/>
          <ref name="att.global.attribute.n"/>
          <ref name="att.global.attribute.xmllang"/>
+         <ref name="lim.att.global.fragmentable.attribute.part"/>
          <ref name="att.global.analytic.attribute.ana"/>
          <ref name="att.global.source.attribute.source"/>
          <optional>
@@ -3178,6 +3165,12 @@ attributes @target and @cRef may be supplied on <name/>.</report>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                         <value>rnd:bordered-right</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                        <value>rnd:bordered-bottom</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                        <value>rnd:bordered-bottom-dashed</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                        <value>rnd:bordered-top</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                         <value>rnd:bold</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                         <value>rnd:indent</value>
@@ -3197,6 +3190,8 @@ attributes @target and @cRef may be supplied on <name/>.</report>
                         <value>rnd:right</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                         <value>rnd:center</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                        <value>rnd:embellished</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                         <value>rnd:list_ordered</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">An ordered list</a:documentation>
@@ -3278,6 +3273,7 @@ Suggested values include: 1] gloss (gloss); 2] index (index); 3] instructions (i
          <ref name="att.global.attribute.xmlid"/>
          <ref name="att.global.attribute.n"/>
          <ref name="att.global.attribute.xmllang"/>
+         <ref name="lim.att.global.fragmentable.attribute.part"/>
          <ref name="att.global.analytic.attribute.ana"/>
          <ref name="att.global.source.attribute.source"/>
          <ref name="att.typed.attributes"/>
@@ -3301,6 +3297,12 @@ Suggested values include: 1] gloss (gloss); 2] index (index); 3] instructions (i
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                         <value>rnd:bordered-right</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                        <value>rnd:bordered-bottom</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                        <value>rnd:bordered-bottom-dashed</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                        <value>rnd:bordered-top</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                         <value>rnd:bold</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                         <value>rnd:indent</value>
@@ -3320,6 +3322,8 @@ Suggested values include: 1] gloss (gloss); 2] index (index); 3] instructions (i
                         <value>rnd:right</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                         <value>rnd:center</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                        <value>rnd:embellished</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                         <value>rnd:hidden</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(hidden) A heading that is hidden (for accessibility purposes).</a:documentation>
@@ -3667,7 +3671,6 @@ Sample values include: 1] main; 2] sub (subordinate); 3] alt (alternate); 4] sho
             </rule>
          </pattern>
          <ref name="att.global.attributes"/>
-         <ref name="att.fragmentable.attributes"/>
          <empty/>
       </element>
    </define>
@@ -3798,7 +3801,6 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</a:documentation
                <sch:assert test="following-sibling::tei:w[1][@part = 'F']">ERROR: Final word part missing preceding initial part. </sch:assert>
             </sch:rule>
          </pattern>
-         <ref name="att.fragmentable.attributes"/>
          <ref name="att.global.attributes"/>
          <empty/>
       </element>
@@ -4745,7 +4747,6 @@ Suggested values include: 1] label; 2] data</a:documentation>
          </pattern>
          <ref name="att.global.attributes"/>
          <ref name="att.typed.attributes"/>
-         <ref name="att.fragmentable.attributes"/>
          <ref name="att.written.attributes"/>
          <empty/>
       </element>
@@ -5574,6 +5575,7 @@ Sample values include: 1] primary; 2] other; 3] paid; 4] unpaid</a:documentation
          <ref name="att.global.linking.attributes"/>
          <ref name="att.global.attribute.n"/>
          <ref name="att.global.attribute.xmllang"/>
+         <ref name="lim.att.global.fragmentable.attribute.part"/>
          <ref name="att.global.rendition.attribute.rendition"/>
          <ref name="att.global.analytic.attribute.ana"/>
          <ref name="att.global.source.attribute.source"/>
@@ -6870,6 +6872,28 @@ Suggested values include: 1] plc:TOWE1 (Tower of London); 2] plc:KENN1 (Kenningt
                   <value>inapplicable</value>
                   <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                </choice>
+            </choice>
+         </attribute>
+      </optional>
+   </define>
+   <define name="lim.att.global.fragmentable.attributes">
+      <ref name="lim.att.global.fragmentable.attribute.part"/>
+   </define>
+   <define name="lim.att.global.fragmentable.attribute.part">
+      <optional>
+         <attribute name="part">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies whether or not its parent element is fragmented in some way, typically by some other overlapping structure: for example a speech which is divided between two or more verse stanzas, a paragraph which is split across a page division, a verse line which is divided between two speakers.</a:documentation>
+            <choice>
+               <value>Y</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(yes) the element is fragmented in some (unspecified) respect</a:documentation>
+               <value>N</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(no) the element is not fragmented, or no claim is made as to its completeness</a:documentation>
+               <value>I</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(initial) this is the initial part of a fragmented element</a:documentation>
+               <value>M</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(medial) this is a medial part of a fragmented element</a:documentation>
+               <value>F</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(final) this is the final part of a fragmented element</a:documentation>
             </choice>
          </attribute>
       </optional>
