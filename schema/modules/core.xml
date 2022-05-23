@@ -327,7 +327,7 @@
                   <content>
                      <macroRef key="macro.specialPara"/>
                   </content>
-                  <constraintSpec ident="allQuotationMarksShouldBeInQ" scheme="schematron">
+   <!--               <constraintSpec ident="allQuotationMarksShouldBeInQ" scheme="schematron">
                         <desc>Quotation marks must be in q elements.</desc>
                         <constraint>
                            <sch:rule context="tei:*[ancestor::tei:text]
@@ -340,7 +340,7 @@
                               <sch:assert test="not(matches($string, $marksRex))">ERROR: All quotation marks must be contained at some point by a q element.</sch:assert>
                            </sch:rule>
                         </constraint>
-                  </constraintSpec>
+                  </constraintSpec>-->
                   <attList org="choice">
                      <attList org="group">
                         <attDef ident="type" usage="opt" mode="replace">

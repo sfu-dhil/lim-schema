@@ -438,7 +438,7 @@
                   <desc>Set of constraints for text and punctuation</desc>
                   <constraint>
                      <sch:pattern>
-                        <sch:rule context="text()[matches(.,'\S')]">
+                        <sch:rule context="text()[matches(.,'\S')][ancestor::tei:text]">
                            <sch:assert test="not(matches(.,'(--+)|(––+)'))">
                               ERROR: Do not use multiple hyphens or en-dashes to represent an em-dash (—) 
                            </sch:assert>
