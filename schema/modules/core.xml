@@ -139,7 +139,7 @@
                   <constraintSpec ident="lb.shouldUseDecimal" scheme="schematron">
                      <constraint>
                         <sch:rule context="tei:lb[@facs]">
-                           <sch:assert test="matches(@facs,'lib:\d+\.\d+')">ERROR: lb elements with facs must specify the line in the form page.lineNum (e.g. lib:23.2)</sch:assert>
+                           <sch:assert test="matches(@facs,'(lib|pg):\d+\.\d+')">ERROR: lb elements with facs must specify the line in the form lib:#.lineNum or pg:#.lineNum (e.g. lib:23.2)</sch:assert>
                         </sch:rule>
                      </constraint>
                   </constraintSpec>
