@@ -16,7 +16,7 @@
     
     
     <property name="odd.src" value="${schemaDir}/lim.odd"/>
-    <basename property="odd.basename" file="${odd.src}"/>
+    <basename property="odd.basename" file="${odd.src}" suffix=".odd"/>
     <property name="odd.expanded" value="${tmpDir}/${odd.basename}_expanded.odd"/>
     <property name="odd.processed" value="${tmpDir}/${odd.basename}_processed.odd"/>
     <property name="odd.lite" value="${tmpDir}/${odd.basename}_lite.xml"/>
@@ -128,8 +128,22 @@
             <arg value="-TP:profile.html"/>
         </java>
     </target>
+    
+    <target name="copySources">
+        <echo message="${echo.separator}"/>
+        <echo message="Copying sources..."/>
+        <echo message="${echo.separator}"/>
+        <mkdir dir="${out}/src"/>
+        <copy todir="${out}/src">
+            <fileset dir="${tmpDir}">
+                <include name="*.odd"/>
+            </fileset>
+            <file name="${odd.src}"/>
+        </copy>
+        
+    </target>
 
 
-    <target name="all" depends="init, copyAssets, md2tei, odd2ExpandedOdd, odd2processedOdd, odd2lite, fixLite, odd2Html"/>
+    <target name="all" depends="init, copyAssets, md2tei, odd2ExpandedOdd, odd2processedOdd, odd2lite, fixLite, odd2Html, copySources"/>
 
 </project>

@@ -23,7 +23,7 @@
          <div>
             <head>analysis</head>
             <schemaSpec ident="lim_analysis">
-               <moduleRef key="analysis" include="pc"/>
+               <moduleRef key="analysis" include="pc w"/>
                <elementSpec ident="pc" mode="change" module="analysis">
             <!--Remove all other attributes-->
                   <classes mode="change">
@@ -37,10 +37,16 @@
                   <constraintSpec ident="pc.onlyPunct" scheme="schematron" mode="add">
                      <desc>Only punctuation in pc.</desc>
                      <constraint>
-                <!--TODO: Remove @ref once feasible-->
                         <sch:rule context="tei:pc">
                            <sch:assert test="matches(text(),'^[\p{P}=]$')">ERROR: Only a single punctuation character is allowed in pc</sch:assert>
-                           <!--<sch:assert test="following-sibling::node()[1][self::tei:lb]">ERROR: All pc elements must be followed immediately by an lb element.</sch:assert>-->
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="dash.shouldBeInWord" scheme="schematron" mode="add">
+                     <desc>Only punctuation in pc.</desc>
+                     <constraint>
+                        <sch:rule context="tei:pc[text() = '-'][@force='weak'][ancestor::tei:TEI/descendant::tei:revisionDesc/@docStatus='inProgress']">
+                           <sch:assert test="ancestor::tei:w">ERROR: All end of line hyphens must be contained by the word (&lt;w&gt;) element.</sch:assert>
                         </sch:rule>
                      </constraint>
                   </constraintSpec>
@@ -49,6 +55,52 @@
                      <attDef ident="pre" mode="delete"/>
                      <attDef ident="force" mode="change" usage="req"/>
                   </attList>
+               </elementSpec>
+               
+               <elementSpec ident="w" mode="change" module="analysis">
+                  <classes mode="change">
+                     <memberOf key="att.segLike" mode="delete"/>
+                     <memberOf key="att.fragmentable" mode="add"/>
+                     <memberOf key="att.typed" mode="delete"/>
+                  </classes>
+                  <constraintSpec ident="w.shouldContainPC" scheme="schematron" mode="add">
+                     <desc>Words should always contain a pc</desc>
+                     <constraint>
+                        <sch:rule context="tei:w[not(@part)]">
+                           <sch:assert test="descendant::tei:pc[@force='weak'] and descendant::tei:lb">ERROR: Word elements must include a pc and an lb,
+                              since the element should only be used to flag words separated across line boundaries </sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="w.shouldBeInParts" scheme="schematron" mode="add">
+                     <desc>Words should always contain a pc</desc>
+                     <constraint>
+                        <sch:rule context="tei:w">
+                           <sch:assert test="not(descendant::tei:fw or descendant::tei:pb)">ERROR: Do not include formeworks or page beginnings in a word element; if a word is split across pages, then use the @part attribute to signal the initial and final parts of the word. </sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="w.partsShouldMatch" scheme="schematron" mode="add">
+                     <desc>Words should always contain a pc</desc>
+                     <constraint>
+                        <sch:rule context="tei:w">
+                           <sch:let name="text" value="string-join(descendant::text(),'')"/>
+                           <sch:assert test="not(matches($text,'^\s|\s$'))">ERROR: <sch:name/> should begin or end with spaces.</sch:assert>
+                        </sch:rule>
+                        <sch:rule context="tei:text[descendant::tei:w[@part]]">
+                           <sch:assert test="count(descendant::tei:w[@part]) mod 2 = 0">ERROR: Odd number of split words found in this transcription.</sch:assert>
+                           
+                        </sch:rule>
+                        <sch:rule context="tei:w[@part = 'F']">
+
+                           <sch:assert test="preceding-sibling::tei:w[1][@part = 'I']">ERROR: Initial word part missing following final part.</sch:assert>
+                        </sch:rule>
+                        <sch:rule context="tei:w[@part = 'I']">
+                           
+                           <sch:assert test="following-sibling::tei:w[1][@part = 'F']">ERROR: Final word part missing preceding initial part. </sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
                </elementSpec>
                
                <classSpec ident="att.linguistic"

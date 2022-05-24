@@ -10,6 +10,14 @@ To add an editorial note, use the `<note>` tag with an `@type`=`"editorial"`:
 <note type="editorial">An editorially supplied note.</note>
 ```
  The `@type` is important here: it distinguishes the editorially supplied note from other notes and annotations made by Forbes or later editors.
+ 
+## Adding Marginal Notes
+
+Here is the documentation for adding marginal notes. 
+
+```
+<note type="marginal" place="margin">This is the marginal note</note>
+```
 
 ## Abbreviations and Expansions
 
@@ -18,10 +26,10 @@ In the project, we have two methods for encoding abbreviations.
 ### Uncommon abbreviations
 
 
-Uncommon or unfamiliar abbreviations—like Revt—will often need to be expanded in order to provide clarity and to facilitate searching. To do so, first tag the abbreviation with the `<abbr>` element, then tag your expansion with an `<expan>`, and then wrap both in a `<choice>` element. For example: 
+Uncommon or unfamiliar abbreviations—like Revd—will often need to be expanded in order to provide clarity and to facilitate searching. To do so, first tag the abbreviation with the `<abbr>` element, then tag your expansion with an `<expan>`, and then wrap both in a `<choice>` element. For example: 
 
 ```
-<title>Letter from the <choice><abbr>Revt.</abbr><expan>Reverend</expan></choice> Mr. <persName>Lyon</persName></title>
+<title>Letter from the <choice><abbr>Revd.</abbr><expan>Reverend</expan></choice> Mr. <persName>Lyon</persName></title>
 ```
 
 

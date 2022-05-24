@@ -142,6 +142,21 @@
                <gloss>An element with a right border (straight or ragged)</gloss>
                <outputRendition>border-right:1px solid black;</outputRendition>
             </rendition>
+            <rendition xml:id="rnd_bordered-bottom">
+               <desc>Bottom bordered</desc>
+               <gloss>An element with a bottom border (straight or ragged)</gloss>
+               <outputRendition>border-bottom:1px solid black;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_bordered-bottom-dashed">
+               <desc>Bottom bordered</desc>
+               <gloss>An element with a dashed bottom border</gloss>
+               <outputRendition>border-bottom:1px dashed black;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_bordered-top">
+               <desc>Top bordered</desc>
+               <gloss>An element with a bottom border (straight or ragged)</gloss>
+               <outputRendition>border-top:1px solid black;</outputRendition>
+            </rendition>
             <rendition xml:id="rnd_bold">
                <desc>Bold</desc>
                <gloss>Bold or heavier weight. TODO: What is the difference between
@@ -168,7 +183,7 @@
             <rendition xml:id="rnd_large" select="head">
                <desc>Larger text (i.e. headings)</desc>
                <gloss>Use this for headings or other large text</gloss>
-               <outputRendition>font-size: 1.5em;</outputRendition>
+               <outputRendition>font-size: 1.5rem;</outputRendition>
             </rendition>
             <rendition xml:id="rnd_strikethrough" selector="del">
                <desc>Strikethrough</desc>
@@ -181,6 +196,26 @@
                <gloss>This text should NOT follow any of the default assumptions
                about its styling (i.e. a heading that is NOT large; a deletion that is
                not struck through)</gloss>
+            </rendition>
+            <rendition xml:id="rnd_left">
+               <desc>Left aligned</desc>
+               <gloss>Left aligned text</gloss>
+               <outputRendition>text-align: left;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_right">
+               <desc>Right aligned</desc>
+               <gloss>Left aligned text</gloss>
+               <outputRendition>text-align: right;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_center">
+               <desc>Centered</desc>
+               <gloss>Centered text</gloss>
+               <outputRendition>text-align: center;</outputRendition>
+            </rendition>
+
+            <rendition xml:id="rnd_embellished">
+               <desc>Embellished letter</desc>
+               <gloss>Use this when some letter/character is embellished.</gloss>
             </rendition>
          </tagsDecl>
          <listPrefixDef>
@@ -228,7 +263,7 @@
       <front>
          <div>
             <head>Encoding Guidelines</head>
-            <p>This document serves as the documentation for <title level="m">The Lyon in Mourning: Networking Jacobites</title> (LiM). At the moment, what follows is a collection of notes to help with planning the project's structure and workflow; as decisions are made and plans are concretized, this document will be updated to reflect the actual encoding principles and guidelines.</p>
+            <p>This is the documentation for <title level="m">The Lyon in Mourning: Networking Jacobites</title> (LiM). At the moment, what follows is a collection of notes to help with planning the project's structure and workflow; as decisions are made and plans are concretized, this document will be updated to reflect the actual encoding principles and guidelines.</p>
          </div>
       </front>
       <body>

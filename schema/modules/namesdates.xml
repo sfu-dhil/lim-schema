@@ -24,7 +24,7 @@
             <head>namesdates</head>
             <schemaSpec ident="lim_namesdates">
                <moduleRef key="namesdates"
-                          include="addName affiliation birth death faith floruit forename genName langKnowledge langKnown listObject listOrg listPerson listPlace location nameLink nationality object objectName occupation org orgName persName person persona place placeName residence roleName sex surname"/>
+                          include="addName affiliation birth death faith floruit forename geo genName langKnowledge langKnown listObject listOrg listPerson listPlace location nameLink nationality object objectName occupation org orgName persName person persona place placeName residence roleName sex surname"/>
                <elementSpec ident="persName" module="namesdates" mode="change">
                   <constraintSpec ident="persName.mustHaveRefWithPrs" mode="add" scheme="schematron">
                      <desc>All inline persNames must have a ref that points to the personography db.</desc>
@@ -191,6 +191,7 @@
                   </classes>
                   <content>
                      <elementRef key="placeName" minOccurs="0" maxOccurs="unbounded"/>
+                     <elementRef key="location" minOccurs="0" maxOccurs="1"/>
                      <elementRef key="note" minOccurs="0" maxOccurs="1"/>
                      <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
                   </content>
@@ -198,7 +199,7 @@
                      <desc>All people must have a proper id.</desc>
                      <constraint>
                         <sch:rule context="/tei:place">
-                           <sch:assert test="matches(@xml:id,concat('^', $placeIdPattern, '$'))">ERROR: All people must have an @xml:id of 4 uppercase letters and a number (e.g. LEIT1).</sch:assert>
+                           <sch:assert test="matches(@xml:id,concat('^', $placeIdPattern, '$'))">ERROR: All places must have an @xml:id of 4 uppercase letters and a number (e.g. LEIT1).</sch:assert>
                            <sch:assert test="tei:placeName">ERROR: All places must have a placeName.</sch:assert>
                         </sch:rule>
                      </constraint>
