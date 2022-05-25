@@ -162,8 +162,6 @@
                </elementSpec>
                <elementSpec ident="sic" module="core" mode="change">
                   <classes mode="change">
-              <!--Remove from pPart.transcriptional, since it should only be in <choice>-->
-                     <memberOf key="model.pPart.transcriptional" mode="delete"/>
                      <!--Add cert and resp-->
                      <memberOf key="att.global.responsibility" mode="add"/>
                   </classes>
