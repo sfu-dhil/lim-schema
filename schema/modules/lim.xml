@@ -210,6 +210,8 @@
                      </attDef>
                   </attList>
                </classSpec>
+               
+               
                <classSpec ident="lim.att.global.fragmentable" mode="add" module="lim" type="atts">
                   <desc versionDate="2021-08-22" xml:lang="en">provides attributes for representing
                      fragmentation of a structural element, typically as 
@@ -413,6 +415,7 @@
                         <sch:let name="persIdPattern" value="'[A-Z]{5}\d+'"/>
                         <sch:let name="cutoff" value="xs:date('1752-09-02')"/>
                         <sch:let name="root" value="root(.)"/>
+                        <sch:let name="docStatus" value="//tei:revisionDesc/@docStatus"/>
                         <sch:let name="isBornDigital" value="exists($root//tei:catRef[matches(@target,'bornDigital')])"/>
                         <sch:let name="isItem" value="exists($root//tei:limItem)"/>
                         <!-- <sch:let name="pd" value="replace($uri,'^(.+[/\\]lim-tei[\\/]).+$', '$1')"/>
@@ -480,9 +483,10 @@
                   <desc>Set of constraints for text and punctuation</desc>
                   <constraint>
                      <sch:pattern>
-                        <sch:rule context="text()[matches(.,'\S')][ancestor::tei:text]">
-                           <sch:assert test="not(matches(.,'(--+)|(––+)'))">
-                              ERROR: Do not use multiple hyphens or en-dashes to represent an em-dash (—) 
+                        <sch:rule context="tei:*[text()][matches(string-join(text(),''),'\S')][ancestor::tei:text][$docStatus=('draft','inProgress','proofed', 'readyForProof')]">
+                           <sch:let name="string" value="string-join(text(),'')"/>
+                           <sch:assert test="not(matches($string,'(--+)|(––+)'))">
+                              ERROR: Do not use multiple hyphens or en-dashes to represent an em-dash (—).
                            </sch:assert>
                           <!-- <sch:assert test="not(matches(., $sq)) and not(ancestor::tei:code | ancestor::*:egXML)">
                               ERROR: Straight quotation marks should be replaced by curly ones

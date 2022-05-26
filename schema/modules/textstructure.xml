@@ -40,6 +40,7 @@
                      </constraint>
                   </constraintSpec>
                </elementSpec>
+               
                <elementSpec ident="div" mode="change" module="textstructure">
                   <constraintSpec ident="div.onlyRootWithIndexAndVolume11"
                                   scheme="schematron"
@@ -74,6 +75,34 @@
                      </attDef>
                   </attList>
                </elementSpec>
+               
+               <elementSpec ident="opener" module="textstructure" mode="change" >
+                  <content>
+                     <macroRef key="lim.macro.openerAndCloserContent"/>
+                  </content>
+               </elementSpec>
+               
+               <elementSpec ident="closer" module="textstructure" mode="change">
+                  <content>
+                     <macroRef key="lim.macro.openerAndCloserContent"/>
+                  </content>
+               </elementSpec>
+               
+               <macroSpec module="textstructure" ident="lim.macro.openerAndCloserContent">
+                  <gloss>Openers and closers content</gloss>
+                  <desc>A macro specification for openers and closers, since their content
+                  models are fairly limited, but should be kept aligned.</desc>
+                  <content>
+                     <alternate minOccurs="1" maxOccurs="unbounded">
+                        <elementRef key="signed"/>
+                        <elementRef key="dateline"/>
+                        <elementRef key="salute"/>
+                        <classRef key="model.milestoneLike"/>
+                     </alternate>
+                  </content>
+               </macroSpec>
+               
+               
             </schemaSpec>
          </div>
       </body>

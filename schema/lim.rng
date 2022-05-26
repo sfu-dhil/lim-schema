@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xlink="http://www.w3.org/1999/xlink" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-05-26T04:00:38Z. .
+Schema generated from ODD source 2022-05-26T04:22:09Z. .
 TEI Edition: Version 4.2.2. Last updated on
 	9th April 2021, revision 609a109b1
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.2.2/
@@ -95,6 +95,16 @@ TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.2.2/
       <optional>
          <ref name="note"/>
       </optional>
+   </define>
+   <define name="lim.macro.openerAndCloserContent">
+      <oneOrMore>
+         <choice>
+            <ref name="signed"/>
+            <ref name="dateline"/>
+            <ref name="salute"/>
+            <ref name="model.milestoneLike"/>
+         </choice>
+      </oneOrMore>
    </define>
    <define name="att.anchoring.attributes">
       <ref name="att.anchoring.attribute.anchored"/>
@@ -6237,19 +6247,7 @@ Sample values include: 1] primary; 2] secondary; 3] temporary; 4] permanent</a:d
    <define name="opener">
       <element name="opener">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(opener) groups together dateline, byline, salutation, and similar phrases appearing as a preliminary group at the start of a division, especially of a letter. [4.2. Elements Common to All Divisions]</a:documentation>
-         <zeroOrMore>
-            <choice>
-               <text/>
-               <ref name="model.gLike"/>
-               <ref name="model.phrase"/>
-               <ref name="byline"/>
-               <ref name="dateline"/>
-               <ref name="epigraph"/>
-               <ref name="salute"/>
-               <ref name="signed"/>
-               <ref name="model.global"/>
-            </choice>
-         </zeroOrMore>
+         <ref name="lim.macro.openerAndCloserContent"/>
          <ref name="att.global.attributes"/>
          <ref name="att.written.attributes"/>
          <empty/>
@@ -6258,17 +6256,7 @@ Sample values include: 1] primary; 2] secondary; 3] temporary; 4] permanent</a:d
    <define name="closer">
       <element name="closer">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(closer) groups together salutations, datelines, and similar phrases appearing as a final group at the end of a division, especially of a letter. [4.2.2. Openers and Closers 4.2. Elements Common to All Divisions]</a:documentation>
-         <zeroOrMore>
-            <choice>
-               <text/>
-               <ref name="model.gLike"/>
-               <ref name="signed"/>
-               <ref name="dateline"/>
-               <ref name="salute"/>
-               <ref name="model.phrase"/>
-               <ref name="model.global"/>
-            </choice>
-         </zeroOrMore>
+         <ref name="lim.macro.openerAndCloserContent"/>
          <ref name="att.global.attributes"/>
          <ref name="att.written.attributes"/>
          <empty/>
@@ -7099,6 +7087,7 @@ Suggested values include: 1] plc:TOWE1 (Tower of London); 2] plc:KENN1 (Kenningt
       <sch:let name="persIdPattern" value="'[A-Z]{5}\d+'"/>
       <sch:let name="cutoff" value="xs:date('1752-09-02')"/>
       <sch:let name="root" value="root(.)"/>
+      <sch:let name="docStatus" value="//tei:revisionDesc/@docStatus"/>
       <sch:let name="isBornDigital" value="exists($root//tei:catRef[matches(@target,'bornDigital')])"/>
       <sch:let name="isItem" value="exists($root//tei:limItem)"/>
    </sch:pattern>
@@ -7133,9 +7122,10 @@ Suggested values include: 1] plc:TOWE1 (Tower of London); 2] plc:KENN1 (Kenningt
       </sch:rule>
    </sch:pattern>
    <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
-      <sch:rule context="text()[matches(.,'\S')][ancestor::tei:text]">
-         <sch:assert test="not(matches(.,'(--+)|(––+)'))">
-                              ERROR: Do not use multiple hyphens or en-dashes to represent an em-dash (—) 
+      <sch:rule context="tei:*[text()][matches(string-join(text(),''),'\S')][ancestor::tei:text][$docStatus=('draft','inProgress','proofed', 'readyForProof')]">
+         <sch:let name="string" value="string-join(text(),'')"/>
+         <sch:assert test="not(matches($string,'(--+)|(––+)'))">
+                              ERROR: Do not use multiple hyphens or en-dashes to represent an em-dash (—).
                            </sch:assert>
       </sch:rule>
    </sch:pattern>
