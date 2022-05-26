@@ -150,12 +150,12 @@
                   <attList>
                      <attDef ident="facs" mode="change">
                         <datatype maxOccurs="1">
-                           <dataRef name="token" restriction="(lib|pg):\d+(.\d+)?"/>
+                           <dataRef key="limdata.facs"/>
                         </datatype>
                      </attDef>
                   </attList>
                   <remarks>
-                     <p>The facs attribute should contain only a single pointer of the form lib:\d+ (i.e. lib: followed by 1 or more digit).</p>
+                     <p>The facs attribute should contain only a single pointer of the limdata.facs.</p>
                   </remarks>
                </classSpec>
                <classSpec ident="att.global.linking"
@@ -192,23 +192,36 @@
                      <attDef ident="style" mode="delete"/>
                      <!--And constraint rendition-->
                      <attDef ident="rendition" mode="change">
+                        <constraintSpec ident="rendition.twoColumnNeedsLeftAndRight" scheme="schematron" mode="add">
+                           <desc>The two column layout requires one item to be left and one item to be right.</desc>
+                           <constraint>
+                              <sch:rule  context="tei:*[contains-token(@rendition,'rnd:two-column')]">
+                                 <sch:let name="children" value="child::tei:*"/>
+                                 <sch:let name="leftChild" value="$children[contains-token(@rendition,'rnd:left')]"/>
+                                 <sch:let name="rightChild" value="$children[contains-token(@rendition, 'rnd:right')]"/>
+                                 <sch:assert test="exists($children) and (count(($leftChild, $rightChild)) = count($children))">ERROR: Every child of a two column layout must have either a rnd:right or a rnd:left rendition value.</sch:assert>
+                                 <sch:assert test="exists($leftChild) and exists($rightChild)">ERROR: There must be at least one rnd:left and one rnd:right child</sch:assert>
+                              </sch:rule>
+                           </constraint>
+                        </constraintSpec>
+                        <constraintSpec ident="rendition.mutualExclusion" scheme="schematron"
+                           mode="add">
+                           <desc>Some renditions contradict each other</desc>
+                           <constraint>
+                              <sch:rule context="tei:*[@rendition]">
+                                 <sch:let name="rendition" value="@rendition"/>
+                                 <sch:let name="ptrs" value="tokenize(@rendition,'\s+')"/>
+                                 <sch:let name="tokens" value="for $p in $ptrs return substring-after($p,'rnd:')"/>
+                                 <sch:let name="duplicates" value="$tokens[count(index-of($tokens, .)) gt 1]"/>
+                                 <sch:assert test="empty($duplicates)">ERROR: Duplicate renditions found: <sch:value-of select="string-join($duplicates,', ')"/>. Do not use the same rendition more than once on a single element.</sch:assert>
+                                 <sch:assert test="count($tokens[. = ('left','right','center')]) lt 2">ERROR: rnd:right, rnd:left, or rnd:center are mutually exclusive.</sch:assert>
+                                 <sch:assert test="count($tokens[. = ('large','small')]) lt 2">ERROR: rnd:large and rnd:small are mutually exclusive.</sch:assert>
+                                 <sch:assert test="count($tokens[. = ('bordered-bottom','bordered-bottom-dashed')]) lt 2">ERROR: rnd:bordered-bottom and rnd:bordered-bottom-dashed are mutually exclusive.</sch:assert>
+                              </sch:rule>
+                           </constraint>
+                        </constraintSpec>
                         <valList type="closed" mode="add">
-                           <valItem ident="rnd:super">
-                              <desc>superscript</desc>
-                              <gloss>superscript</gloss>
-                           </valItem>
-                           <valItem ident="rnd:sub">
-                              <desc>subscript</desc>
-                              <gloss>subscript</gloss>
-                           </valItem>
-                           <valItem ident="rnd:underlined">
-                              <gloss>underlined</gloss>
-                              <desc>underlined (NOTE: This should be used almost exclusively with emph or title)</desc>
-                           </valItem>
-                           <valItem ident="rnd:right-braced">
-                              <gloss>right-braced</gloss>
-                              <desc>An item that has a curly right brace.</desc>
-                           </valItem>
+                           <!--Auto-filled by XSLT: ${pd}/code/schema/fill_odd.xsl -->
                         </valList>
                      </attDef>
                   </attList>
@@ -229,32 +242,10 @@
                <classSpec ident="att.placement" module="tei" type="atts" mode="change">
                   <attList>
                      <attDef ident="place" mode="change">
-                        <valList type="closed" mode="replace">
-                           <valItem ident="left" mode="add">
-                              <gloss>left</gloss>
-                              <desc>in the left margin</desc>
-                           </valItem>
-                           <valItem ident="center" mode="add">
-                              <gloss>center</gloss>
-                              <desc>in the center</desc>
-                           </valItem>
-                           <valItem ident="right" mode="add">
-                              <gloss>right</gloss>
-                              <desc>in the right margin</desc>
-                           </valItem>
-                           <valItem ident="above" mode="add">
-                              <gloss>above</gloss>
-                              <desc>above the line</desc>
-                           </valItem>
-                           <valItem ident="below" mode="add">
-                              <gloss>below</gloss>
-                              <desc>below the line</desc>
-                           </valItem>
-                           <valItem ident="inline" mode="add">
-                              <gloss>inline</gloss>
-                              <desc>an inline note</desc>
-                           </valItem>
-                        </valList>
+                        <datatype>
+                           <dataRef key="limdata.placement"/>
+                        </datatype>
+                        <valList mode="delete"/>
                      </attDef>
                   </attList>
                </classSpec>
@@ -286,6 +277,9 @@
                      <attDef ident="subtype" mode="delete"/>
                   </attList>
                </classSpec>
+               
+               
+         
                <dataSpec module="tei" ident="teidata.language" mode="change">
                   <content>
                      <alternate>

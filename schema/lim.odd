@@ -210,12 +210,16 @@
             <rendition xml:id="rnd_center">
                <desc>Centered</desc>
                <gloss>Centered text</gloss>
-               <outputRendition>text-align: center;</outputRendition>
+               <outputRendition >text-align: center;</outputRendition>
             </rendition>
-
             <rendition xml:id="rnd_embellished">
                <desc>Embellished letter</desc>
                <gloss>Use this when some letter/character is embellished.</gloss>
+            </rendition>
+            <rendition xml:id="rnd_two-column" >
+               <desc>A block that has two columns</desc>
+               <gloss>Used for instances where (usually a closer) has two distinct
+               blocks with something in the left and right-column</gloss>
             </rendition>
          </tagsDecl>
          <listPrefixDef>

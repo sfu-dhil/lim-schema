@@ -316,6 +316,48 @@
                   </content>
                </macroSpec>
                
+               <dataSpec module="lim" ident="limdata.facs" mode="add">
+                  <desc>Datatype for all lim facsimile pointers.</desc>
+                  <content>
+                     <dataRef name="token"  restriction="(lib|pg):\d+(.\d+)?"/>
+                  </content>
+               </dataSpec>
+               
+               <dataSpec module="lim" ident="limdata.placement" mode="add">
+                  <desc>Possible values for placement.</desc>
+                  <content>
+                     <valList type="closed">
+                        <valItem ident="bottom">
+                           <gloss>bottom</gloss>
+                           <desc>at the foot of the page</desc>
+                        </valItem>
+                        <valItem ident="left" mode="add">
+                           <gloss>left</gloss>
+                           <desc>in the left margin</desc>
+                        </valItem>
+                        <valItem ident="center" mode="add">
+                           <gloss>center</gloss>
+                           <desc>in the center</desc>
+                        </valItem>
+                        <valItem ident="right" mode="add">
+                           <gloss>right</gloss>
+                           <desc>in the right margin</desc>
+                        </valItem>
+                        <valItem ident="above" mode="add">
+                           <gloss>above</gloss>
+                           <desc>above the line</desc>
+                        </valItem>
+                        <valItem ident="below" mode="add">
+                           <gloss>below</gloss>
+                           <desc>below the line</desc>
+                        </valItem>
+                        <valItem ident="inline" mode="add">
+                           <gloss>inline</gloss>
+                           <desc>an inline note</desc>
+                        </valItem>
+                     </valList>
+                  </content>
+               </dataSpec>
                
   
                <constraintSpec scheme="schematron" ident="global.rootIdMustMatchDocument">

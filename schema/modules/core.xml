@@ -166,33 +166,23 @@
                      <memberOf key="att.global.responsibility" mode="add"/>
                   </classes>
                </elementSpec>
-               <elementSpec ident="note" module="core" mode="change">
-                  <classes mode="change">
-                     <memberOf key="att.pointer" mode="delete"/>
+               
+               <elementSpec ident="note" module="core" mode="replace">
+                  <gloss xml:lang="en" versionDate="2017-06-25">note</gloss>
+                  <desc versionDate="2005-01-14" xml:lang="en">contains a note or annotation.</desc>
+                  <classes>
+                     <!--All attribute classes have been deleted
+                        in order to allow specific values-->
+                     <memberOf key="model.noteLike"/>
+                     <memberOf key="model.annotationLike"/>
+                     <memberOf key="model.correspDescPart"/>
+                     <memberOf key="model.correspActionPart"/>
+                     <memberOf key="model.correspContextPart"/>
+                     <memberOf key="model.annotationPart.body"/>
                   </classes>
-                  <constraintSpec ident="note.ifAnchoredNeedsN" scheme="schematron">
-                     <desc>Anchored notes need an n attribute.</desc>
-                     <constraint>
-                        <sch:pattern>
-                           <sch:rule context="tei:note[@anchored='true']">
-                              <sch:assert test="@n">All anchored notes need an @n.</sch:assert>
-                           </sch:rule>
-                           <sch:rule context="tei:note[@n]">
-                              <sch:assert test="@anchored = 'true'">Only notes with anchor = true are allowed @n.</sch:assert>
-                           </sch:rule>
-                        </sch:pattern>
-                     </constraint>
-                  </constraintSpec>
-                  <constraintSpec ident="note.co-occurence" scheme="schematron">
-                     <desc>Various co-occurence constraints</desc>
-                     <constraint>
-                        <sch:pattern>
-                           <sch:rule context="tei:note[@type='marginalia']">
-                              <sch:assert test="@place">ERROR: All marginalia must have an @place.</sch:assert>
-                           </sch:rule>
-                        </sch:pattern>
-                     </constraint>
-                  </constraintSpec>
+                  <content>
+                     <macroRef key="macro.specialPara"/>
+                  </content>
                   <constraintSpec ident="note.mustHaveTypeInText" scheme="schematron">
                      <desc>Notes must be typed in the body</desc>
                      <constraint>
@@ -203,56 +193,145 @@
                         </sch:pattern>
                      </constraint>
                   </constraintSpec>
+                  
                   <constraintSpec ident="note.unknownsShouldBeFixed" scheme="schematron">
                      <desc>Notes must be typed in the body</desc>
                      <constraint>
                         <sch:pattern>
                            <sch:rule context="tei:note[@type = 'unknown']">
                               <sch:assert test="//tei:revisionDesc[@docStatus=('empty','uneditedTranscription')]">WARNING: Unknown notes should be replaced by either
-                              the appropriate encoding (usually supplied, gap, del, etc) or should become a @type='editorial'.</sch:assert>
+                                 the appropriate encoding (usually supplied, gap, del, etc) or should become a @type='editorial'.</sch:assert>
                            </sch:rule>
                         </sch:pattern>
                      </constraint>
                   </constraintSpec>
+                  
                   <attList>
-                     <attDef ident="type" mode="change" usage="opt">
-                        <valList type="closed">
-                           <valItem ident="editorial">
-                              <gloss>editorial note</gloss>
-                              <desc>An editorial note written by a team member.</desc>
-                           </valItem>
-                           <valItem ident="marginalia">
-                              <gloss>marginalia</gloss>
-                              <desc>A note that's not a footnote, but is some sort of marginal note.</desc>
-                           </valItem>
-                        </valList>
-                     </attDef>
-                     <attDef ident="copyOf" usage="opt">
-                        <desc versionDate="2005-10-10" xml:lang="en">points to an element of which the current element is a
-                           copy.</desc>
-                        <desc versionDate="2007-12-20" xml:lang="ko">현 요소가 그 복사인 요소를 가리킨다.</desc>
-                        <desc versionDate="2007-05-02" xml:lang="zh-TW">現有元素為所連結元素的複製本。</desc>
-                        <desc versionDate="2008-04-05" xml:lang="ja">当該要素のコピー要素を示す．</desc>
-                        <desc versionDate="2007-06-12" xml:lang="fr">pointe vers un élément dont l'élément en question
-                           est une copie.</desc>
-                        <desc versionDate="2007-05-04" xml:lang="es">señala un elemento del que el elemento corriente es una copia.</desc>
-                        <desc versionDate="2007-01-21" xml:lang="it">punta a un elemento di cui l'elemento corrente è una copia</desc>
-                        <datatype><dataRef key="teidata.pointer"/></datatype>
-                        <remarks versionDate="2005-10-10" xml:lang="en">
-                           <p>Any content of the current element should be ignored. Its
-                              true content is that of the element being pointed at.</p>
-                        </remarks>
-                        <remarks xml:lang="fr" versionDate="2007-06-12">
-                           <p>Tout contenu appartenant à l'élément en cours doit être ignoré. Le vrai
-                              contenu est celui de l'élément cible du pointeur.</p>
-                        </remarks>
-                        <remarks xml:lang="ja" versionDate="2008-04-05">
-                           <p>
-                              当該要素の内容は無視されるべき．本当の内容は，参照先の要素の内
-                              容になる．
-                           </p>
-                        </remarks>
-                     </attDef>
+                     <!--Now we need the note have a choice of attributes:
+                     If there's a type and its one of the three special types that
+                     require attributes, then do that-->
+                     <attList org="choice">
+                        <!--If it's a type not listed below,
+                        then it shouldn't have any other attributes-->
+                        <attList org="group">
+                           <attDef ident="type" usage="opt">
+                              <datatype>
+                                 <dataRef key="teidata.enumerated"/>
+                              </datatype>
+                           </attDef>
+                        </attList>
+                        <!--Group 2: An editorial note,
+                        which must include @resp-->
+                        <attList org="group">
+                           <attDef ident="type" usage="req">
+                              
+                              <valList type="closed">
+                                 <valItem ident="editorial">
+                                    <gloss>editorial note</gloss>
+                                    <desc>An editorial note written by a team member.</desc>
+                                 </valItem>
+                              </valList>
+                           </attDef>
+                           <!--Since we use notes in the teiHeader,
+                              we have to make the use of resp required via schematron-->
+                           <attDef ident="resp" usage="req">
+                              <gloss versionDate="2009-11-02" xml:lang="en">responsible party</gloss>
+                              <datatype maxOccurs="unbounded">
+                                 <dataRef key="teidata.pointer"/>
+                              </datatype>
+                              <constraintSpec ident="note.editorial.requiresResp" scheme="schematron">
+                                 <constraint>
+                                    <sch:rule context="tei:note[@type='editorial'][not(root(.)/*[matches(@xml:id,'vol11')])]">
+                                       <sch:assert test="@resp">ERROR: All editorial notes must point to a team member.</sch:assert>
+                                    </sch:rule>
+                                 </constraint>
+                              </constraintSpec>
+                              <remarks>
+                                 <p>All editorial notes must include a resp in order to identify
+                                    the encoder responsible.</p>
+                              </remarks>
+                           </attDef>
+                        </attList>
+                        <!--Group 3: A LiM Note,
+                        which is a primary source note-->
+                        <attList org="group">
+                           <attDef ident="type" usage="req">
+                              <valList type="closed">
+                                 <valItem ident="lim">
+                                    <gloss>Forbes note</gloss>
+                                    <desc>A note that appears in the manuscript (left by Forbes or someone else).</desc>
+                                 </valItem>
+                              </valList>
+                           </attDef>
+                           <attDef ident="place" usage="req">
+                              <desc versionDate="2012-10-07" xml:lang="en">specifies where this item is placed.</desc>
+                              <datatype>
+                                 <dataRef key="limdata.placement"/>
+                              </datatype>
+                              <constraintSpec ident="note.lim.requiresPlace" scheme="schematron">
+                                 <constraint>
+                                    <sch:rule context="tei:note[@type='lim']">
+                                       <sch:assert test="@place">ERROR: All lim notes require a @place attribute to describe
+                                          where on the page the original note is placed.</sch:assert>
+                                    </sch:rule>
+                                 </constraint>
+                              </constraintSpec>
+                           </attDef>
+                           <!--Optional hand attribute on lim notes-->
+                           <attDef ident="hand" usage="opt">
+                              <desc>points to a <gi>handNote</gi> element describing the hand considered responsible for the
+                                 content of the element concerned.</desc>
+                              <datatype>
+                                 <dataRef key="teidata.pointer"/>
+                              </datatype>
+                           </attDef>
+                           <!--Sub-group:
+                              if anchored is true, then it needs an @n-->
+                           <attList org="choice">
+                              <attList org="group">
+                                 <attDef ident="anchored" usage="req">
+                                    <gloss>anchored</gloss>
+                                    <desc>indicates whether the copy text shows the exact place of reference for the note.</desc>
+                                    <valList type="closed">
+                                       <valItem ident="true">
+                                          <gloss>true</gloss>
+                                          <desc>The note is anchored (i.e. it contains a symbol that anchors it in place)</desc>
+                                       </valItem>
+                                    </valList>
+                                 </attDef>
+                                 <attDef ident="n" usage="req">
+                                    <gloss>notation</gloss>
+                                    <desc>The symbol used for anchoring this note;
+                                       this should only be a single character.</desc>
+                                    <datatype>
+                                       <dataRef name="string">
+                                          <dataFacet name="length" value="1"/>
+                                       </dataRef>
+                                    </datatype>
+                                 </attDef>
+                                 <attDef ident="facs" usage="opt">
+                                    <gloss>facsimile</gloss>
+                                    <desc>Points to the page that contains this note</desc>
+                                    <datatype>
+                                       <dataRef key="limdata.facs"/>
+                                    </datatype>
+                                 </attDef>
+                              </attList>
+                              <attList org="group">
+                                 <attDef ident="anchored" usage="req">
+                                    <gloss>anchored</gloss>
+                                    <desc>indicates whether the copy text shows the exact place of reference for the note.</desc>
+                                    <valList type="closed">
+                                       <valItem ident="false">
+                                          <gloss>false</gloss>
+                                          <desc>The note is not anchored (i.e. it does not contain a symbol that anchors it in place)</desc>
+                                       </valItem>
+                                    </valList>
+                                 </attDef>
+                              </attList>
+                           </attList>
+                        </attList>
+                     </attList>
                   </attList>
                </elementSpec>
                <elementSpec ident="list" module="core" mode="change">
@@ -512,9 +591,10 @@
                            </valItem>
                         </valList>
                      </attDef>
-                     
                   </attList>
                </elementSpec>
+               
+               
             </schemaSpec>
          </div>
       </body>
