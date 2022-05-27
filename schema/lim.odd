@@ -126,7 +126,7 @@
                <desc>Underlined</desc>
                <gloss>Items that are underlined; note that since underlining often denotes
                emphasis, this should usually be used with more precise elements (persName, emph, etc)</gloss>
-               <outputRendition>text-decoration:underlined</outputRendition>
+               <outputRendition>text-decoration:underlined;</outputRendition>
             </rendition>
             <rendition xml:id="rnd_right-braced">
                <desc>Right braced</desc>
@@ -189,7 +189,7 @@
                <desc>Strikethrough</desc>
                <gloss>Use this for text that is struck through; note that,
                by default, you do not need to put this element for dels.</gloss>
-               <outputRendition>text-decoration:line-through</outputRendition>
+               <outputRendition>text-decoration:line-through;</outputRendition>
             </rendition>
             <rendition xml:id="rnd_normal">
                <desc>Normal</desc>
@@ -216,7 +216,7 @@
                <desc>Embellished letter</desc>
                <gloss>Use this when some letter/character is embellished.</gloss>
             </rendition>
-            <rendition xml:id="rnd_two-column" >
+            <rendition xml:id="rnd_two-column">
                <desc>A block that has two columns</desc>
                <gloss>Used for instances where (usually a closer) has two distinct
                blocks with something in the left and right-column</gloss>
