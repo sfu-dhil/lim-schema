@@ -1,6 +1,27 @@
 
 # Workflow
 
+All of the documents for the LiM project are kept in GitHub, which is a version control software system (much like Google Drive). There are a number of advantages of using this approach, but, at its core, what this means is that every version of a file is archived; at any point, we can "roll back" the repository if we need to for whatever reason.
+
+In this project, we following a workflow called "forking":
+
+* Each contributor creates their own repository in their GitHub account by "forking" the main (or "upstream") repository
+* Each contributor then downloads their version of the repository (or the "origin" repository) and then makes changes on their computer ("local")
+* While a contributor is working on a task, they save their local changes and push them back to their version of the repository (the "origin")
+* Once they are ready for everyone else to see their changes, they do a "pull request" so that the upstream repository reflects their changes
+
+
+![Diagram of forking workflow from https://www.tomasbeuzen.com/post/git-fork-branch-pull/](images/fork_workflow.png)
+
+You can consider the upstream repository like an article that is going through publication; each editor takes a photocopy of the article and makes changes. When each editor has finished making their changes, they send it back to the publisher (here, sfu-dhil). When the article needs to go through the next round of revisions, the publisher sends out a new version of the article with your and everyone else's changes combined, and the editing process starts again.
+
+There are three main steps to this workflow:
+
+1. "Pulling" from the upstream repository to update your fork (i.e. getting the most up-to-date version of the data)
+2. Commit and saving your work ("pushing" to the "origin" repository)
+2. Contributing your work back to the upstream repository (by issuing a "pull request") 
+
+
 ## Updating your Repository
 
 Update your local copy of the repository by merging any changes from the upstream repository. To do so:
@@ -56,3 +77,15 @@ Assuming that everything looks correct, you can then commit those files by filli
 ![Commit box](images/commit_box.png)
 
 These commit messages are helpful for record keeping and for tracking changes to the files; note that these commit messages are both permanent and public. In the `Summary` field, add a brief description of what you've done (i.e. "Added index items for vol7"). If there is additional information you'd like to add, put a longer explanation in the `Description` box.
+
+## Issuing a Pull Request
+
+When you are ready for the changes to be reflected on the website, you need to contribute to the main repository. Click on “contribute” and then “Open pull request”. 
+![image18](images/1.18.png)
+
+Review your changes and click on “Create pull request”. 
+![image19](images/1.19.png)
+
+A new window will open. Add a title and a comment to provide an update about the work. Click on “create a pull request” button to confirm. The administrator will review and accept this request. 
+![image20](images/1.20.png)
+
