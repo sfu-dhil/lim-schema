@@ -10,6 +10,16 @@ People, places, and other named entities are tagged in a similar fashion: each n
 
 * They cannot nest: i.e. do not put a `<placeName>` inside of a `<persName>`.
 
+## Contributors
+
+To create a New Contributor, right click on the “contributors” folder, and then select “New” and then “File”.
+![image10](images/1.10.png)
+
+Select the “templates” folder, and then click on “New Team Member/ Contributor Document”. Change the file names to the author’s initials (eg. SJI.xml).
+![image11](images/1.11.png)
+
+To edit a template, replace the green text (the XML Comment) with your text. For instance, edit the forename, surname and display name. 
+![image12](images/1.12.png)
 
 ## People
 
