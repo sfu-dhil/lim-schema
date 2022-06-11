@@ -36,15 +36,45 @@ Once you have confirmed the above, add your ID to the ENCODER column. This is im
     
 1. The first is your encoder ID. Enter your id (i.e. LD1) and press OK
 
- ![encoder ID popup page](images/convert_convertPageButton.png)
+ ![encoder ID popup](images/convert_idPopup.png)
 
 1. The second is the Google Doc URL. Paste in the Google Doc's URL and press OK
 
+ ![encoder ID popup](images/convert_googleDocPopup.png)
+
+
 A pane should appear at the bottom of your oXygen application with a bunch of messages that scroll past as the conversion process proceeds. This will take about a minute or so.
 
-Once the conversion is finished (and if it did not encounter any errors), then the document should automatically open in a new tab in oXygen.
+Once the conversion is finished (and if it did not encounter any errors), then the document should automatically open in a new tab in oXygen and the information at the bottom should say "BUILD SUCCESSFUL"
 
-If the document does not open automatically,  receive a BUILD FAILED message and
+ ![encoder ID popup](images/convert_success.png)
+
+If all was successful, you can close the results pane:
+
+ ![encoder ID popup](images/convert_successClose.png)
+
+If the conversion fails, then a secondary tab will appear at the bottom and will say something dramatic and unhelpful like "FATAL ERROR." 
+
+ ![encoder ID popup](images/convert_fail.png)
+ 
+If you see this, then there are a few steps you can take to try and debug. Often, these errors are caused by some inconsistency in the Transcription Roster, so double check that everything is formatted as described above. 
+
+If the Roster looks OK, then check the "ANT [convertGoogleDoc]" tab. There will be a lot of superfluous information in that window, but try scrolling up a few lines and seeing if you can find a line that begins with the words "ERROR." These are customized error messages for this project, which attempt to explain what caused the error. For instance, in this example, the document had already been transcribed: 
+
+ ![encoder ID popup](images/convert_failInfo.png)
+
+If you can't find a line like that or if it's not clear how to resolve the issue, then the best course of action is to get in touch with the LiM team using the RAs email list, which includes the DHIL developer. It may be the case that another person has encountered the same issue and knows how to fix it or there is something broken with the conversion script. Please include the output of the ANT [convertGoogleDoc] tab at the bottom of your message (it will be a lot of text) since this will help with debugging the issue. 
+
+
+## Step 3: Encoding the Transcription
+
+The automatically generated transcription will almost certainly be riddled with validation errors. These are expected and wanted: the conversion tries to make some educated guesses about formatting, etc, but will usually produce generic or intentionally invalid TEI in order to flag places where human intervention is required.
+
+The overall goal of this first pass of encoding is to make sure the document is valid and accurately represents the source material. While each document will have different requirements in terms of encoding, there are some common errors that appear within documents. 
+
+TODO: Add table of errors with solutions
+
+
 
 
 
