@@ -21,7 +21,7 @@
    
     <!--Identity transform-->
     <xsl:mode on-no-match="shallow-copy"/>
-    <xsl:output indent="yes" suppress-indentation="ref"/>
+    <xsl:preserve-space elements="*"/>
     
     <xsl:variable name="processedODD" select="document(replace(document-uri(.),'_lite.xml','_processed.odd'))" as="document-node()"/>
     
@@ -76,7 +76,33 @@
     </xsl:template>
     
 
+    <!--*** GENERATED CONTENT ***-->
+    <!--Handling for specific divGens-->
     
+    <xsl:template match="divGen[@xml:id='rendition_list']">
+        <table>
+            <xsl:for-each select="root(.)//rendition[@xml:id]">
+                <xsl:sort select="@xml:id"/>
+                <row>
+                    <cell><xsl:value-of select="replace(@xml:id,'rnd_','rnd:')"/></cell>
+                    <cell><seg type="rendition" style="{string(outputRendition)}">Sample</seg></cell>
+                </row>
+            </xsl:for-each>
+        </table>
+    </xsl:template>
+    
+    <xsl:template match="divGen[@xml:id='language_list']">
+        <table>
+            <xsl:for-each select="$processedODD//dataSpec[@ident='teidata.language']//valList/valItem">
+                <xsl:sort select="@ident"/>
+                <row>
+                    <cell><xsl:value-of select="@ident"/></cell>
+                    <cell><xsl:value-of select="gloss"/></cell>
+    
+                </row>
+            </xsl:for-each>
+        </table>
+    </xsl:template>
     
     <!--*** LISTS ***-->
     
@@ -273,6 +299,12 @@
         <xsl:apply-templates mode="#current"/>
     </xsl:template>
     
+    <xsl:template match="seg[@type='rendition']">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()" mode="#current"/>
+        </xsl:copy>
+    </xsl:template>
+    
     <xsl:template match="ab[@xml:space='preserve'][@rend='pre'][ancestor::back][ancestor::div[normalize-space(string-join(head/text(),''))='Constraints']] | eg[@xml:space='preserve'][not(@rend='eg_rnc')]">
         <code>
             <xsl:value-of select="replace(.,' ',' ')"/>
@@ -295,6 +327,13 @@
         <val>
             <xsl:apply-templates mode="#current"/>
         </val>
+    </xsl:template>
+    
+    <xsl:template match="eg:egXML">
+        <xsl:copy>
+            <xsl:attribute name="xml:space" select="'preserve'"/>
+            <xsl:apply-templates select="@*|node()"/>
+        </xsl:copy>
     </xsl:template>
     
 
@@ -331,7 +370,7 @@
     <!--Remove the root TEI attribute-->
     <xsl:template match="TEI/@xml:id"/>
     <!--Be explicit about the tei NS here to avoid matching egXMLs-->
-    <xsl:template match="tei:*[ancestor::back]/@rend| tei:*/@xml:base | tei:*/@xml:lang | eg:egXML/@xml:space | tei:*/@xml:space" />
+    <xsl:template match="tei:*[ancestor::back]/@rend| tei:*/@xml:base | tei:*/@xml:lang"/>
     
     
     <xsl:function name="jt:getBestVersion" as="element()" new-each-time="no">

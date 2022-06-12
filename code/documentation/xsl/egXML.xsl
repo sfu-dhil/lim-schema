@@ -45,10 +45,10 @@
         <!--The initial space variable is the calculated maximum space that can be trimmmed
             from the leftmost side of all components of the egXML block.-->
         <xsl:variable name="initialSpace" select="jt:returnInitialSpace(.)" as="xs:integer"/>
-        
+        <xsl:variable name="dummy" select="serialize(.) => parse-xml-fragment()"/>
         <!--If there is a validity status on the egXML, then add that as a class-->
-        <div class="egXML {if (@valid) then @valid else 'true'}">
-            <xsl:apply-templates mode="eg">
+        <div class="egXML {if (@valid) then @valid else 'true'}" xml:space="preserve">
+            <xsl:apply-templates select="$dummy//teix:egXML/node()" mode="eg">
                 <!--Pass the initialSpace as a tunneled parameter-->
                 <xsl:with-param name="initialSpace" tunnel="yes" select="$initialSpace" as="xs:integer"/>
             </xsl:apply-templates>
@@ -95,7 +95,11 @@
                         <!--Test whether this text is a direct child of the egXML; if it is, then see if it's the final
                                 or intiial text node.-->
                         <!--If it is, then don't make a <br/>-->
-                        <xsl:when test="$thisNode/parent::teix:egXML and ($thisNodeId = ($initialTextNode, $finalTextNode))"/>
+                        <xsl:when test="$thisNode/parent::teix:egXML and ($thisNodeId = ($initialTextNode, $finalTextNode))">
+                            <xsl:if test="$thisNodeId = $initialTextNode and matches(.,'[\r\n]$')">
+                                <br/>
+                            </xsl:if>
+                        </xsl:when>
                         
                         <!--Otherwise, make a break-->
                         <xsl:otherwise>

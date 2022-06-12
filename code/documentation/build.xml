@@ -1,7 +1,7 @@
 <project basedir="." default="all">
 
     <dirname property="projectDir" file="../../lim-schema.xpr"/>
-
+    <property name="saxon" value="${projectDir}/lib/saxon10HE.jar"/>
 
     <property name="echo.separator">**************</property>
 
@@ -52,8 +52,8 @@
         <echo message="Convert markdown documentation files to TEI using Pandoc..."/>
         <echo message="${echo.separator}"/> 
         <mkdir dir="${tmpDir}/docs"/>
-        <apply executable="pandoc">
-            <arg line="-f gfm"/>
+        <apply executable="pandoc" force="true">
+            <arg line="-f gfm+raw_attribute"/>
             <arg line="-t tei"/>
             <srcfile/>
             <arg value="-o"/>

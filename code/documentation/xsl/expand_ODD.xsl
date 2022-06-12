@@ -54,6 +54,11 @@
     </xd:doc>
     <xsl:variable name="egNS">http://www.tei-c.org/ns/Examples</xsl:variable>
     
+    <xd:doc>
+        <xd:desc>The context</xd:desc>
+    </xd:doc>
+    <xsl:variable name="odd" select="/" as="document-node()"/>
+    
     
     <!--**************************************************************
        *                                                            * 
@@ -198,6 +203,7 @@
         <xd:desc>Remove the weird @type that pandoc produces.</xd:desc>
     </xd:doc>
     <xsl:template match="div/@type" mode="pandoc"/>
+    
     
     <xd:doc>
         <xd:desc>Heads are more like descs in figures.</xd:desc>

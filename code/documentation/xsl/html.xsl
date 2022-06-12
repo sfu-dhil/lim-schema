@@ -420,6 +420,13 @@
         </span>
     </xsl:template>
     
+    <xsl:template match="seg[@type='rendition'][@style]" mode="main">
+        <span style="{@style}">
+            <xsl:call-template name="createClass"/>
+            <xsl:apply-templates mode="#current"/>
+        </span>
+    </xsl:template>
+    
     <!--Code blocks-->
     <xsl:template match="code" mode="main">
         <xsl:element name="{if (ancestor::head) then 'span' else 'pre'}">
