@@ -1,6 +1,6 @@
 # Document Structure
 
-### Headings
+## Headings
 
 Headings appear at the beginning of an item, usually giving a title ascribed by Forbes. Not all items have headings—most do, but there are notable exceptions, especially in the later volumes of the manuscript. 
 
@@ -29,22 +29,38 @@ The heading here is both in larger writing and aligned to the right, which we ca
  </head>
 ```
 
-
-
-### Paragraphs
-
-
-
-### Openers and Closers
-
-#### Salutations
-
-#### Signatures
-
-#### Datelines
-
-#### Postscripts
+## Paragraphs
 
 
 
-### 
+## Openers and Closers
+
+Openers and closers refer to material that tend to begin or conclude a letter, the 
+
+### Salutations
+
+
+
+### Signatures
+
+
+
+### Datelines
+
+
+
+### Postscripts
+
+
+
+## Verse
+
+Poems and other verse fragments should be encoded using the following elements for verse:
+
+```{=tei}
+<specList>
+	<specDesc key="l"/>
+	<specDesc key="lg"/>
+</specList>
+```
+

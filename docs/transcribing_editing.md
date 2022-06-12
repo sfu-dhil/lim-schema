@@ -151,7 +151,13 @@ If you are unable to transcribe the text at all or the text has been removed com
 
 ### Foreign Language
 
-To tag that something is in a foreign language, use the `@xml:lang` attribute with an ISO language tag value for that language ( for the list of language tags).
+To tag that something is in a foreign language, use the `@xml:lang` attribute with an ISO language tag value for that language:
+
+```{=tei}
+<divGen xml:id="language_list"/>
+```
+
+
 
 How and where you attach that `@xml:lang` depends on whether the segment of foreign language is entirely contained by a single element. For instance, if an entire `<title>` in an `<item>` is in French, then you can place the `@xml:lang` directly on the `<item>`: 
 ```

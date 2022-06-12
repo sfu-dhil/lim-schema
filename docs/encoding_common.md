@@ -111,3 +111,7 @@ Horizontal rules are distinct from underlines and bordered structural elements a
 
 ## Source Styling
 
+```{=tei}
+<divGen xml:id="rendition_list"/>
+```
+
