@@ -273,6 +273,9 @@ pre.code{
 
 .p{
   margin:1em 0;
+  .item &{
+      margin:0;
+  }
 }
 
 .label{
