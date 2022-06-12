@@ -61,7 +61,7 @@
     <xsl:variable name="template" select="document($templateURI)" as="document-node()"/>
     <xsl:variable name="sourceDoc" select="TEI"/>
     <xsl:variable name="text" select="//text"/>
-    <xsl:variable name="chapters" select="$text/body/div" as="element(div)+"/>
+    <xsl:variable name="chapters" select="outermost($text/body/descendant::div[@xml:id])" as="element(div)+"/>
     <xsl:variable name="appendixItems" select="$text/back//div[@xml:id]/div[@xml:id]" as="element(div)+"/>
     <xsl:variable name="tocIds" select="for $div in ($chapters, $appendixItems) return jt:getId($div)" as="xs:string+"/>
     <xsl:variable name="facsArray" select="json-doc($facsJsonURI)" as="array(*)"/>

@@ -123,6 +123,15 @@
        *                                                            *
        **************************************************************-->
     
+    <xsl:template match="item[p][list]" mode="index">
+        <div>
+            <head>
+                <xsl:value-of select="p"/> 
+            </head>
+            <xsl:apply-templates select="list" mode="#current"/>
+        </div>
+    </xsl:template>
+    
     <xd:doc>
         <xd:desc>Process a ref as a type of inclusion.</xd:desc>
     </xd:doc>
@@ -161,7 +170,9 @@
         <xsl:copy>
             <!--Preserve space within examples esp.-->
             <xsl:attribute name="xml:space">preserve</xsl:attribute>
-            <xsl:apply-templates select="@*|node()" mode="#current"/>
+            <xsl:apply-templates select="@*|node()" mode="#current">
+                <xsl:with-param name="rootId" tunnel="yes" select="tokenize(document-uri(root(.)),'[/\.]')[last() - 1]"/>
+            </xsl:apply-templates>
             <xsl:apply-templates select="$list" mode="index"/>
         </xsl:copy>
     </xsl:template>
@@ -170,7 +181,17 @@
         <xd:desc>Create the div's xml:id from its uri (taking the basename).</xd:desc>
     </xd:doc>
     <xsl:template match="body/div/@xml:id" mode="pandoc">
-        <xsl:attribute name="xml:id" select="tokenize(document-uri(root(.)),'[/\.]')[last() - 1]"/>
+        <xsl:param name="rootId" tunnel="yes"/>
+        <xsl:attribute name="xml:id" select="$rootId"/>
+    </xsl:template>
+    
+    <xd:doc>
+        <xd:desc>Every @xml:id afterwards should inherit the root
+        to make sure everything is unique.</xd:desc>
+    </xd:doc>
+    <xsl:template match="div[not(parent::body)]/@xml:id" mode="pandoc">
+        <xsl:param name="rootId" tunnel="yes"/>
+        <xsl:attribute name="xml:id" select="$rootId || '_' || ."/>
     </xsl:template>
     
     <xd:doc>
