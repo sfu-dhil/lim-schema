@@ -101,13 +101,36 @@ Words split across a page beginning require more complex encoding, since we must
 
 ## Horizontal Rules
 
-Horizontal rules representing a new section are encoded using the self-closing `<milestone>` element with a `@unit` of "section" and `@type` of "rule":
+Horizontal rules are lines written in the document that delimit structures and signal some sort of structural shift. These are distinct from underlines and borders and should only be used in cases where the primary function of the line is organizational and not semantic.
+
+To encode these, we use the `<milestone>` element that bears an `@type` of rule and a `@unit` with a value of either "section" or "item".
+
+Use `unit="section"` when the line separates parts of an item; e.g. the line between a postscript and a signature, et cetera. These should always be between the two structural elements that the line delimits; e.g.:
 
 ```
+<closer>
+<!--[...]-->
+</closer>
 <milestone unit="section" type="rule"/>
+<postscript>
+	<p><!--[...]--></p>
+</postscript>
 ```
 
-Horizontal rules are distinct from underlines and bordered structural elements and should only be used when the horizontal rule is delimiting a new section of the text.
+Encode the line that separates two items (i.e. the final horizontal line at the end of one item) using the `unit="item"` at after the end `<body>` tag; these lines should only be encoded for the item that it ends. 
+
+```
+<text>
+	<body>
+		<!--[ All of the body content for the transcription ]-->
+		<signed>R.F</signed>
+	</body>
+	<milestone unit="item" type="rule"/>
+</text>
+
+```
+
+
 
 ## Source Styling
 
