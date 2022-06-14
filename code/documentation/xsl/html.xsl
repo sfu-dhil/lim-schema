@@ -11,6 +11,7 @@
     xmlns:map="http://www.w3.org/2005/xpath-functions/map"
     xmlns:array="http://www.w3.org/2005/xpath-functions/array"
     xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:xso="alias"
     xmlns="http://www.w3.org/1999/xhtml"
     version="3.0">
     <xd:doc>
@@ -21,6 +22,7 @@
         </xd:desc>
     </xd:doc>
     
+    <xsl:namespace-alias stylesheet-prefix="xso" result-prefix="xsl"/>
     <!--**************************************************************
        *                                                            * 
        *                        Includes                            *
@@ -458,6 +460,30 @@
             </xsl:otherwise>
         </xsl:choose>
 
+    </xsl:template>
+    
+    <xsl:template match="eg:egXML[ancestor::table]" mode="main">
+        <xsl:variable name="self" as="element()">
+            <xsl:copy>
+                <xsl:sequence select="@* except @xml:space"/>
+                <xsl:sequence select="node()"/>
+            </xsl:copy>
+        </xsl:variable>
+        <xsl:variable name="stylesheet" as="element()">
+            <xso:stylesheet version="3.0" xmlns:eg="http://www.tei-c.org/ns/Examples">
+                <xso:output method="xml" indent="yes"/>
+                <xso:mode on-no-match="shallow-copy"/>
+                <xso:template match="/">
+                    <xso:message>YEP</xso:message>
+                    <xso:apply-templates/>
+                </xso:template>
+            </xso:stylesheet>
+        </xsl:variable>
+        <xsl:variable name="prettyPrint" select="transform(map{
+             'stylesheet-node': $stylesheet,
+             'source-node': $self
+            })"/>
+        <xsl:apply-templates select="serialize($self, map{'indent':true()}) => parse-xml-fragment()" mode="tei"/>
     </xsl:template>
     
     <!--EG XML-->
