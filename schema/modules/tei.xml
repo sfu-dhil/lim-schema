@@ -144,6 +144,16 @@
                      <attDef ident="xml:base" mode="delete"/>
                   </attList>
                </classSpec>
+               <!--Make all @ana's only use the LiM analytic categories-->
+               <classSpec ident="att.global.analytic" type="atts" mode="change">
+                  <attList>
+                     <attDef ident="ana" mode="change">
+                        <datatype minOccurs="1" maxOccurs="unbounded">
+                           <dataRef key="limdata.ana"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </classSpec>
                
                <classSpec ident="att.global.facs" type="atts" mode="change">
                   <!--Restrict the use of @facs to only allow lib:-->
@@ -265,7 +275,6 @@
                   </attList>
                </classSpec>
                <classSpec ident="att.sortable" module="tei" type="atts" mode="delete"/>
-               <classSpec ident="att.spanning" module="tei" type="atts" mode="delete"/>
                <classSpec ident="att.timed" module="tei" type="atts" mode="delete"/>
                <classSpec ident="att.transcriptional"
                           module="tei"
@@ -278,8 +287,7 @@
                   </attList>
                </classSpec>
                
-               
-         
+           
                <dataSpec module="tei" ident="teidata.language" mode="change">
                   <content>
                      <alternate>

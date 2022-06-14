@@ -128,6 +128,7 @@
                <elementSpec ident="lb" module="core" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global.facs" mode="add"/>
+                     <memberOf key="att.spanning" mode="delete"/>
                   </classes>
 <!--                  <constraintSpec ident="lb.noSpaces" scheme="schematron">
                      <constraint>
@@ -165,6 +166,43 @@
                      <!--Add cert and resp-->
                      <memberOf key="att.global.responsibility" mode="add"/>
                   </classes>
+               </elementSpec>
+               
+               <elementSpec ident="milestone" module="core" mode="change">
+                  <constraintSpec ident="milestone.sectionInBody" scheme="schematron">
+                     <desc>Notes must be typed in the body</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:milestone[@unit='section']">
+                              <sch:assert test="ancestor::tei:body">ERROR: Section milestones should be within the body of the text</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="milestone.itemInText" scheme="schematron">
+                     <desc>Notes must be typed in the body</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:milestone[@unit='item']">
+                              <sch:assert test="ancestor::tei:text and preceding-sibling::tei:body">ERROR: Item milestones should only occur at the end of the item after the closing body tag.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="unit" mode="change">
+                        <valList type="semi" mode="replace">
+                           <valItem ident="section" mode="add">
+                              <gloss>section</gloss>
+                              <desc>A horizontal rule representing a shift in section</desc>
+                           </valItem>
+                           <valItem ident="item" mode="add">
+                              <gloss>item</gloss>
+                              <desc>A horizontal rule representing the end of an item</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
                </elementSpec>
                
                <elementSpec ident="note" module="core" mode="replace">

@@ -201,6 +201,27 @@
                   </content>
                </elementSpec>
                
+               <elementSpec ident="topic" module="lim" mode="add">
+                  <desc>marks the beginning of a longer sequence of text pertaining to a topic or set of topics.</desc>
+                  <classes>
+                     <memberOf key="att.spanning"/>
+                     <memberOf key="att.global.analytic"/>
+                     <memberOf key="model.global.edit"/>
+                  </classes>
+                  <content>
+                     <empty/>
+                  </content>
+                  <attList>
+                     <attDef ident="xml:id" mode="delete"/>
+                     <attDef ident="xml:space" mode="delete"/>
+                     <attDef ident="spanTo" usage="req" mode="change"/>
+                     <attDef ident="ana" usage="req" mode="change"/>
+                  </attList>
+                  <remarks>
+                     <p>The <gi>topic</gi> element is a custom element for the LiM project to mark the beginning of an analytic segment; it should be used in concert with a <gi>anchor</gi> bearing an <att>xml:id</att>.</p>
+                  </remarks>
+               </elementSpec>
+               
                <classSpec ident="lim.att.boolean" mode="add" module="lim" type="atts">
                   <attList>
                      <attDef ident="value" usage="rec">
@@ -322,6 +343,31 @@
                   <desc>Datatype for all lim facsimile pointers.</desc>
                   <content>
                      <dataRef name="token"  restriction="(lib|pg):\d+(.\d+)?"/>
+                  </content>
+               </dataSpec>
+               
+               
+               <dataSpec module="lim" ident="limdata.ana" mode="add">
+                  <desc>Datatype for all analytic pointers</desc>
+                  <content>
+                     <valList>
+                        <valItem ident="lim:women">
+                           <desc>women</desc>
+                           <gloss>women</gloss>
+                        </valItem>
+                        <valItem ident="lim:gaelic">
+                           <desc>gaelic</desc>
+                           <gloss>gaelic</gloss>
+                        </valItem>
+                        <valItem ident="lim:media">
+                           <desc>media</desc>
+                           <gloss>media</gloss>
+                        </valItem>
+                        <valItem ident="lim:class">
+                           <desc>class</desc>
+                           <gloss>class</gloss>
+                        </valItem>
+                     </valList>
                   </content>
                </dataSpec>
                

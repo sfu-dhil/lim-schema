@@ -23,7 +23,24 @@
          <div>
             <head>linking</head>
             <schemaSpec ident="lim_linking">
-               <moduleRef key="linking" include="ab standOff linkGrp ptr"/>
+               <moduleRef key="linking" include="ab anchor standOff linkGrp ptr"/>
+               
+               <elementSpec ident="anchor" module="linking" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global.rendition" mode="delete"/>
+                     <memberOf key="att.global.change" mode="delete"/>
+                     <memberOf key="att.global.analytic" mode="delete"/>
+                     <memberOf key="att.global.source" mode="delete"/>
+                     <memberOf key="att.global.responsibility" mode="delete"/>
+                     <memberOf key="att.type" mode="delete"/>
+                     <memberOf key="lim.att.global.fragmentable" mode="delete"/>
+                  </classes>
+                  <attList>
+                     <attDef ident="xml:id" usage="req" mode="change"/>
+                     <attDef ident="xml:space" mode="delete"/>
+                  </attList>
+               </elementSpec>
+               
                <elementSpec ident="standOff" module="linking" mode="change">
                   <constraintSpec ident="standoff.elementsMustUseCopyOfORHaveAPersName"
                                   scheme="schematron">
