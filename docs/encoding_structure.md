@@ -35,7 +35,9 @@ The heading here is both in larger writing and aligned to the right, which we ca
 
 ## Openers and Closers
 
-Openers and closers refer to material that tend to begin or conclude a letter, the 
+Openers and closers refer to material that tend to begin or conclude a letter.
+
+
 
 ### Salutations
 
