@@ -24,6 +24,7 @@
             <head>analysis</head>
             <schemaSpec ident="lim_analysis">
                <moduleRef key="analysis" include="pc w"/>
+               <!--pc-->
                <elementSpec ident="pc" mode="change" module="analysis">
             <!--Remove all other attributes-->
                   <classes mode="change">
@@ -56,7 +57,7 @@
                      <attDef ident="force" mode="change" usage="req"/>
                   </attList>
                </elementSpec>
-               
+               <!--w-->
                <elementSpec ident="w" mode="change" module="analysis">
                   <classes mode="change">
                      <memberOf key="att.segLike" mode="delete"/>
@@ -102,7 +103,7 @@
                      </constraint>
                   </constraintSpec>
                </elementSpec>
-               
+               <!--att.linguistic-->
                <classSpec ident="att.linguistic"
                           module="analysis"
                           type="atts"

@@ -23,9 +23,54 @@
          <div>
             <head>lim</head>
             <schemaSpec ident="lim_lim">
-               
                <moduleSpec ident="lim"/>
-               
+               <!--compliment-->
+               <elementSpec ident="compliment" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="att.global"/>
+                     <memberOf key="att.ascribed.directed"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.specialPara"/>
+                  </content>
+               </elementSpec>
+               <!--compliments-->
+               <elementSpec ident="compliments" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="model.correspDescPart"/>
+                  </classes>
+                  <content>
+                     <elementRef key="compliment" minOccurs="0" maxOccurs="unbounded"/>
+                  </content>
+               </elementSpec>
+               <!--duration-->
+               <elementSpec ident="duration" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="model.settingPart"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.paraContent"/>
+                  </content>
+               </elementSpec>
+               <!--enclosure-->
+               <elementSpec ident="enclosure" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="att.global"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.specialPara"/>
+                  </content>
+               </elementSpec>
+               <!--enclosures-->
+               <elementSpec ident="enclosures" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="model.correspDescPart"/>
+                  </classes>
+                  <content>
+                     <elementRef key="enclosure" minOccurs="0" maxOccurs="unbounded"/>
+                  </content>
+               </elementSpec>
+               <!--limItem-->
                <elementSpec ident="limItem" module="lim" mode="add">
                   <desc>contains a set of descriptional elements for a text that serves as the basis for a containing text.</desc>
                   <classes>
@@ -81,17 +126,38 @@
                         </valList>
                      </attDef>
                   </attList>
-                  
                </elementSpec>
-               <elementSpec ident="compliment" module="lim" mode="add">
+               <!--noteMarker-->
+               <elementSpec ident="noteMarker" mode="add" module="lim">
                   <classes>
                      <memberOf key="att.global"/>
-                     <memberOf key="att.ascribed.directed"/>
+                     <memberOf key="model.milestoneLike"/>
                   </classes>
-                  <content>
-                     <macroRef key="macro.specialPara"/>
-                  </content>
+                  <attList>
+                     <attDef ident="rendition" mode="delete"/>
+                     <attDef ident="xml:space" mode="delete"/>
+                     <attDef ident="n" mode="delete"/>
+                     <attDef ident="ana" mode="delete"/>
+                     <attDef ident="part" mode="delete"/>
+                     <attDef ident="source" mode="delete"/>
+                     <attDef ident="xml:lang" mode="delete"/>
+                     <attDef ident="xml:id" mode="change" usage="req"/>
+                     <!--Identical to the ref on glyph-->
+                     <attDef ident="ref" usage="req">
+                        <desc versionDate="2005-01-14" xml:lang="en">points to a description of the character or glyph intended.</desc>
+                        <desc versionDate="2007-05-02" xml:lang="zh-TW">連結到該文字或字體的描述。</desc>
+                        <desc versionDate="2008-04-05" xml:lang="ja">当該文字やグリフの解説を参照する．</desc>
+                        <desc versionDate="2007-06-12" xml:lang="fr">pointe vers la description du caractère ou du glyphe
+                            visé</desc>
+                        <desc versionDate="2007-05-04" xml:lang="es">indica la descripción del carácter o pictograma dado.</desc>
+                        <desc versionDate="2007-01-21" xml:lang="it">punta a una descrizione del carattere o glifo.</desc>
+                        <datatype>
+                           <dataRef key="limdata.glyph"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
                </elementSpec>
+               <!--request-->
                <elementSpec ident="request" module="lim" mode="add">
                   <classes>
                      <memberOf key="att.global"/>
@@ -101,6 +167,7 @@
                      <macroRef key="macro.specialPara"/>
                   </content>
                </elementSpec>
+               <!--requests-->
                <elementSpec ident="requests" module="lim" mode="add">
                   <classes>
                      <memberOf key="model.correspDescPart"/>
@@ -109,14 +176,7 @@
                      <elementRef key="request" minOccurs="0" maxOccurs="unbounded"/>
                   </content>
                </elementSpec>
-               <elementSpec ident="duration" module="lim" mode="add">
-                  <classes>
-                     <memberOf key="model.settingPart"/>
-                  </classes>
-                  <content>
-                     <macroRef key="macro.paraContent"/>
-                  </content>
-               </elementSpec>
+               <!--scaffold-->
                <elementSpec ident="scaffold" module="lim" mode="add">
                   <classes>
                      <memberOf key="model.settingPart"/>
@@ -176,31 +236,7 @@
                      </attDef>
                   </attList>
                </elementSpec>
-               <elementSpec ident="compliments" module="lim" mode="add">
-                  <classes>
-                     <memberOf key="model.correspDescPart"/>
-                  </classes>
-                  <content>
-                     <elementRef key="compliment" minOccurs="0" maxOccurs="unbounded"/>
-                  </content>
-               </elementSpec>
-               <elementSpec ident="enclosure" module="lim" mode="add">
-                  <classes>
-                     <memberOf key="att.global"/>
-                  </classes>
-                  <content>
-                     <macroRef key="macro.specialPara"/>
-                  </content>
-               </elementSpec>
-               <elementSpec ident="enclosures" module="lim" mode="add">
-                  <classes>
-                     <memberOf key="model.correspDescPart"/>
-                  </classes>
-                  <content>
-                     <elementRef key="enclosure" minOccurs="0" maxOccurs="unbounded"/>
-                  </content>
-               </elementSpec>
-               
+               <!--topic-->
                <elementSpec ident="topic" module="lim" mode="add">
                   <desc>marks the beginning of a longer sequence of text pertaining to a topic or set of topics.</desc>
                   <classes>
@@ -221,7 +257,7 @@
                      <p>The <gi>topic</gi> element is a custom element for the LiM project to mark the beginning of an analytic segment; it should be used in concert with a <gi>anchor</gi> bearing an <att>xml:id</att>.</p>
                   </remarks>
                </elementSpec>
-               
+               <!--lim.att.boolean-->
                <classSpec ident="lim.att.boolean" mode="add" module="lim" type="atts">
                   <attList>
                      <attDef ident="value" usage="rec">
@@ -231,9 +267,11 @@
                      </attDef>
                   </attList>
                </classSpec>
-               
-               
-               <classSpec ident="lim.att.global.fragmentable" mode="add" module="lim" type="atts">
+               <!--lim.att.global.fragmentable-->
+               <classSpec ident="lim.att.global.fragmentable"
+                          mode="add"
+                          module="lim"
+                          type="atts">
                   <desc versionDate="2021-08-22" xml:lang="en">provides attributes for representing
                      fragmentation of a structural element, typically as 
                      a consequence of some overlapping hierarchy.</desc>
@@ -284,13 +322,18 @@
                               should be used only where it is clear how the element may
                               be reconstituted.</p>
                         </remarks>
-                        <remarks xml:lang="ja" versionDate="2019-06-08"><p><val>I</val>，<val>M</val>，または<val>F</val>という値は，要素の再構成方法が明らかな場合にのみ使用する。</p></remarks>
+                        <remarks xml:lang="ja" versionDate="2019-06-08">
+                           <p>
+                              <val>I</val>，<val>M</val>，または<val>F</val>という値は，要素の再構成方法が明らかな場合にのみ使用する。</p>
+                        </remarks>
                      </attDef>
                   </attList>
-                  <remarks><p>The same as TEI's att.fragmentable, but turned into its own class
-                     to make it global.</p></remarks>
+                  <remarks>
+                     <p>The same as TEI's att.fragmentable, but turned into its own class
+                     to make it global.</p>
+                  </remarks>
                </classSpec>
-               
+               <!--lim.att.locatable-->
                <classSpec ident="lim.att.locatable" module="lim" type="atts" mode="add">
                   <classes>
                      <memberOf key="lim.att.locatable.directed"/>
@@ -304,7 +347,11 @@
                      </attDef>
                   </attList>
                </classSpec>
-               <classSpec ident="lim.att.locatable.directed" module="lim" type="atts" mode="add">
+               <!--lim.att.locatable.directed-->
+               <classSpec ident="lim.att.locatable.directed"
+                          module="lim"
+                          type="atts"
+                          mode="add">
                   <attList>
                      <attDef ident="toWhere" usage="opt">
                         <desc>indicates the location of something being sent.</desc>
@@ -314,9 +361,7 @@
                      </attDef>
                   </attList>
                </classSpec>
-               
-              
-               
+               <!--lim.personMacro-->
                <macroSpec ident="lim.personMacro" module="lim" mode="add">
                   <content>
                      <elementRef key="persName" minOccurs="1" maxOccurs="unbounded"/>
@@ -338,15 +383,7 @@
                      <elementRef key="note" minOccurs="0" maxOccurs="1"/>
                   </content>
                </macroSpec>
-               
-               <dataSpec module="lim" ident="limdata.facs" mode="add">
-                  <desc>Datatype for all lim facsimile pointers.</desc>
-                  <content>
-                     <dataRef name="token"  restriction="(lib|pg):\d+(.\d+)?"/>
-                  </content>
-               </dataSpec>
-               
-               
+               <!--limdata.ana-->
                <dataSpec module="lim" ident="limdata.ana" mode="add">
                   <desc>Datatype for all analytic pointers</desc>
                   <content>
@@ -370,7 +407,22 @@
                      </valList>
                   </content>
                </dataSpec>
-               
+               <!--limdata.facs-->
+               <dataSpec module="lim" ident="limdata.facs" mode="add">
+                  <desc>Datatype for all lim facsimile pointers.</desc>
+                  <content>
+                     <dataRef name="token" restriction="(lib|pg):\d+(.\d+)?"/>
+                  </content>
+               </dataSpec>
+               <!--limdata.glyph-->
+               <dataSpec module="lim" ident="limdata.glyph" mode="add">
+                  <desc>Datatype for all glyph pointers.</desc>
+                  <content>
+                     <valList type="closed">
+                     </valList>
+                  </content>
+               </dataSpec>
+               <!--limdata.placement-->
                <dataSpec module="lim" ident="limdata.placement" mode="add">
                   <desc>Possible values for placement.</desc>
                   <content>
@@ -406,16 +458,34 @@
                      </valList>
                   </content>
                </dataSpec>
-               
-  
+               <!--fwPbConstraints-->
+               <constraintSpec ident="fwPbConstraints"
+                               module="lim"
+                               mode="add"
+                               scheme="schematron">
+                  <desc>Set of constraints for formeworks and page beginnings.</desc>
+                  <constraint>
+                     <sch:pattern>
+                        <sch:rule context="tei:fw | tei:pb">
+                           <sch:assert test="parent::tei:ab | parent::tei:back | parent::tei:body | parent::tei:div | parent::tei:front | parent::tei:list | parent::tei:p | parent::tei:text | parent::tei:q | parent::tei:note">
+                              ERROR: <sch:name/> should not appear within <sch:value-of select="local-name(parent::*)"/>.
+                           </sch:assert>
+                        </sch:rule>
+                        <sch:rule context="tei:fw">
+                           <sch:assert test="not(tei:lb)">ERROR: <sch:name/> should not contain line beginnings 
+                              (since they are usually a single line)</sch:assert>
+                        </sch:rule>
+                     </sch:pattern>
+                  </constraint>
+               </constraintSpec>
+               <!--global.rootIdMustMatchDocument-->
                <constraintSpec scheme="schematron" ident="global.rootIdMustMatchDocument">
                   <desc>The rootid must be the same as the document's name.</desc>
                   <constraint>
                      <sch:pattern>
                         <sch:rule context="/tei:*">
                            <sch:let name="rootEl" value="local-name()"/>
-                           <sch:let name="correctDir"
-                                    value="                     if (self::tei:person and @role='contributor') then 'contributors'                     else if (self::tei:person) then 'people'                     else if (self::tei:place) then 'places'                     else if (self::tei:org) then 'orgs'                     else $dirName"/>
+                           <sch:let name="correctDir" value="                     if (self::tei:person and @role='contributor') then 'contributors'                     else if (self::tei:person) then 'people'                     else if (self::tei:place) then 'places'                     else if (self::tei:org) then 'orgs'                     else $dirName"/>
                            <sch:assert test="$basename = $id">
                     ERROR: Document's @xml:id (<sch:value-of select="$id"/>) must match the document's base filename
                     (<sch:value-of select="$basename"/>)
@@ -447,6 +517,7 @@
                      </sch:pattern>
                   </constraint>
                </constraintSpec>
+               <!--global.variables-->
                <constraintSpec scheme="schematron" ident="global.variables">
                   <desc>Global variables for use across the schematron.</desc>
                   <constraint>
@@ -471,6 +542,7 @@
                      </sch:pattern>
                   </constraint>
                </constraintSpec>
+               <!--inlineElementsNoSpaces-->
                <constraintSpec scheme="schematron" ident="inlineElementsNoSpaces">
                   <desc>Inline elements should not begin or end with spaces.</desc>
                   <constraint>
@@ -484,10 +556,11 @@
                      </sch:pattern>
                   </constraint>
                </constraintSpec>
+               <!--metadataContraints-->
                <constraintSpec ident="metadataContraints"
-                  module="lim"
-                  mode="add"
-                  scheme="schematron">
+                               module="lim"
+                               mode="add"
+                               scheme="schematron">
                   <desc>Set of constraints for profileDesc / premediation.</desc>
                   <constraint>
                      <sch:pattern>
@@ -503,29 +576,11 @@
                      </sch:pattern>
                   </constraint>
                </constraintSpec>
-               <constraintSpec ident="fwPbConstraints"
-                  module="lim"
-                  mode="add"
-                  scheme="schematron">
-                  <desc>Set of constraints for formeworks and page beginnings.</desc>
-                  <constraint>
-                     <sch:pattern>
-                        <sch:rule context="tei:fw | tei:pb">
-                           <sch:assert test="parent::tei:ab | parent::tei:back | parent::tei:body | parent::tei:div | parent::tei:front | parent::tei:list | parent::tei:p | parent::tei:text | parent::tei:q | parent::tei:note">
-                              ERROR: <sch:name/> should not appear within <sch:value-of select="local-name(parent::*)"/>.
-                           </sch:assert>
-                        </sch:rule>
-                        <sch:rule context="tei:fw">
-                           <sch:assert test="not(tei:lb)">ERROR: <sch:name/> should not contain line beginnings 
-                              (since they are usually a single line)</sch:assert>
-                        </sch:rule>
-                     </sch:pattern>
-                  </constraint>
-               </constraintSpec>
+               <!--textConstraints-->
                <constraintSpec ident="textConstraints"
-                  module="lim"
-                  mode="add"
-                  scheme="schematron">
+                               module="lim"
+                               mode="add"
+                               scheme="schematron">
                   <desc>Set of constraints for text and punctuation</desc>
                   <constraint>
                      <sch:pattern>

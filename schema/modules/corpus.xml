@@ -24,13 +24,7 @@
             <head>corpus</head>
             <schemaSpec ident="lim_corpus">
                <moduleRef key="corpus" include="activity creation setting settingDesc"/>
-               
-               <elementSpec ident="settingDesc" module="corpus" mode="change">
-                  <content>
-                     <elementRef key="setting" minOccurs="1" maxOccurs="unbounded"/>
-                     <elementRef key="note" minOccurs="0" maxOccurs="1"/>
-                  </content>
-               </elementSpec>
+               <!--setting-->
                <elementSpec ident="setting" module="corpus" mode="change">
                   <constraintSpec ident="scaffold.mustHaveTrialPlace" scheme="schematron">
                      <constraint>
@@ -41,6 +35,13 @@
                         </sch:pattern>
                      </constraint>
                   </constraintSpec>
+               </elementSpec>
+               <!--settingDesc-->
+               <elementSpec ident="settingDesc" module="corpus" mode="change">
+                  <content>
+                     <elementRef key="setting" minOccurs="1" maxOccurs="unbounded"/>
+                     <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+                  </content>
                </elementSpec>
             </schemaSpec>
          </div>

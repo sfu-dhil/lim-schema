@@ -24,27 +24,8 @@
             <head>namesdates</head>
             <schemaSpec ident="lim_namesdates">
                <moduleRef key="namesdates"
-                          include="addName affiliation birth death faith floruit forename geo genName langKnowledge langKnown listObject listOrg listPerson listPlace location nameLink nationality object objectName occupation org orgName persName person persona place placeName residence roleName sex surname"/>
-               <elementSpec ident="persName" module="namesdates" mode="change">
-                  <constraintSpec ident="persName.mustHaveRefWithPrs" mode="add" scheme="schematron">
-                     <desc>All inline persNames must have a ref that points to the personography db.</desc>
-                     <constraint>
-                 <!--TODO: Remove @ref once feasible-->
-                        <sch:rule context="tei:persName[not(parent::tei:person)][@ref]">
-                           <sch:assert test="matches(@ref,concat('^prs:', $persIdPattern, '$'))">ERROR: All persName pointers must have an @ref that begins with "prs:" followed by 5 uppercase letters and a number (e.g. prs:FORBR1).</sch:assert>
-                        </sch:rule>
-                     </constraint>
-                  </constraintSpec>
-                  <constraintSpec ident="persName.dontUseRoleName" mode="add" scheme="schematron">
-                     <desc>Do not use roleName, but use occupation instead.</desc>
-                     <constraint>
-                <!--TODO: Remove @ref once feasible-->
-                        <sch:rule context="tei:persName/tei:roleName">
-                           <sch:assert test="false()">ERROR: Rolenames should not be denoted in a persName directly; all role information should be encoded using the occupation element.</sch:assert>
-                        </sch:rule>
-                     </constraint>
-                  </constraintSpec>
-               </elementSpec>
+                          include="addName affiliation birth death faith floruit forename genName geo langKnowledge langKnown listObject listOrg listPerson listPlace location nameLink nationality object objectName occupation org orgName persName person persona place placeName residence roleName sex surname"/>
+               <!--affiliation-->
                <elementSpec ident="affiliation" module="namesdates" mode="change">
                   <constraintSpec scheme="schematron" ident="orgs.mustHaveXmlIdAndProperlyNested">
                      <desc>orgs must have an xml:id that follows the 4 letters and digit pattern, but may be nested.</desc>
@@ -69,90 +50,7 @@
                      </attDef>
                   </attList>
                </elementSpec>
-               <elementSpec ident="placeName" module="namesdates" mode="change">
-                  <constraintSpec ident="placeName.mustHaveRefWithPlc" mode="add" scheme="schematron">
-                     <desc>All inline placeNames must have a ref that points to the place db.</desc>
-                     <constraint>
-                <!--TODO: Remove @ref once feasible-->
-                        <sch:rule context="tei:placeName[not(parent::tei:place)][@ref] | tei:*[@where]">
-                           <sch:let name="ptr" value="(@ref, @where)[1]"/>
-                           <sch:assert test="matches($ptr ,concat('^plc:', $placeIdPattern, '$'))">ERROR: All <sch:name/> pointers must have an @<sch:value-of select="local-name($ptr)"/> that begins with "plc:" followed by 4 uppercase letters and a number (e.g. plc:LEIT1).</sch:assert>
-                        </sch:rule>
-                     </constraint>
-                  </constraintSpec>
-               </elementSpec>
-               <elementSpec ident="orgName" module="namesdates" mode="change">
-                  <constraintSpec ident="placeName.mustHaveRefWithPlc" mode="add" scheme="schematron">
-                     <desc>All inline placeNames must have a ref that points to the place db.</desc>
-                     <constraint>
-                <!--TODO: Remove @ref once feasible-->
-                        <sch:rule context="tei:orgName[not(parent::tei:org)][@ref]">
-                           <sch:let name="ptr" value="(@ref, @where)[1]"/>
-                           <sch:assert test="matches($ptr ,concat('^org:', $orgIdPattern, '$'))">ERROR: All <sch:name/> pointers must have an @<sch:value-of select="local-name($ptr)"/> that begins with "org:" followed by 4 uppercase letters and a number (e.g. org:CLAN1).</sch:assert>
-                        </sch:rule>
-                     </constraint>
-                  </constraintSpec>
-               </elementSpec>
-               <elementSpec ident="person" module="namesdates" mode="change">
-                  <classes mode="change">
-                     <memberOf key="att.global.linking" mode="add"/>
-                  </classes>
-                  <content>
-                     <macroRef key="lim.personMacro"/>
-                     <!--Add linkGrp optionally only for person, not persona-->
-                     <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
-                  </content>
-                  <constraintSpec ident="person.constraints" scheme="schematron">
-                     <desc>Various constraints for the different models for contributors and non-contributors.</desc>
-                     <constraint>
-                        <sch:rule context="/tei:person[not(@role='contributor')]">
-                           <sch:assert test="matches(@xml:id,concat('^', $persIdPattern, '$'))">ERROR: All people must have an @xml:id of 5 uppercase letters and a number (e.g. FORBR1).</sch:assert>
-                           <sch:assert test="tei:langKnowledge">ERROR: People must contain a langKnowledge element.</sch:assert>
-                        </sch:rule>
-                        <sch:rule context="/tei:person[@role='contributor']">
-                           <sch:assert test="matches(@xml:id, '^[A-Z]{2}\d+$')">ERROR: All contributors must have an @xml:id of 2 uppercase letters and a number (e.g. LD1).</sch:assert>
-                           <sch:assert test="tei:persName and tei:note">ERROR: Contributors should only contain persName and note.</sch:assert>
-                        </sch:rule>
-                     </constraint>
-                  </constraintSpec>
-                  <attList>
-                     <attDef ident="age" mode="delete"/>
-                     <!--Remove @sex, since we use the element instead-->
-                     <attDef ident="sex" mode="delete"/>
-                     <attDef ident="role" mode="change">
-                        <valList>
-                           <valItem ident="contributor" mode="add">
-                              <desc>contributor</desc>
-                              <gloss>a contemporary contributor to the Lyon in Mourning project</gloss>
-                           </valItem>
-                        </valList>
-                     </attDef>
-                  </attList>
-               </elementSpec>
-               <elementSpec ident="listObject" mode="change" module="namesdates">
-                  <content>
-                     <sequence>
-                        <elementRef key="head" minOccurs="0" maxOccurs="1"/>
-                        <elementRef key="object" minOccurs="0" maxOccurs="unbounded"/>
-                     </sequence>
-                  </content>
-               </elementSpec>
-               <elementSpec ident="listPerson" mode="change" module="namesdates">
-                  <content>
-                     <sequence>
-                        <elementRef key="head" minOccurs="0" maxOccurs="1"/>
-                        <elementRef key="person" minOccurs="0" maxOccurs="unbounded"/>
-                     </sequence>
-                  </content>
-               </elementSpec>
-               <elementSpec ident="listPlace" mode="change" module="namesdates">
-                  <content>
-                     <sequence>
-                        <elementRef key="head" minOccurs="0" maxOccurs="1"/>
-                        <elementRef key="place" minOccurs="0" maxOccurs="unbounded"/>
-                     </sequence>
-                  </content>
-               </elementSpec>
+               <!--birth-->
                <elementSpec ident="birth" module="namesdates" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global" mode="delete"/>
@@ -167,6 +65,7 @@
                      <attDef ident="calendar" mode="delete"/>
                   </attList>
                </elementSpec>
+               <!--death-->
                <elementSpec ident="death" module="namesdates" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global" mode="delete"/>
@@ -181,77 +80,7 @@
                      <attDef ident="calendar" mode="delete"/>
                   </attList>
                </elementSpec>
-               <elementSpec ident="place" module="namesdates" mode="change">
-                  <classes mode="change">
-                     <memberOf key="att.global.rendition" mode="delete"/>
-                     <memberOf key="att.typed" mode="delete"/>
-                     <memberOf key="att.global.analytic" mode="delete"/>
-                     <memberOf key="att.global.source" mode="delete"/>
-                     <memberOf key="att.global.linking" mode="add"/>
-                  </classes>
-                  <content>
-                     <elementRef key="placeName" minOccurs="0" maxOccurs="unbounded"/>
-                     <elementRef key="location" minOccurs="0" maxOccurs="1"/>
-                     <elementRef key="note" minOccurs="0" maxOccurs="1"/>
-                     <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
-                  </content>
-                  <constraintSpec ident="place.mustHaveProperId" scheme="schematron">
-                     <desc>All people must have a proper id.</desc>
-                     <constraint>
-                        <sch:rule context="/tei:place">
-                           <sch:assert test="matches(@xml:id,concat('^', $placeIdPattern, '$'))">ERROR: All places must have an @xml:id of 4 uppercase letters and a number (e.g. LEIT1).</sch:assert>
-                           <sch:assert test="tei:placeName">ERROR: All places must have a placeName.</sch:assert>
-                        </sch:rule>
-                     </constraint>
-                  </constraintSpec>
-               </elementSpec>
-               <elementSpec ident="residence" module="namesdates" mode="change">
-                  <classes mode="change">
-                     <memberOf key="att.global" mode="delete"/>
-                     <!--Add custom att.locatable-->
-                     <memberOf key="lim.att.locatable" mode="add"/>
-                     <memberOf key="att.naming" mode="delete"/>
-                  </classes>
-                  <attList>
-                     <attDef ident="calendar" mode="delete"/>
-                  </attList>
-               </elementSpec>
-               <elementSpec ident="object" module="namesdates" mode="change">
-                  <classes>
-                     <memberOf key="att.docStatus" mode="delete"/>
-                  </classes>
-                  <content>
-                     <elementRef key="objectName" minOccurs="0" maxOccurs="1"/>
-                     <elementRef key="note" minOccurs="0" maxOccurs="1"/>
-                     <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
-                  </content>
-                  <remarks mode="add">
-                     <p>Our use of object is not TEI conformant, but the break is fairly
-                trivial: where objectName is simply used
-              instead of objectIdentifier/objectName.</p>
-                  </remarks>
-               </elementSpec>
-               <elementSpec ident="sex" module="namesdates" mode="change">
-                  <classes>
-                     <memberOf key="att.global" mode="delete"/>
-                     <memberOf key="att.typed" mode="delete"/>
-                  </classes>
-                  <attList>
-                     <attDef ident="val" mode="change" usage="req"/>
-                     <attDef ident="calendar" mode="delete"/>
-                     <attDef ident="type" mode="delete"/>
-                  </attList>
-               </elementSpec>
-               <elementSpec ident="langKnown" module="namesdates" mode="change">
-                  <classes mode="change">
-              <!--Add @cert and @resp explicitly-->
-                     <memberOf key="att.global.responsibility" mode="add"/>
-                  </classes>
-                  <attList>
-              <!--We do not specify level of fluency-->
-                     <attDef ident="level" mode="delete"/>
-                  </attList>
-               </elementSpec>
+               <!--faith-->
                <elementSpec ident="faith" module="namesdates" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global" mode="delete"/>
@@ -284,6 +113,51 @@
                      </attDef>
                   </attList>
                </elementSpec>
+               <!--langKnowledge-->
+               <elementSpec ident="langKnowledge" module="namesdates" mode="change">
+                  <classes mode="replace">
+                     <memberOf key="model.persStateLike"/>
+                  </classes>
+               </elementSpec>
+               <!--langKnown-->
+               <elementSpec ident="langKnown" module="namesdates" mode="change">
+                  <classes mode="change">
+              <!--Add @cert and @resp explicitly-->
+                     <memberOf key="att.global.responsibility" mode="add"/>
+                  </classes>
+                  <attList>
+              <!--We do not specify level of fluency-->
+                     <attDef ident="level" mode="delete"/>
+                  </attList>
+               </elementSpec>
+               <!--listObject-->
+               <elementSpec ident="listObject" mode="change" module="namesdates">
+                  <content>
+                     <sequence>
+                        <elementRef key="head" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="object" minOccurs="0" maxOccurs="unbounded"/>
+                     </sequence>
+                  </content>
+               </elementSpec>
+               <!--listPerson-->
+               <elementSpec ident="listPerson" mode="change" module="namesdates">
+                  <content>
+                     <sequence>
+                        <elementRef key="head" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="person" minOccurs="0" maxOccurs="unbounded"/>
+                     </sequence>
+                  </content>
+               </elementSpec>
+               <!--listPlace-->
+               <elementSpec ident="listPlace" mode="change" module="namesdates">
+                  <content>
+                     <sequence>
+                        <elementRef key="head" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="place" minOccurs="0" maxOccurs="unbounded"/>
+                     </sequence>
+                  </content>
+               </elementSpec>
+               <!--nationality-->
                <elementSpec ident="nationality" module="namesdates" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global" mode="delete"/>
@@ -339,6 +213,23 @@
                      </attDef>
                   </attList>
                </elementSpec>
+               <!--object-->
+               <elementSpec ident="object" module="namesdates" mode="change">
+                  <classes>
+                     <memberOf key="att.docStatus" mode="delete"/>
+                  </classes>
+                  <content>
+                     <elementRef key="objectName" minOccurs="0" maxOccurs="1"/>
+                     <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+                     <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
+                  </content>
+                  <remarks mode="add">
+                     <p>Our use of object is not TEI conformant, but the break is fairly
+                trivial: where objectName is simply used
+              instead of objectIdentifier/objectName.</p>
+                  </remarks>
+               </elementSpec>
+               <!--org-->
                <elementSpec ident="org" module="namesdates" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global.linking" mode="add"/>
@@ -375,16 +266,146 @@
                      </attDef>
                   </attList>
                </elementSpec>
-               <elementSpec ident="langKnowledge" module="namesdates" mode="change">
-                  <classes mode="replace">
-                     <memberOf key="model.persStateLike"/>
-                  </classes>
+               <!--orgName-->
+               <elementSpec ident="orgName" module="namesdates" mode="change">
+                  <constraintSpec ident="placeName.mustHaveRefWithPlc" mode="add" scheme="schematron">
+                     <desc>All inline placeNames must have a ref that points to the place db.</desc>
+                     <constraint>
+                <!--TODO: Remove @ref once feasible-->
+                        <sch:rule context="tei:orgName[not(parent::tei:org)][@ref]">
+                           <sch:let name="ptr" value="(@ref, @where)[1]"/>
+                           <sch:assert test="matches($ptr ,concat('^org:', $orgIdPattern, '$'))">ERROR: All <sch:name/> pointers must have an @<sch:value-of select="local-name($ptr)"/> that begins with "org:" followed by 4 uppercase letters and a number (e.g. org:CLAN1).</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
                </elementSpec>
+               <!--persName-->
+               <elementSpec ident="persName" module="namesdates" mode="change">
+                  <constraintSpec ident="persName.mustHaveRefWithPrs" mode="add" scheme="schematron">
+                     <desc>All inline persNames must have a ref that points to the personography db.</desc>
+                     <constraint>
+                 <!--TODO: Remove @ref once feasible-->
+                        <sch:rule context="tei:persName[not(parent::tei:person)][@ref]">
+                           <sch:assert test="matches(@ref,concat('^prs:', $persIdPattern, '$'))">ERROR: All persName pointers must have an @ref that begins with "prs:" followed by 5 uppercase letters and a number (e.g. prs:FORBR1).</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="persName.dontUseRoleName" mode="add" scheme="schematron">
+                     <desc>Do not use roleName, but use occupation instead.</desc>
+                     <constraint>
+                <!--TODO: Remove @ref once feasible-->
+                        <sch:rule context="tei:persName/tei:roleName">
+                           <sch:assert test="false()">ERROR: Rolenames should not be denoted in a persName directly; all role information should be encoded using the occupation element.</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+               </elementSpec>
+               <!--person-->
+               <elementSpec ident="person" module="namesdates" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global.linking" mode="add"/>
+                  </classes>
+                  <content>
+                     <macroRef key="lim.personMacro"/>
+                     <!--Add linkGrp optionally only for person, not persona-->
+                     <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
+                  </content>
+                  <constraintSpec ident="person.constraints" scheme="schematron">
+                     <desc>Various constraints for the different models for contributors and non-contributors.</desc>
+                     <constraint>
+                        <sch:rule context="/tei:person[not(@role='contributor')]">
+                           <sch:assert test="matches(@xml:id,concat('^', $persIdPattern, '$'))">ERROR: All people must have an @xml:id of 5 uppercase letters and a number (e.g. FORBR1).</sch:assert>
+                           <sch:assert test="tei:langKnowledge">ERROR: People must contain a langKnowledge element.</sch:assert>
+                        </sch:rule>
+                        <sch:rule context="/tei:person[@role='contributor']">
+                           <sch:assert test="matches(@xml:id, '^[A-Z]{2}\d+$')">ERROR: All contributors must have an @xml:id of 2 uppercase letters and a number (e.g. LD1).</sch:assert>
+                           <sch:assert test="tei:persName and tei:note">ERROR: Contributors should only contain persName and note.</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="age" mode="delete"/>
+                     <!--Remove @sex, since we use the element instead-->
+                     <attDef ident="sex" mode="delete"/>
+                     <attDef ident="role" mode="change">
+                        <valList>
+                           <valItem ident="contributor" mode="add">
+                              <desc>contributor</desc>
+                              <gloss>a contemporary contributor to the Lyon in Mourning project</gloss>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <!--persona-->
                <elementSpec ident="persona" module="namesdates" mode="change">
                   <content>
                      <macroRef key="lim.personMacro"/>
                   </content>
                </elementSpec>
+               <!--place-->
+               <elementSpec ident="place" module="namesdates" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global.rendition" mode="delete"/>
+                     <memberOf key="att.typed" mode="delete"/>
+                     <memberOf key="att.global.analytic" mode="delete"/>
+                     <memberOf key="att.global.source" mode="delete"/>
+                     <memberOf key="att.global.linking" mode="add"/>
+                  </classes>
+                  <content>
+                     <elementRef key="placeName" minOccurs="0" maxOccurs="unbounded"/>
+                     <elementRef key="location" minOccurs="0" maxOccurs="1"/>
+                     <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+                     <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
+                  </content>
+                  <constraintSpec ident="place.mustHaveProperId" scheme="schematron">
+                     <desc>All people must have a proper id.</desc>
+                     <constraint>
+                        <sch:rule context="/tei:place">
+                           <sch:assert test="matches(@xml:id,concat('^', $placeIdPattern, '$'))">ERROR: All places must have an @xml:id of 4 uppercase letters and a number (e.g. LEIT1).</sch:assert>
+                           <sch:assert test="tei:placeName">ERROR: All places must have a placeName.</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+               </elementSpec>
+               <!--placeName-->
+               <elementSpec ident="placeName" module="namesdates" mode="change">
+                  <constraintSpec ident="placeName.mustHaveRefWithPlc" mode="add" scheme="schematron">
+                     <desc>All inline placeNames must have a ref that points to the place db.</desc>
+                     <constraint>
+                <!--TODO: Remove @ref once feasible-->
+                        <sch:rule context="tei:placeName[not(parent::tei:place)][@ref] | tei:*[@where]">
+                           <sch:let name="ptr" value="(@ref, @where)[1]"/>
+                           <sch:assert test="matches($ptr ,concat('^plc:', $placeIdPattern, '$'))">ERROR: All <sch:name/> pointers must have an @<sch:value-of select="local-name($ptr)"/> that begins with "plc:" followed by 4 uppercase letters and a number (e.g. plc:LEIT1).</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+               </elementSpec>
+               <!--residence-->
+               <elementSpec ident="residence" module="namesdates" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global" mode="delete"/>
+                     <!--Add custom att.locatable-->
+                     <memberOf key="lim.att.locatable" mode="add"/>
+                     <memberOf key="att.naming" mode="delete"/>
+                  </classes>
+                  <attList>
+                     <attDef ident="calendar" mode="delete"/>
+                  </attList>
+               </elementSpec>
+               <!--sex-->
+               <elementSpec ident="sex" module="namesdates" mode="change">
+                  <classes>
+                     <memberOf key="att.global" mode="delete"/>
+                     <memberOf key="att.typed" mode="delete"/>
+                  </classes>
+                  <attList>
+                     <attDef ident="val" mode="change" usage="req"/>
+                     <attDef ident="calendar" mode="delete"/>
+                     <attDef ident="type" mode="delete"/>
+                  </attList>
+               </elementSpec>
+               <!--att.datable.custom-->
                <classSpec ident="att.datable.custom"
                           module="namesdates"
                           type="atts"

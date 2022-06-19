@@ -24,23 +24,14 @@
             <head>textstructure</head>
             <schemaSpec ident="lim_textstructure">
                <moduleRef key="textstructure"
-                          include="TEI body byline closer dateline div docAuthor docDate docEdition docImprint docTitle epigraph front imprimatur opener postscript salute signed titlePage titlePart text trailer"/>
-               <elementSpec ident="item" mode="change" module="textstructure">
-                  <constraintSpec ident="item.indexItemsMustHaveTitleAndNum"
-                                  scheme="schematron"
-                                  mode="add">
-                     <desc>All index items must contain a title and a number</desc>
-                     <constraint>
-                        <sch:pattern>
-                           <sch:rule context="tei:div[@type='index']/tei:list/tei:item">
-                              <sch:assert test="count(tei:num) gt 0">ERROR: All index items must contain at least one num element.</sch:assert>
-                              <sch:assert test="count(descendant::tei:title) gt 0">ERROR: All index items must contain at least one title element.</sch:assert>
-                           </sch:rule>
-                        </sch:pattern>
-                     </constraint>
-                  </constraintSpec>
+                          include="TEI body byline closer dateline div docAuthor docDate docEdition docImprint docTitle epigraph front imprimatur opener postscript salute signed text titlePage titlePart trailer"/>
+               <!--closer-->
+               <elementSpec ident="closer" module="textstructure" mode="change">
+                  <content>
+                     <macroRef key="lim.macro.openerAndCloserContent"/>
+                  </content>
                </elementSpec>
-               
+               <!--div-->
                <elementSpec ident="div" mode="change" module="textstructure">
                   <constraintSpec ident="div.onlyRootWithIndexAndVolume11"
                                   scheme="schematron"
@@ -75,19 +66,29 @@
                      </attDef>
                   </attList>
                </elementSpec>
-               
-               <elementSpec ident="opener" module="textstructure" mode="change" >
+               <!--item-->
+               <elementSpec ident="item" mode="change" module="textstructure">
+                  <constraintSpec ident="item.indexItemsMustHaveTitleAndNum"
+                                  scheme="schematron"
+                                  mode="add">
+                     <desc>All index items must contain a title and a number</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:div[@type='index']/tei:list/tei:item">
+                              <sch:assert test="count(tei:num) gt 0">ERROR: All index items must contain at least one num element.</sch:assert>
+                              <sch:assert test="count(descendant::tei:title) gt 0">ERROR: All index items must contain at least one title element.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+               </elementSpec>
+               <!--opener-->
+               <elementSpec ident="opener" module="textstructure" mode="change">
                   <content>
                      <macroRef key="lim.macro.openerAndCloserContent"/>
                   </content>
                </elementSpec>
-               
-               <elementSpec ident="closer" module="textstructure" mode="change">
-                  <content>
-                     <macroRef key="lim.macro.openerAndCloserContent"/>
-                  </content>
-               </elementSpec>
-               
+               <!--lim.macro.openerAndCloserContent-->
                <macroSpec module="textstructure" ident="lim.macro.openerAndCloserContent">
                   <gloss>Openers and closers content</gloss>
                   <desc>A macro specification for openers and closers, since their content
@@ -101,8 +102,6 @@
                      </alternate>
                   </content>
                </macroSpec>
-               
-               
             </schemaSpec>
          </div>
       </body>

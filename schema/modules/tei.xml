@@ -24,40 +24,50 @@
             <head>tei</head>
             <schemaSpec ident="lim_tei">
                <moduleRef key="tei"/>
+               <!--att.anchoring-->
                <classSpec ident="att.anchoring" type="atts" module="tei" mode="change">
                   <attList>
                      <attDef ident="targetEnd" mode="delete"/>
                   </attList>
                </classSpec>
+               <!--att.breaking-->
                <classSpec ident="att.breaking" type="atts" module="tei" mode="delete"/>
+               <!--att.cReferencing-->
                <classSpec ident="att.cReferencing" module="tei" type="atts" mode="delete"/>
+               <!--att.canonical-->
                <classSpec ident="att.canonical" type="atts" module="tei" mode="change">
                   <attList>
                      <attDef ident="key" mode="delete"/>
                   </attList>
                </classSpec>
+               <!--att.damaged-->
                <classSpec ident="att.damaged" type="atts" module="tei" mode="change">
                   <attList>
                      <attDef ident="group" mode="delete"/>
                   </attList>
                </classSpec>
+               <!--att.datable-->
                <classSpec ident="att.datable" module="tei" type="atts" mode="change">
                   <attList>
                      <attDef ident="period" mode="delete"/>
                   </attList>
                </classSpec>
+               <!--att.datable.iso-->
                <classSpec ident="att.datable.iso" module="tei" type="atts" mode="delete"/>
+               <!--att.datcat-->
                <classSpec ident="att.datcat" module="tei" type="atts" mode="delete"/>
+               <!--att.declarable-->
                <classSpec ident="att.declarable" module="tei" type="atts" mode="delete"/>
+               <!--att.declaring-->
                <classSpec ident="att.declaring" module="tei" type="atts" mode="delete"/>
+               <!--att.divLike-->
                <classSpec ident="att.divLike" module="tei" type="atts" mode="delete"/>
-               <!--We remove docStatus, but create our own thing-->
+               <!--att.docStatus-->
                <classSpec ident="att.docStatus" module="tei" type="atts" mode="change">
                   <attList>
                      <attDef ident="status" mode="delete"/>
                      <attDef ident="docStatus" mode="add" usage="opt">
                         <desc versionDate="2010-05-06" xml:lang="en">describes the status of the transcription at the time indicated.</desc>
-                        
                         <valList type="closed" mode="add">
                            <valItem ident="empty" mode="add">
                               <desc>transcription empty</desc>
@@ -74,22 +84,16 @@
                               from Transkribus</gloss>
                            </valItem>
                            <valItem ident="inProgress" mode="add">
-                              
                               <desc>transcription in progress</desc>
                               <gloss>currently being worked on, but not yet "done"</gloss>
-                              
                            </valItem>
                            <valItem ident="readyForProof" mode="add">
-                              
                               <desc>transcription ready for proof</desc>
                               <gloss>corrected and encoded, and is now ready to be proofed</gloss>
-                              
                            </valItem>
                            <valItem ident="proofed" mode="add">
-                              
                               <desc>transcription proofed</desc>
                               <gloss>proofed and checked</gloss>
-                              
                            </valItem>
                         </valList>
                      </attDef>
@@ -104,31 +108,28 @@
                               <gloss>empty / not yet worked on or edited</gloss>
                            </valItem>
                            <valItem ident="inProgress" mode="add">
-                              
                               <desc>metadata in progress</desc>
                               <gloss>currently being worked on, but not yet "done"</gloss>
-                              
                            </valItem>
                            <valItem ident="done" mode="add">
-                              
                               <desc>metadata done</desc>
                               <gloss>Metadata work is completed</gloss>
-                              
                            </valItem>
-
                         </valList>
                      </attDef>
                   </attList>
-                  
                </classSpec>
+               <!--att.editLike-->
                <classSpec ident="att.editLike" module="tei" type="atts" mode="change">
                   <attList>
                      <attDef ident="instant" mode="delete"/>
                   </attList>
                </classSpec>
+               <!--att.edition-->
                <classSpec ident="att.edition" module="tei" type="atts" mode="delete"/>
-               <!--REMOVE att.fragmentable, but add it globally-->
+               <!--att.fragmentable-->
                <classSpec ident="att.fragmentable" module="tei" type="atts" mode="delete"/>
+               <!--att.global-->
                <classSpec ident="att.global" module="tei" type="atts" mode="change">
                   <classes mode="change">
               <!--Remove facs and responsibility from the global modules,
@@ -144,7 +145,7 @@
                      <attDef ident="xml:base" mode="delete"/>
                   </attList>
                </classSpec>
-               <!--Make all @ana's only use the LiM analytic categories-->
+               <!--att.global.analytic-->
                <classSpec ident="att.global.analytic" type="atts" mode="change">
                   <attList>
                      <attDef ident="ana" mode="change">
@@ -154,7 +155,7 @@
                      </attDef>
                   </attList>
                </classSpec>
-               
+               <!--att.global.facs-->
                <classSpec ident="att.global.facs" type="atts" mode="change">
                   <!--Restrict the use of @facs to only allow lib:-->
                   <attList>
@@ -168,6 +169,7 @@
                      <p>The facs attribute should contain only a single pointer of the limdata.facs.</p>
                   </remarks>
                </classSpec>
+               <!--att.global.linking-->
                <classSpec ident="att.global.linking"
                           module="tei"
                           type="atts"
@@ -181,6 +183,7 @@
                      <attDef ident="select" mode="delete"/>
                   </attList>
                </classSpec>
+               <!--att.global.rendition-->
                <classSpec ident="att.global.rendition"
                           module="tei"
                           type="atts"
@@ -189,7 +192,7 @@
                      <desc>Constraints for renditions that should only be used in
                      born digital documents</desc>
                      <constraint>
-                        <sch:rule  context="tei:*[contains-token(@rendition,'rnd:hidden')]">
+                        <sch:rule context="tei:*[contains-token(@rendition,'rnd:hidden')]">
                            <sch:assert test="self::tei:head and ancestor::tei:TEI/descendant::tei:catRef[matches(@target,'bornDigital')]">ERROR: rnd:hidden is meant only for born digital document headings.</sch:assert>
                         </sch:rule>
                         
@@ -202,10 +205,12 @@
                      <attDef ident="style" mode="delete"/>
                      <!--And constraint rendition-->
                      <attDef ident="rendition" mode="change">
-                        <constraintSpec ident="rendition.twoColumnNeedsLeftAndRight" scheme="schematron" mode="add">
+                        <constraintSpec ident="rendition.twoColumnNeedsLeftAndRight"
+                                        scheme="schematron"
+                                        mode="add">
                            <desc>The two column layout requires one item to be left and one item to be right.</desc>
                            <constraint>
-                              <sch:rule  context="tei:*[contains-token(@rendition,'rnd:two-column')]">
+                              <sch:rule context="tei:*[contains-token(@rendition,'rnd:two-column')]">
                                  <sch:let name="children" value="child::tei:*"/>
                                  <sch:let name="leftChild" value="$children[contains-token(@rendition,'rnd:left')]"/>
                                  <sch:let name="rightChild" value="$children[contains-token(@rendition, 'rnd:right')]"/>
@@ -214,8 +219,7 @@
                               </sch:rule>
                            </constraint>
                         </constraintSpec>
-                        <constraintSpec ident="rendition.mutualExclusion" scheme="schematron"
-                           mode="add">
+                        <constraintSpec ident="rendition.mutualExclusion" scheme="schematron" mode="add">
                            <desc>Some renditions contradict each other</desc>
                            <constraint>
                               <sch:rule context="tei:*[@rendition]">
@@ -235,20 +239,23 @@
                         </valList>
                      </attDef>
                   </attList>
-                  
                </classSpec>
+               <!--att.naming-->
                <classSpec ident="att.naming" module="tei" type="atts" mode="change">
                   <attList>
                      <attDef ident="nymRef" mode="delete"/>
                   </attList>
                </classSpec>
+               <!--att.notated-->
                <classSpec ident="att.notated" module="tei" type="atts" mode="delete"/>
+               <!--att.personal-->
                <classSpec ident="att.personal" module="tei" type="atts" mode="change">
                   <attList>
                      <attDef ident="full" mode="delete"/>
                      <attDef ident="sort" mode="delete"/>
                   </attList>
                </classSpec>
+               <!--att.placement-->
                <classSpec ident="att.placement" module="tei" type="atts" mode="change">
                   <attList>
                      <attDef ident="place" mode="change">
@@ -259,35 +266,60 @@
                      </attDef>
                   </attList>
                </classSpec>
+               <!--att.pointing-->
                <classSpec ident="att.pointing" module="tei" type="atts" mode="change">
                   <attList>
                      <attDef ident="targetLang" mode="delete"/>
                      <attDef ident="evaluate" mode="delete"/>
                   </attList>
                </classSpec>
+               <!--att.pointing.group-->
                <classSpec ident="att.pointing.group"
                           mode="delete"
                           module="tei"
                           type="atts"/>
+               <!--att.segLike-->
                <classSpec ident="att.segLike" module="tei" mode="change" type="atts">
                   <attList>
                      <attDef ident="function" mode="delete"/>
                   </attList>
                </classSpec>
+               <!--att.sortable-->
                <classSpec ident="att.sortable" module="tei" type="atts" mode="delete"/>
+               <!--att.timed-->
                <classSpec ident="att.timed" module="tei" type="atts" mode="delete"/>
+               <!--att.transcriptional-->
                <classSpec ident="att.transcriptional"
                           module="tei"
                           type="atts"
                           mode="delete"/>
+               <!--att.typed-->
                <classSpec ident="att.typed" module="tei" type="atts" mode="change">
                   <attList>
               <!--Remove subtype for now-->
                      <attDef ident="subtype" mode="delete"/>
                   </attList>
                </classSpec>
-               
-           
+               <!--att.written-->
+               <classSpec ident="att.written" module="tei" type="atts" mode="change">
+                  <constraintSpec scheme="schematron" ident="hand.ForbesOnlyIfImmediateHandIsnt">
+                     <desc>The use of Forbes' hand makes no sense unless the hand is someone else's.</desc>
+                     <constraint>
+                        <sch:rule context="tei:*[@hand = 'hand:Forbes']">
+                           <sch:let name="ancHand" value="ancestor::*[1][@hand]/@hand"/>
+                           <sch:assert test="exists($ancHand) and not($ancHand = 'hand:Forbes')">ERROR: Specifying hand:Forbes rarely makes sense since his is the implied hand in all cases; the value hand:Forbes should only be used when the hand has switched from Forbes to another hand and then back to Forbes.</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="hand" mode="change">
+                        <valList mode="add" type="closed">
+                           
+                        </valList>
+                     </attDef>
+                  </attList>
+               </classSpec>
+               <!--teidata.language-->
                <dataSpec module="tei" ident="teidata.language" mode="change">
                   <content>
                      <alternate>
