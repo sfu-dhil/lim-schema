@@ -41,11 +41,13 @@
     <target name="populate">
         <description>Populates the ODD with values from taxonomies</description>
         <echo>Populating ODD values from the taxonomies</echo>
+
         <java jar="${saxon}" fork="true">
             <arg line="-xsl:${basedir}/code/schema/fill_odd.xsl"/>
             <arg line="-s:${schemaDir}/lim.included.odd"/>
             <arg line="-o:${schemaDir}/lim.full.odd"/>
         </java>
+        
     </target>
     
     <target name="expand">

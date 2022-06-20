@@ -142,8 +142,18 @@
         </copy>
         
     </target>
+    
+    <target name="search">
+        <echo message="${echo.separator}"/>
+        <echo message="Running staticSearch..."/>
+        <echo message="${echo.separator}"/>
+        <ant antfile="${projectDir}/staticSearch/build.xml" inheritall="no" target="test">
+            <property name="ssConfigFile"
+                value="${projectDir}/staticSearch_config.xml"/>
+        </ant>
+    </target>
 
 
-    <target name="all" depends="init, copyAssets, md2tei, odd2ExpandedOdd, odd2processedOdd, odd2lite, fixLite, odd2Html, copySources"/>
+    <target name="all" depends="init, copyAssets, md2tei, odd2ExpandedOdd, odd2processedOdd, odd2lite, fixLite, odd2Html, copySources, search"/>
 
 </project>

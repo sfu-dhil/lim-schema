@@ -18,6 +18,10 @@ However, if the ampersand does not expand to "and", then you must tag the abbrev
 <choice><abbr>&amp;c.</abbr><expan>et cetera</expan></choice>
 ```
 
+```{=tei}
+<divGen xml:id="abbrTable"/>
+```
+
 #### Uncommon abbreviations
 
 Uncommon or unfamiliar abbreviations—like Revd—will often need to be expanded in order to provide clarity and to facilitate searching. To do so, first tag the abbreviation with the `<abbr>` element, then tag your expansion with an `<expan>`, and then wrap both in a `<choice>` element. For example: 

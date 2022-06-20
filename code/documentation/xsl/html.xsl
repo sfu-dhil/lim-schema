@@ -168,8 +168,23 @@
                         <xsl:value-of select="'.' || $id || '{' || $rndMap($id) || '}' || codepoints-to-string(10)"/>
                     </xsl:for-each>
                 </style>
-               
             </xsl:if>
+            <meta class="staticSearch_desc" name="Document Type">
+                <xsl:attribute name="content">
+                    <xsl:choose>
+                        <xsl:when test="$thisDiv/ancestor-or-self::back">Specification</xsl:when>
+                        <xsl:otherwise>Documentation</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+            </meta>
+            <xsl:variable name="elementNames" as="xs:string*">
+                <xsl:sequence select="$thisDiv/descendant::gi/string(.) ! tokenize(normalize-space(.),'\s+')[1]"/>
+                <xsl:sequence select="$thisDiv/descendant::ref[matches(text(),'^&lt;[a-zA-Z]+/?&gt;$')] ! translate(.,'&lt;&gt;/','')"/>
+                <xsl:sequence select="$thisDiv/descendant::*:egXML/descendant::*/local-name()"/>
+            </xsl:variable>
+            <xsl:for-each-group select="$elementNames" group-by="string(.)">
+                <meta class="staticSearch_feat" name="Elements Mentioned" content="{current-grouping-key()}"/>
+            </xsl:for-each-group>
         </xsl:copy>
     </xsl:template>
     
@@ -178,6 +193,11 @@
         <xsl:copy>
             <xsl:apply-templates select="@*|h2" mode="#current"/>
             <xsl:apply-templates select="$thisDiv/node()" mode="main"/>
+            <xsl:if test="$thisDiv/self::front">
+                <div id="staticSearch">
+                    <!--Static search here-->
+                </div>
+            </xsl:if>
         </xsl:copy>
     </xsl:template>
 
