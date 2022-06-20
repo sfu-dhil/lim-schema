@@ -351,8 +351,8 @@
    <text>
       <front>
          <div>
-            <head>Encoding Guidelines</head>
-            <p>This is the documentation for <title level="m">The Lyon in Mourning: Networking Jacobites</title> (LiM). At the moment, what follows is a collection of notes to help with planning the project's structure and workflow; as decisions are made and plans are concretized, this document will be updated to reflect the actual encoding principles and guidelines.</p>
+            <head>Lyon in Mourning Encoding Guidelines</head>
+            <p>This is the encoding documentation for the forthcoming <ref target="https://dhil.lib.sfu.ca/lyoninmourning">Lyon in Mourning digital edition</ref>, which is part of the larger SSHRC-funded Networking Jacobites project (Leith Davis [SFU, Department of English], Ralph MacLean [National Library of Scotland], and Joey Takeda [SFU, Digital Humanities Innovation Lab]).</p>
          </div>
       </front>
       <body>
