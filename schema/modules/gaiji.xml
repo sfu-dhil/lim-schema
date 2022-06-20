@@ -26,22 +26,6 @@
                <moduleRef key="gaiji" include="char charDecl g localProp mapping"/>
                <!--g-->
                <elementSpec ident="g" module="gaiji" mode="change">
-                  <constraintSpec ident="g.outsideLabelShouldHaveId" scheme="schematron">
-                     <constraint>
-                  <sch:rule context="tei:g[not(parent::tei:label[parent::tei:note])]">
-                     <sch:assert test="@xml:id">ERROR: All glyph elements in the body of the text
-                     must contain an @xml:id.</sch:assert>
-                  </sch:rule>
-                </constraint>
-                  </constraintSpec>
-                  <constraintSpec ident="g.insideLabelMustNotHaveId" scheme="schematron">
-                     <constraint>
-                  <sch:rule context="tei:g[parent::tei:label[parent::tei:note]]">
-                    <sch:assert test="not(@xml:id)">ERROR: Glyph elements inside of notes
-                    should not have an @xml:id.</sch:assert>
-                  </sch:rule>
-                </constraint>
-                  </constraintSpec>
                   <attList>
                      <attDef ident="ref" mode="change" usage="req">
                         <datatype>
@@ -49,9 +33,12 @@
                         </datatype>
                      </attDef>
                   </attList>
+                  <remarks>
+                     <p>In most cases, the <gi>noteMarker</gi> element is more appropriate,
+                     except in cases where the marker is in another hand; in that case, use the g
+                     element.</p>
+                  </remarks>
                </elementSpec>
-               <!--z-->
-               <elementSpec ident="z"/>
             </schemaSpec>
          </div>
       </body>

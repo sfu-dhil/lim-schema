@@ -138,6 +138,16 @@
                      </attDef>
                   </attList>
                </elementSpec>
+               
+               <!--add-->
+               <elementSpec ident="add" module="core" mode="change">
+                  <classes mode="change">
+                     <!--We've deleted att.editLike, so 
+                        we must add att.written -->
+                     <memberOf key="att.written" mode="add"/>
+                  </classes>
+               </elementSpec>
+               
                <!--bibl-->
                <elementSpec ident="bibl" module="core" mode="change">
                   <classes>
@@ -151,6 +161,14 @@
                      <memberOf key="model.pPart.transcriptional" mode="delete"/>
                      <!--Add cert and resp-->
                      <memberOf key="att.global.responsibility" mode="add"/>
+                  </classes>
+               </elementSpec>
+               <!--del-->
+               <elementSpec ident="del" module="core" mode="change">
+                  <classes mode="change">
+                     <!--We've deleted att.editLike, so 
+                        we must add att.written -->
+                     <memberOf key="att.written" mode="add"/>
                   </classes>
                </elementSpec>
                <!--expan-->
@@ -292,21 +310,26 @@
                   </attList>
                </elementSpec>
                <!--note-->
-               <elementSpec ident="note" module="core" mode="replace">
+               <elementSpec ident="note" module="core" mode="change">
                   <gloss xml:lang="en" versionDate="2017-06-25">note</gloss>
                   <desc versionDate="2005-01-14" xml:lang="en">contains a note or annotation.</desc>
-                  <classes>
-                     <!--All attribute classes have been deleted
-                        in order to allow specific values-->
-                     <memberOf key="model.noteLike"/>
-                     <memberOf key="model.annotationLike"/>
-                     <memberOf key="model.correspDescPart"/>
-                     <memberOf key="model.correspActionPart"/>
-                     <memberOf key="model.correspContextPart"/>
-                     <memberOf key="model.annotationPart.body"/>
-                  </classes>
                   <content>
-                     <macroRef key="macro.specialPara"/>
+                     <alternate>
+                        <sequence>
+                           <sequence preserveOrder="false">
+                              <elementRef key="supplied" minOccurs="0" maxOccurs="unbounded"/>
+                              <elementRef key="noteMarker" minOccurs="0" maxOccurs="unbounded"/>
+                           </sequence>
+                           <alternate>
+                              <sequence>
+                                 <elementRef key="p" minOccurs="1" maxOccurs="unbounded"/>
+                                 <elementRef key="closer" minOccurs="0"/>
+                              </sequence>
+                              <elementRef key="NB" minOccurs="1" maxOccurs="1"/>
+                           </alternate>
+                        </sequence>
+                        <macroRef key="macro.specialPara"/>
+                     </alternate>
                   </content>
                   <constraintSpec ident="note.mustHaveTypeInText" scheme="schematron">
                      <desc>Notes must be typed in the body</desc>
@@ -314,6 +337,27 @@
                         <sch:pattern>
                            <sch:rule context="tei:note[ancestor::tei:text][not(ancestor::tei:div[@type='footnotes'])]">
                               <sch:assert test="@type">ERROR: All notes in transcriptions must have a @type.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="note.coOccurenceConstraints" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:note[@type='editorial']">
+                              <sch:assert test="@resp">ERROR: All editorial notes must have a @resp</sch:assert>
+                              <sch:assert test="not(@anchored)">ERROR: Do not use @anchored for editorial notes</sch:assert>
+                              <sch:assert test="not(@hand)">ERROR: Do not use @hand for editorial notes.</sch:assert>
+                           </sch:rule>
+                           <sch:rule context="tei:note[@type='lim']">
+                              <sch:assert test="not(@resp)">ERROR: Do not use @resp on LiM notes. Use @hand instead.</sch:assert>
+                              <sch:assert test="every $text in text() satisfies not(matches($text,'\S'))">ERROR: All lim notes
+                              must have structured context (i.e. 0 or more noteMarkers, either a sequence of paragraphs and a closer OR an NB) </sch:assert>
+                           </sch:rule>
+                           <sch:rule context="tei:note[@type='lim']/tei:supplied">
+                              <sch:assert test="tei:noteMarker">ERROR: Supplied as a direct child of note must contain a noteMarkers.</sch:assert>
+                              <sch:assert test="empty(tei:*[not(self::tei:noteMarker)])">ERROR: Only noteMarkers are allowed within note[@type='lim']/supplied.</sch:assert>
+                              <sch:assert test="every $text in text() satisfies not(matches($text,'\S'))">ERROR: Do not put text within the supplied in a noteMarker.</sch:assert>
                            </sch:rule>
                         </sch:pattern>
                      </constraint>
@@ -329,13 +373,44 @@
                         </sch:pattern>
                      </constraint>
                   </constraintSpec>
+                  <constraintSpec ident="anchoredNotesShouldUseNoteMarker" scheme="schematron">
+                     <desc>Anchored notes should have a child noteMarker</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:note[@anchored='true']">
+                              <sch:assert test="tei:noteMarker or tei:supplied/tei:noteMarker">ERROR: Anchored notes must
+                                 contain a noteMarker element that points to the id of the
+                                 note marker in the body of the text.</sch:assert>
+                           </sch:rule>
+                           <sch:rule context="tei:note[@anchored='false']">
+                              <sch:assert test="@place">ERROR: Unanchored notes must have a @place value
+                                 specifying where it is on the page.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
                   <attList>
-                     <!--Now we need the note have a choice of attributes:
+                     <attDef ident="type" usage="rec" mode="change">
+                        <valList type="semi" mode="add">
+                           <valItem ident="editorial" mode="add">
+                              <gloss>editorial note</gloss>
+                              <desc>An editorial note written by a team member.</desc>
+                           </valItem>
+                           <valItem ident="lim" mode="add">
+                              <gloss>Forbes note</gloss>
+                              <desc>A note that appears in the manuscript (left by Forbes or someone else).</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+                  
+                  <!--<attList>
+                     <!-\-Now we need the note have a choice of attributes:
                      If there's a type and its one of the three special types that
-                     require attributes, then do that-->
+                     require attributes, then do that-\->
                      <attList org="choice">
-                        <!--If it's a type not listed below,
-                        then it shouldn't have any other attributes-->
+                        <!-\-If it's a type not listed below,
+                        then it shouldn't have any other attributes-\->
                         <attList org="group">
                            <attDef ident="type" usage="opt">
                               <datatype>
@@ -343,19 +418,16 @@
                               </datatype>
                            </attDef>
                         </attList>
-                        <!--Group 2: An editorial note,
-                        which must include @resp-->
+                        <!-\-Group 2: An editorial note,
+                        which must include @resp-\->
                         <attList org="group">
                            <attDef ident="type" usage="req">
                               <valList type="closed">
-                                 <valItem ident="editorial">
-                                    <gloss>editorial note</gloss>
-                                    <desc>An editorial note written by a team member.</desc>
-                                 </valItem>
+                                
                               </valList>
                            </attDef>
-                           <!--Since we use notes in the teiHeader,
-                              we have to make the use of resp required via schematron-->
+                           <!-\-Since we use notes in the teiHeader,
+                              we have to make the use of resp required via schematron-\->
                            <attDef ident="resp" usage="req">
                               <gloss versionDate="2009-11-02" xml:lang="en">responsible party</gloss>
                               <datatype maxOccurs="unbounded">
@@ -374,32 +446,15 @@
                               </remarks>
                            </attDef>
                         </attList>
-                        <!--Group 3: A LiM Note,
-                        which is a primary source note-->
+                        <!-\-Group 3: A LiM Note,
+                        which is a primary source note-\->
                         <attList org="group">
                            <attDef ident="type" usage="req">
                               <valList type="closed">
-                                 <valItem ident="lim">
-                                    <gloss>Forbes note</gloss>
-                                    <desc>A note that appears in the manuscript (left by Forbes or someone else).</desc>
-                                 </valItem>
+                                
                               </valList>
                            </attDef>
-                           <attDef ident="place" usage="req">
-                              <desc versionDate="2012-10-07" xml:lang="en">specifies where this item is placed.</desc>
-                              <datatype>
-                                 <dataRef key="limdata.placement"/>
-                              </datatype>
-                              <constraintSpec ident="note.lim.requiresPlace" scheme="schematron">
-                                 <constraint>
-                                    <sch:rule context="tei:note[@type='lim']">
-                                       <sch:assert test="@place">ERROR: All lim notes require a @place attribute to describe
-                                          where on the page the original note is placed.</sch:assert>
-                                    </sch:rule>
-                                 </constraint>
-                              </constraintSpec>
-                           </attDef>
-                           <!--Optional hand attribute on lim notes-->
+                           <!-\-Optional hand attribute on lim notes-\->
                            <attDef ident="hand" usage="opt">
                               <desc>points to a <gi>handNote</gi> element describing the hand considered responsible for the
                                  content of the element concerned.</desc>
@@ -407,8 +462,8 @@
                                  <dataRef key="teidata.pointer"/>
                               </datatype>
                            </attDef>
-                           <!--Sub-group:
-                              if anchored is true, then it needs an @n-->
+                           <!-\-Sub-group:
+                              if anchored is true, then it needs an @n-\->
                            <attList org="choice">
                               <attList org="group">
                                  <attDef ident="anchored" usage="req">
@@ -420,23 +475,6 @@
                                           <desc>The note is anchored (i.e. it contains a symbol that anchors it in place)</desc>
                                        </valItem>
                                     </valList>
-                                 </attDef>
-                                 <attDef ident="n" usage="req">
-                                    <gloss>notation</gloss>
-                                    <desc>The symbol used for anchoring this note;
-                                       this should only be a single character.</desc>
-                                    <datatype>
-                                       <dataRef name="string">
-                                          <dataFacet name="length" value="1"/>
-                                       </dataRef>
-                                    </datatype>
-                                 </attDef>
-                                 <attDef ident="facs" usage="opt">
-                                    <gloss>facsimile</gloss>
-                                    <desc>Points to the page that contains this note</desc>
-                                    <datatype>
-                                       <dataRef key="limdata.facs"/>
-                                    </datatype>
                                  </attDef>
                               </attList>
                               <attList org="group">
@@ -450,11 +488,25 @@
                                        </valItem>
                                     </valList>
                                  </attDef>
+                                 <attDef ident="place" usage="req">
+                                    <desc versionDate="2012-10-07" xml:lang="en">specifies where this item is placed.</desc>
+                                    <datatype>
+                                       <dataRef key="limdata.placement"/>
+                                    </datatype>
+                                    <constraintSpec ident="note.lim.requiresPlace" scheme="schematron">
+                                       <constraint>
+                                          <sch:rule context="tei:note[@type='lim']">
+                                             <sch:assert test="@place">ERROR: All lim notes require a @place attribute to describe
+                                                where on the page the original note is placed.</sch:assert>
+                                          </sch:rule>
+                                       </constraint>
+                                    </constraintSpec>
+                                 </attDef>
                               </attList>
                            </attList>
                         </attList>
                      </attList>
-                  </attList>
+                  </attList>-->
                </elementSpec>
                <!--noteGrp-->
                <elementSpec ident="noteGrp" module="core" mode="change">

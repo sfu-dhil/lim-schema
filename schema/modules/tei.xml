@@ -139,11 +139,26 @@
                      <memberOf key="att.global.linking" mode="delete"/>
                      <memberOf key="lim.att.global.fragmentable" mode="add"/>
                   </classes>
+                  <constraintSpec ident="allIdsMustBeUnique" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           
+                           <sch:rule context="*[@xml:id]">
+                              <sch:let name="allIds" value="//*[@xml:id]/@xml:id"/>
+                              <sch:let name="myId" value="@xml:id"/>
+                              
+                              <sch:assert test="count($allIds[. = $myId]) = 1">ERROR: Duplicate id found <sch:value-of select="$myId"/></sch:assert>
+                           </sch:rule>
+                         
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
                   <attList>
               <!--We'll never need space or base, afaik-->
                      <attDef ident="xml:space" mode="delete"/>
                      <attDef ident="xml:base" mode="delete"/>
                   </attList>
+                  
                </classSpec>
                <!--att.global.analytic-->
                <classSpec ident="att.global.analytic" type="atts" mode="change">
