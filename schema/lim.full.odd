@@ -66,6 +66,11 @@
                <unicodeProp name="Name" value="PI"/>
                <mapping type="standard">Π</mapping>
             </glyph>
+            <glyph xml:id="char_UNKNOWN">
+               <unicodeProp name="Name" value="UNKNOWN"/>
+               <desc>An unknown character to be used as a placeholder until
+               a character can be properly assigned.</desc>
+            </glyph>
          </charDecl>
          <classDecl>
             <taxonomy>
@@ -1352,6 +1357,9 @@
                   <classes>
                      <memberOf key="model.milestoneLike"/>
                   </classes>
+                  <content>
+                     <textNode/>
+                  </content>
                   <constraintSpec ident="noteMarker.mustHaveTargetInNote" scheme="schematron">
                      <constraint>
                         <sch:pattern>
@@ -1364,7 +1372,20 @@
                               have an xml:id identifying it. (This should be automatic if you use
                               the keyboard shortcut Command + Shift + N)</sch:assert>
                            </sch:rule>
+                          
                         </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="noteMarker.mustHaveContentIfUnknown" scheme="schematron">
+                     <constraint>
+                        
+                        <sch:rule context="tei:noteMarker[@ref='g:UNKNOWN']">
+                           <sch:assert test="matches(string(.), '\S')">ERROR: You must provide a character in the noteMarker when using g:UNKNOWN</sch:assert>
+                        </sch:rule>
+                        <sch:rule context="tei:noteMarker[@ref][not(@ref = 'g:UNKNOWN')]">
+                           <sch:assert test="empty(text())">ERROR: No text content is allowed in noteMarker unless @ref='g:UNKNOWN'</sch:assert>
+                        </sch:rule>
+                        
                      </constraint>
                   </constraintSpec>
                   <attList>
@@ -1691,7 +1712,7 @@
                </dataSpec><dataSpec module="lim" ident="limdata.glyph" mode="add">
                   <desc>Datatype for all glyph pointers.</desc>
                   <content>
-                     <valList type="closed"><valItem ident="g:star"><gloss>star</gloss><desc>STAR / ASTERISK (*)</desc></valItem><valItem ident="g:cross"><gloss>cross</gloss><desc>CROSS OR DAGGER (✝)</desc></valItem><valItem ident="g:x"><gloss>x</gloss><desc>X (X)</desc></valItem><valItem ident="g:circledX"><gloss>circledX</gloss><desc>X WITH CIRCLE (ⓧ)</desc></valItem><valItem ident="g:phi"><gloss>phi</gloss><desc>PHI (φ)</desc></valItem><valItem ident="g:theta"><gloss>theta</gloss><desc>THETA (θ)</desc></valItem><valItem ident="g:umbrella"><gloss>umbrella</gloss><desc>UMBRELLA</desc></valItem><valItem ident="g:tau"><gloss>tau</gloss><desc>TAU (Τ)</desc></valItem><valItem ident="g:pi"><gloss>pi</gloss><desc>PI (Π)</desc></valItem></valList>
+                     <valList type="closed"><valItem ident="g:star"><gloss>star</gloss><desc>STAR / ASTERISK (*)</desc></valItem><valItem ident="g:cross"><gloss>cross</gloss><desc>CROSS OR DAGGER (✝)</desc></valItem><valItem ident="g:x"><gloss>x</gloss><desc>X (X)</desc></valItem><valItem ident="g:circledX"><gloss>circledX</gloss><desc>X WITH CIRCLE (ⓧ)</desc></valItem><valItem ident="g:phi"><gloss>phi</gloss><desc>PHI (φ)</desc></valItem><valItem ident="g:theta"><gloss>theta</gloss><desc>THETA (θ)</desc></valItem><valItem ident="g:umbrella"><gloss>umbrella</gloss><desc>UMBRELLA</desc></valItem><valItem ident="g:tau"><gloss>tau</gloss><desc>TAU (Τ)</desc></valItem><valItem ident="g:pi"><gloss>pi</gloss><desc>PI (Π)</desc></valItem><valItem ident="g:UNKNOWN"><gloss>UNKNOWN</gloss><desc>UNKNOWN</desc></valItem></valList>
                   </content>
                </dataSpec><dataSpec module="lim" ident="limdata.placement" mode="add">
                   <desc>Possible values for placement.</desc>

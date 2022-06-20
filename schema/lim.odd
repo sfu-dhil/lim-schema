@@ -71,6 +71,11 @@
                <unicodeProp name="Name" value="PI"/>
                <mapping type="standard">Π</mapping>
             </glyph>
+            <glyph xml:id="char_UNKNOWN">
+               <unicodeProp name="Name" value="UNKNOWN"/>
+               <desc>An unknown character to be used as a placeholder until
+               a character can be properly assigned.</desc>
+            </glyph>
          </charDecl>
          <classDecl>
             <taxonomy>

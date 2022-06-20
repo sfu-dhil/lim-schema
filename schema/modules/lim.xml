@@ -167,6 +167,9 @@
                   <classes>
                      <memberOf key="model.milestoneLike"/>
                   </classes>
+                  <content>
+                     <textNode/>
+                  </content>
                   <constraintSpec ident="noteMarker.mustHaveTargetInNote" scheme="schematron">
                      <constraint>
                         <sch:pattern>
@@ -179,7 +182,20 @@
                               have an xml:id identifying it. (This should be automatic if you use
                               the keyboard shortcut Command + Shift + N)</sch:assert>
                            </sch:rule>
+                          
                         </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="noteMarker.mustHaveContentIfUnknown" scheme="schematron">
+                     <constraint>
+                        
+                        <sch:rule context="tei:noteMarker[@ref='g:UNKNOWN']">
+                           <sch:assert test="matches(string(.), '\S')">ERROR: You must provide a character in the noteMarker when using g:UNKNOWN</sch:assert>
+                        </sch:rule>
+                        <sch:rule context="tei:noteMarker[@ref][not(@ref = 'g:UNKNOWN')]">
+                           <sch:assert test="empty(text())">ERROR: No text content is allowed in noteMarker unless @ref='g:UNKNOWN'</sch:assert>
+                        </sch:rule>
+                        
                      </constraint>
                   </constraintSpec>
                   <attList>
