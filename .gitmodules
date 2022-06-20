@@ -5,3 +5,6 @@
 	path = Stylesheets
 	url = https://github.com/TEIC/Stylesheets
 	branch = main
+[submodule "staticSearch"]
+	path = staticSearch
+	url = https://github.com/projectEndings/staticSearch
