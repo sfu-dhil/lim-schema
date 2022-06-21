@@ -143,7 +143,18 @@
         
     </target>
     
-    <target name="search">
+    <target name="getAntContrib">
+        <!--And we also need ant-contrib for staticSearch-->
+        <get src="https://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" dest="${projectDir}/lib/ant-contrib.jar"/>
+        
+        <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+            <classpath>
+                <pathelement location="${projectDir}/lib/ant-contrib.jar"/>
+            </classpath>
+        </taskdef>
+    </target>
+    
+    <target name="search" depends="getAntContrib">
         <echo message="${echo.separator}"/>
         <echo message="Running staticSearch..."/>
         <echo message="${echo.separator}"/>
