@@ -55,10 +55,11 @@
             <glyph xml:id="char_theta">
                <unicodeProp name="Name" value="THETA"/>
                <mapping type="standard">θ</mapping>
-               <mapping type="unicode">U+03B8</mapping>
+               <mapping type="unicode">U+03B8;</mapping>
             </glyph>
             <glyph xml:id="char_umbrella">
                <unicodeProp name="Name" value="UMBRELLA"/>
+               <mapping type="standard">☂</mapping>
                <figure>
                   <graphic url="img:char_umbrella.svg"/>
                </figure>
