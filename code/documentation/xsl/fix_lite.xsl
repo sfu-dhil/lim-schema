@@ -104,6 +104,29 @@
         </table>
     </xsl:template>
     
+    <xsl:template match="divGen[@xml:id='abbrTable']">
+        <table>
+            <row role="label">
+                <cell>Abbreviation</cell>
+                <cell>Expanded Form</cell>
+                <cell>Encoding</cell>
+            </row>
+            <xsl:for-each select="$processedODD//elementSpec[@ident='abbr']//attDef[@ident='type']/valList/valItem">
+                <xsl:sort select="@ident"/>
+                <row>
+                    <cell><xsl:value-of select="desc"/></cell>
+                    <cell><xsl:value-of select="@ident"/></cell>
+                    <cell>
+                        <eg:egXML>
+                            <abbr type="{@ident}"><xsl:value-of select="desc"/></abbr>
+                        </eg:egXML>
+                    </cell>
+                </row>
+                
+            </xsl:for-each>
+        </table>
+    </xsl:template>
+    
     <!--*** LISTS ***-->
     
     <xsl:template match="item[not(ancestor::list)]">

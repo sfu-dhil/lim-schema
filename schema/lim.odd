@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
-<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml"
 	schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0"
      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -22,6 +22,61 @@
          </sourceDesc>
       </fileDesc>
       <encodingDesc>
+         <charDecl>
+            <glyph xml:id="char_star">
+                <unicodeProp name="Name" value="STAR / ASTERISK"/>
+                <mapping type="standard">*</mapping>
+                <mapping type="unicode">U+002A</mapping>
+                <figure>
+                   <graphic url="img:char_star"/> 
+                </figure>
+            </glyph>
+            <glyph xml:id="char_cross">
+               <unicodeProp name="Name" value="CROSS OR DAGGER"/>
+               <mapping type="standard">✝</mapping>
+               <mapping type="unicode">U+271D</mapping>
+               <figure>
+                  <graphic url="img:char_cross"/>
+               </figure>
+            </glyph>
+            <glyph xml:id="char_x">
+               <unicodeProp name="Name" value="X"/>
+               <mapping type="standard">X</mapping>
+            </glyph>
+            <glyph xml:id="char_circledX">
+               <unicodeProp name="Name" value="X WITH CIRCLE"/>
+               <mapping type="standard">ⓧ</mapping>
+            </glyph>
+            <glyph xml:id="char_phi">
+               <unicodeProp name="Name" value="PHI"/>
+               <mapping type="standard">φ</mapping>
+               <mapping type="unicode">U+03C6</mapping>
+            </glyph>
+            <glyph xml:id="char_theta">
+               <unicodeProp name="Name" value="THETA"/>
+               <mapping type="standard">θ</mapping>
+               <mapping type="unicode">U+03B8</mapping>
+            </glyph>
+            <glyph xml:id="char_umbrella">
+               <unicodeProp name="Name" value="UMBRELLA"/>
+               <figure>
+                  <graphic url="img:char_umbrella"/>
+               </figure>
+            </glyph>
+            <glyph xml:id="char_tau">
+               <unicodeProp name="Name" value="TAU"/>
+               <mapping type="standard">Τ</mapping>
+            </glyph>
+            <glyph xml:id="char_pi">
+               <unicodeProp name="Name" value="PI"/>
+               <mapping type="standard">Π</mapping>
+            </glyph>
+            <glyph xml:id="char_UNKNOWN">
+               <unicodeProp name="Name" value="UNKNOWN"/>
+               <desc>An unknown character to be used as a placeholder until
+               a character can be properly assigned.</desc>
+            </glyph>
+         </charDecl>
          <classDecl>
             <taxonomy>
                <desc>Genre</desc>
@@ -131,6 +186,11 @@
             <rendition xml:id="rnd_right-braced">
                <desc>Right braced</desc>
                <gloss>A set of elements with a CURLY right brace</gloss>
+            </rendition>
+            <rendition xml:id="rnd_bordered-all">
+               <desc>Bordered on all four sides</desc>
+               <gloss>Items that have a full border</gloss>
+               <outputRendition>border:1px solid black;</outputRendition>
             </rendition>
             <rendition xml:id="rnd_bordered-left">
                <desc>Left bordered</desc>
@@ -260,14 +320,39 @@
             <prefixDef ident="img"
                        matchPattern="(.+)"
                        replacementPattern="images/$1"/>
+            <prefixDef ident="g" matchPattern="(.+)" replacementPattern="lim.odd#char_$1">
+               <p>Resolves links to a glyph.</p>
+            </prefixDef>
+            <prefixDef ident="hand" matchPattern="(.+)" replacementPattern="lim.odd#hand_$1">
+               <p>Resolves link to a particular hand.</p>
+            </prefixDef>
          </listPrefixDef>
       </encodingDesc>
+      <profileDesc>
+         <particDesc>
+            <listPerson>
+               <person xml:id="Forbes">
+                  <persName>Forbes</persName>
+               </person>
+               <person xml:id="Chambers">
+                  <persName>Chambers</persName>
+               </person>
+            </listPerson>
+         </particDesc>
+         <handNotes>
+            <handNote xml:id="hand_Forbes" medium="ink" scope="major"
+               scribeRef="#Forbes">Forbes' hand</handNote>
+            <handNote xml:id="hand_Chambers" medium="pencil" scope="minor" 
+               scribeRef="#Chambers">Chambers' hand, written in pencil</handNote>
+            <handNote xml:id="hand_unknown">An unknown hand that is neither Chambers or Forbes.</handNote>
+         </handNotes>
+      </profileDesc>
    </teiHeader>
    <text>
       <front>
          <div>
-            <head>Encoding Guidelines</head>
-            <p>This is the documentation for <title level="m">The Lyon in Mourning: Networking Jacobites</title> (LiM). At the moment, what follows is a collection of notes to help with planning the project's structure and workflow; as decisions are made and plans are concretized, this document will be updated to reflect the actual encoding principles and guidelines.</p>
+            <head>Lyon in Mourning Encoding Guidelines</head>
+            <p>This is the encoding documentation for the forthcoming <ref target="https://dhil.lib.sfu.ca/lyoninmourning">Lyon in Mourning digital edition</ref>, which is part of the larger SSHRC-funded Networking Jacobites project (Leith Davis [SFU, Department of English], Ralph MacLean [National Library of Scotland], and Joey Takeda [SFU, Digital Humanities Innovation Lab]).</p>
          </div>
       </front>
       <body>
@@ -279,34 +364,23 @@
          <div>
             <head>Appendix</head>
             <schemaSpec ident="lim"
-                        start="TEI div person place org biblStruct"
-                        source="tei:4.2.2">
+               start="TEI div person place org biblStruct"
+               source="tei:4.2.2">
                
                <?module analysis?>
-               
                <?module core?>
-               
                <?module corpus?>
-               
                <?module header?>
-               
                <?module figures?>
-               
+               <?module gaiji?>
                <?module lim?>
-               
                <?module linking?>
-               
                <?module msdescription?>
-               
                <?module namesdates?>
-               
                <?module tei?>
-               
                <?module textstructure?>
-               
                <?module transcr?>
-               
-                </schemaSpec>
+            </schemaSpec>
          </div>
       </back>
    </text>

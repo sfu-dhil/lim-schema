@@ -25,21 +25,13 @@
             <schemaSpec ident="lim_transcr">
                <moduleRef key="transcr"
                           include="damage facsimile fw handNotes handShift subst supplied surface surfaceGrp zone"/>
+               <!--facsimile-->
                <elementSpec ident="facsimile" module="transcr" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global.linking" mode="add"/>
                   </classes>
                </elementSpec>
-               <elementSpec ident="supplied" module="transcr" mode="change">
-                  <classes mode="change">
-                     <memberOf key="att.global.responsibility" mode="add"/>
-                     <memberOf key="att.dimensions" mode="delete"/>
-                     <memberOf key="att.ranging" mode="delete"/>
-                     <memberOf key="att.global" mode="delete"/>
-                     <memberOf key="att.editLike" mode="delete"/>
-                  </classes>
-                  
-               </elementSpec>
+               <!--fw-->
                <elementSpec ident="fw" module="transcr" mode="change">
                   <constraintSpec ident="fw.pageNum.mustHavePlace" scheme="schematron">
                      <desc>All pageNum formeworks must have an @place</desc>
@@ -48,10 +40,10 @@
                            <sch:rule context="tei:fw[@type=('pageNum', 'folioNum')]">
                               <sch:assert test="@place">ERROR: Missing required @place attribute for page number formework.</sch:assert>
                            </sch:rule>
-                           <sch:rule context="tei:fw[@type='catchword']">
+                           <!--<sch:rule context="tei:fw[@type='catchword']">
                               <sch:let name="firstFollowingEl" value="following::tei:*[1]"/>
                               <sch:assert test="empty($firstFollowingEl) or $firstFollowingEl/self::tei:pb">ERROR: All catchwords should have a page beginning after</sch:assert>
-                           </sch:rule>
+                           </sch:rule>-->
                         </sch:pattern>
                      </constraint>
                   </constraintSpec>
@@ -78,6 +70,17 @@
                      </attDef>
                   </attList>
                </elementSpec>
+               <!--supplied-->
+               <elementSpec ident="supplied" module="transcr" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global.responsibility" mode="add"/>
+                     <memberOf key="att.dimensions" mode="delete"/>
+                     <memberOf key="att.ranging" mode="delete"/>
+                     <memberOf key="att.global" mode="delete"/>
+                     <memberOf key="att.editLike" mode="delete"/>
+                  </classes>
+               </elementSpec>
+               <!--att.global.change-->
                <classSpec ident="att.global.change"
                           module="transcr"
                           type="atts"

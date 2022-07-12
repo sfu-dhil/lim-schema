@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xlink="http://www.w3.org/1999/xlink" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-06-14T01:25:12Z. .
+Schema generated from ODD source 2022-06-21T01:05:34Z. .
 TEI Edition: Version 4.2.2. Last updated on
 	9th April 2021, revision 609a109b1
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.2.2/
@@ -56,6 +56,14 @@ TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.2.2/
             <ref name="model.inter"/>
             <ref name="model.divPart"/>
             <ref name="model.global"/>
+         </choice>
+      </zeroOrMore>
+   </define>
+   <define name="macro.xtext">
+      <zeroOrMore>
+         <choice>
+            <text/>
+            <ref name="model.gLike"/>
          </choice>
       </zeroOrMore>
    </define>
@@ -322,10 +330,23 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
       <optional>
          <attribute name="hand">
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to a <code xmlns="http://www.w3.org/1999/xhtml">&lt;handNote&gt;</code> element describing the hand considered responsible for the content of the element concerned.</a:documentation>
-            <data type="anyURI"/>
+            <choice>
+               <value>hand:Forbes</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Forbes) Forbes' hand</a:documentation>
+               <value>hand:Chambers</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Chambers) Chambers' hand, written in pencil</a:documentation>
+               <value>hand:unknown</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(unknown) An unknown hand that is neither Chambers or Forbes.</a:documentation>
+            </choice>
          </attribute>
       </optional>
    </define>
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.written-hand.ForbesOnlyIfImmediateHandIsnt-constraint-rule-1">
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@hand = 'hand:Forbes']">
+         <sch:let name="ancHand" value="ancestor::*[1][@hand]/@hand"/>
+         <sch:assert test="exists($ancHand) and not($ancHand = 'hand:Forbes')">ERROR: Specifying hand:Forbes rarely makes sense since his is the implied hand in all cases; the value hand:Forbes should only be used when the hand has switched from Forbes to another hand and then back to Forbes.</sch:assert>
+      </sch:rule>
+   </pattern>
    <define name="att.damaged.attributes">
       <ref name="att.dimensions.attributes"/>
       <ref name="att.written.attributes"/>
@@ -455,17 +476,17 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
          </attribute>
       </optional>
    </define>
-   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.datable.w3c-att-datable-w3c-when-constraint-rule-1">
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.datable.w3c-att-datable-w3c-when-constraint-rule-2">
       <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@when]">
          <sch:report test="@notBefore|@notAfter|@from|@to" role="nonfatal">The @when attribute cannot be used with any other att.datable.w3c attributes.</sch:report>
       </sch:rule>
    </pattern>
-   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.datable.w3c-att-datable-w3c-from-constraint-rule-2">
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.datable.w3c-att-datable-w3c-from-constraint-rule-3">
       <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@from]">
          <sch:report test="@notBefore" role="nonfatal">The @from and @notBefore attributes cannot be used together.</sch:report>
       </sch:rule>
    </pattern>
-   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.datable.w3c-att-datable-w3c-to-constraint-rule-3">
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.datable.w3c-att-datable-w3c-to-constraint-rule-4">
       <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@to]">
          <sch:report test="@notAfter" role="nonfatal">The @to and @notAfter attributes cannot be used together.</sch:report>
       </sch:rule>
@@ -483,7 +504,7 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
          </attribute>
       </optional>
    </define>
-   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.datable-calendar-calendar-constraint-rule-4">
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.datable-calendar-calendar-constraint-rule-5">
       <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@calendar]">
          <sch:assert test="string-length(.) gt 0"> @calendar indicates the system or calendar to
               which the date represented by the content of this element belongs, but this
@@ -612,6 +633,8 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
                      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Underlined) underlined</a:documentation>
                      <value>rnd:right-braced</value>
                      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Right braced) right-braced</a:documentation>
+                     <value>rnd:bordered-all</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Bordered on all four sides) bordered-all</a:documentation>
                      <value>rnd:bordered-left</value>
                      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Left bordered) bordered-left</a:documentation>
                      <value>rnd:bordered-right</value>
@@ -652,7 +675,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
          </attribute>
       </optional>
    </define>
-   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.global.rendition-rendition-rendition.twoColumnNeedsLeftAndRight-constraint-rule-6">
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.global.rendition-rendition-rendition.twoColumnNeedsLeftAndRight-constraint-rule-7">
       <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[contains-token(@rendition,'rnd:two-column')]">
          <sch:let name="children" value="child::tei:*"/>
          <sch:let name="leftChild" value="$children[contains-token(@rendition,'rnd:left')]"/>
@@ -661,7 +684,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
          <sch:assert test="exists($leftChild) and exists($rightChild)">ERROR: There must be at least one rnd:left and one rnd:right child</sch:assert>
       </sch:rule>
    </pattern>
-   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.global.rendition-rendition-rendition.mutualExclusion-constraint-rule-7">
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.global.rendition-rendition-rendition.mutualExclusion-constraint-rule-8">
       <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@rendition]">
          <sch:let name="rendition" value="@rendition"/>
          <sch:let name="ptrs" value="tokenize(@rendition,'\s+')"/>
@@ -673,7 +696,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
          <sch:assert test="count($tokens[. = ('bordered-bottom','bordered-bottom-dashed')]) lt 2">ERROR: rnd:bordered-bottom and rnd:bordered-bottom-dashed are mutually exclusive.</sch:assert>
       </sch:rule>
    </pattern>
-   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.global.rendition-rendition.onlyInBornDigital-constraint-rule-5">
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.global.rendition-rendition.onlyInBornDigital-constraint-rule-6">
       <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[contains-token(@rendition,'rnd:hidden')]">
          <sch:assert test="self::tei:head and ancestor::tei:TEI/descendant::tei:catRef[matches(@target,'bornDigital')]">ERROR: rnd:hidden is meant only for born digital document headings.</sch:assert>
       </sch:rule>
@@ -752,6 +775,14 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
          </attribute>
       </optional>
    </define>
+   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude">
+      <sch:rule context="*[@xml:id]">
+         <sch:let name="allIds" value="//*[@xml:id]/@xml:id"/>
+         <sch:let name="myId" value="@xml:id"/>
+         <sch:assert test="count($allIds[. = $myId]) = 1">ERROR: Duplicate id found <sch:value-of select="$myId"/>
+         </sch:assert>
+      </sch:rule>
+   </sch:pattern>
    <define name="att.handFeatures.attributes">
       <ref name="att.handFeatures.attribute.scribe"/>
       <ref name="att.handFeatures.attribute.scribeRef"/>
@@ -956,7 +987,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
          </attribute>
       </optional>
    </define>
-   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.typed-subtypeTyped-constraint-rule-8">
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.typed-subtypeTyped-constraint-rule-10">
       <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@subtype]">
          <sch:assert test="@type">The <sch:name/> element should not be categorized in detail with @subtype unless also categorized in general with @type</sch:assert>
       </sch:rule>
@@ -987,7 +1018,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
          </attribute>
       </optional>
    </define>
-   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.spanning-spanTo-spanTo-2-constraint-rule-9">
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.spanning-spanTo-spanTo-2-constraint-rule-11">
       <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@spanTo]">
          <sch:assert test="id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]">
 The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow the current element <sch:name/>
@@ -1025,7 +1056,7 @@ The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow 
          </attribute>
       </optional>
    </define>
-   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-10">
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-12">
       <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@schemeVersion]">
          <sch:assert test="@scheme and not(@scheme = 'free')">
               @schemeVersion can only be used if @scheme is specified.
@@ -1621,10 +1652,13 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="lb"/>
          <ref name="anchor"/>
          <ref name="fw"/>
+         <ref name="noteMarker"/>
       </choice>
    </define>
    <define name="model.gLike">
-      <notAllowed/>
+      <choice>
+         <ref name="g"/>
+      </choice>
    </define>
    <define name="model.oddDecl">
       <notAllowed/>
@@ -2149,6 +2183,7 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="closer"/>
          <ref name="signed"/>
          <ref name="postscript"/>
+         <ref name="NB"/>
       </choice>
    </define>
    <define name="model.divBottom">
@@ -2434,6 +2469,7 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="projectDesc"/>
          <ref name="tagsDecl"/>
          <ref name="listPrefixDef"/>
+         <ref name="charDecl"/>
       </choice>
    </define>
    <define name="model.standOffPart">
@@ -2469,9 +2505,9 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="noteGrp"/>
          <ref name="correspAction"/>
          <ref name="correspContext"/>
-         <ref name="requests"/>
          <ref name="compliments"/>
          <ref name="enclosures"/>
+         <ref name="requests"/>
       </choice>
    </define>
    <define name="model.resource">
@@ -2647,7 +2683,7 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       <element name="desc">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(description) contains a brief description of the object documented by its parent element, typically a documentation element or an entity. [22.4.1. Description of Components]</a:documentation>
          <ref name="macro.limitedContent"/>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-desc-deprecationInfo-only-in-deprecated-constraint-rule-11">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-desc-deprecationInfo-only-in-deprecated-constraint-rule-13">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:desc[ @type eq 'deprecationInfo']">
                <sch:assert test="../@validUntil">Information about a
         deprecation should only be present in a specification element
@@ -2805,6 +2841,7 @@ Sample values include: 1] rubbing (rubbing); 2] mildew (mildew); 3] smoke (smoke
       <element name="add">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(addition) contains letters, words, or phrases inserted in the source text by an author, scribe, or a previous annotator or corrector. [3.5.3. Additions, Deletions, and Omissions]</a:documentation>
          <ref name="macro.paraContent"/>
+         <ref name="att.written.attributes"/>
          <ref name="att.global.attributes"/>
          <ref name="att.placement.attributes"/>
          <ref name="att.typed.attributes"/>
@@ -2816,6 +2853,7 @@ Sample values include: 1] rubbing (rubbing); 2] mildew (mildew); 3] smoke (smoke
       <element name="del">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(deletion) contains a letter, word, or passage deleted, marked as deleted, or otherwise indicated as superfluous or spurious in the copy text by an author, scribe, or a previous annotator or corrector. [3.5.3. Additions, Deletions, and Omissions]</a:documentation>
          <ref name="macro.paraContent"/>
+         <ref name="att.written.attributes"/>
          <ref name="att.global.attributes"/>
          <ref name="att.typed.attributes"/>
          <ref name="att.dimensions.attributes"/>
@@ -2870,7 +2908,7 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
       <element name="name">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(name, proper noun) contains a proper noun or noun phrase. [3.6.1. Referring Strings]</a:documentation>
          <ref name="macro.phraseSeq"/>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-name-name.notForPeopleOrPlaces-constraint-rule-12">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-name-name.notForPeopleOrPlaces-constraint-rule-14">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:name[@ref]">
                <sch:assert test="not(matches(@ref,'^prs:'))">ERROR: Use &lt;persName&gt; to tag names of people.</sch:assert>
                <sch:assert test="not(matches(@ref,'^plc:'))">ERROR: Use &lt;placeName&gt; to tag names of places.</sch:assert>
@@ -2899,7 +2937,7 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
       <element name="rs">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(referencing string) contains a general purpose name or referring string. [13.2.1. Personal Names 3.6.1. Referring Strings]</a:documentation>
          <ref name="macro.phraseSeq"/>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-rs-rs.familyNoRef-constraint-rule-13">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-rs-rs.familyNoRef-constraint-rule-15">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:rs[@type='family']">
                <sch:assert test="not(@ref)">ERROR: Do not use a @ref attribute on for a family reference since it can't point to anything.</sch:assert>
             </sch:rule>
@@ -3000,7 +3038,7 @@ Suggested values include: 1] cardinal; 2] ordinal; 3] fraction; 4] percentage</a
       <element name="abbr">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(abbreviation) contains an abbreviation of any sort. [3.6.5. Abbreviations and Their Expansions]</a:documentation>
          <ref name="macro.phraseSeq"/>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-abbr-abbr.shouldntContainJustAmp-constraint-rule-14">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-abbr-abbr.shouldntContainJustAmp-constraint-rule-16">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:abbr">
                <sch:let name="content" value="string(.)"/>
                <sch:assert test="not(matches($content, '^\s*&amp;\s*$'))">ERROR: There is no need to tag ampersands when it means "and".</sch:assert>
@@ -3021,35 +3059,50 @@ Suggested values include: 1] cardinal; 2] ordinal; 3] fraction; 4] percentage</a
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(type) allows the encoder to classify the abbreviation according to some convenient typology.</a:documentation>
                <choice>
                   <value>another</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for another) anoyr</a:documentation>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for another
+                              ) anoyr</a:documentation>
                   <value>Brother</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for Brother) Broyr</a:documentation>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for Brother
+                              ) Broyr</a:documentation>
                   <value>which</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for which) qch</a:documentation>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for which
+                              ) qch</a:documentation>
                   <value>whom</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for whom) qm</a:documentation>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for whom
+                              ) qm</a:documentation>
                   <value>when</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for when) qn</a:documentation>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for when
+                              ) qn</a:documentation>
                   <value>who</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for who) qo</a:documentation>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for who
+                              ) qo</a:documentation>
                   <value>what</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for what) qt</a:documentation>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for what
+                              ) qt</a:documentation>
                   <value>with</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for with) wt</a:documentation>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for with
+                              ) wt</a:documentation>
                   <value>the</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for the) ye</a:documentation>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for the
+                              ) ye</a:documentation>
                   <value>then</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for then) yn</a:documentation>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for then
+                              ) yn</a:documentation>
                   <value>your</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for your) yr</a:documentation>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for your
+                              ) yr</a:documentation>
                   <value>that</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for that) yt</a:documentation>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for that
+                              ) yt</a:documentation>
                   <value>them</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for them) ym</a:documentation>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for them
+                              ) ym</a:documentation>
                   <value>there</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for there) yre</a:documentation>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for there
+                              ) yre</a:documentation>
                   <value>this</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for this) ys</a:documentation>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Abbreviation for this
+                              ) ys</a:documentation>
                </choice>
             </attribute>
          </optional>
@@ -3147,12 +3200,12 @@ attributes @target and @cRef may be supplied on <name/>.</report>
                </group>
             </zeroOrMore>
          </group>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-list-list.bornDigitalNeedsRendition-constraint-rule-17">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-list-list.bornDigitalNeedsRendition-constraint-rule-19">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:list[not(@rendition)]">
                <sch:assert test="not($isBornDigital)">ERROR: All lists in born digital document require the rendition attribute.</sch:assert>
             </sch:rule>
          </pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-list-gloss-list-must-have-labels-constraint-rule-18">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-list-gloss-list-must-have-labels-constraint-rule-20">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:list[@type='gloss']">
                <sch:assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</sch:assert>
             </sch:rule>
@@ -3176,6 +3229,8 @@ attributes @target and @cRef may be supplied on <name/>.</report>
                         <value>rnd:underlined</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                         <value>rnd:right-braced</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                        <value>rnd:bordered-all</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                         <value>rnd:bordered-left</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
@@ -3220,7 +3275,7 @@ attributes @target and @cRef may be supplied on <name/>.</report>
                </list>
             </attribute>
          </optional>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-list-rendition-rendition.twoColumnNeedsLeftAndRight-constraint-rule-19">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-list-rendition-rendition.twoColumnNeedsLeftAndRight-constraint-rule-21">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[contains-token(@rendition,'rnd:two-column')]">
                <sch:let name="children" value="child::tei:*"/>
                <sch:let name="leftChild" value="$children[contains-token(@rendition,'rnd:left')]"/>
@@ -3229,7 +3284,7 @@ attributes @target and @cRef may be supplied on <name/>.</report>
                <sch:assert test="exists($leftChild) and exists($rightChild)">ERROR: There must be at least one rnd:left and one rnd:right child</sch:assert>
             </sch:rule>
          </pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-list-rendition-rendition.mutualExclusion-constraint-rule-20">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-list-rendition-rendition.mutualExclusion-constraint-rule-22">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@rendition]">
                <sch:let name="rendition" value="@rendition"/>
                <sch:let name="ptrs" value="tokenize(@rendition,'\s+')"/>
@@ -3304,7 +3359,7 @@ Suggested values include: 1] gloss (gloss); 2] index (index); 3] instructions (i
                <ref name="model.global"/>
             </choice>
          </zeroOrMore>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-head-head.bdHidden-constraint-rule-22">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-head-head.bdHidden-constraint-rule-24">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:head[matches(@rendition,'rnd:hidden')]">
                <sch:assert test="$isBornDigital">ERROR: Only use rnd:hidden in born digital documents.</sch:assert>
             </sch:rule>
@@ -3331,6 +3386,8 @@ Suggested values include: 1] gloss (gloss); 2] index (index); 3] instructions (i
                         <value>rnd:underlined</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                         <value>rnd:right-braced</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                        <value>rnd:bordered-all</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                         <value>rnd:bordered-left</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
@@ -3373,7 +3430,7 @@ Suggested values include: 1] gloss (gloss); 2] index (index); 3] instructions (i
                </list>
             </attribute>
          </optional>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-head-rendition-rendition.twoColumnNeedsLeftAndRight-constraint-rule-23">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-head-rendition-rendition.twoColumnNeedsLeftAndRight-constraint-rule-25">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[contains-token(@rendition,'rnd:two-column')]">
                <sch:let name="children" value="child::tei:*"/>
                <sch:let name="leftChild" value="$children[contains-token(@rendition,'rnd:left')]"/>
@@ -3382,7 +3439,7 @@ Suggested values include: 1] gloss (gloss); 2] index (index); 3] instructions (i
                <sch:assert test="exists($leftChild) and exists($rightChild)">ERROR: There must be at least one rnd:left and one rnd:right child</sch:assert>
             </sch:rule>
          </pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-head-rendition-rendition.mutualExclusion-constraint-rule-24">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-head-rendition-rendition.mutualExclusion-constraint-rule-26">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@rendition]">
                <sch:let name="rendition" value="@rendition"/>
                <sch:let name="ptrs" value="tokenize(@rendition,'\s+')"/>
@@ -3399,123 +3456,91 @@ Suggested values include: 1] gloss (gloss); 2] index (index); 3] instructions (i
    </define>
    <define name="note">
       <element name="note">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(note) contains a note or annotation.</a:documentation>
-         <ref name="macro.specialPara"/>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(note) contains a note or annotation. [3.9.1. Notes and Simple Annotation 2.2.6. The Notes Statement 3.12.2.8. Notes and Statement of Language 9.3.5.4. Notes within Entries]</a:documentation>
+         <choice>
+            <group>
+               <group>
+                  <zeroOrMore>
+                     <ref name="supplied"/>
+                  </zeroOrMore>
+                  <zeroOrMore>
+                     <ref name="noteMarker"/>
+                  </zeroOrMore>
+               </group>
+               <choice>
+                  <group>
+                     <oneOrMore>
+                        <ref name="p"/>
+                     </oneOrMore>
+                     <optional>
+                        <ref name="closer"/>
+                     </optional>
+                  </group>
+                  <ref name="NB"/>
+               </choice>
+            </group>
+            <ref name="macro.specialPara"/>
+         </choice>
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
             <sch:rule context="tei:note[ancestor::tei:text][not(ancestor::tei:div[@type='footnotes'])]">
                <sch:assert test="@type">ERROR: All notes in transcriptions must have a @type.</sch:assert>
             </sch:rule>
          </sch:pattern>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+            <sch:rule context="tei:note[@type='editorial']">
+               <sch:assert test="@resp">ERROR: All editorial notes must have a @resp</sch:assert>
+               <sch:assert test="not(@anchored)">ERROR: Do not use @anchored for editorial notes</sch:assert>
+               <sch:assert test="not(@hand)">ERROR: Do not use @hand for editorial notes.</sch:assert>
+            </sch:rule>
+            <sch:rule context="tei:note[@type='lim']">
+               <sch:assert test="not(@resp)">ERROR: Do not use @resp on LiM notes. Use @hand instead.</sch:assert>
+               <sch:assert test="every $text in text() satisfies not(matches($text,'\S'))">ERROR: All lim notes
+                              must have structured context (i.e. 0 or more noteMarkers, either a sequence of paragraphs and a closer OR an NB) </sch:assert>
+            </sch:rule>
+            <sch:rule context="tei:note[@type='lim']/tei:supplied">
+               <sch:assert test="tei:noteMarker">ERROR: Supplied as a direct child of note must contain a noteMarkers.</sch:assert>
+               <sch:assert test="empty(tei:*[not(self::tei:noteMarker)])">ERROR: Only noteMarkers are allowed within note[@type='lim']/supplied.</sch:assert>
+               <sch:assert test="every $text in text() satisfies not(matches($text,'\S'))">ERROR: Do not put text within the supplied in a noteMarker.</sch:assert>
+            </sch:rule>
+         </sch:pattern>
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
             <sch:rule context="tei:note[@type = 'unknown']">
                <sch:assert test="//tei:revisionDesc[@docStatus=('empty','uneditedTranscription')]">WARNING: Unknown notes should be replaced by either
                                  the appropriate encoding (usually supplied, gap, del, etc) or should become a @type='editorial'.</sch:assert>
             </sch:rule>
          </sch:pattern>
-         <choice>
-            <optional>
-               <attribute name="type">
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+            <sch:rule context="tei:note[@anchored='true']">
+               <sch:assert test="tei:noteMarker or tei:supplied/tei:noteMarker">ERROR: Anchored notes must
+                                 contain a noteMarker element that points to the id of the
+                                 note marker in the body of the text.</sch:assert>
+            </sch:rule>
+            <sch:rule context="tei:note[@anchored='false']">
+               <sch:assert test="@place">ERROR: Unanchored notes must have a @place value
+                                 specifying where it is on the page.</sch:assert>
+            </sch:rule>
+         </sch:pattern>
+         <ref name="att.global.responsibility.attributes"/>
+         <ref name="att.global.attributes"/>
+         <ref name="att.placement.attributes"/>
+         <ref name="att.pointing.attributes"/>
+         <ref name="att.written.attributes"/>
+         <ref name="att.anchoring.attributes"/>
+         <optional>
+            <attribute name="type">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">characterizes the element in some sense, using any convenient classification scheme or typology.
+Suggested values include: 1] editorial (editorial note); 2] lim (Forbes note)</a:documentation>
+               <choice>
+                  <value>editorial</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(editorial note) An editorial note written by a team member.</a:documentation>
+                  <value>lim</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Forbes note) A note that appears in the manuscript (left by Forbes or someone else).</a:documentation>
                   <data type="token">
                      <param name="pattern">[^\p{C}\p{Z}]+</param>
                   </data>
-               </attribute>
-            </optional>
-            <group>
-               <attribute name="type">
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-                  <choice>
-                     <value>editorial</value>
-                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(editorial note) An editorial note written by a team member.</a:documentation>
-                  </choice>
-               </attribute>
-               <attribute name="resp">
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(responsible party) </a:documentation>
-                  <list>
-                     <oneOrMore>
-                        <data type="anyURI"/>
-                     </oneOrMore>
-                  </list>
-               </attribute>
-               <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-note-resp-note.editorial.requiresResp-constraint-rule-27">
-                  <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:note[@type='editorial'][not(root(.)/*[matches(@xml:id,'vol11')])]">
-                     <sch:assert test="@resp">ERROR: All editorial notes must point to a team member.</sch:assert>
-                  </sch:rule>
-               </pattern>
-            </group>
-            <group>
-               <attribute name="type">
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-                  <choice>
-                     <value>lim</value>
-                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Forbes note) A note that appears in the manuscript (left by Forbes or someone else).</a:documentation>
-                  </choice>
-               </attribute>
-               <attribute name="place">
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies where this item is placed.</a:documentation>
-                  <choice>
-                     <value>bottom</value>
-                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(bottom) at the foot of the page</a:documentation>
-                     <value>left</value>
-                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(left) in the left margin</a:documentation>
-                     <value>center</value>
-                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(center) in the center</a:documentation>
-                     <value>right</value>
-                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(right) in the right margin</a:documentation>
-                     <value>above</value>
-                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(above) above the line</a:documentation>
-                     <value>below</value>
-                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(below) below the line</a:documentation>
-                     <value>inline</value>
-                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(inline) an inline note</a:documentation>
-                  </choice>
-               </attribute>
-               <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-note-place-note.lim.requiresPlace-constraint-rule-28">
-                  <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:note[@type='lim']">
-                     <sch:assert test="@place">ERROR: All lim notes require a @place attribute to describe
-                                          where on the page the original note is placed.</sch:assert>
-                  </sch:rule>
-               </pattern>
-               <optional>
-                  <attribute name="hand">
-                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to a <code xmlns="http://www.w3.org/1999/xhtml">&lt;handNote&gt;</code> element describing the hand considered responsible for the content of the element concerned.</a:documentation>
-                     <data type="anyURI"/>
-                  </attribute>
-               </optional>
-               <choice>
-                  <group>
-                     <attribute name="anchored">
-                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(anchored) indicates whether the copy text shows the exact place of reference for the note.</a:documentation>
-                        <choice>
-                           <value>true</value>
-                           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(true) The note is anchored (i.e. it contains a symbol that anchors it in place)</a:documentation>
-                        </choice>
-                     </attribute>
-                     <attribute name="n">
-                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(notation) The symbol used for anchoring this note; this should only be a single character.</a:documentation>
-                        <data type="string">
-                           <param name="length">1</param>
-                        </data>
-                     </attribute>
-                     <optional>
-                        <attribute name="facs">
-                           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(facsimile) Points to the page that contains this note</a:documentation>
-                           <data type="token">
-                              <param name="pattern">(lib|pg):\d+(.\d+)?</param>
-                           </data>
-                        </attribute>
-                     </optional>
-                  </group>
-                  <attribute name="anchored">
-                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(anchored) indicates whether the copy text shows the exact place of reference for the note.</a:documentation>
-                     <choice>
-                        <value>false</value>
-                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(false) The note is not anchored (i.e. it does not contain a symbol that anchors it in place)</a:documentation>
-                     </choice>
-                  </attribute>
                </choice>
-            </group>
-         </choice>
+            </attribute>
+         </optional>
          <empty/>
       </element>
    </define>
@@ -3586,12 +3611,12 @@ Suggested values include: 1] section (section); 2] item (item)</a:documentation>
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(page beginning) marks the beginning of a new page in a paginated document. [3.11.3. Milestone
 Elements]</a:documentation>
          <empty/>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-pb-pb.noDecimal-constraint-rule-31">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-pb-pb.noDecimal-constraint-rule-36">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:pb[@facs]">
                <sch:assert test="matches(@facs,'^(lib|pg):\d+$')">ERROR: pb/@facs should be either the Forbes page number (i.e. pg:233 for the page Forbes numbers as 233) or via the page number in the library catalogue using the lib scheme (i.e. lib:22).</sch:assert>
             </sch:rule>
          </pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-pb-pb.unique-constraint-rule-32">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-pb-pb.unique-constraint-rule-37">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:pb[@facs][not(ancestor::tei:TEI[@xml:id = 'vol11'])]">
                <sch:let name="facsPtr" value="@facs"/>
                <sch:let name="allFacs" value="//tei:pb[@facs]"/>
@@ -3615,7 +3640,7 @@ Elements]</a:documentation>
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(line beginning) marks the beginning of a new (typographic) line in some edition or version of a text. [3.11.3. Milestone
 Elements 7.2.5. Speech Contents]</a:documentation>
          <empty/>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-lb-lb.shouldUseDecimal-constraint-rule-33">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-lb-lb.shouldUseDecimal-constraint-rule-38">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:lb[@facs]">
                <sch:assert test="matches(@facs,'(lib|pg):\d+\.\d+')">ERROR: lb elements with facs must specify the line in the form lib:#.lineNum or pg:#.lineNum (e.g. lib:23.2)</sch:assert>
             </sch:rule>
@@ -3866,7 +3891,7 @@ Sample values include: 1] main; 2] sub (subordinate); 3] alt (alternate); 4] sho
                </group>
             </zeroOrMore>
          </group>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-lg-atleast1oflggapl-constraint-assert-46">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-lg-atleast1oflggapl-constraint-assert-56">
             <rule context="tei:lg">
                <sch:assert xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
         must contain at least one child l, lg, or gap element.</sch:assert>
@@ -3942,18 +3967,18 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</a:documentation
                <ref name="model.pPart.edit"/>
             </choice>
          </zeroOrMore>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-w-w.shouldContainPC-constraint-rule-34">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-w-w.shouldContainPC-constraint-rule-39">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:w[not(@part)]">
                <sch:assert test="descendant::tei:pc[@force='weak'] and descendant::tei:lb">ERROR: Word elements must include a pc and an lb,
                               since the element should only be used to flag words separated across line boundaries </sch:assert>
             </sch:rule>
          </pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-w-w.shouldBeInParts-constraint-rule-35">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-w-w.shouldBeInParts-constraint-rule-40">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:w">
                <sch:assert test="not(descendant::tei:fw or descendant::tei:pb)">ERROR: Do not include formeworks or page beginnings in a word element; if a word is split across pages, then use the @part attribute to signal the initial and final parts of the word. </sch:assert>
             </sch:rule>
          </pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-w-w.partsShouldMatch-constraint-rule-36">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-w-w.partsShouldMatch-constraint-rule-41">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:w">
                <sch:let name="text" value="string-join(descendant::text(),'')"/>
                <sch:assert test="not(matches($text,'^\s|\s$'))">ERROR: <sch:name/> should begin or end with spaces.</sch:assert>
@@ -3976,12 +4001,12 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</a:documentation
       <element name="pc">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(punctuation character) contains a character or string of characters regarded as constituting a single punctuation mark. [17.1.2. Below the Word Level 17.4.2. Lightweight Linguistic Annotation]</a:documentation>
          <text/>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-pc-pc.onlyPunct-constraint-rule-40">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-pc-pc.onlyPunct-constraint-rule-45">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:pc">
                <sch:assert test="matches(text(),'^[\p{P}=]$')">ERROR: Only a single punctuation character is allowed in pc</sch:assert>
             </sch:rule>
          </pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-pc-dash.shouldBeInWord-constraint-rule-41">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-pc-dash.shouldBeInWord-constraint-rule-46">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:pc[text() = '-'][@force='weak'][ancestor::tei:TEI/descendant::tei:revisionDesc/@docStatus='inProgress']">
                <sch:assert test="ancestor::tei:w">ERROR: All end of line hyphens must be contained by the word (&lt;w&gt;) element.</sch:assert>
             </sch:rule>
@@ -4858,6 +4883,170 @@ Suggested values include: 1] label; 2] data</a:documentation>
          <empty/>
       </element>
    </define>
+   <define name="att.gaijiProp.attributes">
+      <ref name="att.gaijiProp.attribute.name"/>
+      <ref name="att.gaijiProp.attribute.value"/>
+      <ref name="att.gaijiProp.attribute.version"/>
+   </define>
+   <define name="att.gaijiProp.attribute.name">
+      <attribute name="name">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides the name of the character or glyph property being defined.</a:documentation>
+         <data type="NCName"/>
+      </attribute>
+   </define>
+   <define name="att.gaijiProp.attribute.value">
+      <attribute name="value">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides the value of the character or glyph property being defined.</a:documentation>
+         <data type="string"/>
+      </attribute>
+   </define>
+   <define name="att.gaijiProp.attribute.version">
+      <optional>
+         <attribute name="version">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the version number of the Unicode Standard in which this property name is defined.
+Suggested values include: 1] 1.0.1; 2] 1.1; 3] 2.0; 4] 2.1; 5] 3.0; 6] 3.1; 7] 3.2; 8] 4.0; 9] 4.1; 10] 5.0; 11] 5.1; 12] 5.2; 13] 6.0; 14] 6.1; 15] 6.2; 16] 6.3; 17] 7.0; 18] 8.0; 19] 9.0; 20] 10.0; 21] 11.0; 22] 12.0; 23] 12.1; 24] unassigned</a:documentation>
+            <choice>
+               <value>1.0.1</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>1.1</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>2.0</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>2.1</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>3.0</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>3.1</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>3.2</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>4.0</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>4.1</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>5.0</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>5.1</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>5.2</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>6.0</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>6.1</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>6.2</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>6.3</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>7.0</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>8.0</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>9.0</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>10.0</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>11.0</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>12.0</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>12.1</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>unassigned</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <data type="token">
+                  <param name="pattern">[^\p{C}\p{Z}]+</param>
+               </data>
+            </choice>
+         </attribute>
+      </optional>
+   </define>
+   <define name="g">
+      <element name="g">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(character or glyph) represents a glyph, or a non-standard character. [5. Characters, Glyphs, and Writing Modes]</a:documentation>
+         <text/>
+         <ref name="att.global.attributes"/>
+         <ref name="att.typed.attributes"/>
+         <attribute name="ref">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to a description of the character or glyph intended.</a:documentation>
+            <choice>
+               <value>g:star</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(star) STAR / ASTERISK (*)</a:documentation>
+               <value>g:cross</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(cross) CROSS OR DAGGER (✝)</a:documentation>
+               <value>g:x</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(x) X (X)</a:documentation>
+               <value>g:circledX</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(circledX) X WITH CIRCLE (ⓧ)</a:documentation>
+               <value>g:phi</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(phi) PHI (φ)</a:documentation>
+               <value>g:theta</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(theta) THETA (θ)</a:documentation>
+               <value>g:umbrella</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(umbrella) UMBRELLA</a:documentation>
+               <value>g:tau</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(tau) TAU (Τ)</a:documentation>
+               <value>g:pi</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(pi) PI (Π)</a:documentation>
+               <value>g:UNKNOWN</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(UNKNOWN) UNKNOWN</a:documentation>
+            </choice>
+         </attribute>
+         <empty/>
+      </element>
+   </define>
+   <define name="charDecl">
+      <element name="charDecl">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(character declarations) provides information about nonstandard characters and glyphs. [5.2. Markup Constructs for Representation of Characters and Glyphs]</a:documentation>
+         <group>
+            <optional>
+               <ref name="desc"/>
+            </optional>
+            <oneOrMore>
+               <choice>
+                  <ref name="char"/>
+               </choice>
+            </oneOrMore>
+         </group>
+         <ref name="att.global.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="char">
+      <element name="char">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(character) provides descriptive information about a character. [5.2. Markup Constructs for Representation of Characters and Glyphs]</a:documentation>
+         <zeroOrMore>
+            <choice>
+               <ref name="localProp"/>
+               <ref name="mapping"/>
+               <ref name="figure"/>
+               <ref name="model.graphicLike"/>
+               <ref name="model.noteLike"/>
+               <ref name="model.descLike"/>
+            </choice>
+         </zeroOrMore>
+         <ref name="att.global.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="localProp">
+      <element name="localProp">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(locally defined property) provides a locally defined character (or glyph) property. [5.2.1. Character Properties]</a:documentation>
+         <empty/>
+         <ref name="att.global.attributes"/>
+         <ref name="att.gaijiProp.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="mapping">
+      <element name="mapping">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(character mapping) contains one or more characters which are related to the parent character or glyph in some respect, as specified by the <code xmlns="http://www.w3.org/1999/xhtml">@type</code> attribute. [5.2. Markup Constructs for Representation of Characters and Glyphs]</a:documentation>
+         <ref name="macro.xtext"/>
+         <ref name="att.global.attributes"/>
+         <ref name="att.typed.attributes"/>
+         <empty/>
+      </element>
+   </define>
    <define name="att.global.linking.attributes">
       <ref name="att.global.linking.attribute.corresp"/>
       <ref name="att.global.linking.attribute.copyOf"/>
@@ -4952,7 +5141,7 @@ Suggested values include: 1] label; 2] data</a:documentation>
                     </sch:assert>
             </sch:rule>
          </sch:pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-standOff-nested_standOff_should_be_typed-constraint-assert-68">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-standOff-nested_standOff_should_be_typed-constraint-assert-78">
             <rule context="tei:standOff">
                <sch:assert xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" test="@type or not(ancestor::tei:standOff)">This
       <sch:name/> element must have a @type attribute, since it is
@@ -5252,7 +5441,7 @@ Suggested values include: 1] label; 2] data</a:documentation>
       <element name="orgName">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(organization name) contains an organizational name. [13.2.2. Organizational Names]</a:documentation>
          <ref name="macro.phraseSeq"/>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-orgName-placeName.mustHaveRefWithPlc-constraint-rule-52">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-orgName-placeName.mustHaveRefWithPlc-constraint-rule-57">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:orgName[not(parent::tei:org)][@ref]">
                <sch:let name="ptr" value="(@ref, @where)[1]"/>
                <sch:assert test="matches($ptr ,concat('^org:', $orgIdPattern, '$'))">ERROR: All <sch:name/> pointers must have an @<sch:value-of select="local-name($ptr)"/> that begins with "org:" followed by 4 uppercase letters and a number (e.g. org:CLAN1).</sch:assert>
@@ -5270,12 +5459,12 @@ Suggested values include: 1] label; 2] data</a:documentation>
       <element name="persName">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(personal name) contains a proper noun or proper-noun phrase referring to a person, possibly including one or more of the person's forenames, surnames, honorifics, added names, etc. [13.2.1. Personal Names]</a:documentation>
          <ref name="macro.phraseSeq"/>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-persName-persName.mustHaveRefWithPrs-constraint-rule-53">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-persName-persName.mustHaveRefWithPrs-constraint-rule-58">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:persName[not(parent::tei:person)][@ref]">
                <sch:assert test="matches(@ref,concat('^prs:', $persIdPattern, '$'))">ERROR: All persName pointers must have an @ref that begins with "prs:" followed by 5 uppercase letters and a number (e.g. prs:FORBR1).</sch:assert>
             </sch:rule>
          </pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-persName-persName.dontUseRoleName-constraint-rule-54">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-persName-persName.dontUseRoleName-constraint-rule-59">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:persName/tei:roleName">
                <sch:assert test="false()">ERROR: Rolenames should not be denoted in a persName directly; all role information should be encoded using the occupation element.</sch:assert>
             </sch:rule>
@@ -5351,7 +5540,7 @@ Suggested values include: 1] label; 2] data</a:documentation>
       <element name="placeName">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(place name) contains an absolute or relative place name. [13.2.3. Place Names]</a:documentation>
          <ref name="macro.phraseSeq"/>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-placeName-placeName.mustHaveRefWithPlc-constraint-rule-55">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-placeName-placeName.mustHaveRefWithPlc-constraint-rule-60">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:placeName[not(parent::tei:place)][@ref] | tei:*[@where]">
                <sch:let name="ptr" value="(@ref, @where)[1]"/>
                <sch:assert test="matches($ptr ,concat('^plc:', $placeIdPattern, '$'))">ERROR: All <sch:name/> pointers must have an @<sch:value-of select="local-name($ptr)"/> that begins with "plc:" followed by 4 uppercase letters and a number (e.g. plc:LEIT1).</sch:assert>
@@ -5369,7 +5558,7 @@ Suggested values include: 1] label; 2] data</a:documentation>
       <element name="affiliation">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(affiliation) contains an informal description of a person's present or past affiliation with some organization, for example an employer or sponsor. [15.2.2. The Participant Description]</a:documentation>
          <ref name="macro.phraseSeq"/>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-affiliation-orgs.mustHaveXmlIdAndProperlyNested-constraint-rule-56">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-affiliation-orgs.mustHaveXmlIdAndProperlyNested-constraint-rule-61">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:affiliation[@type=('clan','army')]">
                <sch:assert test="matches(@ref,'org:')">ERROR: All <sch:value-of select="@type"/> affiliations must have a @ref that points to the org for that <sch:value-of select="@type"/>.</sch:assert>
             </sch:rule>
@@ -5770,12 +5959,12 @@ Sample values include: 1] primary; 2] other; 3] paid; 4] unpaid</a:documentation
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(identifier) provides a unique identifier for the element bearing the attribute.</a:documentation>
             <data type="ID"/>
          </attribute>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-org-xmlid-orgs.mustHaveXmlIdAndProperlyNested-constraint-rule-57">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-org-xmlid-orgs.mustHaveXmlIdAndProperlyNested-constraint-rule-62">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="/tei:org">
                <sch:assert test="matches(@xml:id, concat('^', $orgIdPattern, '$'))">ERROR: All main orgs must have an id that is a sequence of four letter and a digit.</sch:assert>
             </sch:rule>
          </pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-org-xmlid-orgs.mustHaveXmlIdAndProperlyNested-constraint-rule-58">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-org-xmlid-orgs.mustHaveXmlIdAndProperlyNested-constraint-rule-63">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:org/tei:listOrg/tei:org">
                <sch:let name="parentId" value="ancestor::tei:org[1]/@xml:id"/>
                <sch:assert test="starts-with(@xml:id, $parentId)">ERROR: All sub organization ids must start with the id of its parent organization.</sch:assert>
@@ -5803,7 +5992,7 @@ Sample values include: 1] primary; 2] other; 3] paid; 4] unpaid</a:documentation
          <optional>
             <ref name="linkGrp"/>
          </optional>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-person-person.constraints-constraint-rule-59">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-person-person.constraints-constraint-rule-64">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="/tei:person[not(@role='contributor')]">
                <sch:assert test="matches(@xml:id,concat('^', $persIdPattern, '$'))">ERROR: All people must have an @xml:id of 5 uppercase letters and a number (e.g. FORBR1).</sch:assert>
                <sch:assert test="tei:langKnowledge">ERROR: People must contain a langKnowledge element.</sch:assert>
@@ -5846,7 +6035,7 @@ Sample values include: 1] primary; 2] other; 3] paid; 4] unpaid</a:documentation
          <optional>
             <ref name="linkGrp"/>
          </optional>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-place-place.mustHaveProperId-constraint-rule-61">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-place-place.mustHaveProperId-constraint-rule-66">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="/tei:place">
                <sch:assert test="matches(@xml:id,concat('^', $placeIdPattern, '$'))">ERROR: All places must have an @xml:id of 4 uppercase letters and a number (e.g. LEIT1).</sch:assert>
                <sch:assert test="tei:placeName">ERROR: All places must have a placeName.</sch:assert>
@@ -6771,10 +6960,6 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
             <sch:rule context="tei:fw[@type=('pageNum', 'folioNum')]">
                <sch:assert test="@place">ERROR: Missing required @place attribute for page number formework.</sch:assert>
             </sch:rule>
-            <sch:rule context="tei:fw[@type='catchword']">
-               <sch:let name="firstFollowingEl" value="following::tei:*[1]"/>
-               <sch:assert test="empty($firstFollowingEl) or $firstFollowingEl/self::tei:pb">ERROR: All catchwords should have a page beginning after</sch:assert>
-            </sch:rule>
          </sch:pattern>
          <ref name="att.global.attributes"/>
          <ref name="att.placement.attributes"/>
@@ -6820,7 +7005,7 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
                <ref name="model.milestoneLike"/>
             </choice>
          </oneOrMore>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-subst-substContents1-constraint-assert-90">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-subst-substContents1-constraint-assert-99">
             <rule context="tei:subst">
                <assert xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" test="child::tei:add and (child::tei:del or child::tei:surplus)">
                   <name/> must have at least one child add and at least one child del or surplus</assert>
@@ -6849,6 +7034,45 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
             </attribute>
          </optional>
          <empty/>
+      </element>
+   </define>
+   <define name="compliment">
+      <element name="compliment">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+         <ref name="macro.specialPara"/>
+         <ref name="att.global.attributes"/>
+         <ref name="att.ascribed.directed.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="compliments">
+      <element name="compliments">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+         <zeroOrMore>
+            <ref name="compliment"/>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="duration">
+      <element name="duration">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+         <ref name="macro.paraContent"/>
+      </element>
+   </define>
+   <define name="enclosure">
+      <element name="enclosure">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+         <ref name="macro.specialPara"/>
+         <ref name="att.global.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="enclosures">
+      <element name="enclosures">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+         <zeroOrMore>
+            <ref name="enclosure"/>
+         </zeroOrMore>
       </element>
    </define>
    <define name="limItem">
@@ -6912,12 +7136,110 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
          <empty/>
       </element>
    </define>
-   <define name="compliment">
-      <element name="compliment">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-         <ref name="macro.specialPara"/>
+   <define name="NB">
+      <element name="NB">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(nota bene) groups together content that is marked as a nota bene.</a:documentation>
+         <group>
+            <zeroOrMore>
+               <choice>
+                  <ref name="model.global"/>
+                  <ref name="model.divTopPart"/>
+               </choice>
+            </zeroOrMore>
+            <ref name="model.common"/>
+            <zeroOrMore>
+               <choice>
+                  <ref name="model.global"/>
+                  <ref name="model.common"/>
+               </choice>
+            </zeroOrMore>
+            <zeroOrMore>
+               <group>
+                  <ref name="model.divBottomPart"/>
+                  <zeroOrMore>
+                     <ref name="model.global"/>
+                  </zeroOrMore>
+               </group>
+            </zeroOrMore>
+         </group>
          <ref name="att.global.attributes"/>
-         <ref name="att.ascribed.directed.attributes"/>
+         <ref name="att.written.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="noteMarker">
+      <element name="noteMarker">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+         <text/>
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+            <sch:rule context="tei:note/tei:noteMarker | tei:note/tei:supplied/tei:noteMarker">
+               <sch:assert test="@target">ERROR: Note markers in a note should have a target
+                                 pointing to the source note marker.</sch:assert>
+            </sch:rule>
+            <sch:rule context="tei:noteMarker[not(parent::tei:note)] | tei:noteMarker[not(parent::tei:supplied/parent::tei:note)]">
+               <sch:assert test="@xml:id">ERROR: Note markers in the body of text should 
+                              have an xml:id identifying it. (This should be automatic if you use
+                              the keyboard shortcut Command + Shift + N)</sch:assert>
+            </sch:rule>
+         </sch:pattern>
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-noteMarker-noteMarker.mustHaveContentIfUnknown-constraint-rule-71">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:noteMarker[@ref='g:UNKNOWN']">
+               <sch:assert test="matches(string(.), '\S')">ERROR: You must provide a character in the noteMarker when using g:UNKNOWN</sch:assert>
+            </sch:rule>
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:noteMarker[@ref][not(@ref = 'g:UNKNOWN')]">
+               <sch:assert test="empty(text())">ERROR: No text content is allowed in noteMarker unless @ref='g:UNKNOWN'</sch:assert>
+            </sch:rule>
+         </pattern>
+         <attribute name="ref">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to a description of the character or glyph intended.</a:documentation>
+            <choice>
+               <value>g:star</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(star) STAR / ASTERISK (*)</a:documentation>
+               <value>g:cross</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(cross) CROSS OR DAGGER (✝)</a:documentation>
+               <value>g:x</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(x) X (X)</a:documentation>
+               <value>g:circledX</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(circledX) X WITH CIRCLE (ⓧ)</a:documentation>
+               <value>g:phi</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(phi) PHI (φ)</a:documentation>
+               <value>g:theta</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(theta) THETA (θ)</a:documentation>
+               <value>g:umbrella</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(umbrella) UMBRELLA</a:documentation>
+               <value>g:tau</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(tau) TAU (Τ)</a:documentation>
+               <value>g:pi</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(pi) PI (Π)</a:documentation>
+               <value>g:UNKNOWN</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(UNKNOWN) UNKNOWN</a:documentation>
+            </choice>
+         </attribute>
+         <optional>
+            <attribute name="annotation">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes any penciled annotation surrounding this note marker</a:documentation>
+               <choice>
+                  <value>circle</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(circle) circled in pencil</a:documentation>
+                  <value>strike</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(strike) Struck out in pencil</a:documentation>
+               </choice>
+            </attribute>
+         </optional>
+         <choice>
+            <attribute name="xml:id">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(identifier) provides a unique identifier for the element bearing the attribute.</a:documentation>
+               <data type="ID"/>
+            </attribute>
+            <attribute name="target">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the destination of the reference by supplying one or more URI References</a:documentation>
+               <list>
+                  <oneOrMore>
+                     <data type="anyURI"/>
+                  </oneOrMore>
+               </list>
+            </attribute>
+         </choice>
          <empty/>
       </element>
    </define>
@@ -6936,12 +7258,6 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
          <zeroOrMore>
             <ref name="request"/>
          </zeroOrMore>
-      </element>
-   </define>
-   <define name="duration">
-      <element name="duration">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-         <ref name="macro.paraContent"/>
       </element>
    </define>
    <define name="scaffold">
@@ -6997,30 +7313,6 @@ Suggested values include: 1] plc:TOWE1 (Tower of London); 2] plc:KENN1 (Kenningt
          <empty/>
       </element>
    </define>
-   <define name="compliments">
-      <element name="compliments">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-         <zeroOrMore>
-            <ref name="compliment"/>
-         </zeroOrMore>
-      </element>
-   </define>
-   <define name="enclosure">
-      <element name="enclosure">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-         <ref name="macro.specialPara"/>
-         <ref name="att.global.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="enclosures">
-      <element name="enclosures">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-         <zeroOrMore>
-            <ref name="enclosure"/>
-         </zeroOrMore>
-      </element>
-   </define>
    <define name="topic">
       <element name="topic">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">marks the beginning of a longer sequence of text pertaining to a topic or set of topics.</a:documentation>
@@ -7029,7 +7321,7 @@ Suggested values include: 1] plc:TOWE1 (Tower of London); 2] plc:KENN1 (Kenningt
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the end of a span initiated by the element bearing this attribute.</a:documentation>
             <data type="anyURI"/>
          </attribute>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-topic-spanTo-spanTo-2-constraint-rule-66">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-topic-spanTo-spanTo-2-constraint-rule-74">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@spanTo]">
                <sch:assert test="id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]">
 The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow the current element <sch:name/>
@@ -7131,6 +7423,17 @@ The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow 
       </choice>
    </start>
    <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+      <sch:rule context="tei:fw | tei:pb">
+         <sch:assert test="parent::tei:ab | parent::tei:back | parent::tei:body | parent::tei:div | parent::tei:front | parent::tei:list | parent::tei:p | parent::tei:text | parent::tei:q | parent::tei:note">
+                              ERROR: <sch:name/> should not appear within <sch:value-of select="local-name(parent::*)"/>.
+                           </sch:assert>
+      </sch:rule>
+      <sch:rule context="tei:fw">
+         <sch:assert test="not(tei:lb)">ERROR: <sch:name/> should not contain line beginnings 
+                              (since they are usually a single line)</sch:assert>
+      </sch:rule>
+   </sch:pattern>
+   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
       <sch:rule context="/tei:*">
          <sch:let name="rootEl" value="local-name()"/>
          <sch:let name="correctDir" value="                     if (self::tei:person and @role='contributor') then 'contributors'                     else if (self::tei:person) then 'people'                     else if (self::tei:place) then 'places'                     else if (self::tei:org) then 'orgs'                     else $dirName"/>
@@ -7175,17 +7478,6 @@ The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow 
          <sch:assert test="if (matches($genre,'Speech|Account|Conversation','i')) then tei:settingDesc else true()">
                               ERROR: All <sch:value-of select="$genre"/> must have a settingDesc.
                            </sch:assert>
-      </sch:rule>
-   </sch:pattern>
-   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
-      <sch:rule context="tei:fw | tei:pb">
-         <sch:assert test="parent::tei:ab | parent::tei:back | parent::tei:body | parent::tei:div | parent::tei:front | parent::tei:list | parent::tei:p | parent::tei:text | parent::tei:q | parent::tei:note">
-                              ERROR: <sch:name/> should not appear within <sch:value-of select="local-name(parent::*)"/>.
-                           </sch:assert>
-      </sch:rule>
-      <sch:rule context="tei:fw">
-         <sch:assert test="not(tei:lb)">ERROR: <sch:name/> should not contain line beginnings 
-                              (since they are usually a single line)</sch:assert>
       </sch:rule>
    </sch:pattern>
    <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">

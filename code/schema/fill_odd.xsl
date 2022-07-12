@@ -21,9 +21,18 @@
     <xsl:mode on-no-match="shallow-copy"/>
     
     <xd:doc>
+        <xd:desc>Root template</xd:desc>
+    </xd:doc>
+    <xsl:template match="/">
+        <xsl:message>Expanding ODD into <xsl:value-of select="current-output-uri()"/></xsl:message>
+        <xsl:apply-templates/>
+    </xsl:template>
+    
+    <xd:doc>
         <xd:desc>Add values from the renditions</xd:desc>
     </xd:doc>
     <xsl:template match="classSpec[@ident='att.global.rendition']/attList/attDef[@ident='rendition']/valList">
+        
         <xsl:copy>
             <xsl:apply-templates select="@*"/>
             <xsl:for-each select="//rendition[@xml:id]">
@@ -33,6 +42,50 @@
                     <gloss><xsl:value-of select="if (desc) then desc else $name"/></gloss>
                 </valItem>
             </xsl:for-each>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xd:doc>
+        <xd:desc>Add values to the glyphs</xd:desc>
+    </xd:doc>
+    <xsl:template match="dataSpec[@ident='limdata.glyph']//valList">
+        <xsl:copy>
+            <xsl:apply-templates select="@*"/>
+            <xsl:for-each select="//glyph[@xml:id]">
+                <xsl:variable name="name" select="substring-after(@xml:id,'char_')" as="xs:string"/>
+                <valItem ident="g:{$name}">
+                    <gloss><xsl:value-of select="$name"/></gloss>
+                    <desc><xsl:value-of select="unicodeProp[@name='Name']/@value"/>
+                        <xsl:if test="mapping[@type='standard']">
+                            <xsl:value-of select="' (' || mapping[@type='standard'] || ')'"/>
+                        </xsl:if>
+                    </desc>
+                </valItem>
+            </xsl:for-each>
+        </xsl:copy>
+        
+    </xsl:template>
+    
+    <xd:doc>
+        <xd:desc>Adds hand values; we match the attDef as we may have redefined
+        hand in other places.</xd:desc>
+    </xd:doc>
+    <xsl:template match="attDef[@ident='hand']">
+        <xsl:copy>
+            <xsl:apply-templates select="@*"/>
+            <xsl:apply-templates select="node()[not(self::valList)]"/>
+            <valList type="closed">
+                <xsl:if test="ancestor::*[self::elementSpec or self::classSpec][1]/@mode = 'change'">
+                    <xsl:attribute name="mode">add</xsl:attribute>
+                </xsl:if>
+                <xsl:for-each select="//handNote[@xml:id]">
+                    <xsl:variable name="name" select="substring-after(@xml:id,'hand_')" as="xs:string"/>
+                    <valItem ident="hand:{$name}">
+                        <gloss><xsl:value-of select="$name"/></gloss>
+                        <desc><xsl:value-of select="string(.)"/></desc>
+                    </valItem>
+                </xsl:for-each>
+            </valList>
         </xsl:copy>
     </xsl:template>
     

@@ -24,27 +24,8 @@
             <head>msdescription</head>
             <schemaSpec ident="lim_msdescription">
                <moduleRef key="msdescription" include="locus locusGrp"/>
-               <elementSpec ident="locusGrp" module="msdescription" mode="change">
-                  <constraintSpec ident="locusGrpVsLocus" scheme="schematron">
-                     <constraint>
-                        <sch:pattern>
-                           <sch:rule context="tei:locusGrp/tei:locus">
-                              <sch:assert test="self::tei:locus[@type='Forbes']">
-                                 ERROR: Every locus in a locusGrp must be of type "Forbes"
-                              </sch:assert>
-                           </sch:rule>
-                        </sch:pattern>
-                     </constraint>
-                  </constraintSpec>
-               </elementSpec>
-               
-               <!--NOTE: locus is completely replaced
-                  in order to handle the grouped attLists:
-                   * We want all locus to need from/to
-                   * We only want Paton locus to need an n
-                   -->
+               <!--locus-->
                <elementSpec ident="locus" module="msdescription" mode="replace">
-
                   <gloss xml:lang="en" versionDate="2007-06-12">locus</gloss>
                   <desc versionDate="2019-01-17" xml:lang="en" xml:id="locus.desc">defines a location within a manuscript, manuscript part, or other object typically 
                      as a (possibly discontinuous) sequence of folio references.</desc>
@@ -67,8 +48,7 @@
                         <sch:pattern>
                            <sch:rule context="tei:locus[@type='Paton'][@n and @from and @to]">
                               <sch:let name="n" value="@n"/>
-                              <sch:let name="max" value="if (@n = '1') then 382 
-                                 else if (@n = '2') then 380 else 416"/>
+                              <sch:let name="max" value="if (@n = '1') then 382                                   else if (@n = '2') then 380 else 416"/>
                               <sch:let name="from" value="xs:integer(replace(@from,'[^\d]+',''))"/>
                               <sch:let name="to" value="xs:integer(replace(@from,'[^\d]+',''))"/>
                               <sch:assert test="$from lt ($max + 1)">
@@ -80,7 +60,6 @@
                            </sch:rule>
                         </sch:pattern>
                      </constraint>
-                     
                   </constraintSpec>
                   <attList org="group">
                      <attDef ident="from" usage="req">
@@ -88,15 +67,18 @@
                         <desc versionDate="2013-12-21" xml:lang="en">specifies the
                            starting point of the location in a normalized form, typically a
                            page number.</desc>
-                        <datatype><dataRef key="teidata.word"/></datatype>
+                        <datatype>
+                           <dataRef key="teidata.word"/>
+                        </datatype>
                      </attDef>
                      <attDef ident="to" usage="req">
                         <gloss xml:lang="en" versionDate="2007-06-12">to</gloss>
-                        
                         <desc versionDate="2013-12-21" xml:lang="en">specifies the
                            end-point of the location in a normalized form, typically as a
                            page number.</desc>
-                        <datatype><dataRef key="teidata.word"/></datatype>
+                        <datatype>
+                           <dataRef key="teidata.word"/>
+                        </datatype>
                      </attDef>
                      <attList org="choice">
                         <attList org="group">
@@ -120,7 +102,6 @@
                            </attDef>
                            <attDef ident="n" usage="req">
                               <gloss versionDate="2007-07-02" xml:lang="en">number</gloss>
-                              
                               <desc versionDate="2005-10-10" xml:lang="en">gives a number (or other label) for an element, which is not necessarily unique within
                                  the document.</desc>
                               <datatype maxOccurs="1">
@@ -133,15 +114,25 @@
                                     list items, etc.; it may also be used in the specification of a standard reference system
                                     for the text.</p>
                               </remarks>
-                              
                            </attDef>
                         </attList>
                      </attList>
                   </attList>
-                  
                </elementSpec>
-               
-               
+               <!--locusGrp-->
+               <elementSpec ident="locusGrp" module="msdescription" mode="change">
+                  <constraintSpec ident="locusGrpVsLocus" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:locusGrp/tei:locus">
+                              <sch:assert test="self::tei:locus[@type='Forbes']">
+                                 ERROR: Every locus in a locusGrp must be of type "Forbes"
+                              </sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+               </elementSpec>
             </schemaSpec>
          </div>
       </body>

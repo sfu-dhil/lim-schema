@@ -13,6 +13,8 @@
     <property name="TEIStylesheets" value="${basedir}/Stylesheets/"/>
     <property name="saxon" value="${lib.dir}/saxon10HE.jar"/>
     
+
+    
     <target name="install">
         <description>target: install
         
@@ -41,11 +43,13 @@
     <target name="populate">
         <description>Populates the ODD with values from taxonomies</description>
         <echo>Populating ODD values from the taxonomies</echo>
+
         <java jar="${saxon}" fork="true">
             <arg line="-xsl:${basedir}/code/schema/fill_odd.xsl"/>
             <arg line="-s:${schemaDir}/lim.included.odd"/>
             <arg line="-o:${schemaDir}/lim.full.odd"/>
         </java>
+        
     </target>
     
     <target name="expand">
@@ -137,6 +141,7 @@
             <property name="dir" value="${dataDir}"/>
             <property name="rng" value="${schemaDir}/lim.rng"/>
             <property name="saxon" value="${saxon}"/>
+            <property name="exclude" value="vol11"/>
         </ant>
     </target>
     

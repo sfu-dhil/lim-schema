@@ -2,6 +2,8 @@
 <?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
 	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="../odd/lim-odd.sch" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0"
      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
      xml:id="core">
@@ -25,12 +27,498 @@
             <schemaSpec ident="lim_core">
                <moduleRef key="core"
                           include="abbr add author bibl biblStruct choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note noteGrp num orig p pb ptr pubPlace publisher q quote ref reg resp respStmt rs sic term time title unclear"/>
+               <!--abbr-->
+               <elementSpec ident="abbr" module="core" mode="change">
+                  <classes mode="change">
+                     <!--Add cert and resp-->
+                     <memberOf key="att.global.responsibility" mode="add"/>
+                  </classes>
+                  <constraintSpec ident="abbr.shouldntContainJustAmp" scheme="schematron" mode="add">
+                     <desc>Don't expand the ampersand only.</desc>
+                     <constraint>
+                        <sch:rule context="tei:abbr">
+                           <sch:let name="content" value="string(.)"/>
+                           <sch:assert test="not(matches($content, '^\s*&amp;\s*$'))">ERROR: There is no need to tag ampersands when it means "and".</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="abbr.typeCheck" scheme="schematron" mode="add">
+                     <desc>Type is required when not in choice</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <!--TODO: Remove @ref once feasible-->
+                           <sch:rule context="tei:choice/tei:abbr">
+                              <sch:assert test="not(@type)">ERROR: Do not put a type attribute on abbrs in choice.</sch:assert>
+                           </sch:rule>
+                           <sch:rule context="tei:abbr[not(parent::tei:choice)]">
+                              <sch:assert test="@type">ERROR: @type is required when abbr is not in a choice.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef mode="change" ident="type">
+                        <valList mode="replace" type="closed">
+                           <valItem ident="another" mode="add">
+                              <desc>anoyr</desc>
+                              <gloss>Abbreviation for <mentioned>another</mentioned>
+                              </gloss>
+                           </valItem>
+                           <valItem ident="Brother" mode="add">
+                              <desc>Broyr</desc>
+                              <gloss>Abbreviation for <mentioned>Brother</mentioned>
+                              </gloss>
+                           </valItem>
+                           <valItem ident="which" mode="add">
+                              <desc>qch</desc>
+                              <gloss>Abbreviation for <mentioned>which</mentioned>
+                              </gloss>
+                           </valItem>
+                           <valItem ident="whom" mode="add">
+                              <desc>qm</desc>
+                              <gloss>Abbreviation for <mentioned>whom</mentioned>
+                              </gloss>
+                           </valItem>
+                           <valItem ident="when" mode="add">
+                              <desc>qn</desc>
+                              <gloss>Abbreviation for <mentioned>when</mentioned>
+                              </gloss>
+                           </valItem>
+                           <valItem ident="who" mode="add">
+                              <desc>qo</desc>
+                              <gloss>Abbreviation for <mentioned>who</mentioned>
+                              </gloss>
+                           </valItem>
+                           <valItem ident="what" mode="add">
+                              <desc>qt</desc>
+                              <gloss>Abbreviation for <mentioned>what</mentioned>
+                              </gloss>
+                           </valItem>
+                           <valItem ident="with" mode="add">
+                              <desc>wt</desc>
+                              <gloss>Abbreviation for <mentioned>with</mentioned>
+                              </gloss>
+                           </valItem>
+                           <valItem ident="the" mode="add">
+                              <desc>ye</desc>
+                              <gloss>Abbreviation for <mentioned>the</mentioned>
+                              </gloss>
+                           </valItem>
+                           <valItem ident="then" mode="add">
+                              <desc>yn</desc>
+                              <gloss>Abbreviation for <mentioned>then</mentioned>
+                              </gloss>
+                           </valItem>
+                           <valItem ident="your" mode="add">
+                              <desc>yr</desc>
+                              <gloss>Abbreviation for <mentioned>your</mentioned>
+                              </gloss>
+                           </valItem>
+                           <valItem ident="that" mode="add">
+                              <desc>yt</desc>
+                              <gloss>Abbreviation for <mentioned>that</mentioned>
+                              </gloss>
+                           </valItem>
+                           <valItem ident="them" mode="add">
+                              <desc>ym</desc>
+                              <gloss>Abbreviation for <mentioned>them</mentioned>
+                              </gloss>
+                           </valItem>
+                           <valItem ident="there" mode="add">
+                              <desc>yre</desc>
+                              <gloss>Abbreviation for <mentioned>there</mentioned>
+                              </gloss>
+                           </valItem>
+                           <valItem ident="this" mode="add">
+                              <desc>ys</desc>
+                              <gloss>Abbreviation for <mentioned>this</mentioned>
+                              </gloss>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               
+               <!--add-->
+               <elementSpec ident="add" module="core" mode="change">
+                  <classes mode="change">
+                     <!--We've deleted att.editLike, so 
+                        we must add att.written -->
+                     <memberOf key="att.written" mode="add"/>
+                  </classes>
+               </elementSpec>
+               
+               <!--bibl-->
                <elementSpec ident="bibl" module="core" mode="change">
                   <classes>
                      <memberOf key="att.docStatus" mode="delete"/>
                   </classes>
                </elementSpec>
-               
+               <!--corr-->
+               <elementSpec ident="corr" module="core" mode="change">
+                  <classes mode="change">
+              <!--Remove from pPart.transcriptional, since it should only be in <choice>-->
+                     <memberOf key="model.pPart.transcriptional" mode="delete"/>
+                     <!--Add cert and resp-->
+                     <memberOf key="att.global.responsibility" mode="add"/>
+                  </classes>
+               </elementSpec>
+               <!--del-->
+               <elementSpec ident="del" module="core" mode="change">
+                  <classes mode="change">
+                     <!--We've deleted att.editLike, so 
+                        we must add att.written -->
+                     <memberOf key="att.written" mode="add"/>
+                  </classes>
+               </elementSpec>
+               <!--expan-->
+               <elementSpec ident="expan" module="core" mode="change">
+                  <classes mode="change">
+              <!--Remove from pPart.editorial, since it should only be in <choice>-->
+                     <memberOf key="model.pPart.editorial" mode="delete"/>
+                     <!--Add cert and resp-->
+                     <memberOf key="att.global.responsibility" mode="add"/>
+                  </classes>
+               </elementSpec>
+               <!--head-->
+               <elementSpec ident="head" module="core" mode="change">
+                  <constraintSpec scheme="schematron" ident="head.bdHidden">
+                     <constraint>
+                        <sch:rule context="tei:head[matches(@rendition,'rnd:hidden')]">
+                           <sch:assert test="$isBornDigital">ERROR: Only use rnd:hidden in born digital documents.</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="rendition" mode="change">
+                        <valList type="closed" mode="change">
+                           <valItem mode="add" ident="rnd:hidden">
+                              <gloss>hidden</gloss>
+                              <desc>A heading that is
+                                 hidden (for accessibility purposes).</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <!--lb-->
+               <elementSpec ident="lb" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global.facs" mode="add"/>
+                     <memberOf key="att.spanning" mode="delete"/>
+                  </classes>
+                  <!--                  <constraintSpec ident="lb.noSpaces" scheme="schematron">
+                     <constraint>
+                        <sch:rule context="tei:lb[preceding-sibling::node()[1][self::tei:pc]]">
+                           <sch:assert test="matches(following::text()[1],'^\S')">ERROR: All punctuation separated words in lines should not have any spaces after the line beginning element.</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>-->
+                  <constraintSpec ident="lb.shouldUseDecimal" scheme="schematron">
+                     <constraint>
+                        <sch:rule context="tei:lb[@facs]">
+                           <sch:assert test="matches(@facs,'(lib|pg):\d+\.\d+')">ERROR: lb elements with facs must specify the line in the form lib:#.lineNum or pg:#.lineNum (e.g. lib:23.2)</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+               </elementSpec>
+               <!--list-->
+               <elementSpec ident="list" module="core" mode="change">
+                  <constraintSpec scheme="schematron" ident="list.bornDigitalNeedsRendition">
+                     <constraint>
+                        <sch:rule context="tei:list[not(@rendition)]">
+                           <sch:assert test="not($isBornDigital)">ERROR: All lists in born digital document require the rendition attribute.</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="rendition" mode="change">
+                        <valList type="closed" mode="change">
+                           <valItem mode="add" ident="rnd:list_ordered">
+                              <desc>An ordered list</desc>
+                           </valItem>
+                           <valItem mode="add" ident="rnd:list_unordered">
+                              <desc>An unordered list</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <!--milestone-->
+               <elementSpec ident="milestone" module="core" mode="change">
+                  <constraintSpec ident="milestone.sectionInBody" scheme="schematron">
+                     <desc>Notes must be typed in the body</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:milestone[@unit='section']">
+                              <sch:assert test="ancestor::tei:body">ERROR: Section milestones should be within the body of the text</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="milestone.itemInText" scheme="schematron">
+                     <desc>Notes must be typed in the body</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:milestone[@unit='item']">
+                              <sch:assert test="ancestor::tei:text and preceding-sibling::tei:body">ERROR: Item milestones should only occur at the end of the item after the closing body tag.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="unit" mode="change">
+                        <valList type="semi" mode="replace">
+                           <valItem ident="section" mode="add">
+                              <gloss>section</gloss>
+                              <desc>A horizontal rule representing a shift in section</desc>
+                           </valItem>
+                           <valItem ident="item" mode="add">
+                              <gloss>item</gloss>
+                              <desc>A horizontal rule representing the end of an item</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <!--name-->
+               <elementSpec ident="name" module="core" mode="change">
+                  <constraintSpec ident="name.notForPeopleOrPlaces" mode="change" scheme="schematron">
+                     <desc>Name should only be used if there isn't a more specific element.</desc>
+                     <constraint>
+                <!--TODO: Remove @ref once feasible-->
+                        <sch:rule context="tei:name[@ref]">
+                           <sch:assert test="not(matches(@ref,'^prs:'))">ERROR: Use &lt;persName&gt; to tag names of people.</sch:assert>
+                           <sch:assert test="not(matches(@ref,'^plc:'))">ERROR: Use &lt;placeName&gt; to tag names of places.</sch:assert>
+                           <sch:assert test="not(matches(@ref,'^org:'))">ERROR: Use &lt;orgName&gt; to tag names of organizations.</sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="type" mode="change" usage="opt">
+                        <valList type="closed" mode="add">
+                           <valItem ident="event" mode="add">
+                              <gloss>event</gloss>
+                              <desc>The name of an event (e.g. "The Battle of Prestonpans")</desc>
+                           </valItem>
+                           <valItem ident="object" mode="add">
+                              <gloss>object</gloss>
+                              <desc>The name of an object (e.g. "Excalibur")</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <!--note-->
+               <elementSpec ident="note" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global.responsibility" mode="add"/>
+                  </classes>
+                  <content>
+                     <alternate>
+                        <sequence>
+                           <sequence preserveOrder="false">
+                              <elementRef key="supplied" minOccurs="0" maxOccurs="unbounded"/>
+                              <elementRef key="noteMarker" minOccurs="0" maxOccurs="unbounded"/>
+                           </sequence>
+                           <alternate>
+                              <sequence>
+                                 <elementRef key="p" minOccurs="1" maxOccurs="unbounded"/>
+                                 <elementRef key="closer" minOccurs="0"/>
+                              </sequence>
+                              <elementRef key="NB" minOccurs="1" maxOccurs="1"/>
+                           </alternate>
+                        </sequence>
+                        <macroRef key="macro.specialPara"/>
+                     </alternate>
+                  </content>
+                  <constraintSpec ident="note.mustHaveTypeInText" scheme="schematron">
+                     <desc>Notes must be typed in the body</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:note[ancestor::tei:text][not(ancestor::tei:div[@type='footnotes'])]">
+                              <sch:assert test="@type">ERROR: All notes in transcriptions must have a @type.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="note.coOccurenceConstraints" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:note[@type='editorial']">
+                              <sch:assert test="@resp">ERROR: All editorial notes must have a @resp</sch:assert>
+                              <sch:assert test="not(@anchored)">ERROR: Do not use @anchored for editorial notes</sch:assert>
+                              <sch:assert test="not(@hand)">ERROR: Do not use @hand for editorial notes.</sch:assert>
+                           </sch:rule>
+                           <sch:rule context="tei:note[@type='lim']">
+                              <sch:assert test="not(@resp)">ERROR: Do not use @resp on LiM notes. Use @hand instead.</sch:assert>
+                              <sch:assert test="every $text in text() satisfies not(matches($text,'\S'))">ERROR: All lim notes
+                              must have structured context (i.e. 0 or more noteMarkers, either a sequence of paragraphs and a closer OR an NB) </sch:assert>
+                           </sch:rule>
+                           <sch:rule context="tei:note[@type='lim']/tei:supplied">
+                              <sch:assert test="tei:noteMarker">ERROR: Supplied as a direct child of note must contain a noteMarkers.</sch:assert>
+                              <sch:assert test="empty(tei:*[not(self::tei:noteMarker)])">ERROR: Only noteMarkers are allowed within note[@type='lim']/supplied.</sch:assert>
+                              <sch:assert test="every $text in text() satisfies not(matches($text,'\S'))">ERROR: Do not put text within the supplied in a noteMarker.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="note.unknownsShouldBeFixed" scheme="schematron">
+                     <desc>Notes must be typed in the body</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:note[@type = 'unknown']">
+                              <sch:assert test="//tei:revisionDesc[@docStatus=('empty','uneditedTranscription')]">WARNING: Unknown notes should be replaced by either
+                                 the appropriate encoding (usually supplied, gap, del, etc) or should become a @type='editorial'.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="anchoredNotesShouldUseNoteMarker" scheme="schematron">
+                     <desc>Anchored notes should have a child noteMarker</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:note[@anchored='true']">
+                              <sch:assert test="tei:noteMarker or tei:supplied/tei:noteMarker">ERROR: Anchored notes must
+                                 contain a noteMarker element that points to the id of the
+                                 note marker in the body of the text.</sch:assert>
+                           </sch:rule>
+                           <sch:rule context="tei:note[@anchored='false']">
+                              <sch:assert test="@place">ERROR: Unanchored notes must have a @place value
+                                 specifying where it is on the page.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="type" usage="rec" mode="change">
+                        <valList type="semi" mode="add">
+                           <valItem ident="editorial" mode="add">
+                              <gloss>editorial note</gloss>
+                              <desc>An editorial note written by a team member.</desc>
+                           </valItem>
+                           <valItem ident="lim" mode="add">
+                              <gloss>Forbes note</gloss>
+                              <desc>A note that appears in the manuscript (left by Forbes or someone else).</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+                  
+                  <!--<attList>
+                     <!-\-Now we need the note have a choice of attributes:
+                     If there's a type and its one of the three special types that
+                     require attributes, then do that-\->
+                     <attList org="choice">
+                        <!-\-If it's a type not listed below,
+                        then it shouldn't have any other attributes-\->
+                        <attList org="group">
+                           <attDef ident="type" usage="opt">
+                              <datatype>
+                                 <dataRef key="teidata.enumerated"/>
+                              </datatype>
+                           </attDef>
+                        </attList>
+                        <!-\-Group 2: An editorial note,
+                        which must include @resp-\->
+                        <attList org="group">
+                           <attDef ident="type" usage="req">
+                              <valList type="closed">
+                                
+                              </valList>
+                           </attDef>
+                           <!-\-Since we use notes in the teiHeader,
+                              we have to make the use of resp required via schematron-\->
+                           <attDef ident="resp" usage="req">
+                              <gloss versionDate="2009-11-02" xml:lang="en">responsible party</gloss>
+                              <datatype maxOccurs="unbounded">
+                                 <dataRef key="teidata.pointer"/>
+                              </datatype>
+                              <constraintSpec ident="note.editorial.requiresResp" scheme="schematron">
+                                 <constraint>
+                                    <sch:rule context="tei:note[@type='editorial'][not(root(.)/*[matches(@xml:id,'vol11')])]">
+                                       <sch:assert test="@resp">ERROR: All editorial notes must point to a team member.</sch:assert>
+                                    </sch:rule>
+                                 </constraint>
+                              </constraintSpec>
+                              <remarks>
+                                 <p>All editorial notes must include a resp in order to identify
+                                    the encoder responsible.</p>
+                              </remarks>
+                           </attDef>
+                        </attList>
+                        <!-\-Group 3: A LiM Note,
+                        which is a primary source note-\->
+                        <attList org="group">
+                           <attDef ident="type" usage="req">
+                              <valList type="closed">
+                                
+                              </valList>
+                           </attDef>
+                           <!-\-Optional hand attribute on lim notes-\->
+                           <attDef ident="hand" usage="opt">
+                              <desc>points to a <gi>handNote</gi> element describing the hand considered responsible for the
+                                 content of the element concerned.</desc>
+                              <datatype>
+                                 <dataRef key="teidata.pointer"/>
+                              </datatype>
+                           </attDef>
+                           <!-\-Sub-group:
+                              if anchored is true, then it needs an @n-\->
+                           <attList org="choice">
+                              <attList org="group">
+                                 <attDef ident="anchored" usage="req">
+                                    <gloss>anchored</gloss>
+                                    <desc>indicates whether the copy text shows the exact place of reference for the note.</desc>
+                                    <valList type="closed">
+                                       <valItem ident="true">
+                                          <gloss>true</gloss>
+                                          <desc>The note is anchored (i.e. it contains a symbol that anchors it in place)</desc>
+                                       </valItem>
+                                    </valList>
+                                 </attDef>
+                              </attList>
+                              <attList org="group">
+                                 <attDef ident="anchored" usage="req">
+                                    <gloss>anchored</gloss>
+                                    <desc>indicates whether the copy text shows the exact place of reference for the note.</desc>
+                                    <valList type="closed">
+                                       <valItem ident="false">
+                                          <gloss>false</gloss>
+                                          <desc>The note is not anchored (i.e. it does not contain a symbol that anchors it in place)</desc>
+                                       </valItem>
+                                    </valList>
+                                 </attDef>
+                                 <attDef ident="place" usage="req">
+                                    <desc versionDate="2012-10-07" xml:lang="en">specifies where this item is placed.</desc>
+                                    <datatype>
+                                       <dataRef key="limdata.placement"/>
+                                    </datatype>
+                                    <constraintSpec ident="note.lim.requiresPlace" scheme="schematron">
+                                       <constraint>
+                                          <sch:rule context="tei:note[@type='lim']">
+                                             <sch:assert test="@place">ERROR: All lim notes require a @place attribute to describe
+                                                where on the page the original note is placed.</sch:assert>
+                                          </sch:rule>
+                                       </constraint>
+                                    </constraintSpec>
+                                 </attDef>
+                              </attList>
+                           </attList>
+                        </attList>
+                     </attList>
+                  </attList>-->
+               </elementSpec>
+               <!--noteGrp-->
+               <elementSpec ident="noteGrp" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="lim.att.boolean" mode="add"/>
+                  </classes>
+                  <content>
+                     <elementRef key="note" minOccurs="0" maxOccurs="unbounded"/>
+                  </content>
+               </elementSpec>
+               <!--pb-->
                <elementSpec ident="pb" module="core" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global" mode="delete"/>
@@ -61,33 +549,119 @@
                      <attDef ident="facs" mode="change" usage="req"/>
                   </attList>
                </elementSpec>
-               <elementSpec ident="name" module="core" mode="change">
-                  <constraintSpec ident="name.notForPeopleOrPlaces" mode="change" scheme="schematron">
-                     <desc>Name should only be used if there isn't a more specific element.</desc>
-                     <constraint>
-                <!--TODO: Remove @ref once feasible-->
-                        <sch:rule context="tei:name[@ref]">
-                           <sch:assert test="not(matches(@ref,'^prs:'))">ERROR: Use &lt;persName&gt; to tag names of people.</sch:assert>
-                           <sch:assert test="not(matches(@ref,'^plc:'))">ERROR: Use &lt;placeName&gt; to tag names of places.</sch:assert>
-                           <sch:assert test="not(matches(@ref,'^org:'))">ERROR: Use &lt;orgName&gt; to tag names of organizations.</sch:assert>
-                        </sch:rule>
-                     </constraint>
-                  </constraintSpec>
-                  <attList>
-                     <attDef ident="type" mode="change" usage="opt">
-                        <valList type="closed" mode="add">
-                           <valItem ident="event" mode="add">
-                              <gloss>event</gloss>
-                              <desc>The name of an event (e.g. "The Battle of Prestonpans")</desc>
-                           </valItem>
-                           <valItem ident="object" mode="add">
-                              <gloss>object</gloss>
-                              <desc>The name of an object (e.g. "Excalibur")</desc>
-                           </valItem>
-                        </valList>
-                     </attDef>
+               <!--q-->
+               <elementSpec ident="q" module="core" mode="replace">
+                  <gloss versionDate="2012-03-26" xml:lang="en">quoted</gloss>
+                  <desc versionDate="2012-03-26" xml:lang="en">contains material which is distinguished from the
+                     surrounding text using quotation marks or a similar method, for any one of a variety of reasons including, but not limited to: direct
+                     speech or thought, technical terms or jargon, authorial distance, quotations from elsewhere, and
+                     passages that are mentioned but not used.</desc>
+                  <classes>
+                     <memberOf key="model.hiLike"/>
+                     <memberOf key="model.common"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.specialPara"/>
+                  </content>
+                  <!--               <constraintSpec ident="allQuotationMarksShouldBeInQ" scheme="schematron">
+                        <desc>Quotation marks must be in q elements.</desc>
+                        <constraint>
+                           <sch:rule context="tei:*[ancestor::tei:text]
+                              [ancestor::tei:TEI/descendant::tei:limItem]
+                              [ancestor::tei:TEI/descendant::tei:revisionDesc/@docStatus='inProgress']
+                              [not(ancestor-or-self::tei:q)]
+                              [some $text in text() satisfies matches($text,'\S')]">
+                              <sch:let name="marksRex" value="'[' || codepoints-to-string(34) || '“”]'"/>
+                              <sch:let name="string" value="string-join(text(),'')"/>
+                              <sch:assert test="not(matches($string, $marksRex))">ERROR: All quotation marks must be contained at some point by a q element.</sch:assert>
+                           </sch:rule>
+                        </constraint>
+                  </constraintSpec>-->
+                  <attList org="choice">
+                     <attList org="group">
+                        <attDef ident="type" usage="opt" mode="replace">
+                           <datatype minOccurs="1" maxOccurs="1">
+                              <dataRef key="teidata.enumerated"/>
+                           </datatype>
+                           <valList type="closed">
+                              <valItem ident="speech">
+                                 <gloss>speech</gloss>
+                                 <desc>Representation of speech</desc>
+                              </valItem>
+                           </valList>
+                        </attDef>
+                        <attDef ident="who" mode="add" usage="opt">
+                           <desc versionDate="2005-11-05" xml:lang="en">indicates the person, or group of people, to whom the element content is ascribed.</desc>
+                           <datatype maxOccurs="unbounded">
+                              <dataRef key="teidata.pointer"/>
+                           </datatype>
+                        </attDef>
+                        <attDef ident="toWhom" mode="add" usage="opt">
+                           <desc versionDate="2018-07-19" xml:lang="en">indicates the person, or group of people, to whom a speech act or action is directed.</desc>
+                           <datatype maxOccurs="unbounded">
+                              <dataRef key="teidata.pointer"/>
+                           </datatype>
+                        </attDef>
+                     </attList>
+                     <attList org="group">
+                        <attDef ident="type" usage="opt" mode="replace">
+                           <datatype minOccurs="0" maxOccurs="1">
+                              <dataRef key="teidata.enumerated"/>
+                           </datatype>
+                           <valList type="closed" mode="replace">
+                              <valItem ident="letter" mode="add">
+                                 <gloss>letter</gloss>
+                                 <desc>Representation of writing (i.e. a letter)</desc>
+                              </valItem>
+                           </valList>
+                        </attDef>
+                        <attDef ident="who" mode="add" usage="opt">
+                           <desc versionDate="2005-11-05" xml:lang="en">indicates the person, or group of people, to whom the element content is ascribed.</desc>
+                           <datatype maxOccurs="unbounded">
+                              <dataRef key="teidata.pointer"/>
+                           </datatype>
+                        </attDef>
+                        <attDef ident="toWhom" mode="add" usage="opt">
+                           <desc versionDate="2018-07-19" xml:lang="en">indicates the person, or group of people, to whom a speech act or action is directed.</desc>
+                           <datatype maxOccurs="unbounded">
+                              <dataRef key="teidata.pointer"/>
+                           </datatype>
+                        </attDef>
+                        <attDef ident="where" mode="add" usage="opt">
+                           <desc versionDate="2007-06-11" xml:lang="en">indicates the location of an event by pointing to a <gi>place</gi> element</desc>
+                           <datatype>
+                              <dataRef key="teidata.pointer"/>
+                           </datatype>
+                        </attDef>
+                        <attDef ident="toWhere" mode="add" usage="opt">
+                           <desc>indicates the location of something being sent.</desc>
+                           <datatype>
+                              <dataRef key="teidata.pointer"/>
+                           </datatype>
+                        </attDef>
+                     </attList>
+                     <attList org="group">
+                        <attDef ident="type" usage="opt" mode="replace">
+                           <datatype minOccurs="0" maxOccurs="1">
+                              <dataRef key="teidata.enumerated"/>
+                           </datatype>
+                           <valList type="closed" mode="replace">
+                              <valItem ident="quotation" mode="add">
+                                 <gloss>quotation</gloss>
+                                 <desc>Represents some sort of other quotation</desc>
+                              </valItem>
+                           </valList>
+                        </attDef>
+                     </attList>
                   </attList>
                </elementSpec>
+               <!--quote-->
+               <elementSpec ident="quote" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.citing"/>
+                  </classes>
+               </elementSpec>
+               <!--rs-->
                <elementSpec ident="rs" module="core" mode="change">
                   <constraintSpec ident="rs.familyNoRef" mode="change" scheme="schematron">
                      <desc>Family references should not have a ref.</desc>
@@ -125,514 +699,13 @@
                      </attDef>
                   </attList>
                </elementSpec>
-               <elementSpec ident="lb" module="core" mode="change">
-                  <classes mode="change">
-                     <memberOf key="att.global.facs" mode="add"/>
-                     <memberOf key="att.spanning" mode="delete"/>
-                  </classes>
-<!--                  <constraintSpec ident="lb.noSpaces" scheme="schematron">
-                     <constraint>
-                        <sch:rule context="tei:lb[preceding-sibling::node()[1][self::tei:pc]]">
-                           <sch:assert test="matches(following::text()[1],'^\S')">ERROR: All punctuation separated words in lines should not have any spaces after the line beginning element.</sch:assert>
-                        </sch:rule>
-                     </constraint>
-                  </constraintSpec>-->
-                  <constraintSpec ident="lb.shouldUseDecimal" scheme="schematron">
-                     <constraint>
-                        <sch:rule context="tei:lb[@facs]">
-                           <sch:assert test="matches(@facs,'(lib|pg):\d+\.\d+')">ERROR: lb elements with facs must specify the line in the form lib:#.lineNum or pg:#.lineNum (e.g. lib:23.2)</sch:assert>
-                        </sch:rule>
-                     </constraint>
-                  </constraintSpec>
-               </elementSpec>
-               <elementSpec ident="corr" module="core" mode="change">
-                  <classes mode="change">
-              <!--Remove from pPart.transcriptional, since it should only be in <choice>-->
-                     <memberOf key="model.pPart.transcriptional" mode="delete"/>
-                     <!--Add cert and resp-->
-                     <memberOf key="att.global.responsibility" mode="add"/>
-                  </classes>
-               </elementSpec>
-               <elementSpec ident="expan" module="core" mode="change">
-                  <classes mode="change">
-              <!--Remove from pPart.editorial, since it should only be in <choice>-->
-                     <memberOf key="model.pPart.editorial" mode="delete"/>
-                     <!--Add cert and resp-->
-                     <memberOf key="att.global.responsibility" mode="add"/>
-                  </classes>
-               </elementSpec>
+               <!--sic-->
                <elementSpec ident="sic" module="core" mode="change">
                   <classes mode="change">
                      <!--Add cert and resp-->
                      <memberOf key="att.global.responsibility" mode="add"/>
                   </classes>
                </elementSpec>
-               
-               <elementSpec ident="milestone" module="core" mode="change">
-                  <constraintSpec ident="milestone.sectionInBody" scheme="schematron">
-                     <desc>Notes must be typed in the body</desc>
-                     <constraint>
-                        <sch:pattern>
-                           <sch:rule context="tei:milestone[@unit='section']">
-                              <sch:assert test="ancestor::tei:body">ERROR: Section milestones should be within the body of the text</sch:assert>
-                           </sch:rule>
-                        </sch:pattern>
-                     </constraint>
-                  </constraintSpec>
-                  <constraintSpec ident="milestone.itemInText" scheme="schematron">
-                     <desc>Notes must be typed in the body</desc>
-                     <constraint>
-                        <sch:pattern>
-                           <sch:rule context="tei:milestone[@unit='item']">
-                              <sch:assert test="ancestor::tei:text and preceding-sibling::tei:body">ERROR: Item milestones should only occur at the end of the item after the closing body tag.</sch:assert>
-                           </sch:rule>
-                        </sch:pattern>
-                     </constraint>
-                  </constraintSpec>
-                  <attList>
-                     <attDef ident="unit" mode="change">
-                        <valList type="semi" mode="replace">
-                           <valItem ident="section" mode="add">
-                              <gloss>section</gloss>
-                              <desc>A horizontal rule representing a shift in section</desc>
-                           </valItem>
-                           <valItem ident="item" mode="add">
-                              <gloss>item</gloss>
-                              <desc>A horizontal rule representing the end of an item</desc>
-                           </valItem>
-                        </valList>
-                     </attDef>
-                  </attList>
-               </elementSpec>
-               
-               <elementSpec ident="note" module="core" mode="replace">
-                  <gloss xml:lang="en" versionDate="2017-06-25">note</gloss>
-                  <desc versionDate="2005-01-14" xml:lang="en">contains a note or annotation.</desc>
-                  <classes>
-                     <!--All attribute classes have been deleted
-                        in order to allow specific values-->
-                     <memberOf key="model.noteLike"/>
-                     <memberOf key="model.annotationLike"/>
-                     <memberOf key="model.correspDescPart"/>
-                     <memberOf key="model.correspActionPart"/>
-                     <memberOf key="model.correspContextPart"/>
-                     <memberOf key="model.annotationPart.body"/>
-                  </classes>
-                  <content>
-                     <macroRef key="macro.specialPara"/>
-                  </content>
-                  <constraintSpec ident="note.mustHaveTypeInText" scheme="schematron">
-                     <desc>Notes must be typed in the body</desc>
-                     <constraint>
-                        <sch:pattern>
-                           <sch:rule context="tei:note[ancestor::tei:text][not(ancestor::tei:div[@type='footnotes'])]">
-                              <sch:assert test="@type">ERROR: All notes in transcriptions must have a @type.</sch:assert>
-                           </sch:rule>
-                        </sch:pattern>
-                     </constraint>
-                  </constraintSpec>
-                  
-                  <constraintSpec ident="note.unknownsShouldBeFixed" scheme="schematron">
-                     <desc>Notes must be typed in the body</desc>
-                     <constraint>
-                        <sch:pattern>
-                           <sch:rule context="tei:note[@type = 'unknown']">
-                              <sch:assert test="//tei:revisionDesc[@docStatus=('empty','uneditedTranscription')]">WARNING: Unknown notes should be replaced by either
-                                 the appropriate encoding (usually supplied, gap, del, etc) or should become a @type='editorial'.</sch:assert>
-                           </sch:rule>
-                        </sch:pattern>
-                     </constraint>
-                  </constraintSpec>
-                  
-                  <attList>
-                     <!--Now we need the note have a choice of attributes:
-                     If there's a type and its one of the three special types that
-                     require attributes, then do that-->
-                     <attList org="choice">
-                        <!--If it's a type not listed below,
-                        then it shouldn't have any other attributes-->
-                        <attList org="group">
-                           <attDef ident="type" usage="opt">
-                              <datatype>
-                                 <dataRef key="teidata.enumerated"/>
-                              </datatype>
-                           </attDef>
-                        </attList>
-                        <!--Group 2: An editorial note,
-                        which must include @resp-->
-                        <attList org="group">
-                           <attDef ident="type" usage="req">
-                              
-                              <valList type="closed">
-                                 <valItem ident="editorial">
-                                    <gloss>editorial note</gloss>
-                                    <desc>An editorial note written by a team member.</desc>
-                                 </valItem>
-                              </valList>
-                           </attDef>
-                           <!--Since we use notes in the teiHeader,
-                              we have to make the use of resp required via schematron-->
-                           <attDef ident="resp" usage="req">
-                              <gloss versionDate="2009-11-02" xml:lang="en">responsible party</gloss>
-                              <datatype maxOccurs="unbounded">
-                                 <dataRef key="teidata.pointer"/>
-                              </datatype>
-                              <constraintSpec ident="note.editorial.requiresResp" scheme="schematron">
-                                 <constraint>
-                                    <sch:rule context="tei:note[@type='editorial'][not(root(.)/*[matches(@xml:id,'vol11')])]">
-                                       <sch:assert test="@resp">ERROR: All editorial notes must point to a team member.</sch:assert>
-                                    </sch:rule>
-                                 </constraint>
-                              </constraintSpec>
-                              <remarks>
-                                 <p>All editorial notes must include a resp in order to identify
-                                    the encoder responsible.</p>
-                              </remarks>
-                           </attDef>
-                        </attList>
-                        <!--Group 3: A LiM Note,
-                        which is a primary source note-->
-                        <attList org="group">
-                           <attDef ident="type" usage="req">
-                              <valList type="closed">
-                                 <valItem ident="lim">
-                                    <gloss>Forbes note</gloss>
-                                    <desc>A note that appears in the manuscript (left by Forbes or someone else).</desc>
-                                 </valItem>
-                              </valList>
-                           </attDef>
-                           <attDef ident="place" usage="req">
-                              <desc versionDate="2012-10-07" xml:lang="en">specifies where this item is placed.</desc>
-                              <datatype>
-                                 <dataRef key="limdata.placement"/>
-                              </datatype>
-                              <constraintSpec ident="note.lim.requiresPlace" scheme="schematron">
-                                 <constraint>
-                                    <sch:rule context="tei:note[@type='lim']">
-                                       <sch:assert test="@place">ERROR: All lim notes require a @place attribute to describe
-                                          where on the page the original note is placed.</sch:assert>
-                                    </sch:rule>
-                                 </constraint>
-                              </constraintSpec>
-                           </attDef>
-                           <!--Optional hand attribute on lim notes-->
-                           <attDef ident="hand" usage="opt">
-                              <desc>points to a <gi>handNote</gi> element describing the hand considered responsible for the
-                                 content of the element concerned.</desc>
-                              <datatype>
-                                 <dataRef key="teidata.pointer"/>
-                              </datatype>
-                           </attDef>
-                           <!--Sub-group:
-                              if anchored is true, then it needs an @n-->
-                           <attList org="choice">
-                              <attList org="group">
-                                 <attDef ident="anchored" usage="req">
-                                    <gloss>anchored</gloss>
-                                    <desc>indicates whether the copy text shows the exact place of reference for the note.</desc>
-                                    <valList type="closed">
-                                       <valItem ident="true">
-                                          <gloss>true</gloss>
-                                          <desc>The note is anchored (i.e. it contains a symbol that anchors it in place)</desc>
-                                       </valItem>
-                                    </valList>
-                                 </attDef>
-                                 <attDef ident="n" usage="req">
-                                    <gloss>notation</gloss>
-                                    <desc>The symbol used for anchoring this note;
-                                       this should only be a single character.</desc>
-                                    <datatype>
-                                       <dataRef name="string">
-                                          <dataFacet name="length" value="1"/>
-                                       </dataRef>
-                                    </datatype>
-                                 </attDef>
-                                 <attDef ident="facs" usage="opt">
-                                    <gloss>facsimile</gloss>
-                                    <desc>Points to the page that contains this note</desc>
-                                    <datatype>
-                                       <dataRef key="limdata.facs"/>
-                                    </datatype>
-                                 </attDef>
-                              </attList>
-                              <attList org="group">
-                                 <attDef ident="anchored" usage="req">
-                                    <gloss>anchored</gloss>
-                                    <desc>indicates whether the copy text shows the exact place of reference for the note.</desc>
-                                    <valList type="closed">
-                                       <valItem ident="false">
-                                          <gloss>false</gloss>
-                                          <desc>The note is not anchored (i.e. it does not contain a symbol that anchors it in place)</desc>
-                                       </valItem>
-                                    </valList>
-                                 </attDef>
-                              </attList>
-                           </attList>
-                        </attList>
-                     </attList>
-                  </attList>
-               </elementSpec>
-               <elementSpec ident="list" module="core" mode="change">
-                  <constraintSpec scheme="schematron" ident="list.bornDigitalNeedsRendition">
-                     <constraint>
-                        <sch:rule context="tei:list[not(@rendition)]">
-                           <sch:assert test="not($isBornDigital)">ERROR: All lists in born digital document require the rendition attribute.</sch:assert>
-                        </sch:rule>
-                     </constraint>
-                  </constraintSpec>
-                  <attList>
-                     <attDef ident="rendition" mode="change">
-                        <valList type="closed" mode="change">
-                           <valItem mode="add" ident="rnd:list_ordered">
-                              <desc>An ordered list</desc>
-                           </valItem>
-                           <valItem mode="add" ident="rnd:list_unordered">
-                              <desc>An unordered list</desc>
-                           </valItem>
-                        </valList>
-                     </attDef>
-                  </attList>
-               </elementSpec>
-               <elementSpec ident="head" module="core" mode="change">
-                  <constraintSpec scheme="schematron" ident="head.bdHidden">
-                     <constraint>
-                        <sch:rule context="tei:head[matches(@rendition,'rnd:hidden')]">
-                           <sch:assert
-                              test="$isBornDigital">ERROR: Only use rnd:hidden in born digital documents.</sch:assert>
-                        </sch:rule>
-                     </constraint>
-                     
-                  </constraintSpec>
-                  <attList>
-                     <attDef ident="rendition" mode="change">
-                        <valList type="closed" mode="change">
-                           <valItem mode="add" ident="rnd:hidden">
-                              <gloss>hidden</gloss>
-                              <desc>A heading that is
-                                 hidden (for accessibility purposes).</desc>
-                           </valItem>
-                        </valList>
-                     </attDef>
-                  </attList>
-                  
-               </elementSpec>
-               <elementSpec ident="noteGrp" module="core" mode="change">
-                  <classes mode="change">
-                     <memberOf key="lim.att.boolean" mode="add"/>
-                  </classes>
-                  <content>
-                     <elementRef key="note" minOccurs="0" maxOccurs="unbounded"/>
-                  </content>
-               </elementSpec>
-               <elementSpec ident="quote" module="core" mode="change">
-                  <classes mode="change">
-                     <memberOf key="att.citing"/>
-                  </classes>
-               </elementSpec>
-               <elementSpec ident="q" module="core" mode="replace">
-                  <gloss versionDate="2012-03-26" xml:lang="en">quoted</gloss>
-                  <desc versionDate="2012-03-26" xml:lang="en">contains material which is distinguished from the
-                     surrounding text using quotation marks or a similar method, for any one of a variety of reasons including, but not limited to: direct
-                     speech or thought, technical terms or jargon, authorial distance, quotations from elsewhere, and
-                     passages that are mentioned but not used.</desc>
-                  <classes>
-                     <memberOf key="model.hiLike"/>
-                     <memberOf key="model.common"/>
-                  </classes>
-                  <content>
-                     <macroRef key="macro.specialPara"/>
-                  </content>
-   <!--               <constraintSpec ident="allQuotationMarksShouldBeInQ" scheme="schematron">
-                        <desc>Quotation marks must be in q elements.</desc>
-                        <constraint>
-                           <sch:rule context="tei:*[ancestor::tei:text]
-                              [ancestor::tei:TEI/descendant::tei:limItem]
-                              [ancestor::tei:TEI/descendant::tei:revisionDesc/@docStatus='inProgress']
-                              [not(ancestor-or-self::tei:q)]
-                              [some $text in text() satisfies matches($text,'\S')]">
-                              <sch:let name="marksRex" value="'[' || codepoints-to-string(34) || '“”]'"/>
-                              <sch:let name="string" value="string-join(text(),'')"/>
-                              <sch:assert test="not(matches($string, $marksRex))">ERROR: All quotation marks must be contained at some point by a q element.</sch:assert>
-                           </sch:rule>
-                        </constraint>
-                  </constraintSpec>-->
-                  <attList org="choice">
-                     <attList org="group">
-                        <attDef ident="type" usage="opt" mode="replace">
-                           <datatype minOccurs="1" maxOccurs="1">
-                              <dataRef key="teidata.enumerated"/>
-                           </datatype>
-                           <valList type="closed">
-                              <valItem ident="speech">
-                                 <gloss>speech</gloss>
-                                 <desc>Representation of speech</desc>
-                              </valItem>
-                           </valList>
-                        </attDef>
-                        <attDef ident="who" mode="add" usage="opt">
-                           <desc versionDate="2005-11-05" xml:lang="en">indicates the person, or group of people, to whom the element content is ascribed.</desc>
-                           <datatype maxOccurs="unbounded">
-                              <dataRef key="teidata.pointer"/>
-                           </datatype>
-                        </attDef>
-                        <attDef ident="toWhom" mode="add" usage="opt">
-                           <desc versionDate="2018-07-19" xml:lang="en">indicates the person, or group of people, to whom a speech act or action is directed.</desc>
-                           
-                           <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
-                        </attDef>
-                     </attList>
-                     <attList org="group">
-                        <attDef ident="type" usage="opt" mode="replace">
-                           <datatype minOccurs="0" maxOccurs="1">
-                              <dataRef key="teidata.enumerated"/>
-                           </datatype>
-                           <valList type="closed" mode="replace">
-                              <valItem ident="letter" mode="add">
-                                 <gloss>letter</gloss>
-                                 <desc>Representation of writing (i.e. a letter)</desc>
-                              </valItem>
-                           </valList>
-                        </attDef>
-                        <attDef ident="who" mode="add" usage="opt">
-                           <desc versionDate="2005-11-05" xml:lang="en">indicates the person, or group of people, to whom the element content is ascribed.</desc>
-                           <datatype maxOccurs="unbounded">
-                              <dataRef key="teidata.pointer"/>
-                           </datatype>
-                        </attDef>
-                        <attDef ident="toWhom" mode="add" usage="opt">
-                           <desc versionDate="2018-07-19" xml:lang="en">indicates the person, or group of people, to whom a speech act or action is directed.</desc>
-                           
-                           <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
-                        </attDef>
-                        <attDef ident="where" mode="add" usage="opt">
-                           <desc versionDate="2007-06-11" xml:lang="en">indicates the location of an event by pointing to a <gi>place</gi> element</desc>
-                           <datatype>
-                              <dataRef key="teidata.pointer"/>
-                           </datatype>
-                        </attDef>
-                        <attDef ident="toWhere" mode="add" usage="opt">
-                           <desc>indicates the location of something being sent.</desc>
-                           <datatype>
-                              <dataRef key="teidata.pointer"/>
-                           </datatype>
-                        </attDef>
-                     </attList>
-                     <attList org="group">
-                        <attDef ident="type" usage="opt" mode="replace">
-                           <datatype minOccurs="0" maxOccurs="1">
-                              <dataRef key="teidata.enumerated"/>
-                           </datatype>
-                           <valList type="closed" mode="replace">
-                              <valItem ident="quotation" mode="add">
-                                 <gloss>quotation</gloss>
-                                 <desc>Represents some sort of other quotation</desc>
-                              </valItem>
-                           </valList>
-                        </attDef>
-                     </attList>
-                  </attList>
-               </elementSpec>
-               
-               <elementSpec ident="abbr" module="core" mode="change">
-                  <classes mode="change">
-                     <!--Add cert and resp-->
-                     <memberOf key="att.global.responsibility" mode="add"/>
-                  </classes>
-                  <constraintSpec ident="abbr.shouldntContainJustAmp" scheme="schematron" mode="add">
-                     <desc>Don't expand the ampersand only.</desc>
-                     <constraint>
-                        <sch:rule context="tei:abbr">
-                           <sch:let name="content" value="string(.)"/>
-                           <sch:assert test="not(matches($content, '^\s*&amp;\s*$'))">ERROR: There is no need to tag ampersands when it means "and".</sch:assert>
-                        </sch:rule>
-                     </constraint>
-                  </constraintSpec>
-                  <constraintSpec ident="abbr.typeCheck" scheme="schematron" mode="add">
-                     <desc>Type is required when not in choice</desc>
-                     <constraint>
-                        <sch:pattern>
-                           <!--TODO: Remove @ref once feasible-->
-                           <sch:rule context="tei:choice/tei:abbr">
-                              <sch:assert test="not(@type)">ERROR: Do not put a type attribute on abbrs in choice.</sch:assert>
-                           </sch:rule>
-                           <sch:rule context="tei:abbr[not(parent::tei:choice)]">
-                              <sch:assert test="@type">ERROR: @type is required when abbr is not in a choice.</sch:assert>
-                           </sch:rule>
-                        </sch:pattern>
-                     </constraint>
-                  </constraintSpec>
-                  <attList>
-
-            
-                     
-                     <attDef mode="change" ident="type">
-                        <valList mode="replace" type="closed">
-                           <valItem ident="another" mode="add">
-                              <desc>anoyr</desc>
-                              <gloss>Abbreviation for <mentioned>another</mentioned></gloss>
-                           </valItem>
-                           <valItem ident="Brother" mode="add">
-                              <desc>Broyr</desc>
-                              <gloss>Abbreviation for <mentioned>Brother</mentioned></gloss>
-                           </valItem>
-                           <valItem ident="which" mode="add">
-                              <desc>qch</desc>
-                              <gloss>Abbreviation for <mentioned>which</mentioned></gloss>
-                           </valItem>
-                           <valItem ident="whom" mode="add">
-                              <desc>qm</desc>
-                              <gloss>Abbreviation for <mentioned>whom</mentioned></gloss>
-                           </valItem>
-                           <valItem ident="when" mode="add">
-                              <desc>qn</desc>
-                              <gloss>Abbreviation for <mentioned>when</mentioned></gloss>
-                           </valItem>
-                           <valItem ident="who" mode="add">
-                              <desc>qo</desc>
-                              <gloss>Abbreviation for <mentioned>who</mentioned></gloss>
-                           </valItem>
-                           <valItem ident="what" mode="add">
-                              <desc>qt</desc>
-                              <gloss>Abbreviation for <mentioned>what</mentioned></gloss>
-                           </valItem>
-                           <valItem ident="with" mode="add">
-                              <desc>wt</desc>
-                              <gloss>Abbreviation for <mentioned>with</mentioned></gloss>
-                           </valItem>
-                           <valItem ident="the" mode="add">
-                              <desc>ye</desc>
-                              <gloss>Abbreviation for <mentioned>the</mentioned></gloss>
-                           </valItem>
-                           <valItem ident="then" mode="add">
-                              <desc>yn</desc>
-                              <gloss>Abbreviation for <mentioned>then</mentioned></gloss>
-                           </valItem>
-                           <valItem ident="your" mode="add">
-                              <desc>yr</desc>
-                              <gloss>Abbreviation for <mentioned>your</mentioned></gloss>
-                           </valItem>
-                           <valItem ident="that" mode="add">
-                              <desc>yt</desc>
-                              <gloss>Abbreviation for <mentioned>that</mentioned></gloss>
-                           </valItem>
-                           <valItem ident="them" mode="add">
-                              <desc>ym</desc>
-                              <gloss>Abbreviation for <mentioned>them</mentioned></gloss>
-                           </valItem>
-                           <valItem ident="there" mode="add">
-                              <desc>yre</desc>
-                              <gloss>Abbreviation for <mentioned>there</mentioned></gloss>
-                           </valItem>
-                           <valItem ident="this" mode="add">
-                              <desc>ys</desc>
-                              <gloss>Abbreviation for <mentioned>this</mentioned></gloss>
-                           </valItem>
-                        </valList>
-                     </attDef>
-                  </attList>
-               </elementSpec>
-               
-               
             </schemaSpec>
          </div>
       </body>

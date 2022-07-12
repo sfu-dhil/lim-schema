@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://hcmc.uvic.ca/ns/staticSearch" version="1">
+    <params>
+        <searchFile>public/index.html</searchFile>
+        <recurse>false<!--Need to set recurse to true for the test--></recurse>
+        <linkToFragmentId>true</linkToFragmentId>
+        <scrollToTextFragment>false</scrollToTextFragment>
+        <phrasalSearch>true</phrasalSearch>
+        <wildcardSearch>true</wildcardSearch>
+        <createContexts>true</createContexts>
+        <resultsPerPage>75</resultsPerPage>
+        <minWordLength>2</minWordLength>
+        <!--NOTE: If phrasalSearch is set to TRUE, then
+        maxContexts prop will be ignored-->
+        <maxKwicsToHarvest>5</maxKwicsToHarvest>
+        <maxKwicsToShow>5</maxKwicsToShow>
+        <totalKwicLength>15</totalKwicLength>
+        <kwicTruncateString>...</kwicTruncateString>
+        <verbose>false</verbose>
+        <stopwordsFile>staticSearch/test/test_stopwords.txt</stopwordsFile>
+        <dictionaryFile>staticSearch/xsl/english_words.txt</dictionaryFile>
+        <indentJSON>false</indentJSON>
+        <outputFolder>search</outputFolder>
+    </params>
+    
+    <rules>
+        <rule weight="2"
+            match="h1 | h2"/>
+        <rule weight="0"
+            match="nav"/>
+        <rule weight="0" match="span[contains-token(@class,'label')]"/>
+        <rule weight="0" match="*[contains-token(@class,'egXML')]"/>
+        <!--Remove the sample boilerplate string-->
+        <rule weight="0" match="td/span[@style]"/>
+        <rule weight="0"
+            match="script | style"/>
+        <rule weight="20" match="div[contains-token(@class,'p')][ancestor::html[descendant::meta[@name='Document Type']/@content='Documentation']]"/>
+    </rules>
+    
+    <excludes>
+        <exclude type="index" match="html[@id='excluded']"/>
+        <exclude match="meta[contains-token(@class,'excludedMeta')]" type="filter"/>
+    </excludes>
+    
+</config>

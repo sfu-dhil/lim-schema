@@ -23,9 +23,54 @@
          <div>
             <head>lim</head>
             <schemaSpec ident="lim_lim">
-               
                <moduleSpec ident="lim"/>
-               
+               <!--compliment-->
+               <elementSpec ident="compliment" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="att.global"/>
+                     <memberOf key="att.ascribed.directed"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.specialPara"/>
+                  </content>
+               </elementSpec>
+               <!--compliments-->
+               <elementSpec ident="compliments" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="model.correspDescPart"/>
+                  </classes>
+                  <content>
+                     <elementRef key="compliment" minOccurs="0" maxOccurs="unbounded"/>
+                  </content>
+               </elementSpec>
+               <!--duration-->
+               <elementSpec ident="duration" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="model.settingPart"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.paraContent"/>
+                  </content>
+               </elementSpec>
+               <!--enclosure-->
+               <elementSpec ident="enclosure" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="att.global"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.specialPara"/>
+                  </content>
+               </elementSpec>
+               <!--enclosures-->
+               <elementSpec ident="enclosures" module="lim" mode="add">
+                  <classes>
+                     <memberOf key="model.correspDescPart"/>
+                  </classes>
+                  <content>
+                     <elementRef key="enclosure" minOccurs="0" maxOccurs="unbounded"/>
+                  </content>
+               </elementSpec>
+               <!--limItem-->
                <elementSpec ident="limItem" module="lim" mode="add">
                   <desc>contains a set of descriptional elements for a text that serves as the basis for a containing text.</desc>
                   <classes>
@@ -81,17 +126,173 @@
                         </valList>
                      </attDef>
                   </attList>
-                  
                </elementSpec>
-               <elementSpec ident="compliment" module="lim" mode="add">
+               <!--NB-->
+               <elementSpec ident="NB" mode="add" module="lim">
+                  <gloss>nota bene</gloss>
+                  <desc>groups together content that is marked as a nota bene.</desc>
                   <classes>
                      <memberOf key="att.global"/>
-                     <memberOf key="att.ascribed.directed"/>
+                     <memberOf key="att.written"/>
+                     <memberOf key="model.divBottomPart"/>
                   </classes>
                   <content>
-                     <macroRef key="macro.specialPara"/>
+                     <sequence>
+                        <alternate minOccurs="0" maxOccurs="unbounded">
+                           <classRef key="model.global"/>
+                           <classRef key="model.divTopPart"/>
+                        </alternate>
+                        <classRef key="model.common"/>
+                        <alternate minOccurs="0" maxOccurs="unbounded">
+                           <classRef key="model.global"/>
+                           <classRef key="model.common"/>
+                        </alternate>
+                        <sequence minOccurs="0" maxOccurs="unbounded">
+                           <classRef key="model.divBottomPart"/>
+                           <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+                        </sequence>
+                     </sequence>
                   </content>
+                  <remarks>
+                     <p>The <gi>NB</gi> element is modelled after the <gi>postscript</gi> element
+                        as Forbes frequently uses NBs in multiple contexts (including as trailing 
+                        content, or as the entirety of an element).</p>
+                     <p>When a NB is used as the content of a footnote, 
+                        wrap the <gi>NB</gi> in the <gi>note</gi>.</p>
+                     <p>We assume that all <gi>NB</gi> elements are written by Forbes (i.e. the implied value of <att>resp</att> is prs:FORBR1).</p>
+                  </remarks>
                </elementSpec>
+               <!--noteMarker-->
+               <elementSpec ident="noteMarker" mode="add" module="lim">
+                  <classes>
+                     <memberOf key="model.milestoneLike"/>
+                  </classes>
+                  <content>
+                     <textNode/>
+                  </content>
+                  <constraintSpec ident="noteMarker.mustHaveTargetInNote" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:note/tei:noteMarker | tei:note/tei:supplied/tei:noteMarker">
+                              <sch:assert test="@target">ERROR: Note markers in a note should have a target
+                                 pointing to the source note marker.</sch:assert>
+                           </sch:rule>
+                           <sch:rule context="tei:noteMarker[not(parent::tei:note)] | tei:noteMarker[not(parent::tei:supplied/parent::tei:note)]">
+                              <sch:assert test="@xml:id">ERROR: Note markers in the body of text should 
+                              have an xml:id identifying it. (This should be automatic if you use
+                              the keyboard shortcut Command + Shift + N)</sch:assert>
+                           </sch:rule>
+                          
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="noteMarker.mustHaveContentIfUnknown" scheme="schematron">
+                     <constraint>
+                        
+                        <sch:rule context="tei:noteMarker[@ref='g:UNKNOWN']">
+                           <sch:assert test="matches(string(.), '\S')">ERROR: You must provide a character in the noteMarker when using g:UNKNOWN</sch:assert>
+                        </sch:rule>
+                        <sch:rule context="tei:noteMarker[@ref][not(@ref = 'g:UNKNOWN')]">
+                           <sch:assert test="empty(text())">ERROR: No text content is allowed in noteMarker unless @ref='g:UNKNOWN'</sch:assert>
+                        </sch:rule>
+                        
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <!--Identical to the ref on glyph-->
+                     <attDef ident="ref" usage="req">
+                        <desc versionDate="2005-01-14" xml:lang="en">points to a description of the character or glyph intended.</desc>
+                        <desc versionDate="2007-05-02" xml:lang="zh-TW">連結到該文字或字體的描述。</desc>
+                        <desc versionDate="2008-04-05" xml:lang="ja">当該文字やグリフの解説を参照する．</desc>
+                        <desc versionDate="2007-06-12" xml:lang="fr">pointe vers la description du caractère ou du glyphe
+                            visé</desc>
+                        <desc versionDate="2007-05-04" xml:lang="es">indica la descripción del carácter o pictograma dado.</desc>
+                        <desc versionDate="2007-01-21" xml:lang="it">punta a una descrizione del carattere o glifo.</desc>
+                        <datatype>
+                           <dataRef key="limdata.glyph"/>
+                        </datatype>
+                     </attDef>
+                     <attDef ident="annotation" usage="opt">
+                        <desc>describes any penciled annotation surrounding this note marker</desc>
+                        <valList type="closed">
+                           <valItem ident="circle">
+                              <gloss>circle</gloss>
+                              <desc>circled in pencil</desc>
+                           </valItem>
+                           <valItem ident="strike">
+                              <gloss>strike</gloss>
+                              <desc>Struck out in pencil</desc>
+                           </valItem>
+                        </valList>
+                        <remarks>
+                           <p>This <att>annotation</att> attribute is something of a shortcut 
+                           for the <gi>add</gi> element to better describe some kind of phenomena around
+                           a note marker added by a later annotator.</p>
+                        </remarks>
+                     </attDef>
+                     <attList org="choice">
+                        <attDef ident="xml:id" usage="req">
+                           <gloss versionDate="2007-07-02" xml:lang="en">identifier</gloss>
+                           <gloss versionDate="2007-12-20" xml:lang="ko">확인소</gloss>
+                           <gloss versionDate="2008-04-06" xml:lang="es">identificador</gloss>
+                           <gloss versionDate="2008-03-30" xml:lang="fr">identifiant</gloss>
+                           <gloss versionDate="2007-11-06" xml:lang="it">identificatore</gloss>
+                           <gloss xml:lang="ja" versionDate="2019-06-08">識別子</gloss>
+                           <desc versionDate="2005-10-10" xml:lang="en">provides a unique identifier for the element bearing the attribute.</desc>
+                           <desc versionDate="2007-12-20" xml:lang="ko">속성을 포함하는 요소에 대한 고유한 확인소를 제공한다.</desc>
+                           <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一個獨特識別符碼，識別帶有該屬性的元素。</desc>
+                           <desc versionDate="2008-04-05" xml:lang="ja">当該要素にユニークな識別子を示す．</desc>
+                           <desc versionDate="2009-05-25" xml:lang="fr">fournit un identifiant unique pour l'élément qui
+                              porte l'attribut</desc>
+                           <desc versionDate="2007-05-04" xml:lang="es">proporciona un identificador único para el elemento
+                              al cual se asocia el atributo.</desc>
+                           <desc versionDate="2007-01-21" xml:lang="it">assegna un identificatore unico all'elemento a cui è
+                              associato l'attributo</desc>
+                           <datatype><dataRef name="ID"/></datatype>
+                           <remarks versionDate="2005-10-10" xml:lang="en">
+                              <p>The <att>xml:id</att> attribute may be used to specify a canonical reference for an
+                                 element; see section <ptr target="#CORS"/>.</p>
+                           </remarks>
+                           <remarks xml:lang="fr" versionDate="2007-06-12">
+                              <p>L'attribut <att>xml:id</att> peut être employé pour indiquer une référence canonique pour
+                                 un élément ; voir la section<ptr target="#CORS"/>.</p>
+                           </remarks>
+                           <remarks xml:lang="es" versionDate="2008-04-06">
+                              <p>El atributo <att>xml:id</att> se puede utilizar para especificar una referencia canónica
+                                 para un elemento; ver la sección <ptr target="#CORS"/>.</p>
+                           </remarks>
+                           <remarks xml:lang="ja" versionDate="2008-04-05">
+                              <p> 当該属性<att>xml:id</att>は，属性の指示対象を示している．詳細 は<ptr target="#CORS"/>を参照のこと． </p>
+                           </remarks>
+                        </attDef>
+                        <attDef ident="target" usage="req">
+                           <desc versionDate="2010-05-02" xml:lang="en">specifies the destination of the reference by supplying one or more URI References</desc>
+                           <desc versionDate="2007-12-20" xml:lang="ko">하나 혹은 다수의 URI 참조를 제시하여 참조의 목적지를 명시한다.</desc>
+                           <desc versionDate="2007-05-02" xml:lang="zh-TW">用一個或多個統一資源識別符參照 (URI References) 來說明參照所指位置。</desc>
+                           <desc versionDate="2008-04-05" xml:lang="ja">ひとつ以上のURIで，参照先を特定する．</desc>
+                           <desc versionDate="2009-01-06" xml:lang="fr">précise la cible de la référence en donnant une ou
+                              plusieurs références URI</desc>
+                           <desc versionDate="2007-05-04" xml:lang="es">especifica la destinación de una referencia
+                              proporcionando una o más referencias URI.</desc>
+                           <desc versionDate="2007-01-21" xml:lang="it">specifica la destinazione di un riferimento, fornendo
+                              uno o più riferimenti URI</desc>
+                           <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
+                           <remarks versionDate="2007-01-21" xml:lang="en"><p>One or more syntactically valid URI references, separated by whitespace. Because
+                              whitespace is used to separate URIs, no whitespace is permitted inside a single URI. If a
+                              whitespace character is required in a URI, it should be escaped with the normal mechanism,
+                              e.g. <code>TEI%20Consortium</code>.</p></remarks>
+                           <remarks versionDate="2007-01-21" xml:lang="fr"><p>Une ou plusieurs références URI syntaxiquement valables, séparée par
+                              un espace. Puisqu'un espace  est employé pour séparer des URIs, aucun espace
+                              n’est autorisé à l'intérieur d'un URI. Si un espace est requis dans un URI, il
+                              faut le représenter avec une séquence d'échappement, comme par exemple 
+                              <code>TEI%20Consortium</code>.</p></remarks>
+                        </attDef>
+                     </attList>
+                  </attList>
+                  
+               </elementSpec>
+              
+               <!--request-->
                <elementSpec ident="request" module="lim" mode="add">
                   <classes>
                      <memberOf key="att.global"/>
@@ -101,6 +302,7 @@
                      <macroRef key="macro.specialPara"/>
                   </content>
                </elementSpec>
+               <!--requests-->
                <elementSpec ident="requests" module="lim" mode="add">
                   <classes>
                      <memberOf key="model.correspDescPart"/>
@@ -109,14 +311,7 @@
                      <elementRef key="request" minOccurs="0" maxOccurs="unbounded"/>
                   </content>
                </elementSpec>
-               <elementSpec ident="duration" module="lim" mode="add">
-                  <classes>
-                     <memberOf key="model.settingPart"/>
-                  </classes>
-                  <content>
-                     <macroRef key="macro.paraContent"/>
-                  </content>
-               </elementSpec>
+               <!--scaffold-->
                <elementSpec ident="scaffold" module="lim" mode="add">
                   <classes>
                      <memberOf key="model.settingPart"/>
@@ -176,31 +371,7 @@
                      </attDef>
                   </attList>
                </elementSpec>
-               <elementSpec ident="compliments" module="lim" mode="add">
-                  <classes>
-                     <memberOf key="model.correspDescPart"/>
-                  </classes>
-                  <content>
-                     <elementRef key="compliment" minOccurs="0" maxOccurs="unbounded"/>
-                  </content>
-               </elementSpec>
-               <elementSpec ident="enclosure" module="lim" mode="add">
-                  <classes>
-                     <memberOf key="att.global"/>
-                  </classes>
-                  <content>
-                     <macroRef key="macro.specialPara"/>
-                  </content>
-               </elementSpec>
-               <elementSpec ident="enclosures" module="lim" mode="add">
-                  <classes>
-                     <memberOf key="model.correspDescPart"/>
-                  </classes>
-                  <content>
-                     <elementRef key="enclosure" minOccurs="0" maxOccurs="unbounded"/>
-                  </content>
-               </elementSpec>
-               
+               <!--topic-->
                <elementSpec ident="topic" module="lim" mode="add">
                   <desc>marks the beginning of a longer sequence of text pertaining to a topic or set of topics.</desc>
                   <classes>
@@ -221,7 +392,7 @@
                      <p>The <gi>topic</gi> element is a custom element for the LiM project to mark the beginning of an analytic segment; it should be used in concert with a <gi>anchor</gi> bearing an <att>xml:id</att>.</p>
                   </remarks>
                </elementSpec>
-               
+               <!--lim.att.boolean-->
                <classSpec ident="lim.att.boolean" mode="add" module="lim" type="atts">
                   <attList>
                      <attDef ident="value" usage="rec">
@@ -231,9 +402,11 @@
                      </attDef>
                   </attList>
                </classSpec>
-               
-               
-               <classSpec ident="lim.att.global.fragmentable" mode="add" module="lim" type="atts">
+               <!--lim.att.global.fragmentable-->
+               <classSpec ident="lim.att.global.fragmentable"
+                          mode="add"
+                          module="lim"
+                          type="atts">
                   <desc versionDate="2021-08-22" xml:lang="en">provides attributes for representing
                      fragmentation of a structural element, typically as 
                      a consequence of some overlapping hierarchy.</desc>
@@ -284,13 +457,18 @@
                               should be used only where it is clear how the element may
                               be reconstituted.</p>
                         </remarks>
-                        <remarks xml:lang="ja" versionDate="2019-06-08"><p><val>I</val>，<val>M</val>，または<val>F</val>という値は，要素の再構成方法が明らかな場合にのみ使用する。</p></remarks>
+                        <remarks xml:lang="ja" versionDate="2019-06-08">
+                           <p>
+                              <val>I</val>，<val>M</val>，または<val>F</val>という値は，要素の再構成方法が明らかな場合にのみ使用する。</p>
+                        </remarks>
                      </attDef>
                   </attList>
-                  <remarks><p>The same as TEI's att.fragmentable, but turned into its own class
-                     to make it global.</p></remarks>
+                  <remarks>
+                     <p>The same as TEI's att.fragmentable, but turned into its own class
+                     to make it global.</p>
+                  </remarks>
                </classSpec>
-               
+               <!--lim.att.locatable-->
                <classSpec ident="lim.att.locatable" module="lim" type="atts" mode="add">
                   <classes>
                      <memberOf key="lim.att.locatable.directed"/>
@@ -304,7 +482,11 @@
                      </attDef>
                   </attList>
                </classSpec>
-               <classSpec ident="lim.att.locatable.directed" module="lim" type="atts" mode="add">
+               <!--lim.att.locatable.directed-->
+               <classSpec ident="lim.att.locatable.directed"
+                          module="lim"
+                          type="atts"
+                          mode="add">
                   <attList>
                      <attDef ident="toWhere" usage="opt">
                         <desc>indicates the location of something being sent.</desc>
@@ -314,9 +496,7 @@
                      </attDef>
                   </attList>
                </classSpec>
-               
-              
-               
+               <!--lim.personMacro-->
                <macroSpec ident="lim.personMacro" module="lim" mode="add">
                   <content>
                      <elementRef key="persName" minOccurs="1" maxOccurs="unbounded"/>
@@ -338,15 +518,7 @@
                      <elementRef key="note" minOccurs="0" maxOccurs="1"/>
                   </content>
                </macroSpec>
-               
-               <dataSpec module="lim" ident="limdata.facs" mode="add">
-                  <desc>Datatype for all lim facsimile pointers.</desc>
-                  <content>
-                     <dataRef name="token"  restriction="(lib|pg):\d+(.\d+)?"/>
-                  </content>
-               </dataSpec>
-               
-               
+               <!--limdata.ana-->
                <dataSpec module="lim" ident="limdata.ana" mode="add">
                   <desc>Datatype for all analytic pointers</desc>
                   <content>
@@ -370,7 +542,22 @@
                      </valList>
                   </content>
                </dataSpec>
-               
+               <!--limdata.facs-->
+               <dataSpec module="lim" ident="limdata.facs" mode="add">
+                  <desc>Datatype for all lim facsimile pointers.</desc>
+                  <content>
+                     <dataRef name="token" restriction="(lib|pg):\d+(.\d+)?"/>
+                  </content>
+               </dataSpec>
+               <!--limdata.glyph-->
+               <dataSpec module="lim" ident="limdata.glyph" mode="add">
+                  <desc>Datatype for all glyph pointers.</desc>
+                  <content>
+                     <valList type="closed">
+                     </valList>
+                  </content>
+               </dataSpec>
+               <!--limdata.placement-->
                <dataSpec module="lim" ident="limdata.placement" mode="add">
                   <desc>Possible values for placement.</desc>
                   <content>
@@ -406,16 +593,34 @@
                      </valList>
                   </content>
                </dataSpec>
-               
-  
+               <!--fwPbConstraints-->
+               <constraintSpec ident="fwPbConstraints"
+                               module="lim"
+                               mode="add"
+                               scheme="schematron">
+                  <desc>Set of constraints for formeworks and page beginnings.</desc>
+                  <constraint>
+                     <sch:pattern>
+                        <sch:rule context="tei:fw | tei:pb">
+                           <sch:assert test="parent::tei:ab | parent::tei:back | parent::tei:body | parent::tei:div | parent::tei:front | parent::tei:list | parent::tei:p | parent::tei:text | parent::tei:q | parent::tei:note">
+                              ERROR: <sch:name/> should not appear within <sch:value-of select="local-name(parent::*)"/>.
+                           </sch:assert>
+                        </sch:rule>
+                        <sch:rule context="tei:fw">
+                           <sch:assert test="not(tei:lb)">ERROR: <sch:name/> should not contain line beginnings 
+                              (since they are usually a single line)</sch:assert>
+                        </sch:rule>
+                     </sch:pattern>
+                  </constraint>
+               </constraintSpec>
+               <!--global.rootIdMustMatchDocument-->
                <constraintSpec scheme="schematron" ident="global.rootIdMustMatchDocument">
                   <desc>The rootid must be the same as the document's name.</desc>
                   <constraint>
                      <sch:pattern>
                         <sch:rule context="/tei:*">
                            <sch:let name="rootEl" value="local-name()"/>
-                           <sch:let name="correctDir"
-                                    value="                     if (self::tei:person and @role='contributor') then 'contributors'                     else if (self::tei:person) then 'people'                     else if (self::tei:place) then 'places'                     else if (self::tei:org) then 'orgs'                     else $dirName"/>
+                           <sch:let name="correctDir" value="                     if (self::tei:person and @role='contributor') then 'contributors'                     else if (self::tei:person) then 'people'                     else if (self::tei:place) then 'places'                     else if (self::tei:org) then 'orgs'                     else $dirName"/>
                            <sch:assert test="$basename = $id">
                     ERROR: Document's @xml:id (<sch:value-of select="$id"/>) must match the document's base filename
                     (<sch:value-of select="$basename"/>)
@@ -447,6 +652,7 @@
                      </sch:pattern>
                   </constraint>
                </constraintSpec>
+               <!--global.variables-->
                <constraintSpec scheme="schematron" ident="global.variables">
                   <desc>Global variables for use across the schematron.</desc>
                   <constraint>
@@ -471,6 +677,7 @@
                      </sch:pattern>
                   </constraint>
                </constraintSpec>
+               <!--inlineElementsNoSpaces-->
                <constraintSpec scheme="schematron" ident="inlineElementsNoSpaces">
                   <desc>Inline elements should not begin or end with spaces.</desc>
                   <constraint>
@@ -484,10 +691,11 @@
                      </sch:pattern>
                   </constraint>
                </constraintSpec>
+               <!--metadataContraints-->
                <constraintSpec ident="metadataContraints"
-                  module="lim"
-                  mode="add"
-                  scheme="schematron">
+                               module="lim"
+                               mode="add"
+                               scheme="schematron">
                   <desc>Set of constraints for profileDesc / premediation.</desc>
                   <constraint>
                      <sch:pattern>
@@ -503,29 +711,11 @@
                      </sch:pattern>
                   </constraint>
                </constraintSpec>
-               <constraintSpec ident="fwPbConstraints"
-                  module="lim"
-                  mode="add"
-                  scheme="schematron">
-                  <desc>Set of constraints for formeworks and page beginnings.</desc>
-                  <constraint>
-                     <sch:pattern>
-                        <sch:rule context="tei:fw | tei:pb">
-                           <sch:assert test="parent::tei:ab | parent::tei:back | parent::tei:body | parent::tei:div | parent::tei:front | parent::tei:list | parent::tei:p | parent::tei:text | parent::tei:q | parent::tei:note">
-                              ERROR: <sch:name/> should not appear within <sch:value-of select="local-name(parent::*)"/>.
-                           </sch:assert>
-                        </sch:rule>
-                        <sch:rule context="tei:fw">
-                           <sch:assert test="not(tei:lb)">ERROR: <sch:name/> should not contain line beginnings 
-                              (since they are usually a single line)</sch:assert>
-                        </sch:rule>
-                     </sch:pattern>
-                  </constraint>
-               </constraintSpec>
+               <!--textConstraints-->
                <constraintSpec ident="textConstraints"
-                  module="lim"
-                  mode="add"
-                  scheme="schematron">
+                               module="lim"
+                               mode="add"
+                               scheme="schematron">
                   <desc>Set of constraints for text and punctuation</desc>
                   <constraint>
                      <sch:pattern>

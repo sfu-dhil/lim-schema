@@ -24,8 +24,37 @@
             <head>header</head>
             <schemaSpec ident="lim_header">
                <moduleRef key="header"
-                  include="abstract catDesc catRef category change correspAction correspContext correspDesc creation encodingDesc fileDesc handNote idno langUsage listChange listPrefixDef language notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
-               
+                          include="abstract catDesc catRef category change correspAction correspContext correspDesc creation encodingDesc fileDesc handNote idno langUsage language listChange listPrefixDef notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
+               <!--change-->
+               <elementSpec ident="change" mode="change" module="header">
+                  <constraintSpec ident="changeMustPointToTeam" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:change">
+                              <sch:assert test="every $ptr in tokenize(@who,'\s+') satisfies matches($ptr,'^team:')">
+                                 ERROR: Every pointer in change/@who must start with 'team:'.
+                              </sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="changeMustHaveContent" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:change">
+                              <sch:assert test="not(normalize-space(string-join(descendant::text(),'')) = '')">
+                                 ERROR: change elements must contain meaningful content.
+                              </sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="who" mode="change" usage="req"/>
+                     <attDef ident="when" mode="change" usage="req"/>
+                  </attList>
+               </elementSpec>
+               <!--correspAction-->
                <elementSpec ident="correspAction" module="header" mode="change">
                   <classes mode="change">
                      <memberOf key="att.datable" mode="add"/>
@@ -40,38 +69,7 @@
                      </alternate>
                   </content>
                </elementSpec>
-               
-               <elementSpec ident="change" mode="change" module="header">
-                  <constraintSpec ident="changeMustPointToTeam" scheme="schematron">
-                     <constraint>
-                        <sch:pattern>
-                           <sch:rule context="tei:change">
-                              <sch:assert test="every $ptr in tokenize(@who,'\s+') satisfies matches($ptr,'^team:')">
-                                 ERROR: Every pointer in change/@who must start with 'team:'.
-                              </sch:assert>
-                           </sch:rule>
-                        </sch:pattern>
-                     </constraint>
-                     
-                  </constraintSpec>
-                  <constraintSpec ident="changeMustHaveContent" scheme="schematron">
-                     <constraint>
-                        <sch:pattern>
-                           <sch:rule context="tei:change">
-                              <sch:assert test="not(normalize-space(string-join(descendant::text(),'')) = '')">
-                                 ERROR: change elements must contain meaningful content.
-                              </sch:assert>
-                           </sch:rule>
-                        </sch:pattern>
-                     </constraint>
-                     
-                  </constraintSpec>
-                  <attList>
-                     <attDef ident="who" mode="change" usage="req"/>
-                     <attDef ident="when" mode="change" usage="req"/>
-                  </attList>
-               </elementSpec>
-               
+               <!--creation-->
                <elementSpec ident="creation" module="header" mode="change">
                   <content>
                      <sequence>
@@ -84,17 +82,22 @@
                      <constraint>
                         <sch:pattern>
                            <sch:rule context="tei:creation">
-                              <sch:assert 
-                                 test="ancestor::tei:profileDesc/tei:limItem[@type=
-                                 ('accountNarrative','conversation','misc', 'speech')]">ERROR: The creation element should only be used for account/narratives, conversations, and speeches, since the date/place of the transcription may differ from the setting.</sch:assert>
+                              <sch:assert test="ancestor::tei:profileDesc/tei:limItem[@type=                                  ('accountNarrative','conversation','misc', 'speech')]">ERROR: The creation element should only be used for account/narratives, conversations, and speeches, since the date/place of the transcription may differ from the setting.</sch:assert>
                               <sch:assert test="count(tei:*) gt 0">ERROR: The creation element requires at least one of placeName, date, or note.</sch:assert>
                            </sch:rule>
                            
                         </sch:pattern>
                         
                      </constraint>
-                  </constraintSpec>                  
+                  </constraintSpec>
                </elementSpec>
+               <!--langUsage-->
+               <elementSpec ident="langUsage" module="header" mode="change">
+                  <content>
+                     <elementRef key="language" minOccurs="1" maxOccurs="unbounded"/>
+                  </content>
+               </elementSpec>
+               <!--profileDesc-->
                <elementSpec ident="profileDesc" module="header" mode="change">
                   <content>
                      <alternate>
@@ -106,16 +109,15 @@
                               </sequence>
                               <elementRef key="locus" minOccurs="1" maxOccurs="2"/>
                            </alternate>
-                           <elementRef key="abstact" 
-                              minOccurs="0" maxOccurs="1"/>
+                           <elementRef key="abstact" minOccurs="0" maxOccurs="1"/>
                            <elementRef key="langUsage" minOccurs="0" maxOccurs="1"/>
                            <elementRef key="limItem"/>
                         </sequence>
                         <elementRef key="catRef"/>
                      </alternate>
-                  </content>                  
+                  </content>
                </elementSpec>
-               
+               <!--revisionDesc-->
                <elementSpec ident="revisionDesc" mode="change" module="header">
                   <content>
                      <elementRef key="change" minOccurs="1" maxOccurs="unbounded"/>
@@ -147,17 +149,14 @@
                         </sch:pattern>
                      </constraint>
                   </constraintSpec>
-                 
                   <constraintSpec ident="revisionDescEarliest" scheme="schematron">
                      <constraint>
                         <sch:pattern>
                            <sch:rule context="tei:revisionDesc[count(tei:change[@when]) gt 1]">
                               <sch:let name="firstChange" value="tei:change[1]"/>
                               <sch:let name="secondChange" value="tei:change[2]"/>
-                              <sch:let name="firstDate"
-                                 value="xs:date(string-join((tokenize($firstChange/@when,'-'),'01','01')[position() lt 4],'-'))"/>
-                              <sch:let name="secondDate"
-                                 value="xs:date(string-join((tokenize($firstChange/@when,'-'),'01','01')[position() lt 4],'-'))"/>
+                              <sch:let name="firstDate" value="xs:date(string-join((tokenize($firstChange/@when,'-'),'01','01')[position() lt 4],'-'))"/>
+                              <sch:let name="secondDate" value="xs:date(string-join((tokenize($firstChange/@when,'-'),'01','01')[position() lt 4],'-'))"/>
                               <sch:assert test="($firstDate gt $secondDate) or ($firstDate = $secondDate)">
                                  ERROR: Change elements should be ordered reverse chronologically (latest first).
                               </sch:assert>
@@ -166,14 +165,9 @@
                      </constraint>
                   </constraintSpec>
                </elementSpec>
+               <!--textClass-->
                <elementSpec ident="textClass" module="header" mode="change">
                   <!--Add constraints to force either a correspDesc or a settingDesc-->
-               </elementSpec>
-               
-               <elementSpec ident="langUsage" module="header" mode="change">
-                  <content>
-                     <elementRef key="language" minOccurs="1" maxOccurs="unbounded"/>
-                  </content>
                </elementSpec>
             </schemaSpec>
          </div>

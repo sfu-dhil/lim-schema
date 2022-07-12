@@ -23,8 +23,8 @@
          <div>
             <head>linking</head>
             <schemaSpec ident="lim_linking">
-               <moduleRef key="linking" include="ab anchor standOff linkGrp ptr"/>
-               
+               <moduleRef key="linking" include="ab anchor linkGrp ptr standOff"/>
+               <!--anchor-->
                <elementSpec ident="anchor" module="linking" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global.rendition" mode="delete"/>
@@ -40,7 +40,7 @@
                      <attDef ident="xml:space" mode="delete"/>
                   </attList>
                </elementSpec>
-               
+               <!--standOff-->
                <elementSpec ident="standOff" module="linking" mode="change">
                   <constraintSpec ident="standoff.elementsMustUseCopyOfORHaveAPersName"
                                   scheme="schematron">

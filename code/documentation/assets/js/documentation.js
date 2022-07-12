@@ -20,6 +20,18 @@
           }
        });
     });
+    const searchInput = document.querySelector('nav.searchBar > input');
+  console.log(searchInput);
+  searchInput.addEventListener('keyup', ({key}) => {
+        console.log(key);
+      if (key === 'Enter' && searchInput.value.length > 2){
+        if(!searchInput.reportValidity()){
+          return;
+        }  
+         window.location.href = 'index.html?q=' + searchInput.value;
+      }
+      
+  });
     const dialog = getDialogEl();
     console.log(dialog);
     const dialog_content = dialog.querySelector('#dialog-content');
@@ -29,6 +41,8 @@
         dialog_content.appendChild(img.cloneNode());
         dialog.showModal();
   });
+  
+  
 });
 }());
 
