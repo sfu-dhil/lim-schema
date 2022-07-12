@@ -28,7 +28,7 @@
                 <mapping type="standard">*</mapping>
                 <mapping type="unicode">U+002A</mapping>
                 <figure>
-                   <graphic url="img:char_star"/> 
+                   <graphic url="img:char_star.svg"/> 
                 </figure>
             </glyph>
             <glyph xml:id="char_cross">
@@ -36,7 +36,7 @@
                <mapping type="standard">✝</mapping>
                <mapping type="unicode">U+271D</mapping>
                <figure>
-                  <graphic url="img:char_cross"/>
+                  <graphic url="img:char_cross.svg"/>
                </figure>
             </glyph>
             <glyph xml:id="char_x">
@@ -60,7 +60,7 @@
             <glyph xml:id="char_umbrella">
                <unicodeProp name="Name" value="UMBRELLA"/>
                <figure>
-                  <graphic url="img:char_umbrella"/>
+                  <graphic url="img:char_umbrella.svg"/>
                </figure>
             </glyph>
             <glyph xml:id="char_tau">
