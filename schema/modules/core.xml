@@ -311,8 +311,9 @@
                </elementSpec>
                <!--note-->
                <elementSpec ident="note" module="core" mode="change">
-                  <gloss xml:lang="en" versionDate="2017-06-25">note</gloss>
-                  <desc versionDate="2005-01-14" xml:lang="en">contains a note or annotation.</desc>
+                  <classes mode="change">
+                     <memberOf key="att.global.responsibility" mode="add"/>
+                  </classes>
                   <content>
                      <alternate>
                         <sequence>

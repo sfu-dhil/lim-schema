@@ -13,6 +13,8 @@
     <property name="TEIStylesheets" value="${basedir}/Stylesheets/"/>
     <property name="saxon" value="${lib.dir}/saxon10HE.jar"/>
     
+
+    
     <target name="install">
         <description>target: install
         
@@ -139,6 +141,7 @@
             <property name="dir" value="${dataDir}"/>
             <property name="rng" value="${schemaDir}/lim.rng"/>
             <property name="saxon" value="${saxon}"/>
+            <property name="exclude" value="vol11"/>
         </ant>
     </target>
     
