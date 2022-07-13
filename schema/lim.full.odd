@@ -23,7 +23,7 @@
                 <mapping type="standard">*</mapping>
                 <mapping type="unicode">U+002A</mapping>
                 <figure>
-                   <graphic url="img:char_star"/> 
+                   <graphic url="img:char_star.svg"/> 
                 </figure>
             </glyph>
             <glyph xml:id="char_cross">
@@ -31,7 +31,7 @@
                <mapping type="standard">✝</mapping>
                <mapping type="unicode">U+271D</mapping>
                <figure>
-                  <graphic url="img:char_cross"/>
+                  <graphic url="img:char_cross.svg"/>
                </figure>
             </glyph>
             <glyph xml:id="char_x">
@@ -50,12 +50,13 @@
             <glyph xml:id="char_theta">
                <unicodeProp name="Name" value="THETA"/>
                <mapping type="standard">θ</mapping>
-               <mapping type="unicode">U+03B8</mapping>
+               <mapping type="unicode">U+03B8;</mapping>
             </glyph>
             <glyph xml:id="char_umbrella">
                <unicodeProp name="Name" value="UMBRELLA"/>
+               <mapping type="standard">☂</mapping>
                <figure>
-                  <graphic url="img:char_umbrella"/>
+                  <graphic url="img:char_umbrella.svg"/>
                </figure>
             </glyph>
             <glyph xml:id="char_tau">
@@ -728,6 +729,7 @@
                               <sch:assert test="not(@resp)">ERROR: Do not use @resp on LiM notes. Use @hand instead.</sch:assert>
                               <sch:assert test="every $text in text() satisfies not(matches($text,'\S'))">ERROR: All lim notes
                               must have structured context (i.e. 0 or more noteMarkers, either a sequence of paragraphs and a closer OR an NB) </sch:assert>
+                              <sch:assert test="@anchored">ERROR: All LiM notes must specify whether it is anchored using the @anchored attribute.</sch:assert>
                            </sch:rule>
                            <sch:rule context="tei:note[@type='lim']/tei:supplied">
                               <sch:assert test="tei:noteMarker">ERROR: Supplied as a direct child of note must contain a noteMarkers.</sch:assert>
@@ -1713,7 +1715,7 @@
                </dataSpec><dataSpec module="lim" ident="limdata.glyph" mode="add">
                   <desc>Datatype for all glyph pointers.</desc>
                   <content>
-                     <valList type="closed"><valItem ident="g:star"><gloss>star</gloss><desc>STAR / ASTERISK (*)</desc></valItem><valItem ident="g:cross"><gloss>cross</gloss><desc>CROSS OR DAGGER (✝)</desc></valItem><valItem ident="g:x"><gloss>x</gloss><desc>X (X)</desc></valItem><valItem ident="g:circledX"><gloss>circledX</gloss><desc>X WITH CIRCLE (ⓧ)</desc></valItem><valItem ident="g:phi"><gloss>phi</gloss><desc>PHI (φ)</desc></valItem><valItem ident="g:theta"><gloss>theta</gloss><desc>THETA (θ)</desc></valItem><valItem ident="g:umbrella"><gloss>umbrella</gloss><desc>UMBRELLA</desc></valItem><valItem ident="g:tau"><gloss>tau</gloss><desc>TAU (Τ)</desc></valItem><valItem ident="g:pi"><gloss>pi</gloss><desc>PI (Π)</desc></valItem><valItem ident="g:UNKNOWN"><gloss>UNKNOWN</gloss><desc>UNKNOWN</desc></valItem></valList>
+                     <valList type="closed"><valItem ident="g:star"><gloss>star</gloss><desc>STAR / ASTERISK (*)</desc></valItem><valItem ident="g:cross"><gloss>cross</gloss><desc>CROSS OR DAGGER (✝)</desc></valItem><valItem ident="g:x"><gloss>x</gloss><desc>X (X)</desc></valItem><valItem ident="g:circledX"><gloss>circledX</gloss><desc>X WITH CIRCLE (ⓧ)</desc></valItem><valItem ident="g:phi"><gloss>phi</gloss><desc>PHI (φ)</desc></valItem><valItem ident="g:theta"><gloss>theta</gloss><desc>THETA (θ)</desc></valItem><valItem ident="g:umbrella"><gloss>umbrella</gloss><desc>UMBRELLA (☂)</desc></valItem><valItem ident="g:tau"><gloss>tau</gloss><desc>TAU (Τ)</desc></valItem><valItem ident="g:pi"><gloss>pi</gloss><desc>PI (Π)</desc></valItem><valItem ident="g:UNKNOWN"><gloss>UNKNOWN</gloss><desc>UNKNOWN</desc></valItem></valList>
                   </content>
                </dataSpec><dataSpec module="lim" ident="limdata.placement" mode="add">
                   <desc>Possible values for placement.</desc>

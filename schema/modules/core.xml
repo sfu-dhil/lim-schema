@@ -354,6 +354,7 @@
                               <sch:assert test="not(@resp)">ERROR: Do not use @resp on LiM notes. Use @hand instead.</sch:assert>
                               <sch:assert test="every $text in text() satisfies not(matches($text,'\S'))">ERROR: All lim notes
                               must have structured context (i.e. 0 or more noteMarkers, either a sequence of paragraphs and a closer OR an NB) </sch:assert>
+                              <sch:assert test="@anchored">ERROR: All LiM notes must specify whether it is anchored using the @anchored attribute.</sch:assert>
                            </sch:rule>
                            <sch:rule context="tei:note[@type='lim']/tei:supplied">
                               <sch:assert test="tei:noteMarker">ERROR: Supplied as a direct child of note must contain a noteMarkers.</sch:assert>
