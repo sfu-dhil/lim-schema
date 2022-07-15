@@ -2,6 +2,7 @@
 
     <dirname property="projectDir" file="../../lim-schema.xpr"/>
     <property name="saxon" value="${projectDir}/lib/saxon10HE.jar"/>
+    <property name="TEIStylesheets" value="${projectDir}/Stylesheets/"/>
 
     <property name="echo.separator">**************</property>
 
@@ -166,5 +167,7 @@
 
 
     <target name="all" depends="init, copyAssets, md2tei, odd2ExpandedOdd, odd2processedOdd, odd2lite, fixLite, odd2Html, copySources, search"/>
+    
+    <target name="quick" depends="copyAssets, md2tei, odd2ExpandedOdd, odd2processedOdd, odd2lite, fixLite, odd2Html, copySources"/>
 
 </project>
