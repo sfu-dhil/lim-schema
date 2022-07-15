@@ -104,6 +104,44 @@
         </table>
     </xsl:template>
     
+    <xsl:template match="divGen[@xml:id='place_list']">
+        <table>
+            <xsl:for-each select="$processedODD//dataSpec[@ident='limdata.placement']//valList/valItem">
+                <xsl:sort select="@ident"/>
+                <row>
+                    <cell><xsl:value-of select="@ident"/></cell>
+                    <cell><xsl:value-of select="gloss"/></cell>
+                </row>
+            </xsl:for-each>
+        </table>
+    </xsl:template>
+    
+    <xsl:template match="divGen[@xml:id='glyph_list']">
+        <table>
+            <row role="label">
+                <cell>Name</cell>
+                <cell><att>ref</att> value</cell>
+                <cell>Standard representation</cell>
+                <cell>Icon</cell>
+            </row>
+            <xsl:for-each select="root(.)//glyph[@xml:id]">
+                <row>
+                    <cell>
+                        <xsl:value-of select="unicodeProp[@name='Name']/@value"/>
+                    </cell>
+                    <cell><xsl:value-of select="replace(@xml:id,'char_','g:')"/></cell>
+                    <cell style="font-family: monospace"><xsl:value-of select="mapping[@type='standard']"/></cell>
+                    <cell>
+                        <xsl:if test="figure/graphic">
+                            <graphic url="{replace(figure/graphic/@url,'img:','https://joeytakeda.github.io/lim-site/site/images/')}"/>
+                        </xsl:if>
+                    </cell>
+                </row>
+            </xsl:for-each>
+            
+        </table>
+    </xsl:template>
+    
     <xsl:template match="divGen[@xml:id='abbrTable']">
         <table>
             <row role="label">
