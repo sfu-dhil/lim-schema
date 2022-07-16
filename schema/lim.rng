@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xlink="http://www.w3.org/1999/xlink" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-07-13T00:35:42Z. .
+Schema generated from ODD source 2022-07-16T00:17:54Z. .
 TEI Edition: Version 4.2.2. Last updated on
 	9th April 2021, revision 609a109b1
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.2.2/
@@ -1653,6 +1653,7 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="anchor"/>
          <ref name="fw"/>
          <ref name="noteMarker"/>
+         <ref name="rule"/>
       </choice>
    </define>
    <define name="model.gLike">
@@ -7346,6 +7347,62 @@ The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow 
                </oneOrMore>
             </list>
          </attribute>
+         <empty/>
+      </element>
+   </define>
+   <define name="rule">
+      <element name="rule">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">marks a ruled line</a:documentation>
+         <optional>
+            <ref name="desc"/>
+         </optional>
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+            <sch:rule context="tei:rule[@place]">
+               <sch:assert test="exists(@extent) and xs:integer(replace(@extent,'%','')) gt 99">ERROR: @place only makes sense if an @extent exists and is less than 100%.</sch:assert>
+            </sch:rule>
+         </sch:pattern>
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+            <sch:rule context="tei:rule[@extent]">
+               <sch:let name="int" value="xs:integer(replace(@extent,'%',''))"/>
+               <sch:assert test="$int = (1 to 100)">ERROR: @extent should be a percentage value between 1 and 100.</sch:assert>
+            </sch:rule>
+         </sch:pattern>
+         <attribute name="unit">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides a conventional name for the kind of section changing at this milestone.</a:documentation>
+            <data type="token">
+               <param name="pattern">[^\p{C}\p{Z}]+</param>
+            </data>
+         </attribute>
+         <optional>
+            <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="extent" a:defaultValue="100%">
+               <a:documentation>the extent of the rule in percentage. By default, 100%.
+Suggested values include: 1] 25% (25%); 2] 50% (50%); 3] 75% (75%); 4] 100% (100%)</a:documentation>
+               <choice>
+                  <value>25%</value>
+                  <a:documentation>(25%) A quarter of the page</a:documentation>
+                  <value>50%</value>
+                  <a:documentation>(50%) Half of the page</a:documentation>
+                  <value>75%</value>
+                  <a:documentation>(75%) Three-quarters of the page</a:documentation>
+                  <value>100%</value>
+                  <a:documentation>(100%) The entire width of the page.</a:documentation>
+                  <data type="token">
+                     <param name="pattern">\d+%</param>
+                  </data>
+               </choice>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="place">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies where this item is placed.</a:documentation>
+               <choice>
+                  <value>left</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(left) left</a:documentation>
+                  <value>right</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(right) right</a:documentation>
+               </choice>
+            </attribute>
+         </optional>
          <empty/>
       </element>
    </define>

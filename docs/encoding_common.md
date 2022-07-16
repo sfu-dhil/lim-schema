@@ -103,7 +103,15 @@ Words split across a page beginning require more complex encoding, since we must
 
 Horizontal rules are lines written in the document that delimit structures and signal some sort of structural shift. These are distinct from underlines and borders and should only be used in cases where the primary function of the line is organizational and not semantic.
 
-To encode these, we use the `<milestone>` element that bears an `@type` of rule and a `@unit` with a value of either "section" or "item".
+To encode these, we use the custom `<rule>` element:
+
+```{=tei}
+
+<specDesc key="rule" 
+    atts="unit extent place"/>
+```
+
+The `@unit` attribute is mandatory and must be one of either "section" (for all horizontal rules that mark changes in sections) or "item".
 
 Use `unit="section"` when the line separates parts of an item; e.g. the line between a postscript and a signature, et cetera. These should always be between the two structural elements that the line delimits; e.g.:
 
@@ -111,7 +119,7 @@ Use `unit="section"` when the line separates parts of an item; e.g. the line bet
 <closer>
 <!--[...]-->
 </closer>
-<milestone unit="section" type="rule"/>
+<rule unit="section"/>
 <postscript>
 	<p><!--[...]--></p>
 </postscript>
@@ -125,12 +133,28 @@ Encode the line that separates two items (i.e. the final horizontal line at the 
 		<!--[ All of the body content for the transcription ]-->
 		<signed>R.F</signed>
 	</body>
-	<milestone unit="item" type="rule"/>
+	<rule unit="item"/>
 </text>
 
 ```
 
+### Styling Horizontal Rules
 
+Given the variation of rules in the manuscript, we do not try to replicate the precise curvature, style, or shape of a given horizontal rule. However, we do capture the length and position of the rule where possible.
+
+If the line separating is significantly shorter than the width of the page, then use the `@extent` attribute to specify a percentange of the page the rule occupies (i.e. 25%, 50%, etc). You do not need to specify `@extent` if the rule spans the width of the page. Shorter rules can also be placed left or right using the `@place` attribute (note that `@place` is only valid if the rule has an `@extent` less than 100%).
+
+```
+<rule unit="section" extent="50%" place="right"/>
+```
+
+If there are any other stylistic features you think are worth noting, use the `<desc>` element within the `<rule>`:
+
+```
+<rule unit="section">
+<desc>Line curves around catchword</desc>
+</rule>
+```
 
 ## Source Styling
 

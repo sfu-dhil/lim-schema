@@ -392,6 +392,98 @@
                      <p>The <gi>topic</gi> element is a custom element for the LiM project to mark the beginning of an analytic segment; it should be used in concert with a <gi>anchor</gi> bearing an <att>xml:id</att>.</p>
                   </remarks>
                </elementSpec>
+               <!--rule-->
+               <elementSpec ident="rule" module="lim" mode="add">
+                  <gloss>rule</gloss>
+                  <desc>marks a ruled line</desc>
+                  <classes>
+                     <memberOf key="model.milestoneLike"/>
+                     <memberOf key="att.milestoneUnit"/>
+                  </classes>
+                  <content>
+                     <elementRef key="desc" minOccurs="0" maxOccurs="1"/>
+                  </content>
+                  <constraintSpec ident="rule.onlyPlaceWithExtentLessThan100" scheme="schematron">
+                     <desc>The <att>place</att> attribute only makes sense when extent is less than 100%</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:rule[@place]">
+                              <sch:assert test="exists(@extent) and xs:integer(replace(@extent,'%','')) gt 99">ERROR: @place only makes sense if an @extent exists and is less than 100%.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="rule.extentShouldBeIntegerLeq100" scheme="schematron">
+                     <desc>The <att>extent</att> of a <gi>rule</gi> should be between 1 and 100%</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:rule[@extent]">
+                              <sch:let name="int" value="xs:integer(replace(@extent,'%',''))"/>
+                              <sch:assert test="$int = (1 to 100)">ERROR: @extent should be a percentage value between 1 and 100.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="unit" usage="req" mode="change">
+                        <valList mode="replace">
+                           <valItem ident="section">
+                              <gloss>section</gloss>
+                              <desc>a rule separating sections of some sort on
+                                 the page, but not between items.</desc>
+                           </valItem>
+                           <valItem ident="item">
+                              <gloss>item</gloss>
+                              <desc>a rule that separates items.</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                     <attDef ident="extent" usage="opt">
+                        <desc>the extent of the rule in percentage. By default, 100%.</desc>
+                        <datatype>
+                           <dataRef name="token" restriction="\d+%"/>
+                        </datatype>
+                        <defaultVal>100%</defaultVal>
+                        <valList type="semi">
+                           <valItem ident="25%">
+                              <gloss>25%</gloss>
+                              <desc>A quarter of the page</desc>
+                           </valItem>
+                           <valItem ident="50%">
+                              <gloss>50%</gloss>
+                              <desc>Half of the page</desc>
+                           </valItem>
+                           <valItem ident="75%">
+                              <gloss>75%</gloss>
+                              <desc>Three-quarters of the page</desc>
+                           </valItem>
+                           <valItem ident="100%">
+                              <gloss>100%</gloss>
+                              <desc>The entire width of the page.</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                     <attDef ident="place" usage="opt">
+                        <desc>specifies where this item is placed.</desc>
+                        <valList type="closed">
+                           <valItem ident="left">
+                              <gloss>left</gloss>
+                              <desc>left</desc>
+                           </valItem>
+                           <valItem ident="right">
+                              <gloss>right</gloss>
+                              <desc>right</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+                  <remarks>
+                     <p>This element is semantically equivalent to the standard TEI <gi>milestone</gi> with <att>rendition</att> values. However, it may contain an optional <gi>desc</gi> child if further description of line is necessary.</p>
+                     <p>The <att>place</att> attribute (which is borrowed from att.placement) has no bearing on <gi>rule</gi> elements that do not specify an <att>extent</att> less than 100% (which is the default).</p>
+                  </remarks>
+               </elementSpec>
+               
+               
                <!--lim.att.boolean-->
                <classSpec ident="lim.att.boolean" mode="add" module="lim" type="atts">
                   <attList>
