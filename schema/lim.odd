@@ -224,12 +224,17 @@
                bold and a shift in ink?</gloss>
                <outputRendition>font-weight:bold;</outputRendition>
             </rendition>
-            <rendition xml:id="rnd_indent">
+            <rendition xml:id="rnd_indent-first-line">
                <desc>Indent</desc>
-               <gloss>A paragraph or block that is indented (for paragraphs, tag the whole paragraph;
-               for poetic lines, tag each indented line)</gloss>
+               <gloss>A paragraph or poetic line that has a first line indent.</gloss>
                <outputRendition>text-indent: 1rem;</outputRendition>
             </rendition>
+            <rendition xml:id="rnd_indent-block">
+               <desc>Indented block</desc>
+               <gloss>A block element that is entirely indented (i.e. a paragraph). Use the @n attribute as a multiplier.</gloss>
+               <outputRendition>margin-left: 1rem;</outputRendition>
+            </rendition>
+            
             <rendition xml:id="rnd_overline">
                <desc>Overline</desc>
                <gloss>An element with a line above. Note: this should NOT be used for letters with macrons (i.e. ō);

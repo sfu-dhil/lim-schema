@@ -424,6 +424,16 @@
                         </sch:pattern>
                      </constraint>
                   </constraintSpec>
+                  <constraintSpec ident="rule.usedToUseMilestone" scheme="schematron">
+                     <desc>We used to use the milestone element, but that construct is now deprecated.</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:milestone">
+                              <sch:assert test="not(ancestor::tei:text)">ERROR: milestone elements for ruled lines are deprecated. Use &lt;rule&gt; instead.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
                   <attList>
                      <attDef ident="unit" usage="req" mode="change">
                         <valList mode="replace">
