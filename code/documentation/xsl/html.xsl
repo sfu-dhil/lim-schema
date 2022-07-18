@@ -98,13 +98,39 @@
    
     <xsl:template match="/">
         <xsl:message>Creating documentation pages</xsl:message>
-        <!--Create index page-->
+        <xsl:call-template name="createTypeaheadJSON"/>
+        <xsl:call-template name="createIndexPage"/>
+        <xsl:call-template name="createChapters"/>
+    </xsl:template>
+    
+    <xsl:template name="createTypeaheadJSON">
+        <xsl:message>Creating typeahead JSON...</xsl:message>
+        <xsl:result-document href="{$outDir}/json/typeahead.json" method="json">
+            <xsl:map>
+                <xsl:for-each select="$chapters">
+                    <xsl:variable name="link" select="jt:getId(.) || '.html'"
+                        as="xs:string"/>
+                    <xsl:map-entry key="$link" select="string(head[1])"/>
+                    <xsl:for-each select="descendant::div[@xml:id][head]">
+                        <xsl:map-entry
+                            key="$link || '#' || jt:getId(.)" 
+                            select="string(head[1])"/>
+                    </xsl:for-each>
+                </xsl:for-each>
+            </xsl:map>
+        </xsl:result-document>
+    </xsl:template>
+    
+    <xsl:template name="createIndexPage">
+        <xsl:message>Creating index page...</xsl:message>
         <xsl:call-template name="createDoc">
             <xsl:with-param name="id" select="'index'"/>
             <xsl:with-param name="root" select="$text/front"/>
         </xsl:call-template>
-        
-        <!--Create main chapters-->
+    </xsl:template>
+    
+    <xsl:template name="createChapters">
+        <xsl:message>Creating chapters...</xsl:message>
         <xsl:for-each select="($chapters, $appendixItems)">
             <xsl:call-template name="createDoc">
                 <xsl:with-param name="id" select="jt:getId(.)"/>

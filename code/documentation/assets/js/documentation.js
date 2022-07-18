@@ -20,17 +20,55 @@
           }
        });
     });
-    const searchInput = document.querySelector('nav.searchBar > input');
-  console.log(searchInput);
-  searchInput.addEventListener('keyup', ({key}) => {
-        console.log(key);
-      if (key === 'Enter' && searchInput.value.length > 2){
-        if(!searchInput.reportValidity()){
-          return;
-        }  
-         window.location.href = 'index.html?q=' + searchInput.value;
-      }
-      
+    fetch('json/typeahead.json')
+        .then(response => response.json())
+        .then(json => {
+        const entries = Object.entries(json);    
+        const searchInput = document.querySelector('nav.searchBar > input');
+        const resultsDiv = document.createElement('div');
+        const clear = () => {
+           resultsDiv.innerHTML = ''; 
+        }
+        const typeahead = (value) => {
+            clear();
+            let valRex = new RegExp(value, 'ig');
+            let results = entries.filter(([uri, title]) => {
+                 return valRex.test(title);
+            });
+               let orderedResults = results.sort((a, b) => {
+                    return a[0].length - b[0].length  
+                });
+                let resultsEntries = orderedResults.map(([uri, title]) => {
+                    return `<div class="result"><a href="${uri}">${title}</a></div>`;   
+                }).join('');
+                resultsDiv.insertAdjacentHTML('beforeend', resultsEntries);  
+        }
+        
+        resultsDiv.classList.add('results');
+        searchInput.insertAdjacentElement('afterend', resultsDiv);
+        searchInput.addEventListener('focus', () => {
+        });
+        
+        searchInput.addEventListener('keyup', ({key}) => {
+            let value = searchInput.value;
+            if (value.length < 3){
+                if (value.length == 0){
+                    clear();
+                }
+                return;
+            }
+            typeahead(value);
+          
+            if (key == 'Enter'){
+                if(!searchInput.reportValidity()){
+                    return;
+                }
+            window.location.href = 'index.html?q=' + value;
+           }
+           
+            
+        });
+   
   });
     const dialog = getDialogEl();
     console.log(dialog);

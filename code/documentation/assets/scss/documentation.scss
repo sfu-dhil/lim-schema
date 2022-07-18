@@ -428,17 +428,38 @@ nav.searchBar{
     background-color: white;
     border-bottom: 1px solid #efefefef;
     display: flex;
+    flex-wrap:wrap;
+    
     /* margin: 1rem 0; */
     padding: 0;
     input{
         height: 100%;
-    width: 100%;
-    display: block;
-    /* padding: 1rem; */
-    padding: 1rem;
-    border: none;
-    background: #fcfcfc;
-    border-bottom: 1px solid #dbd8d8;
+        width: 100%;
+        display: block;
+        padding: 1rem;
+        border: none;
+        background: #fcfcfc;
+        border-bottom: 1px solid #dbd8d8;
+    }
+    .results{
+        display:none;
+    }
+    &:focus,
+    &:focus-within{
+        .results {
+            display:block;
+            margin-right: auto;
+            width: 100%;
+        }
+    }
+    .result{
+        padding: 1rem 1.5em;
+    }
+    .result + .result{
+        border-top: 1px solid #d7d7d7;
+    }
+    .result:last-child{
+        border-bottom: 2px solid #efefef;
     }
 }
 

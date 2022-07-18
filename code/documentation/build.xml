@@ -126,7 +126,6 @@
             <arg value="-xsl:${basedir}/xsl/html.xsl"/>
             <arg value="-s:${odd.fixed}"/>
             <arg value="outDir=${out}"/>
-            <arg value="-TP:profile.html"/>
         </java>
     </target>
     
@@ -141,7 +140,6 @@
             </fileset>
             <file name="${odd.src}"/>
         </copy>
-        
     </target>
     
     <target name="getAntContrib">
