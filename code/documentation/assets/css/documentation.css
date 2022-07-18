@@ -13,10 +13,6 @@ body * {
   scroll-behavior: smooth;
 }
 
-#index .searchBar {
-  display: none;
-}
-
 .container {
   display: grid;
   grid-template-columns: 2fr 6fr;
