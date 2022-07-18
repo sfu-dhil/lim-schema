@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xlink="http://www.w3.org/1999/xlink" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-07-16T00:17:54Z. .
+Schema generated from ODD source 2022-07-18T15:19:24Z. .
 TEI Edition: Version 4.2.2. Last updated on
 	9th April 2021, revision 609a109b1
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.2.2/
@@ -7352,13 +7352,13 @@ The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow 
    </define>
    <define name="rule">
       <element name="rule">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">marks a ruled line</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(rule) marks a ruled line</a:documentation>
          <optional>
             <ref name="desc"/>
          </optional>
          <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
             <sch:rule context="tei:rule[@place]">
-               <sch:assert test="exists(@extent) and xs:integer(replace(@extent,'%','')) gt 99">ERROR: @place only makes sense if an @extent exists and is less than 100%.</sch:assert>
+               <sch:assert test="exists(@extent) and xs:integer(replace(@extent,'%','')) lt 100">ERROR: @place only makes sense if an @extent exists and is less than 100%.</sch:assert>
             </sch:rule>
          </sch:pattern>
          <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">

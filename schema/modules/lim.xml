@@ -408,7 +408,7 @@
                      <constraint>
                         <sch:pattern>
                            <sch:rule context="tei:rule[@place]">
-                              <sch:assert test="exists(@extent) and xs:integer(replace(@extent,'%','')) gt 99">ERROR: @place only makes sense if an @extent exists and is less than 100%.</sch:assert>
+                              <sch:assert test="exists(@extent) and xs:integer(replace(@extent,'%','')) lt 100">ERROR: @place only makes sense if an @extent exists and is less than 100%.</sch:assert>
                            </sch:rule>
                         </sch:pattern>
                      </constraint>

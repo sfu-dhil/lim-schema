@@ -1576,6 +1576,7 @@
                      <p>The <gi>topic</gi> element is a custom element for the LiM project to mark the beginning of an analytic segment; it should be used in concert with a <gi>anchor</gi> bearing an <att>xml:id</att>.</p>
                   </remarks>
                </elementSpec><elementSpec ident="rule" module="lim" mode="add">
+                  <gloss>rule</gloss>
                   <desc>marks a ruled line</desc>
                   <classes>
                      <memberOf key="model.milestoneLike"/>
@@ -1589,7 +1590,7 @@
                      <constraint>
                         <sch:pattern>
                            <sch:rule context="tei:rule[@place]">
-                              <sch:assert test="exists(@extent) and xs:integer(replace(@extent,'%','')) gt 99">ERROR: @place only makes sense if an @extent exists and is less than 100%.</sch:assert>
+                              <sch:assert test="exists(@extent) and xs:integer(replace(@extent,'%','')) lt 100">ERROR: @place only makes sense if an @extent exists and is less than 100%.</sch:assert>
                            </sch:rule>
                         </sch:pattern>
                      </constraint>
