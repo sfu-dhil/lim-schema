@@ -1,0 +1,1 @@
+{"stem":"string-length","instances":[{"docId":"TEI.att.datable","docUri":"TEI.att.datable.html","score":1,"contexts":[{"form":"\"string-length","weight":"1","pos":84,"context":"...calendar]\"&gt; &lt;sch:assert test=<mark>\"string-length<\/mark>(.) gt 0\"&gt; @calendar indicates the system or...","fid":"_d2e79861"}]}]}
