@@ -4,6 +4,9 @@
 	schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0"
      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     xmlns:sqf="http://www.schematron-quickfix.com/validator/process"
+     xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning"
+     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
      xml:id="lim">
    <teiHeader>
       <fileDesc>
@@ -182,7 +185,33 @@
                               have an xml:id identifying it. (This should be automatic if you use
                               the keyboard shortcut Command + Shift + N)</sch:assert>
                            </sch:rule>
-                          
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="noteMarker.allTargetsShouldStartWithHash" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:noteMarker[@target]">
+                              <sch:let name="localTargs" value="tokenize(@target,'\s+')"/>
+                              <sch:assert test="every $targ in $localTargs satisfies matches($targ,'^#')">ERROR: Every target in noteMarker must start with a '#'</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="noteMarker.allTargsShouldExist" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:noteMarker[@target]">
+                              <sch:let name="noteMarker" value="."/>
+                              <sch:let name="localTargs" value="tokenize(@target,'\s+')[matches(.,'^#')]"/>
+                              <sch:let name="noteMarkers" 
+                                 value="ancestor::tei:TEI/descendant::tei:noteMarker[@xml:id]"/>
+                              <sch:let name="badPointers" value="for $targ in $localTargs return
+                                 let $note := $noteMarkers[@xml:id = substring-after($targ,'#')]
+                                 return if (exists($note) and $note[. &lt;&lt; $noteMarker]) then ()
+                                 else $targ"/>
+                               <sch:assert test="empty($badPointers)">ERROR: Cannot find preceding noteMarker for target<sch:value-of select="if (count($badPointers) gt 1) then 's' else ()"/>: <sch:value-of select="string-join($badPointers,' ')"/>.</sch:assert>
+                           </sch:rule>
                         </sch:pattern>
                      </constraint>
                   </constraintSpec>
@@ -196,6 +225,19 @@
                            <sch:assert test="empty(text())">ERROR: No text content is allowed in noteMarker unless @ref='g:UNKNOWN'</sch:assert>
                         </sch:rule>
                         
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="noteMarker.mustHaveIdFollowingFormat" scheme="schematron">
+                     <constraint>
+                        <sch:rule context="tei:noteMarker[not(parent::tei:note[@anchored='true'] or parent::tei:supplied/parent::tei:note[@anchored='true'])]">
+                           <sch:let name="prePage" value="preceding::tei:pb[1]"/>
+                           <sch:let name="prePageVal" value="if ($prePage) then substring-after($prePage/@facs,'pg:') else tokenize(ancestor::tei:TEI/@xml:id,'\.')[2]"/>
+                           <sch:let name="prePageInt" value="xs:integer($prePageVal)"/>
+                           <sch:let name="preNotes" value="preceding::tei:noteMarker[@xml:id]"/>
+                           <sch:let name="noteNum" value="(if (exists($prePage)) then count($preNotes[. &gt;&gt; $prePage]) else count($preNotes)) + 1"/>
+                           <sch:let name="noteMarkerId" value="'p' || $prePageVal || '_n' || $noteNum"/>
+                           <sch:assert test="@xml:id and (@xml:id = $noteMarkerId)">ERROR: @xml:id of noteMarker should be <sch:value-of select="$noteMarkerId"/>.</sch:assert>
+                        </sch:rule>
                      </constraint>
                   </constraintSpec>
                   <attList>
@@ -231,7 +273,7 @@
                         </remarks>
                      </attDef>
                      <attList org="choice">
-                        <attDef ident="xml:id" usage="req">
+                        <attDef ident="xml:id" usage="rec">
                            <gloss versionDate="2007-07-02" xml:lang="en">identifier</gloss>
                            <gloss versionDate="2007-12-20" xml:lang="ko">확인소</gloss>
                            <gloss versionDate="2008-04-06" xml:lang="es">identificador</gloss>

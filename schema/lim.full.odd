@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?><?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml"
-	schematypens="http://purl.oclc.org/dsdl/schematron"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xml:lang="en">
+	schematypens="http://purl.oclc.org/dsdl/schematron"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xml:lang="en">
    <teiHeader>
       <fileDesc>
          <titleStmt>
@@ -1237,7 +1237,7 @@
                      element.</p>
                   </remarks>
                </elementSpec>
-               <moduleSpec ident="lim"/><elementSpec ident="compliment" module="lim" mode="add">
+               <moduleSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="lim"/><elementSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="compliment" module="lim" mode="add">
                   <classes>
                      <memberOf key="att.global"/>
                      <memberOf key="att.ascribed.directed"/>
@@ -1245,35 +1245,35 @@
                   <content>
                      <macroRef key="macro.specialPara"/>
                   </content>
-               </elementSpec><elementSpec ident="compliments" module="lim" mode="add">
+               </elementSpec><elementSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="compliments" module="lim" mode="add">
                   <classes>
                      <memberOf key="model.correspDescPart"/>
                   </classes>
                   <content>
                      <elementRef key="compliment" minOccurs="0" maxOccurs="unbounded"/>
                   </content>
-               </elementSpec><elementSpec ident="duration" module="lim" mode="add">
+               </elementSpec><elementSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="duration" module="lim" mode="add">
                   <classes>
                      <memberOf key="model.settingPart"/>
                   </classes>
                   <content>
                      <macroRef key="macro.paraContent"/>
                   </content>
-               </elementSpec><elementSpec ident="enclosure" module="lim" mode="add">
+               </elementSpec><elementSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="enclosure" module="lim" mode="add">
                   <classes>
                      <memberOf key="att.global"/>
                   </classes>
                   <content>
                      <macroRef key="macro.specialPara"/>
                   </content>
-               </elementSpec><elementSpec ident="enclosures" module="lim" mode="add">
+               </elementSpec><elementSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="enclosures" module="lim" mode="add">
                   <classes>
                      <memberOf key="model.correspDescPart"/>
                   </classes>
                   <content>
                      <elementRef key="enclosure" minOccurs="0" maxOccurs="unbounded"/>
                   </content>
-               </elementSpec><elementSpec ident="limItem" module="lim" mode="add">
+               </elementSpec><elementSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="limItem" module="lim" mode="add">
                   <desc>contains a set of descriptional elements for a text that serves as the basis for a containing text.</desc>
                   <classes>
                      <memberOf key="att.typed"/>
@@ -1328,7 +1328,7 @@
                         </valList>
                      </attDef>
                   </attList>
-               </elementSpec><elementSpec ident="NB" mode="add" module="lim">
+               </elementSpec><elementSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="NB" mode="add" module="lim">
                   <gloss>nota bene</gloss>
                   <desc>groups together content that is marked as a nota bene.</desc>
                   <classes>
@@ -1361,7 +1361,7 @@
                         wrap the <gi>NB</gi> in the <gi>note</gi>.</p>
                      <p>We assume that all <gi>NB</gi> elements are written by Forbes (i.e. the implied value of <att>resp</att> is prs:FORBR1).</p>
                   </remarks>
-               </elementSpec><elementSpec ident="noteMarker" mode="add" module="lim">
+               </elementSpec><elementSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="noteMarker" mode="add" module="lim">
                   <classes>
                      <memberOf key="model.milestoneLike"/>
                   </classes>
@@ -1380,7 +1380,30 @@
                               have an xml:id identifying it. (This should be automatic if you use
                               the keyboard shortcut Command + Shift + N)</sch:assert>
                            </sch:rule>
-                          
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="noteMarker.allTargetsShouldStartWithHash" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:noteMarker[@target]">
+                              <sch:let name="localTargs" value="tokenize(@target,'\s+')"/>
+                              <sch:assert test="every $targ in $localTargs satisfies matches($targ,'^#')">ERROR: Every target in noteMarker must start with a '#'</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                     
+                  </constraintSpec>
+                  <constraintSpec ident="noteMarker.allTargsShouldExist" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:noteMarker[@target]">
+                              <sch:let name="noteMarker" value="."/>
+                              <sch:let name="localTargs" value="tokenize(@target,'\s+')[matches(.,'^#')]"/>
+                              <sch:let name="noteMarkers" value="ancestor::tei:TEI/descendant::tei:noteMarker[@xml:id]"/>
+                              <sch:let name="badPointers" value="for $targ in $localTargs return                                  let $note := $noteMarkers[@xml:id = substring-after($targ,'#')]                                  return if (exists($note) and $note[. &lt;&lt; $noteMarker]) then ()                                  else $targ"/>
+                               <sch:assert test="empty($badPointers)">ERROR: Cannot find preceding noteMarker for target<sch:value-of select="if (count($badPointers) gt 1) then 's' else ()"/>: <sch:value-of select="string-join($badPointers,' ')"/>.</sch:assert>
+                           </sch:rule>
                         </sch:pattern>
                      </constraint>
                   </constraintSpec>
@@ -1394,6 +1417,19 @@
                            <sch:assert test="empty(text())">ERROR: No text content is allowed in noteMarker unless @ref='g:UNKNOWN'</sch:assert>
                         </sch:rule>
                         
+                     </constraint>
+                  </constraintSpec>
+                  <constraintSpec ident="noteMarker.mustHaveIdFollowingFormat" scheme="schematron">
+                     <constraint>
+                        <sch:rule context="tei:noteMarker[not(parent::tei:note[@anchored='true'] or parent::tei:supplied/parent::tei:note[@anchored='true'])]">
+                           <sch:let name="prePage" value="preceding::tei:pb[1]"/>
+                           <sch:let name="prePageVal" value="if ($prePage) then substring-after($prePage/@facs,'pg:') else tokenize(ancestor::tei:TEI/@xml:id,'\.')[2]"/>
+                           <sch:let name="prePageInt" value="xs:integer($prePageVal)"/>
+                           <sch:let name="preNotes" value="preceding::tei:noteMarker[@xml:id]"/>
+                           <sch:let name="noteNum" value="(if (exists($prePage)) then count($preNotes[. &gt;&gt; $prePage]) else count($preNotes)) + 1"/>
+                           <sch:let name="noteMarkerId" value="'p' || $prePageVal || '_n' || $noteNum"/>
+                           <sch:assert test="@xml:id and (@xml:id = $noteMarkerId)">ERROR: @xml:id of noteMarker should be <sch:value-of select="$noteMarkerId"/>.</sch:assert>
+                        </sch:rule>
                      </constraint>
                   </constraintSpec>
                   <attList>
@@ -1429,7 +1465,7 @@
                         </remarks>
                      </attDef>
                      <attList org="choice">
-                        <attDef ident="xml:id" usage="req">
+                        <attDef ident="xml:id" usage="rec">
                            <gloss versionDate="2007-07-02" xml:lang="en">identifier</gloss>
                            <gloss versionDate="2007-12-20" xml:lang="ko">확인소</gloss>
                            <gloss versionDate="2008-04-06" xml:lang="es">identificador</gloss>
@@ -1488,7 +1524,7 @@
                      </attList>
                   </attList>
                   
-               </elementSpec><elementSpec ident="request" module="lim" mode="add">
+               </elementSpec><elementSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="request" module="lim" mode="add">
                   <classes>
                      <memberOf key="att.global"/>
                      <memberOf key="att.ascribed.directed"/>
@@ -1496,14 +1532,14 @@
                   <content>
                      <macroRef key="macro.specialPara"/>
                   </content>
-               </elementSpec><elementSpec ident="requests" module="lim" mode="add">
+               </elementSpec><elementSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="requests" module="lim" mode="add">
                   <classes>
                      <memberOf key="model.correspDescPart"/>
                   </classes>
                   <content>
                      <elementRef key="request" minOccurs="0" maxOccurs="unbounded"/>
                   </content>
-               </elementSpec><elementSpec ident="scaffold" module="lim" mode="add">
+               </elementSpec><elementSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="scaffold" module="lim" mode="add">
                   <classes>
                      <memberOf key="model.settingPart"/>
                      <memberOf key="lim.att.locatable"/>
@@ -1561,7 +1597,7 @@
                         </valList>
                      </attDef>
                   </attList>
-               </elementSpec><elementSpec ident="topic" module="lim" mode="add">
+               </elementSpec><elementSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="topic" module="lim" mode="add">
                   <desc>marks the beginning of a longer sequence of text pertaining to a topic or set of topics.</desc>
                   <classes>
                      <memberOf key="att.spanning"/>
@@ -1580,7 +1616,7 @@
                   <remarks>
                      <p>The <gi>topic</gi> element is a custom element for the LiM project to mark the beginning of an analytic segment; it should be used in concert with a <gi>anchor</gi> bearing an <att>xml:id</att>.</p>
                   </remarks>
-               </elementSpec><elementSpec ident="rule" module="lim" mode="add">
+               </elementSpec><elementSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="rule" module="lim" mode="add">
                   <gloss>rule</gloss>
                   <desc>marks a ruled line</desc>
                   <classes>
@@ -1678,7 +1714,7 @@
                      <p>This element is semantically equivalent to the standard TEI <gi>milestone</gi> with <att>rendition</att> values. However, it may contain an optional <gi>desc</gi> child if further description of line is necessary.</p>
                      <p>The <att>place</att> attribute (which is borrowed from att.placement) has no bearing on <gi>rule</gi> elements that do not specify an <att>extent</att> less than 100% (which is the default).</p>
                   </remarks>
-               </elementSpec><classSpec ident="lim.att.boolean" mode="add" module="lim" type="atts">
+               </elementSpec><classSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="lim.att.boolean" mode="add" module="lim" type="atts">
                   <attList>
                      <attDef ident="value" usage="rec">
                         <datatype>
@@ -1686,7 +1722,7 @@
                         </datatype>
                      </attDef>
                   </attList>
-               </classSpec><classSpec ident="lim.att.global.fragmentable" mode="add" module="lim" type="atts">
+               </classSpec><classSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="lim.att.global.fragmentable" mode="add" module="lim" type="atts">
                   <desc versionDate="2021-08-22" xml:lang="en">provides attributes for representing
                      fragmentation of a structural element, typically as 
                      a consequence of some overlapping hierarchy.</desc>
@@ -1747,7 +1783,7 @@
                      <p>The same as TEI's att.fragmentable, but turned into its own class
                      to make it global.</p>
                   </remarks>
-               </classSpec><classSpec ident="lim.att.locatable" module="lim" type="atts" mode="add">
+               </classSpec><classSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="lim.att.locatable" module="lim" type="atts" mode="add">
                   <classes>
                      <memberOf key="lim.att.locatable.directed"/>
                   </classes>
@@ -1759,7 +1795,7 @@
                         </datatype>
                      </attDef>
                   </attList>
-               </classSpec><classSpec ident="lim.att.locatable.directed" module="lim" type="atts" mode="add">
+               </classSpec><classSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="lim.att.locatable.directed" module="lim" type="atts" mode="add">
                   <attList>
                      <attDef ident="toWhere" usage="opt">
                         <desc>indicates the location of something being sent.</desc>
@@ -1768,7 +1804,7 @@
                         </datatype>
                      </attDef>
                   </attList>
-               </classSpec><macroSpec ident="lim.personMacro" module="lim" mode="add">
+               </classSpec><macroSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="lim.personMacro" module="lim" mode="add">
                   <content>
                      <elementRef key="persName" minOccurs="1" maxOccurs="unbounded"/>
                      <!--NOTE: preserveORder doesn't actually work, but there
@@ -1788,7 +1824,7 @@
                      <elementRef key="langKnowledge" minOccurs="0" maxOccurs="1"/>
                      <elementRef key="note" minOccurs="0" maxOccurs="1"/>
                   </content>
-               </macroSpec><dataSpec module="lim" ident="limdata.ana" mode="add">
+               </macroSpec><dataSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" module="lim" ident="limdata.ana" mode="add">
                   <desc>Datatype for all analytic pointers</desc>
                   <content>
                      <valList>
@@ -1810,17 +1846,17 @@
                         </valItem>
                      </valList>
                   </content>
-               </dataSpec><dataSpec module="lim" ident="limdata.facs" mode="add">
+               </dataSpec><dataSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" module="lim" ident="limdata.facs" mode="add">
                   <desc>Datatype for all lim facsimile pointers.</desc>
                   <content>
                      <dataRef name="token" restriction="(lib|pg):\d+(.\d+)?"/>
                   </content>
-               </dataSpec><dataSpec module="lim" ident="limdata.glyph" mode="add">
+               </dataSpec><dataSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" module="lim" ident="limdata.glyph" mode="add">
                   <desc>Datatype for all glyph pointers.</desc>
                   <content>
                      <valList type="closed"><valItem ident="g:star"><gloss>star</gloss><desc>STAR / ASTERISK (*)</desc></valItem><valItem ident="g:cross"><gloss>cross</gloss><desc>CROSS OR DAGGER (✝)</desc></valItem><valItem ident="g:x"><gloss>x</gloss><desc>X (X)</desc></valItem><valItem ident="g:circledX"><gloss>circledX</gloss><desc>X WITH CIRCLE (ⓧ)</desc></valItem><valItem ident="g:phi"><gloss>phi</gloss><desc>PHI (φ)</desc></valItem><valItem ident="g:theta"><gloss>theta</gloss><desc>THETA (θ)</desc></valItem><valItem ident="g:umbrella"><gloss>umbrella</gloss><desc>UMBRELLA (☂)</desc></valItem><valItem ident="g:tau"><gloss>tau</gloss><desc>TAU (Τ)</desc></valItem><valItem ident="g:pi"><gloss>pi</gloss><desc>PI (Π)</desc></valItem><valItem ident="g:UNKNOWN"><gloss>UNKNOWN</gloss><desc>UNKNOWN</desc></valItem></valList>
                   </content>
-               </dataSpec><dataSpec module="lim" ident="limdata.placement" mode="add">
+               </dataSpec><dataSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" module="lim" ident="limdata.placement" mode="add">
                   <desc>Possible values for placement.</desc>
                   <content>
                      <valList type="closed">
@@ -1854,7 +1890,7 @@
                         </valItem>
                      </valList>
                   </content>
-               </dataSpec><constraintSpec ident="fwPbConstraints" module="lim" mode="add" scheme="schematron">
+               </dataSpec><constraintSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="fwPbConstraints" module="lim" mode="add" scheme="schematron">
                   <desc>Set of constraints for formeworks and page beginnings.</desc>
                   <constraint>
                      <sch:pattern>
@@ -1869,7 +1905,7 @@
                         </sch:rule>
                      </sch:pattern>
                   </constraint>
-               </constraintSpec><constraintSpec scheme="schematron" ident="global.rootIdMustMatchDocument">
+               </constraintSpec><constraintSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" scheme="schematron" ident="global.rootIdMustMatchDocument">
                   <desc>The rootid must be the same as the document's name.</desc>
                   <constraint>
                      <sch:pattern>
@@ -1906,7 +1942,7 @@
                         </sch:rule>
                      </sch:pattern>
                   </constraint>
-               </constraintSpec><constraintSpec scheme="schematron" ident="global.variables">
+               </constraintSpec><constraintSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" scheme="schematron" ident="global.variables">
                   <desc>Global variables for use across the schematron.</desc>
                   <constraint>
                      <sch:pattern>
@@ -1929,7 +1965,7 @@
                   value="document($dataDir || 'glyphs.xml')//tei:glyph[@xml:id]"/> -->
                      </sch:pattern>
                   </constraint>
-               </constraintSpec><constraintSpec scheme="schematron" ident="inlineElementsNoSpaces">
+               </constraintSpec><constraintSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" scheme="schematron" ident="inlineElementsNoSpaces">
                   <desc>Inline elements should not begin or end with spaces.</desc>
                   <constraint>
                      <sch:pattern>
@@ -1941,7 +1977,7 @@
                         </sch:rule>
                      </sch:pattern>
                   </constraint>
-               </constraintSpec><constraintSpec ident="metadataContraints" module="lim" mode="add" scheme="schematron">
+               </constraintSpec><constraintSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="metadataContraints" module="lim" mode="add" scheme="schematron">
                   <desc>Set of constraints for profileDesc / premediation.</desc>
                   <constraint>
                      <sch:pattern>
@@ -1956,7 +1992,7 @@
                         </sch:rule>
                      </sch:pattern>
                   </constraint>
-               </constraintSpec><constraintSpec ident="textConstraints" module="lim" mode="add" scheme="schematron">
+               </constraintSpec><constraintSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="textConstraints" module="lim" mode="add" scheme="schematron">
                   <desc>Set of constraints for text and punctuation</desc>
                   <constraint>
                      <sch:pattern>

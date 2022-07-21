@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xlink="http://www.w3.org/1999/xlink" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-07-18T15:46:10Z. .
+Schema generated from ODD source 2022-07-21T17:29:38Z. .
 TEI Edition: Version 4.2.2. Last updated on
 	9th April 2021, revision 609a109b1
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.2.2/
@@ -342,7 +342,7 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
       </optional>
    </define>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.written-hand.ForbesOnlyIfImmediateHandIsnt-constraint-rule-1">
-      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@hand = 'hand:Forbes']">
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@hand = 'hand:Forbes']">
          <sch:let name="ancHand" value="ancestor::*[1][@hand]/@hand"/>
          <sch:assert test="exists($ancHand) and not($ancHand = 'hand:Forbes')">ERROR: Specifying hand:Forbes rarely makes sense since his is the implied hand in all cases; the value hand:Forbes should only be used when the hand has switched from Forbes to another hand and then back to Forbes.</sch:assert>
       </sch:rule>
@@ -477,17 +477,17 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
       </optional>
    </define>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.datable.w3c-att-datable-w3c-when-constraint-rule-2">
-      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@when]">
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@when]">
          <sch:report test="@notBefore|@notAfter|@from|@to" role="nonfatal">The @when attribute cannot be used with any other att.datable.w3c attributes.</sch:report>
       </sch:rule>
    </pattern>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.datable.w3c-att-datable-w3c-from-constraint-rule-3">
-      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@from]">
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@from]">
          <sch:report test="@notBefore" role="nonfatal">The @from and @notBefore attributes cannot be used together.</sch:report>
       </sch:rule>
    </pattern>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.datable.w3c-att-datable-w3c-to-constraint-rule-4">
-      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@to]">
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@to]">
          <sch:report test="@notAfter" role="nonfatal">The @to and @notAfter attributes cannot be used together.</sch:report>
       </sch:rule>
    </pattern>
@@ -505,7 +505,7 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
       </optional>
    </define>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.datable-calendar-calendar-constraint-rule-5">
-      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@calendar]">
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@calendar]">
          <sch:assert test="string-length(.) gt 0"> @calendar indicates the system or calendar to
               which the date represented by the content of this element belongs, but this
               <sch:name/> element has no textual content.</sch:assert>
@@ -678,7 +678,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
       </optional>
    </define>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.global.rendition-rendition-rendition.twoColumnNeedsLeftAndRight-constraint-rule-7">
-      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[contains-token(@rendition,'rnd:two-column')]">
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[contains-token(@rendition,'rnd:two-column')]">
          <sch:let name="children" value="child::tei:*"/>
          <sch:let name="leftChild" value="$children[contains-token(@rendition,'rnd:left')]"/>
          <sch:let name="rightChild" value="$children[contains-token(@rendition, 'rnd:right')]"/>
@@ -687,7 +687,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
       </sch:rule>
    </pattern>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.global.rendition-rendition-rendition.mutualExclusion-constraint-rule-8">
-      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@rendition]">
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@rendition]">
          <sch:let name="rendition" value="@rendition"/>
          <sch:let name="ptrs" value="tokenize(@rendition,'\s+')"/>
          <sch:let name="tokens" value="for $p in $ptrs return substring-after($p,'rnd:')"/>
@@ -699,7 +699,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
       </sch:rule>
    </pattern>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.global.rendition-rendition.onlyInBornDigital-constraint-rule-6">
-      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[contains-token(@rendition,'rnd:hidden')]">
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[contains-token(@rendition,'rnd:hidden')]">
          <sch:assert test="self::tei:head and ancestor::tei:TEI/descendant::tei:catRef[matches(@target,'bornDigital')]">ERROR: rnd:hidden is meant only for born digital document headings.</sch:assert>
       </sch:rule>
    </pattern>
@@ -777,7 +777,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
          </attribute>
       </optional>
    </define>
-   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude">
+   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude">
       <sch:rule context="*[@xml:id]">
          <sch:let name="allIds" value="//*[@xml:id]/@xml:id"/>
          <sch:let name="myId" value="@xml:id"/>
@@ -990,7 +990,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
       </optional>
    </define>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.typed-subtypeTyped-constraint-rule-10">
-      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@subtype]">
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@subtype]">
          <sch:assert test="@type">The <sch:name/> element should not be categorized in detail with @subtype unless also categorized in general with @type</sch:assert>
       </sch:rule>
    </pattern>
@@ -1021,7 +1021,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
       </optional>
    </define>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.spanning-spanTo-spanTo-2-constraint-rule-11">
-      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@spanTo]">
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@spanTo]">
          <sch:assert test="id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]">
 The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow the current element <sch:name/>
          </sch:assert>
@@ -1059,7 +1059,7 @@ The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow 
       </optional>
    </define>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-12">
-      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@schemeVersion]">
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@schemeVersion]">
          <sch:assert test="@scheme and not(@scheme = 'free')">
               @schemeVersion can only be used if @scheme is specified.
             </sch:assert>
@@ -2529,14 +2529,14 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="macro.paraContent"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-p-abstractModel-structure-p-constraint-report-4">
             <rule context="tei:p">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )">
+               <report xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )">
         Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
       </report>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-p-abstractModel-structure-l-constraint-report-5">
             <rule context="tei:p">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]">
+               <report xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" test="ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]">
         Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab.
       </report>
             </rule>
@@ -2687,7 +2687,7 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(description) contains a brief description of the object documented by its parent element, typically a documentation element or an entity. [22.4.1. Description of Components]</a:documentation>
          <ref name="macro.limitedContent"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-desc-deprecationInfo-only-in-deprecated-constraint-rule-13">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:desc[ @type eq 'deprecationInfo']">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:desc[ @type eq 'deprecationInfo']">
                <sch:assert test="../@validUntil">Information about a
         deprecation should only be present in a specification element
         that is being deprecated: that is, only an element that has a
@@ -2912,7 +2912,7 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(name, proper noun) contains a proper noun or noun phrase. [3.6.1. Referring Strings]</a:documentation>
          <ref name="macro.phraseSeq"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-name-name.notForPeopleOrPlaces-constraint-rule-14">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:name[@ref]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:name[@ref]">
                <sch:assert test="not(matches(@ref,'^prs:'))">ERROR: Use &lt;persName&gt; to tag names of people.</sch:assert>
                <sch:assert test="not(matches(@ref,'^plc:'))">ERROR: Use &lt;placeName&gt; to tag names of places.</sch:assert>
                <sch:assert test="not(matches(@ref,'^org:'))">ERROR: Use &lt;orgName&gt; to tag names of organizations.</sch:assert>
@@ -2941,7 +2941,7 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(referencing string) contains a general purpose name or referring string. [13.2.1. Personal Names 3.6.1. Referring Strings]</a:documentation>
          <ref name="macro.phraseSeq"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-rs-rs.familyNoRef-constraint-rule-15">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:rs[@type='family']">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:rs[@type='family']">
                <sch:assert test="not(@ref)">ERROR: Do not use a @ref attribute on for a family reference since it can't point to anything.</sch:assert>
             </sch:rule>
          </pattern>
@@ -3042,12 +3042,12 @@ Suggested values include: 1] cardinal; 2] ordinal; 3] fraction; 4] percentage</a
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(abbreviation) contains an abbreviation of any sort. [3.6.5. Abbreviations and Their Expansions]</a:documentation>
          <ref name="macro.phraseSeq"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-abbr-abbr.shouldntContainJustAmp-constraint-rule-16">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:abbr">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:abbr">
                <sch:let name="content" value="string(.)"/>
                <sch:assert test="not(matches($content, '^\s*&amp;\s*$'))">ERROR: There is no need to tag ampersands when it means "and".</sch:assert>
             </sch:rule>
          </pattern>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
             <sch:rule context="tei:choice/tei:abbr">
                <sch:assert test="not(@type)">ERROR: Do not put a type attribute on abbrs in choice.</sch:assert>
             </sch:rule>
@@ -3128,7 +3128,7 @@ Suggested values include: 1] cardinal; 2] ordinal; 3] fraction; 4] percentage</a
          <empty/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-ptr-ptrAtts-constraint-report-6">
             <rule context="tei:ptr">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="@target and @cRef">Only one of the
+               <report xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" test="@target and @cRef">Only one of the
 attributes @target and @cRef may be supplied on <name/>.</report>
             </rule>
          </pattern>
@@ -3145,7 +3145,7 @@ attributes @target and @cRef may be supplied on <name/>.</report>
          <ref name="macro.paraContent"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-ref-refAtts-constraint-report-7">
             <rule context="tei:ref">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="@target and @cRef">Only one of the
+               <report xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" test="@target and @cRef">Only one of the
 	attributes @target' and @cRef' may be supplied on <name/>
                </report>
             </rule>
@@ -3204,12 +3204,12 @@ attributes @target and @cRef may be supplied on <name/>.</report>
             </zeroOrMore>
          </group>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-list-list.bornDigitalNeedsRendition-constraint-rule-19">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:list[not(@rendition)]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:list[not(@rendition)]">
                <sch:assert test="not($isBornDigital)">ERROR: All lists in born digital document require the rendition attribute.</sch:assert>
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-list-gloss-list-must-have-labels-constraint-rule-20">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:list[@type='gloss']">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:list[@type='gloss']">
                <sch:assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</sch:assert>
             </sch:rule>
          </pattern>
@@ -3281,7 +3281,7 @@ attributes @target and @cRef may be supplied on <name/>.</report>
             </attribute>
          </optional>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-list-rendition-rendition.twoColumnNeedsLeftAndRight-constraint-rule-21">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[contains-token(@rendition,'rnd:two-column')]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[contains-token(@rendition,'rnd:two-column')]">
                <sch:let name="children" value="child::tei:*"/>
                <sch:let name="leftChild" value="$children[contains-token(@rendition,'rnd:left')]"/>
                <sch:let name="rightChild" value="$children[contains-token(@rendition, 'rnd:right')]"/>
@@ -3290,7 +3290,7 @@ attributes @target and @cRef may be supplied on <name/>.</report>
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-list-rendition-rendition.mutualExclusion-constraint-rule-22">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@rendition]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@rendition]">
                <sch:let name="rendition" value="@rendition"/>
                <sch:let name="ptrs" value="tokenize(@rendition,'\s+')"/>
                <sch:let name="tokens" value="for $p in $ptrs return substring-after($p,'rnd:')"/>
@@ -3329,7 +3329,7 @@ Suggested values include: 1] gloss (gloss); 2] index (index); 3] instructions (i
       <element name="item">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(item) contains one component of a list. [3.8. Lists 2.6. The Revision Description]</a:documentation>
          <ref name="macro.specialPara"/>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
             <sch:rule context="tei:div[@type='index']/tei:list/tei:item">
                <sch:assert test="count(tei:num) gt 0">ERROR: All index items must contain at least one num element.</sch:assert>
                <sch:assert test="count(descendant::tei:title) gt 0">ERROR: All index items must contain at least one title element.</sch:assert>
@@ -3365,7 +3365,7 @@ Suggested values include: 1] gloss (gloss); 2] index (index); 3] instructions (i
             </choice>
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-head-head.bdHidden-constraint-rule-24">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:head[matches(@rendition,'rnd:hidden')]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:head[matches(@rendition,'rnd:hidden')]">
                <sch:assert test="$isBornDigital">ERROR: Only use rnd:hidden in born digital documents.</sch:assert>
             </sch:rule>
          </pattern>
@@ -3438,7 +3438,7 @@ Suggested values include: 1] gloss (gloss); 2] index (index); 3] instructions (i
             </attribute>
          </optional>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-head-rendition-rendition.twoColumnNeedsLeftAndRight-constraint-rule-25">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[contains-token(@rendition,'rnd:two-column')]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[contains-token(@rendition,'rnd:two-column')]">
                <sch:let name="children" value="child::tei:*"/>
                <sch:let name="leftChild" value="$children[contains-token(@rendition,'rnd:left')]"/>
                <sch:let name="rightChild" value="$children[contains-token(@rendition, 'rnd:right')]"/>
@@ -3447,7 +3447,7 @@ Suggested values include: 1] gloss (gloss); 2] index (index); 3] instructions (i
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-head-rendition-rendition.mutualExclusion-constraint-rule-26">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@rendition]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@rendition]">
                <sch:let name="rendition" value="@rendition"/>
                <sch:let name="ptrs" value="tokenize(@rendition,'\s+')"/>
                <sch:let name="tokens" value="for $p in $ptrs return substring-after($p,'rnd:')"/>
@@ -3488,12 +3488,12 @@ Suggested values include: 1] gloss (gloss); 2] index (index); 3] instructions (i
             </group>
             <ref name="macro.specialPara"/>
          </choice>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
             <sch:rule context="tei:note[ancestor::tei:text][not(ancestor::tei:div[@type='footnotes'])]">
                <sch:assert test="@type">ERROR: All notes in transcriptions must have a @type.</sch:assert>
             </sch:rule>
          </sch:pattern>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
             <sch:rule context="tei:note[@type='editorial']">
                <sch:assert test="@resp">ERROR: All editorial notes must have a @resp</sch:assert>
                <sch:assert test="not(@anchored)">ERROR: Do not use @anchored for editorial notes</sch:assert>
@@ -3511,13 +3511,13 @@ Suggested values include: 1] gloss (gloss); 2] index (index); 3] instructions (i
                <sch:assert test="every $text in text() satisfies not(matches($text,'\S'))">ERROR: Do not put text within the supplied in a noteMarker.</sch:assert>
             </sch:rule>
          </sch:pattern>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
             <sch:rule context="tei:note[@type = 'unknown']">
                <sch:assert test="//tei:revisionDesc[@docStatus=('empty','uneditedTranscription')]">WARNING: Unknown notes should be replaced by either
                                  the appropriate encoding (usually supplied, gap, del, etc) or should become a @type='editorial'.</sch:assert>
             </sch:rule>
          </sch:pattern>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
             <sch:rule context="tei:note[@anchored='true']">
                <sch:assert test="tei:noteMarker or tei:supplied/tei:noteMarker">ERROR: Anchored notes must
                                  contain a noteMarker element that points to the id of the
@@ -3585,12 +3585,12 @@ Suggested values include: 1] editorial (editorial note); 2] lim (Forbes note)</a
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(milestone) marks a boundary point separating any kind of section of a text, typically but not necessarily indicating a point at which some part of a standard reference system changes, where the change is not represented by a structural element. [3.11.3. Milestone
 Elements]</a:documentation>
          <empty/>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
             <sch:rule context="tei:milestone[@unit='section']">
                <sch:assert test="ancestor::tei:body">ERROR: Section milestones should be within the body of the text</sch:assert>
             </sch:rule>
          </sch:pattern>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
             <sch:rule context="tei:milestone[@unit='item']">
                <sch:assert test="ancestor::tei:text and preceding-sibling::tei:body">ERROR: Item milestones should only occur at the end of the item after the closing body tag.</sch:assert>
             </sch:rule>
@@ -3620,12 +3620,12 @@ Suggested values include: 1] section (section); 2] item (item)</a:documentation>
 Elements]</a:documentation>
          <empty/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-pb-pb.noDecimal-constraint-rule-36">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:pb[@facs]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:pb[@facs]">
                <sch:assert test="matches(@facs,'^(lib|pg):\d+$')">ERROR: pb/@facs should be either the Forbes page number (i.e. pg:233 for the page Forbes numbers as 233) or via the page number in the library catalogue using the lib scheme (i.e. lib:22).</sch:assert>
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-pb-pb.unique-constraint-rule-37">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:pb[@facs][not(ancestor::tei:TEI[@xml:id = 'vol11'])]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:pb[@facs][not(ancestor::tei:TEI[@xml:id = 'vol11'])]">
                <sch:let name="facsPtr" value="@facs"/>
                <sch:let name="allFacs" value="//tei:pb[@facs]"/>
                <sch:assert test="count($allFacs[contains-token(@facs, $facsPtr)]) = 1">
@@ -3649,7 +3649,7 @@ Elements]</a:documentation>
 Elements 7.2.5. Speech Contents]</a:documentation>
          <empty/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-lb-lb.shouldUseDecimal-constraint-rule-38">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:lb[@facs]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:lb[@facs]">
                <sch:assert test="matches(@facs,'(lib|pg):\d+\.\d+')">ERROR: lb elements with facs must specify the line in the form lib:#.lineNum or pg:#.lineNum (e.g. lib:23.2)</sch:assert>
             </sch:rule>
          </pattern>
@@ -3856,7 +3856,7 @@ Sample values include: 1] main; 2] sub (subordinate); 3] alt (alternate); 4] sho
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-l-abstractModel-structure-l-constraint-report-8">
             <rule context="tei:l">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
+               <report xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
         Abstract model violation: Lines may not contain lines or lg elements.
       </report>
             </rule>
@@ -3901,13 +3901,13 @@ Sample values include: 1] main; 2] sub (subordinate); 3] alt (alternate); 4] sho
          </group>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-lg-atleast1oflggapl-constraint-assert-57">
             <rule context="tei:lg">
-               <sch:assert xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
+               <sch:assert xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
         must contain at least one child l, lg, or gap element.</sch:assert>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-lg-abstractModel-structure-l-constraint-report-9">
             <rule context="tei:lg">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
+               <report xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
         Abstract model violation: Lines may not contain line groups.
       </report>
             </rule>
@@ -3976,28 +3976,28 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</a:documentation
             </choice>
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-w-w.shouldContainPC-constraint-rule-39">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:w[not(@part)]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:w[not(@part)]">
                <sch:assert test="descendant::tei:pc[@force='weak'] and descendant::tei:lb">ERROR: Word elements must include a pc and an lb,
                               since the element should only be used to flag words separated across line boundaries </sch:assert>
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-w-w.shouldBeInParts-constraint-rule-40">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:w">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:w">
                <sch:assert test="not(descendant::tei:fw or descendant::tei:pb)">ERROR: Do not include formeworks or page beginnings in a word element; if a word is split across pages, then use the @part attribute to signal the initial and final parts of the word. </sch:assert>
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-w-w.partsShouldMatch-constraint-rule-41">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:w">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:w">
                <sch:let name="text" value="string-join(descendant::text(),'')"/>
                <sch:assert test="not(matches($text,'^\s|\s$'))">ERROR: <sch:name/> should begin or end with spaces.</sch:assert>
             </sch:rule>
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:text[descendant::tei:w[@part]]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:text[descendant::tei:w[@part]]">
                <sch:assert test="count(descendant::tei:w[@part]) mod 2 = 0">ERROR: Odd number of split words found in this transcription.</sch:assert>
             </sch:rule>
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:w[@part = 'F']">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:w[@part = 'F']">
                <sch:assert test="preceding-sibling::tei:w[1][@part = 'I']">ERROR: Initial word part missing following final part.</sch:assert>
             </sch:rule>
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:w[@part = 'I']">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:w[@part = 'I']">
                <sch:assert test="following-sibling::tei:w[1][@part = 'F']">ERROR: Final word part missing preceding initial part. </sch:assert>
             </sch:rule>
          </pattern>
@@ -4010,12 +4010,12 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</a:documentation
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(punctuation character) contains a character or string of characters regarded as constituting a single punctuation mark. [17.1.2. Below the Word Level 17.4.2. Lightweight Linguistic Annotation]</a:documentation>
          <text/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-pc-pc.onlyPunct-constraint-rule-45">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:pc">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:pc">
                <sch:assert test="matches(text(),'^[\p{P}=]$')">ERROR: Only a single punctuation character is allowed in pc</sch:assert>
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-pc-dash.shouldBeInWord-constraint-rule-46">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:pc[text() = '-'][@force='weak'][ancestor::tei:TEI/descendant::tei:revisionDesc/@docStatus='inProgress']">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" context="tei:pc[text() = '-'][@force='weak'][ancestor::tei:TEI/descendant::tei:revisionDesc/@docStatus='inProgress']">
                <sch:assert test="ancestor::tei:w">ERROR: All end of line hyphens must be contained by the word (&lt;w&gt;) element.</sch:assert>
             </sch:rule>
          </pattern>
@@ -4061,7 +4061,7 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</a:documentation
                </choice>
             </zeroOrMore>
          </choice>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
             <sch:rule context="tei:setting[ancestor::tei:limItem[matches(@type,'speech')]]">
                <sch:assert test="tei:scaffold">ERROR: All speeches must have a scaffold element.</sch:assert>
             </sch:rule>
@@ -4468,7 +4468,7 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
                <ref name="note"/>
             </optional>
          </interleave>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude">
             <sch:rule context="tei:creation">
                <sch:assert test="ancestor::tei:profileDesc/tei:limItem[@type=                                  ('accountNarrative','conversation','misc', 'speech')]">ERROR: The creation element should only be used for account/narratives, conversations, and speeches, since the date/place of the transcription may differ from the setting.</sch:assert>
                <sch:assert test="count(tei:*) gt 0">ERROR: The creation element requires at least one of placeName, date, or note.</sch:assert>
@@ -4621,7 +4621,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
          <oneOrMore>
             <ref name="change"/>
          </oneOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude">
             <sch:rule context="tei:revisionDesc">
                <sch:let name="firstChangeWithDocStatus" value="tei:change[@docStatus][1]"/>
                <sch:let name="firstChangeWithMetaStatus" value="tei:change[@metaStatus][1]"/>
@@ -4644,7 +4644,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
                               </sch:assert>
             </sch:rule>
          </sch:pattern>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude">
             <sch:rule context="tei:revisionDesc[count(tei:change[@when]) gt 1]">
                <sch:let name="firstChange" value="tei:change[1]"/>
                <sch:let name="secondChange" value="tei:change[2]"/>
@@ -4664,14 +4664,14 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
       <element name="change">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(change) documents a change or set of changes made during the production of a source document, or during the revision of an electronic file. [2.6. The Revision Description 2.4.1. Creation 11.7. Identifying Changes and Revisions]</a:documentation>
          <ref name="macro.specialPara"/>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude">
             <sch:rule context="tei:change">
                <sch:assert test="every $ptr in tokenize(@who,'\s+') satisfies matches($ptr,'^team:')">
                                  ERROR: Every pointer in change/@who must start with 'team:'.
                               </sch:assert>
             </sch:rule>
          </sch:pattern>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude">
             <sch:rule context="tei:change">
                <sch:assert test="not(normalize-space(string-join(descendant::text(),'')) = '')">
                                  ERROR: change elements must contain meaningful content.
@@ -5097,14 +5097,14 @@ Suggested values include: 1] 1.0.1; 2] 1.1; 3] 2.0; 4] 2.1; 5] 3.0; 6] 3.1; 7] 3
          <ref name="macro.paraContent"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-ab-abstractModel-structure-ab-constraint-report-10">
             <rule context="tei:ab">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)">
+               <report xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)">
         Abstract model violation: ab may not occur inside paragraphs or other ab elements.
       </report>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-ab-abstractModel-structure-l-constraint-report-11">
             <rule context="tei:ab">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" test="ancestor::tei:l or ancestor::tei:lg">
+               <report xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" test="ancestor::tei:l or ancestor::tei:lg">
         Abstract model violation: Lines may not contain higher-level divisions such as p or ab.
       </report>
             </rule>
@@ -5139,7 +5139,7 @@ Suggested values include: 1] 1.0.1; 2] 1.1; 3] 2.0; 4] 2.1; 5] 3.0; 6] 3.1; 7] 3
          <oneOrMore>
             <ref name="model.standOffPart"/>
          </oneOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude">
             <sch:rule context="tei:standOff/tei:*[not(self::tei:listQuote)]/tei:*[not(self::tei:head)]">
                <sch:assert test="@copyOf or tei:*">
                       ERROR: <sch:name/> elements need either a @copyOf that points to an existing <sch:name/> OR content.
@@ -5151,7 +5151,7 @@ Suggested values include: 1] 1.0.1; 2] 1.1; 3] 2.0; 4] 2.1; 5] 3.0; 6] 3.1; 7] 3
          </sch:pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-standOff-nested_standOff_should_be_typed-constraint-assert-79">
             <rule context="tei:standOff">
-               <sch:assert xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" test="@type or not(ancestor::tei:standOff)">This
+               <sch:assert xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" test="@type or not(ancestor::tei:standOff)">This
       <sch:name/> element must have a @type attribute, since it is
       nested inside a <sch:name/>
                </sch:assert>
@@ -5185,7 +5185,7 @@ Suggested values include: 1] 1.0.1; 2] 1.1; 3] 2.0; 4] 2.1; 5] 3.0; 6] 3.1; 7] 3
       <element name="locus">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(locus) defines a location within a manuscript, manuscript part, or other object typically as a (possibly discontinuous) sequence of folio references.</a:documentation>
          <empty/>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
             <sch:rule context="tei:locus[@from and @to]">
                <sch:let name="from" value="xs:integer(replace(@from,'[^\d]+',''))"/>
                <sch:let name="to" value="xs:integer(replace(@to,'[^\d]+',''))"/>
@@ -5195,7 +5195,7 @@ Suggested values include: 1] 1.0.1; 2] 1.1; 3] 2.0; 4] 2.1; 5] 3.0; 6] 3.1; 7] 3
                               </sch:assert>
             </sch:rule>
          </sch:pattern>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
             <sch:rule context="tei:locus[@type='Paton'][@n and @from and @to]">
                <sch:let name="n" value="@n"/>
                <sch:let name="max" value="if (@n = '1') then 382                                   else if (@n = '2') then 380 else 416"/>
@@ -5254,7 +5254,7 @@ Suggested values include: 1] 1.0.1; 2] 1.1; 3] 2.0; 4] 2.1; 5] 3.0; 6] 3.1; 7] 3
          <oneOrMore>
             <ref name="locus"/>
          </oneOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
             <sch:rule context="tei:locusGrp/tei:locus">
                <sch:assert test="self::tei:locus[@type='Forbes']">
                                  ERROR: Every locus in a locusGrp must be of type "Forbes"
@@ -5450,7 +5450,7 @@ Suggested values include: 1] 1.0.1; 2] 1.1; 3] 2.0; 4] 2.1; 5] 3.0; 6] 3.1; 7] 3
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(organization name) contains an organizational name. [13.2.2. Organizational Names]</a:documentation>
          <ref name="macro.phraseSeq"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-orgName-placeName.mustHaveRefWithPlc-constraint-rule-57">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:orgName[not(parent::tei:org)][@ref]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:orgName[not(parent::tei:org)][@ref]">
                <sch:let name="ptr" value="(@ref, @where)[1]"/>
                <sch:assert test="matches($ptr ,concat('^org:', $orgIdPattern, '$'))">ERROR: All <sch:name/> pointers must have an @<sch:value-of select="local-name($ptr)"/> that begins with "org:" followed by 4 uppercase letters and a number (e.g. org:CLAN1).</sch:assert>
             </sch:rule>
@@ -5468,12 +5468,12 @@ Suggested values include: 1] 1.0.1; 2] 1.1; 3] 2.0; 4] 2.1; 5] 3.0; 6] 3.1; 7] 3
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(personal name) contains a proper noun or proper-noun phrase referring to a person, possibly including one or more of the person's forenames, surnames, honorifics, added names, etc. [13.2.1. Personal Names]</a:documentation>
          <ref name="macro.phraseSeq"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-persName-persName.mustHaveRefWithPrs-constraint-rule-58">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:persName[not(parent::tei:person)][@ref]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:persName[not(parent::tei:person)][@ref]">
                <sch:assert test="matches(@ref,concat('^prs:', $persIdPattern, '$'))">ERROR: All persName pointers must have an @ref that begins with "prs:" followed by 5 uppercase letters and a number (e.g. prs:FORBR1).</sch:assert>
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-persName-persName.dontUseRoleName-constraint-rule-59">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:persName/tei:roleName">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:persName/tei:roleName">
                <sch:assert test="false()">ERROR: Rolenames should not be denoted in a persName directly; all role information should be encoded using the occupation element.</sch:assert>
             </sch:rule>
          </pattern>
@@ -5549,7 +5549,7 @@ Suggested values include: 1] 1.0.1; 2] 1.1; 3] 2.0; 4] 2.1; 5] 3.0; 6] 3.1; 7] 3
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(place name) contains an absolute or relative place name. [13.2.3. Place Names]</a:documentation>
          <ref name="macro.phraseSeq"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-placeName-placeName.mustHaveRefWithPlc-constraint-rule-60">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:placeName[not(parent::tei:place)][@ref] | tei:*[@where]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:placeName[not(parent::tei:place)][@ref] | tei:*[@where]">
                <sch:let name="ptr" value="(@ref, @where)[1]"/>
                <sch:assert test="matches($ptr ,concat('^plc:', $placeIdPattern, '$'))">ERROR: All <sch:name/> pointers must have an @<sch:value-of select="local-name($ptr)"/> that begins with "plc:" followed by 4 uppercase letters and a number (e.g. plc:LEIT1).</sch:assert>
             </sch:rule>
@@ -5567,7 +5567,7 @@ Suggested values include: 1] 1.0.1; 2] 1.1; 3] 2.0; 4] 2.1; 5] 3.0; 6] 3.1; 7] 3
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(affiliation) contains an informal description of a person's present or past affiliation with some organization, for example an employer or sponsor. [15.2.2. The Participant Description]</a:documentation>
          <ref name="macro.phraseSeq"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-affiliation-orgs.mustHaveXmlIdAndProperlyNested-constraint-rule-61">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:affiliation[@type=('clan','army')]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:affiliation[@type=('clan','army')]">
                <sch:assert test="matches(@ref,'org:')">ERROR: All <sch:value-of select="@type"/> affiliations must have a @ref that points to the org for that <sch:value-of select="@type"/>.</sch:assert>
             </sch:rule>
          </pattern>
@@ -5968,12 +5968,12 @@ Sample values include: 1] primary; 2] other; 3] paid; 4] unpaid</a:documentation
             <data type="ID"/>
          </attribute>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-org-xmlid-orgs.mustHaveXmlIdAndProperlyNested-constraint-rule-62">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="/tei:org">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="/tei:org">
                <sch:assert test="matches(@xml:id, concat('^', $orgIdPattern, '$'))">ERROR: All main orgs must have an id that is a sequence of four letter and a digit.</sch:assert>
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-org-xmlid-orgs.mustHaveXmlIdAndProperlyNested-constraint-rule-63">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:org/tei:listOrg/tei:org">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:org/tei:listOrg/tei:org">
                <sch:let name="parentId" value="ancestor::tei:org[1]/@xml:id"/>
                <sch:assert test="starts-with(@xml:id, $parentId)">ERROR: All sub organization ids must start with the id of its parent organization.</sch:assert>
             </sch:rule>
@@ -6001,11 +6001,11 @@ Sample values include: 1] primary; 2] other; 3] paid; 4] unpaid</a:documentation
             <ref name="linkGrp"/>
          </optional>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-person-person.constraints-constraint-rule-64">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="/tei:person[not(@role='contributor')]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="/tei:person[not(@role='contributor')]">
                <sch:assert test="matches(@xml:id,concat('^', $persIdPattern, '$'))">ERROR: All people must have an @xml:id of 5 uppercase letters and a number (e.g. FORBR1).</sch:assert>
                <sch:assert test="tei:langKnowledge">ERROR: People must contain a langKnowledge element.</sch:assert>
             </sch:rule>
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="/tei:person[@role='contributor']">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="/tei:person[@role='contributor']">
                <sch:assert test="matches(@xml:id, '^[A-Z]{2}\d+$')">ERROR: All contributors must have an @xml:id of 2 uppercase letters and a number (e.g. LD1).</sch:assert>
                <sch:assert test="tei:persName and tei:note">ERROR: Contributors should only contain persName and note.</sch:assert>
             </sch:rule>
@@ -6044,7 +6044,7 @@ Sample values include: 1] primary; 2] other; 3] paid; 4] unpaid</a:documentation
             <ref name="linkGrp"/>
          </optional>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-place-place.mustHaveProperId-constraint-rule-66">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="/tei:place">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="/tei:place">
                <sch:assert test="matches(@xml:id,concat('^', $placeIdPattern, '$'))">ERROR: All places must have an @xml:id of 4 uppercase letters and a number (e.g. LEIT1).</sch:assert>
                <sch:assert test="tei:placeName">ERROR: All places must have a placeName.</sch:assert>
             </sch:rule>
@@ -6164,9 +6164,9 @@ Sample values include: 1] primary; 2] secondary; 3] temporary; 4] permanent</a:d
                </oneOrMore>
             </choice>
          </group>
-         <sch:ns xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
-         <sch:ns xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
-         <sch:ns xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
+         <sch:ns xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
+         <sch:ns xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
+         <sch:ns xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
          <ref name="att.global.attributes"/>
          <ref name="att.typed.attributes"/>
          <optional>
@@ -6367,7 +6367,7 @@ Sample values include: 1] primary; 2] secondary; 3] temporary; 4] permanent</a:d
                </group>
             </optional>
          </group>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
             <sch:rule context="/tei:div">
                <sch:assert test="@type = 'index'">ERROR: Only divisions with @type='index' are allowed
                       as root elements.</sch:assert>
@@ -6376,14 +6376,14 @@ Sample values include: 1] primary; 2] secondary; 3] temporary; 4] permanent</a:d
          </sch:pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-div-abstractModel-structure-l-constraint-report-12">
             <rule context="tei:div">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="ancestor::tei:l">
+               <report xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" test="ancestor::tei:l">
         Abstract model violation: Lines may not contain higher-level structural elements such as div.
       </report>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-div-abstractModel-structure-p-constraint-report-13">
             <rule context="tei:div">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="ancestor::tei:p or ancestor::tei:ab and not(ancestor::tei:floatingText)">
+               <report xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" test="ancestor::tei:p or ancestor::tei:ab and not(ancestor::tei:floatingText)">
         Abstract model violation: p and ab may not contain higher-level structural elements such as div.
       </report>
             </rule>
@@ -6964,7 +6964,7 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
       <element name="fw">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(forme work) contains a running head (e.g. a header, footer), catchword, or similar material appearing on the current page. [11.6. Headers, Footers, and Similar Matter]</a:documentation>
          <ref name="macro.phraseSeq"/>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude">
             <sch:rule context="tei:fw[@type=('pageNum', 'folioNum')]">
                <sch:assert test="@place">ERROR: Missing required @place attribute for page number formework.</sch:assert>
             </sch:rule>
@@ -7015,7 +7015,7 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
          </oneOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-subst-substContents1-constraint-assert-100">
             <rule context="tei:subst">
-               <assert xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" test="child::tei:add and (child::tei:del or child::tei:surplus)">
+               <assert xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" test="child::tei:add and (child::tei:del or child::tei:surplus)">
                   <name/> must have at least one child add and at least one child del or surplus</assert>
             </rule>
          </pattern>
@@ -7179,7 +7179,7 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
       <element name="noteMarker">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
          <text/>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
             <sch:rule context="tei:note/tei:noteMarker | tei:note/tei:supplied/tei:noteMarker">
                <sch:assert test="@target">ERROR: Note markers in a note should have a target
                                  pointing to the source note marker.</sch:assert>
@@ -7190,12 +7190,38 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
                               the keyboard shortcut Command + Shift + N)</sch:assert>
             </sch:rule>
          </sch:pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-noteMarker-noteMarker.mustHaveContentIfUnknown-constraint-rule-71">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:noteMarker[@ref='g:UNKNOWN']">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+            <sch:rule context="tei:noteMarker[@target]">
+               <sch:let name="localTargs" value="tokenize(@target,'\s+')"/>
+               <sch:assert test="every $targ in $localTargs satisfies matches($targ,'^#')">ERROR: Every target in noteMarker must start with a '#'</sch:assert>
+            </sch:rule>
+         </sch:pattern>
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+            <sch:rule context="tei:noteMarker[@target]">
+               <sch:let name="noteMarker" value="."/>
+               <sch:let name="localTargs" value="tokenize(@target,'\s+')[matches(.,'^#')]"/>
+               <sch:let name="noteMarkers" value="ancestor::tei:TEI/descendant::tei:noteMarker[@xml:id]"/>
+               <sch:let name="badPointers" value="for $targ in $localTargs return                                  let $note := $noteMarkers[@xml:id = substring-after($targ,'#')]                                  return if (exists($note) and $note[. &lt;&lt; $noteMarker]) then ()                                  else $targ"/>
+               <sch:assert test="empty($badPointers)">ERROR: Cannot find preceding noteMarker for target<sch:value-of select="if (count($badPointers) gt 1) then 's' else ()"/>: <sch:value-of select="string-join($badPointers,' ')"/>.</sch:assert>
+            </sch:rule>
+         </sch:pattern>
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-noteMarker-noteMarker.mustHaveContentIfUnknown-constraint-rule-73">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" context="tei:noteMarker[@ref='g:UNKNOWN']">
                <sch:assert test="matches(string(.), '\S')">ERROR: You must provide a character in the noteMarker when using g:UNKNOWN</sch:assert>
             </sch:rule>
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:noteMarker[@ref][not(@ref = 'g:UNKNOWN')]">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" context="tei:noteMarker[@ref][not(@ref = 'g:UNKNOWN')]">
                <sch:assert test="empty(text())">ERROR: No text content is allowed in noteMarker unless @ref='g:UNKNOWN'</sch:assert>
+            </sch:rule>
+         </pattern>
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-noteMarker-noteMarker.mustHaveIdFollowingFormat-constraint-rule-75">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" context="tei:noteMarker[not(parent::tei:note[@anchored='true'] or parent::tei:supplied/parent::tei:note[@anchored='true'])]">
+               <sch:let name="prePage" value="preceding::tei:pb[1]"/>
+               <sch:let name="prePageVal" value="if ($prePage) then substring-after($prePage/@facs,'pg:') else tokenize(ancestor::tei:TEI/@xml:id,'\.')[2]"/>
+               <sch:let name="prePageInt" value="xs:integer($prePageVal)"/>
+               <sch:let name="preNotes" value="preceding::tei:noteMarker[@xml:id]"/>
+               <sch:let name="noteNum" value="(if (exists($prePage)) then count($preNotes[. &gt;&gt; $prePage]) else count($preNotes)) + 1"/>
+               <sch:let name="noteMarkerId" value="'p' || $prePageVal || '_n' || $noteNum"/>
+               <sch:assert test="@xml:id and (@xml:id = $noteMarkerId)">ERROR: @xml:id of noteMarker should be <sch:value-of select="$noteMarkerId"/>.</sch:assert>
             </sch:rule>
          </pattern>
          <attribute name="ref">
@@ -7235,10 +7261,12 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
             </attribute>
          </optional>
          <choice>
-            <attribute name="xml:id">
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(identifier) provides a unique identifier for the element bearing the attribute.</a:documentation>
-               <data type="ID"/>
-            </attribute>
+            <optional>
+               <attribute name="xml:id">
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(identifier) provides a unique identifier for the element bearing the attribute.</a:documentation>
+                  <data type="ID"/>
+               </attribute>
+            </optional>
             <attribute name="target">
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the destination of the reference by supplying one or more URI References</a:documentation>
                <list>
@@ -7274,7 +7302,7 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
          <optional>
             <ref name="placeName"/>
          </optional>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
             <sch:rule context="tei:scaffold[@value = 'true']">
                <sch:assert test="tei:placeName or @where">
                       ERROR: If this is a scaffold speech, then it must have a place associated
@@ -7329,8 +7357,8 @@ Suggested values include: 1] plc:TOWE1 (Tower of London); 2] plc:KENN1 (Kenningt
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the end of a span initiated by the element bearing this attribute.</a:documentation>
             <data type="anyURI"/>
          </attribute>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-topic-spanTo-spanTo-2-constraint-rule-74">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@spanTo]">
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="lim-topic-spanTo-spanTo-2-constraint-rule-77">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@spanTo]">
                <sch:assert test="id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]">
 The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow the current element <sch:name/>
                </sch:assert>
@@ -7362,18 +7390,18 @@ The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow 
          <optional>
             <ref name="desc"/>
          </optional>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
             <sch:rule context="tei:rule[@place]">
                <sch:assert test="exists(@extent) and xs:integer(replace(@extent,'%','')) lt 100">ERROR: @place only makes sense if an @extent exists and is less than 100%.</sch:assert>
             </sch:rule>
          </sch:pattern>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
             <sch:rule context="tei:rule[@extent]">
                <sch:let name="int" value="xs:integer(replace(@extent,'%',''))"/>
                <sch:assert test="$int = (1 to 100)">ERROR: @extent should be a percentage value between 1 and 100.</sch:assert>
             </sch:rule>
          </sch:pattern>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
             <sch:rule context="tei:milestone">
                <sch:assert test="not(ancestor::tei:text)">ERROR: milestone elements for ruled lines are deprecated. Use &lt;rule&gt; instead.</sch:assert>
             </sch:rule>
@@ -7491,7 +7519,7 @@ Suggested values include: 1] 25% (25%); 2] 50% (50%); 3] 75% (75%); 4] 100% (100
          <ref name="biblStruct"/>
       </choice>
    </start>
-   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
       <sch:rule context="tei:fw | tei:pb">
          <sch:assert test="parent::tei:ab | parent::tei:back | parent::tei:body | parent::tei:div | parent::tei:front | parent::tei:list | parent::tei:p | parent::tei:text | parent::tei:q | parent::tei:note">
                               ERROR: <sch:name/> should not appear within <sch:value-of select="local-name(parent::*)"/>.
@@ -7502,7 +7530,7 @@ Suggested values include: 1] 25% (25%); 2] 50% (50%); 3] 75% (75%); 4] 100% (100
                               (since they are usually a single line)</sch:assert>
       </sch:rule>
    </sch:pattern>
-   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
       <sch:rule context="/tei:*">
          <sch:let name="rootEl" value="local-name()"/>
          <sch:let name="correctDir" value="                     if (self::tei:person and @role='contributor') then 'contributors'                     else if (self::tei:person) then 'people'                     else if (self::tei:place) then 'places'                     else if (self::tei:org) then 'orgs'                     else $dirName"/>
@@ -7515,7 +7543,7 @@ Suggested values include: 1] 25% (25%); 2] 50% (50%); 3] 75% (75%); 4] 100% (100
                   </sch:assert>
       </sch:rule>
    </sch:pattern>
-   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
       <sch:let name="id" value="/tei:*/@xml:id"/>
       <sch:let name="uri" value="document-uri(/)"/>
       <sch:let name="tokens" value="tokenize($uri,'[/\\]')"/>
@@ -7530,7 +7558,7 @@ Suggested values include: 1] 25% (25%); 2] 50% (50%); 3] 75% (75%); 4] 100% (100
       <sch:let name="isBornDigital" value="exists($root//tei:catRef[matches(@target,'bornDigital')])"/>
       <sch:let name="isItem" value="exists($root//tei:limItem)"/>
    </sch:pattern>
-   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
       <sch:rule context="tei:title | tei:num | tei:ref | tei:rs | tei:placeName[not(parent::tei:place)] | tei:persName[not(parent::tei:person)]">
          <sch:let name="text" value="string(.)"/>
          <sch:assert test="not(matches($text, '^\s+|\s+$'))">
@@ -7538,7 +7566,7 @@ Suggested values include: 1] 25% (25%); 2] 50% (50%); 3] 75% (75%); 4] 100% (100
                   </sch:assert>
       </sch:rule>
    </sch:pattern>
-   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
       <sch:rule context="tei:limItem">
          <sch:let name="genre" value="@type"/>
          <sch:assert test="if (matches($genre, 'letter','i')) then tei:correspDesc else true()">
@@ -7549,7 +7577,7 @@ Suggested values include: 1] 25% (25%); 2] 50% (50%); 3] 75% (75%); 4] 100% (100
                            </sch:assert>
       </sch:rule>
    </sch:pattern>
-   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
       <sch:rule context="tei:*[text()][matches(string-join(text(),''),'\S')][ancestor::tei:text][$docStatus=('draft','inProgress','proofed', 'readyForProof')]">
          <sch:let name="string" value="string-join(text(),'')"/>
          <sch:assert test="not(matches($string,'(--+)|(––+)'))">
