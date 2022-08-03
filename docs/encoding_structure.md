@@ -102,7 +102,7 @@ Poems and other verse fragments should be encoded using the following elements f
 </specList>
 ```
 
-All `<l>` elements should be enclosed within an `<lg>`; note that you do need to include a line beginning element for verse lines.
+All `<l>` elements should be enclosed within an `<lg>`; note that you do not need to include a line beginning element for verse lines.
 
 For poems with headings, use the `<head>` element inside of the `<lg>`
 

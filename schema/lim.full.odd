@@ -538,6 +538,14 @@
                               <gloss>Abbreviation for <mentioned>this</mentioned>
                               </gloss>
                            </valItem>
+                           <valItem ident="fm" mode="add">
+                              <desc>fm</desc>
+                              <gloss>Abbreviation for <mentioned>from</mentioned></gloss>
+                           </valItem>
+                           <valItem ident="qre" mode="add">
+                              <desc>qre</desc>
+                              <gloss>Abbreviation for <mentioned>where</mentioned></gloss>
+                           </valItem>
                         </valList>
                      </attDef>
                   </attList>
@@ -1392,7 +1400,6 @@
                            </sch:rule>
                         </sch:pattern>
                      </constraint>
-                     
                   </constraintSpec>
                   <constraintSpec ident="noteMarker.allTargsShouldExist" scheme="schematron">
                      <constraint>
