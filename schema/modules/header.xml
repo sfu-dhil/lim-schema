@@ -24,7 +24,7 @@
             <head>header</head>
             <schemaSpec ident="lim_header">
                <moduleRef key="header"
-                          include="abstract catDesc catRef category change correspAction correspContext correspDesc creation encodingDesc fileDesc handNote idno langUsage language listChange listPrefixDef notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
+                          include="abstract catDesc catRef category change correspAction correspContext correspDesc creation encodingDesc extent fileDesc handNote idno langUsage language listChange listPrefixDef notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
                <!--change-->
                <elementSpec ident="change" mode="change" module="header">
                   <constraintSpec ident="changeMustPointToTeam" scheme="schematron">

@@ -3,8 +3,8 @@
 <?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
 	schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0"
-     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-     xml:id="msdescription">
+   xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+   xml:id="msdescription">
    <teiHeader>
       <fileDesc>
          <titleStmt>
@@ -23,7 +23,7 @@
          <div>
             <head>msdescription</head>
             <schemaSpec ident="lim_msdescription">
-               <moduleRef key="msdescription" include="locus locusGrp"/>
+               <moduleRef key="msdescription" include="additional adminInfo collection custodialHist history locus locusGrp msContents msDesc msIdentifier msItem msName msPart objectDesc origin physDesc repository summary supportDesc surrogates"/>
                <!--locus-->
                <elementSpec ident="locus" module="msdescription" mode="replace">
                   <gloss xml:lang="en" versionDate="2007-06-12">locus</gloss>

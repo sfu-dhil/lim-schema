@@ -1099,7 +1099,7 @@
                      <elementRef key="note" minOccurs="0" maxOccurs="1"/>
                   </content>
                </elementSpec>
-               <moduleRef key="header" include="abstract catDesc catRef category change correspAction correspContext correspDesc creation encodingDesc fileDesc handNote idno langUsage language listChange listPrefixDef notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/><elementSpec ident="change" mode="change" module="header">
+               <moduleRef key="header" include="abstract catDesc catRef category change correspAction correspContext correspDesc creation encodingDesc extent fileDesc handNote idno langUsage language listChange listPrefixDef notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/><elementSpec ident="change" mode="change" module="header">
                   <constraintSpec ident="changeMustPointToTeam" scheme="schematron">
                      <constraint>
                         <sch:pattern>
@@ -1826,6 +1826,7 @@
                         <elementRef key="occupation" minOccurs="0" maxOccurs="unbounded"/>
                         <elementRef key="nationality" minOccurs="0" maxOccurs="unbounded"/>
                         <elementRef key="residence" minOccurs="0" maxOccurs="unbounded"/>
+                        <elementRef key="figure" minOccurs="0" maxOccurs="unbounded"/>
                      </sequence>
                      <!--Always make langKnowledge and note come last-->
                      <elementRef key="langKnowledge" minOccurs="0" maxOccurs="1"/>
@@ -2045,7 +2046,7 @@
                      </constraint>
                   </constraintSpec>
                </elementSpec>
-               <moduleRef key="msdescription" include="locus locusGrp"/><elementSpec ident="locus" module="msdescription" mode="replace">
+               <moduleRef key="msdescription" include="additional adminInfo collection custodialHist history locus locusGrp msContents msDesc msIdentifier msItem msName msPart objectDesc origin physDesc repository summary supportDesc surrogates"/><elementSpec ident="locus" module="msdescription" mode="replace">
                   <gloss xml:lang="en" versionDate="2007-06-12">locus</gloss>
                   <desc versionDate="2019-01-17" xml:lang="en" xml:id="locus.desc">defines a location within a manuscript, manuscript part, or other object typically 
                      as a (possibly discontinuous) sequence of folio references.</desc>
@@ -2151,7 +2152,7 @@
                      </constraint>
                   </constraintSpec>
                </elementSpec>
-               <moduleRef key="namesdates" include="addName affiliation birth death faith floruit forename genName geo langKnowledge langKnown listObject listOrg listPerson listPlace location nameLink nationality object objectName occupation org orgName persName person persona place placeName residence roleName sex surname"/><elementSpec ident="affiliation" module="namesdates" mode="change">
+               <moduleRef key="namesdates" include="addName affiliation birth death faith floruit forename genName geo langKnowledge langKnown listObject listOrg listPerson listPlace location nameLink nationality object objectName occupation org orgName persName person persona place placeName residence roleName settlement sex surname"/><elementSpec ident="affiliation" module="namesdates" mode="change">
                   <constraintSpec scheme="schematron" ident="orgs.mustHaveXmlIdAndProperlyNested">
                      <desc>orgs must have an xml:id that follows the 4 letters and digit pattern, but may be nested.</desc>
                      <constraint>
@@ -2349,7 +2350,7 @@
                   </content>
                   <attList>
                      <attDef ident="xml:id" mode="change" usage="req">
-                        <constraintSpec scheme="schematron" ident="orgs.mustHaveXmlIdAndProperlyNested">
+                        <constraintSpec scheme="schematron" ident="orgs.mustHaveXmlId">
                            <desc>orgs must have an xml:id that follows the 4 letters and digit pattern, but may be nested.</desc>
                            <constraint>
                               <sch:rule context="/tei:org">
@@ -2357,7 +2358,7 @@
                               </sch:rule>
                            </constraint>
                         </constraintSpec>
-                        <constraintSpec scheme="schematron" ident="orgs.mustHaveXmlIdAndProperlyNested">
+                        <constraintSpec scheme="schematron" ident="orgs.mustHaveXmlIdProperlyNested">
                            <desc>org ids must be inherited.</desc>
                            <constraint>
                               <sch:rule context="tei:org/tei:listOrg/tei:org">
@@ -2369,7 +2370,7 @@
                      </attDef>
                   </attList>
                </elementSpec><elementSpec ident="orgName" module="namesdates" mode="change">
-                  <constraintSpec ident="placeName.mustHaveRefWithPlc" mode="add" scheme="schematron">
+                  <constraintSpec ident="orgName.mustHaveRefWithOrg" mode="add" scheme="schematron">
                      <desc>All inline placeNames must have a ref that points to the place db.</desc>
                      <constraint>
                 <!--TODO: Remove @ref once feasible-->
