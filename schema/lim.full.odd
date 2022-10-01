@@ -282,6 +282,18 @@
                <gloss>Used for instances where (usually a closer) has two distinct
                blocks with something in the left and right-column</gloss>
             </rendition>
+            <rendition xml:id="rnd_rotate-left">
+               <desc>A block rotated -90 degrees.</desc>
+               <gloss>Used for notes, annotations, et cetera that are rotated -90 degrees (i.e.
+               read from bottom to top)</gloss>
+               <outputRendition>transform: rotate(-90deg);</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_rotate-right">
+               <desc>A block rotated 90 degrees.</desc>
+               <gloss>Used for notes, annotations, et cetera that are rotated 90 degrees (i.e.
+               read from top to bottom)</gloss>
+               <outputRendition>transform: rotate(90deg);</outputRendition>
+            </rendition>
          </tagsDecl>
          <listPrefixDef>
             <prefixDef ident="doc" matchPattern="(.+)(#.+)?" replacementPattern="$1.xml$2">
@@ -1904,7 +1916,7 @@
                   <constraint>
                      <sch:pattern>
                         <sch:rule context="tei:fw | tei:pb">
-                           <sch:assert test="parent::tei:ab | parent::tei:back | parent::tei:body | parent::tei:div | parent::tei:front | parent::tei:list | parent::tei:p | parent::tei:text | parent::tei:q | parent::tei:note | parent::tei:lg">
+                           <sch:assert test="parent::tei:ab | parent::tei:back | parent::tei:body | parent::tei:div | parent::tei:front | parent::tei:list | parent::tei:p | parent::tei:text | parent::tei:q | parent::tei:note | parent::tei:lg | parent::tei:head | parent::tei:NB">
                               ERROR: <sch:name/> should not appear within <sch:value-of select="local-name(parent::*)"/>.
                            </sch:assert>
                         </sch:rule>
@@ -2676,7 +2688,7 @@
                               </sch:rule>
                            </constraint>
                         </constraintSpec>
-                        <valList type="closed" mode="add"><valItem ident="rnd:super"><desc>super</desc><gloss>Superscript</gloss></valItem><valItem ident="rnd:sub"><desc>sub</desc><gloss>Subscript</gloss></valItem><valItem ident="rnd:underlined"><desc>underlined</desc><gloss>Underlined</gloss></valItem><valItem ident="rnd:right-braced"><desc>right-braced</desc><gloss>Right braced</gloss></valItem><valItem ident="rnd:bordered-all"><desc>bordered-all</desc><gloss>Bordered on all four sides</gloss></valItem><valItem ident="rnd:bordered-left"><desc>bordered-left</desc><gloss>Left bordered</gloss></valItem><valItem ident="rnd:bordered-right"><desc>bordered-right</desc><gloss>Right bordered</gloss></valItem><valItem ident="rnd:bordered-bottom"><desc>bordered-bottom</desc><gloss>Bottom bordered</gloss></valItem><valItem ident="rnd:bordered-bottom-dashed"><desc>bordered-bottom-dashed</desc><gloss>Bottom bordered</gloss></valItem><valItem ident="rnd:bordered-top"><desc>bordered-top</desc><gloss>Top bordered</gloss></valItem><valItem ident="rnd:bold"><desc>bold</desc><gloss>Bold</gloss></valItem><valItem ident="rnd:indent-first-line"><desc>indent-first-line</desc><gloss>Indent</gloss></valItem><valItem ident="rnd:indent-block"><desc>indent-block</desc><gloss>Indented block</gloss></valItem><valItem ident="rnd:overline"><desc>overline</desc><gloss>Overline</gloss></valItem><valItem ident="rnd:small"><desc>small</desc><gloss>Small text</gloss></valItem><valItem ident="rnd:large"><desc>large</desc><gloss>Larger text (i.e. headings)</gloss></valItem><valItem ident="rnd:strikethrough"><desc>strikethrough</desc><gloss>Strikethrough</gloss></valItem><valItem ident="rnd:normal"><desc>normal</desc><gloss>Normal</gloss></valItem><valItem ident="rnd:left"><desc>left</desc><gloss>Left aligned</gloss></valItem><valItem ident="rnd:right"><desc>right</desc><gloss>Right aligned</gloss></valItem><valItem ident="rnd:center"><desc>center</desc><gloss>Centered</gloss></valItem><valItem ident="rnd:embellished"><desc>embellished</desc><gloss>Embellished letter</gloss></valItem><valItem ident="rnd:two-column"><desc>two-column</desc><gloss>A block that has two columns</gloss></valItem></valList>
+                        <valList type="closed" mode="add"><valItem ident="rnd:super"><desc>super</desc><gloss>Superscript</gloss></valItem><valItem ident="rnd:sub"><desc>sub</desc><gloss>Subscript</gloss></valItem><valItem ident="rnd:underlined"><desc>underlined</desc><gloss>Underlined</gloss></valItem><valItem ident="rnd:right-braced"><desc>right-braced</desc><gloss>Right braced</gloss></valItem><valItem ident="rnd:bordered-all"><desc>bordered-all</desc><gloss>Bordered on all four sides</gloss></valItem><valItem ident="rnd:bordered-left"><desc>bordered-left</desc><gloss>Left bordered</gloss></valItem><valItem ident="rnd:bordered-right"><desc>bordered-right</desc><gloss>Right bordered</gloss></valItem><valItem ident="rnd:bordered-bottom"><desc>bordered-bottom</desc><gloss>Bottom bordered</gloss></valItem><valItem ident="rnd:bordered-bottom-dashed"><desc>bordered-bottom-dashed</desc><gloss>Bottom bordered</gloss></valItem><valItem ident="rnd:bordered-top"><desc>bordered-top</desc><gloss>Top bordered</gloss></valItem><valItem ident="rnd:bold"><desc>bold</desc><gloss>Bold</gloss></valItem><valItem ident="rnd:indent-first-line"><desc>indent-first-line</desc><gloss>Indent</gloss></valItem><valItem ident="rnd:indent-block"><desc>indent-block</desc><gloss>Indented block</gloss></valItem><valItem ident="rnd:overline"><desc>overline</desc><gloss>Overline</gloss></valItem><valItem ident="rnd:small"><desc>small</desc><gloss>Small text</gloss></valItem><valItem ident="rnd:large"><desc>large</desc><gloss>Larger text (i.e. headings)</gloss></valItem><valItem ident="rnd:strikethrough"><desc>strikethrough</desc><gloss>Strikethrough</gloss></valItem><valItem ident="rnd:normal"><desc>normal</desc><gloss>Normal</gloss></valItem><valItem ident="rnd:left"><desc>left</desc><gloss>Left aligned</gloss></valItem><valItem ident="rnd:right"><desc>right</desc><gloss>Right aligned</gloss></valItem><valItem ident="rnd:center"><desc>center</desc><gloss>Centered</gloss></valItem><valItem ident="rnd:embellished"><desc>embellished</desc><gloss>Embellished letter</gloss></valItem><valItem ident="rnd:two-column"><desc>two-column</desc><gloss>A block that has two columns</gloss></valItem><valItem ident="rnd:rotate-left"><desc>rotate-left</desc><gloss>A block rotated -90 degrees.</gloss></valItem><valItem ident="rnd:rotate-right"><desc>rotate-right</desc><gloss>A block rotated 90 degrees.</gloss></valItem></valList>
                      </attDef>
                   </attList>
                </classSpec><classSpec ident="att.naming" module="tei" type="atts" mode="change">

@@ -278,7 +278,7 @@
             <rendition xml:id="rnd_center">
                <desc>Centered</desc>
                <gloss>Centered text</gloss>
-               <outputRendition >text-align: center;</outputRendition>
+               <outputRendition>text-align: center;</outputRendition>
             </rendition>
             <rendition xml:id="rnd_embellished">
                <desc>Embellished letter</desc>
@@ -288,6 +288,18 @@
                <desc>A block that has two columns</desc>
                <gloss>Used for instances where (usually a closer) has two distinct
                blocks with something in the left and right-column</gloss>
+            </rendition>
+            <rendition xml:id="rnd_rotate-left">
+               <desc>A block rotated -90 degrees.</desc>
+               <gloss>Used for notes, annotations, et cetera that are rotated -90 degrees (i.e.
+               read from bottom to top)</gloss>
+               <outputRendition>transform: rotate(-90deg);</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_rotate-right">
+               <desc>A block rotated 90 degrees.</desc>
+               <gloss>Used for notes, annotations, et cetera that are rotated 90 degrees (i.e.
+               read from top to bottom)</gloss>
+               <outputRendition>transform: rotate(90deg);</outputRendition>
             </rendition>
          </tagsDecl>
          <listPrefixDef>
