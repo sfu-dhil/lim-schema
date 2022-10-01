@@ -1342,6 +1342,7 @@
                   <classes>
                      <memberOf key="att.global"/>
                      <memberOf key="att.written"/>
+                     <memberOf key="model.divPart"/>
                      <memberOf key="model.divBottomPart"/>
                   </classes>
                   <content>
