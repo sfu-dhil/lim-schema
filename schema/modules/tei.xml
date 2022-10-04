@@ -51,6 +51,7 @@
                   <attList>
                      <attDef ident="period" mode="delete"/>
                   </attList>
+                  
                </classSpec>
                <!--att.datable.iso-->
                <classSpec ident="att.datable.iso" module="tei" type="atts" mode="delete"/>
@@ -137,6 +138,7 @@
                      <memberOf key="att.global.facs" mode="delete"/>
                      <memberOf key="att.global.responsibility" mode="delete"/>
                      <memberOf key="att.global.linking" mode="delete"/>
+                     <memberOf key="att.global.analytic" mode="delete"/>
                      <memberOf key="lim.att.global.fragmentable" mode="add"/>
                   </classes>
                   <constraintSpec ident="allIdsMustBeUnique" scheme="schematron">
@@ -162,6 +164,19 @@
                </classSpec>
                <!--att.global.analytic-->
                <classSpec ident="att.global.analytic" type="atts" mode="change">
+                  <constraintSpec ident="att.global.analytic.distinctValues" scheme="schematron">
+                     <desc><att>ana</att> values should all be distinct</desc>
+                     <constraint>
+                        <sch:rule context="*[@ana]">
+                           <sch:let name="values" value="tokenize(@ana,'\s+')"/>
+                           <sch:let name="dups" 
+                              value="for $v in $values return if (count(index-of($values, $v)) gt 1) then $v else ()"/>
+                           <sch:assert test="empty($dups)">
+                              ERROR: Do not repeat @ana values (duplicate values found: <sch:value-of select="string-join(distinct-values($dups),', ')"/>)
+                           </sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
                   <attList>
                      <attDef ident="ana" mode="change">
                         <datatype minOccurs="1" maxOccurs="unbounded">

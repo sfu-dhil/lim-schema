@@ -415,7 +415,7 @@
                   </attList>
                </elementSpec>
                <!--topic-->
-               <elementSpec ident="topic" module="lim" mode="add">
+               <!--<elementSpec ident="topic" module="lim" mode="add">
                   <desc>marks the beginning of a longer sequence of text pertaining to a topic or set of topics.</desc>
                   <classes>
                      <memberOf key="att.spanning"/>
@@ -434,7 +434,7 @@
                   <remarks>
                      <p>The <gi>topic</gi> element is a custom element for the LiM project to mark the beginning of an analytic segment; it should be used in concert with a <gi>anchor</gi> bearing an <att>xml:id</att>.</p>
                   </remarks>
-               </elementSpec>
+               </elementSpec>-->
                <!--rule-->
                <elementSpec ident="rule" module="lim" mode="add">
                   <gloss>rule</gloss>
@@ -828,7 +828,7 @@
                   <desc>Inline elements should not begin or end with spaces.</desc>
                   <constraint>
                      <sch:pattern>
-                        <sch:rule context="tei:title | tei:num | tei:ref | tei:rs | tei:placeName[not(parent::tei:place)] | tei:persName[not(parent::tei:person)]">
+                        <sch:rule context="tei:title | tei:num | tei:ref | tei:rs | tei:placeName[not(parent::tei:place)] | tei:persName[not(parent::tei:person)] | tei:objectName[not(parent::tei:object)] | tei:date[ancestor::tei:text] | tei:time[ancestor::tei:text]">
                            <sch:let name="text" value="string(.)"/>
                            <sch:assert test="not(matches($text, '^\s+|\s+$'))">
                     ERROR: <sch:name/> should not begin or end with spaces.

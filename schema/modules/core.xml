@@ -171,6 +171,16 @@
                      <memberOf key="att.global.responsibility" mode="add"/>
                   </classes>
                </elementSpec>
+               <!--date-->
+               <elementSpec ident="date" module="core" mode="change">
+                  <classes mode="replace">
+                     <memberOf key="model.dateLike" mode="add"/>
+                     <memberOf key="model.publicationStmtPart.detail"/>
+                     <memberOf key="att.datable.w3c" mode="add"/>
+                     <memberOf key="att.global.rendition" mode="add"/>
+                  </classes>
+                  
+               </elementSpec>
                <!--del-->
                <elementSpec ident="del" module="core" mode="change">
                   <classes mode="change">
@@ -208,6 +218,18 @@
                         </valList>
                      </attDef>
                   </attList>
+               </elementSpec>
+               <!--item-->
+               <elementSpec ident="item" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global.analytic" mode="add"/>
+                  </classes>
+               </elementSpec>
+               <!--l-->
+               <elementSpec ident="l" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global.analytic" mode="add"/>
+                  </classes>
                </elementSpec>
                <!--lb-->
                <elementSpec ident="lb" module="core" mode="change">
@@ -527,6 +549,12 @@
                      <elementRef key="note" minOccurs="0" maxOccurs="unbounded"/>
                   </content>
                </elementSpec>
+               <!--p-->
+               <elementSpec ident="p" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global.analytic" mode="add"/>
+                  </classes>
+               </elementSpec>
                <!--pb-->
                <elementSpec ident="pb" module="core" mode="change">
                   <classes mode="change">
@@ -714,6 +742,25 @@
                      <!--Add cert and resp-->
                      <memberOf key="att.global.responsibility" mode="add"/>
                   </classes>
+               </elementSpec>
+               <!--time-->
+               <elementSpec ident="time" module="core" mode="change">
+                  <classes mode="replace">
+                      <memberOf key="att.global.rendition" mode="add"/>
+                      <memberOf key="att.datable.w3c" mode="add"/>
+                      <memberOf key="att.duration.w3c" mode="add"/>
+                      <memberOf key="model.dateLike" mode="add"/>
+                  </classes>
+                  <constraintSpec ident="time.shouldHaveTextInText" scheme="schematron">
+                     <desc>The <gi>time</gi> element should contain text</desc>
+                     <constraint>
+                        <sch:rule context="tei:time[ancestor::tei:text]">
+                           <sch:assert test="normalize-space(string-join(descendant::text(),'')) ne ''">
+                              ERROR: The time element should not be empty.
+                           </sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
                </elementSpec>
             </schemaSpec>
          </div>

@@ -578,6 +578,14 @@
                      <!--Add cert and resp-->
                      <memberOf key="att.global.responsibility" mode="add"/>
                   </classes>
+               </elementSpec><elementSpec ident="date" module="core" mode="change">
+                  <classes mode="replace">
+                     <memberOf key="model.dateLike" mode="add"/>
+                     <memberOf key="model.publicationStmtPart.detail"/>
+                     <memberOf key="att.datable.w3c" mode="add"/>
+                     <memberOf key="att.global.rendition" mode="add"/>
+                  </classes>
+                  
                </elementSpec><elementSpec ident="del" module="core" mode="change">
                   <classes mode="change">
                      <!--We've deleted att.editLike, so 
@@ -610,6 +618,14 @@
                         </valList>
                      </attDef>
                   </attList>
+               </elementSpec><elementSpec ident="item" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global.analytic" mode="add"/>
+                  </classes>
+               </elementSpec><elementSpec ident="l" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global.analytic" mode="add"/>
+                  </classes>
                </elementSpec><elementSpec ident="lb" module="core" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global.facs" mode="add"/>
@@ -916,6 +932,10 @@
                   <content>
                      <elementRef key="note" minOccurs="0" maxOccurs="unbounded"/>
                   </content>
+               </elementSpec><elementSpec ident="p" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.global.analytic" mode="add"/>
+                  </classes>
                </elementSpec><elementSpec ident="pb" module="core" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global" mode="delete"/>
@@ -1094,6 +1114,23 @@
                      <!--Add cert and resp-->
                      <memberOf key="att.global.responsibility" mode="add"/>
                   </classes>
+               </elementSpec><elementSpec ident="time" module="core" mode="change">
+                  <classes mode="replace">
+                      <memberOf key="att.global.rendition" mode="add"/>
+                      <memberOf key="att.datable.w3c" mode="add"/>
+                      <memberOf key="att.duration.w3c" mode="add"/>
+                      <memberOf key="model.dateLike" mode="add"/>
+                  </classes>
+                  <constraintSpec ident="time.shouldHaveTextInText" scheme="schematron">
+                     <desc>The <gi>time</gi> element should contain text</desc>
+                     <constraint>
+                        <sch:rule context="tei:time[ancestor::tei:text]">
+                           <sch:assert test="normalize-space(string-join(descendant::text(),'')) ne ''">
+                              ERROR: The time element should not be empty.
+                           </sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
                </elementSpec>
                <moduleRef key="corpus" include="activity creation setting settingDesc"/><elementSpec ident="setting" module="corpus" mode="change">
                   <constraintSpec ident="scaffold.mustHaveTrialPlace" scheme="schematron">
@@ -1617,25 +1654,6 @@
                         </valList>
                      </attDef>
                   </attList>
-               </elementSpec><elementSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="topic" module="lim" mode="add">
-                  <desc>marks the beginning of a longer sequence of text pertaining to a topic or set of topics.</desc>
-                  <classes>
-                     <memberOf key="att.spanning"/>
-                     <memberOf key="att.global.analytic"/>
-                     <memberOf key="model.global.edit"/>
-                  </classes>
-                  <content>
-                     <empty/>
-                  </content>
-                  <attList>
-                     <attDef ident="xml:id" mode="delete"/>
-                     <attDef ident="xml:space" mode="delete"/>
-                     <attDef ident="spanTo" usage="req" mode="change"/>
-                     <attDef ident="ana" usage="req" mode="change"/>
-                  </attList>
-                  <remarks>
-                     <p>The <gi>topic</gi> element is a custom element for the LiM project to mark the beginning of an analytic segment; it should be used in concert with a <gi>anchor</gi> bearing an <att>xml:id</att>.</p>
-                  </remarks>
                </elementSpec><elementSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="rule" module="lim" mode="add">
                   <gloss>rule</gloss>
                   <desc>marks a ruled line</desc>
@@ -1990,7 +2008,7 @@
                   <desc>Inline elements should not begin or end with spaces.</desc>
                   <constraint>
                      <sch:pattern>
-                        <sch:rule context="tei:title | tei:num | tei:ref | tei:rs | tei:placeName[not(parent::tei:place)] | tei:persName[not(parent::tei:person)]">
+                        <sch:rule context="tei:title | tei:num | tei:ref | tei:rs | tei:placeName[not(parent::tei:place)] | tei:persName[not(parent::tei:person)] | tei:objectName[not(parent::tei:object)] | tei:date[ancestor::tei:text] | tei:time[ancestor::tei:text]">
                            <sch:let name="text" value="string(.)"/>
                            <sch:assert test="not(matches($text, '^\s+|\s+$'))">
                     ERROR: <sch:name/> should not begin or end with spaces.
@@ -2029,7 +2047,7 @@
                      </sch:pattern>
                   </constraint>
                </constraintSpec>
-               <moduleRef key="linking" include="ab anchor linkGrp ptr standOff"/><elementSpec ident="anchor" module="linking" mode="change">
+               <moduleRef key="linking" include="ab linkGrp ptr standOff"/><elementSpec ident="anchor" module="linking" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global.rendition" mode="delete"/>
                      <memberOf key="att.global.change" mode="delete"/>
@@ -2526,6 +2544,7 @@
                   <attList>
                      <attDef ident="period" mode="delete"/>
                   </attList>
+                  
                </classSpec><classSpec ident="att.datable.iso" module="tei" type="atts" mode="delete"/><classSpec ident="att.datcat" module="tei" type="atts" mode="delete"/><classSpec ident="att.declarable" module="tei" type="atts" mode="delete"/><classSpec ident="att.declaring" module="tei" type="atts" mode="delete"/><classSpec ident="att.divLike" module="tei" type="atts" mode="delete"/><classSpec ident="att.docStatus" module="tei" type="atts" mode="change">
                   <attList>
                      <attDef ident="status" mode="delete"/>
@@ -2592,6 +2611,7 @@
                      <memberOf key="att.global.facs" mode="delete"/>
                      <memberOf key="att.global.responsibility" mode="delete"/>
                      <memberOf key="att.global.linking" mode="delete"/>
+                     <memberOf key="att.global.analytic" mode="delete"/>
                      <memberOf key="lim.att.global.fragmentable" mode="add"/>
                   </classes>
                   <constraintSpec ident="allIdsMustBeUnique" scheme="schematron">
@@ -2615,6 +2635,18 @@
                   </attList>
                   
                </classSpec><classSpec ident="att.global.analytic" type="atts" mode="change">
+                  <constraintSpec ident="att.global.analytic.distinctValues" scheme="schematron">
+                     <desc><att>ana</att> values should all be distinct</desc>
+                     <constraint>
+                        <sch:rule context="*[@ana]">
+                           <sch:let name="values" value="tokenize(@ana,'\s+')"/>
+                           <sch:let name="dups" value="for $v in $values return if (count(index-of($values, $v)) gt 1) then $v else ()"/>
+                           <sch:assert test="empty($dups)">
+                              ERROR: Do not repeat @ana values (duplicate values found: <sch:value-of select="string-join(distinct-values($dups),', ')"/>)
+                           </sch:assert>
+                        </sch:rule>
+                     </constraint>
+                  </constraintSpec>
                   <attList>
                      <attDef ident="ana" mode="change">
                         <datatype minOccurs="1" maxOccurs="unbounded">
