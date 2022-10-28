@@ -748,7 +748,7 @@
                   <constraint>
                      <sch:pattern>
                         <sch:rule context="tei:fw | tei:pb">
-                           <sch:assert test="parent::tei:ab | parent::tei:back | parent::tei:body | parent::tei:div | parent::tei:front | parent::tei:list | parent::tei:p | parent::tei:text | parent::tei:q | parent::tei:note | parent::tei:lg | parent::tei:head | parent::tei:NB">
+                           <sch:assert test="parent::tei:ab | parent::tei:back | parent::tei:body | parent::tei:div | parent::tei:front | parent::tei:list | parent::tei:p | parent::tei:text | parent::tei:q | parent::tei:note | parent::tei:lg | parent::tei:head | parent::tei:NB | parent::tei:closer | parent::tei:dateline | parent::tei:signed">
                               ERROR: <sch:name/> should not appear within <sch:value-of select="local-name(parent::*)"/>.
                            </sch:assert>
                         </sch:rule>
