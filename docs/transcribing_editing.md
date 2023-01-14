@@ -153,6 +153,50 @@ If you are unable to transcribe the text at all or the text has been removed com
 <gap><desc>First six words illegible due to scan.</desc></gap>
 ```
 
+### Elisions and Omissions
+
+Text that has been purposefully omitted/elided by Forbes (e.g. for political or social reasons) should be tagged using the `<ellipsis>` element in combination with a `<metamark>` and, if the omitted text is known, a `<supplied>`. Consider the following line from "Copy of a Letter to Captain Malcolm MacLeod of Castle in Raaza" (v02.0323.01):
+
+![Example from v02.0323.01](images/ellipsis_example.png)
+
+First, the gap between the "R" and "on" would be marked as an omission using the `<ellipsis>` element like so:
+
+```
+He said, in the Event of a R<ellipsis><!--...--></ellipsis>on,
+```
+
+This tells us that there is text that has been elided; to encode the space, we use a `<metamark>` with a child `<space>` element within the `<ellipsis>`:
+
+```
+He said, in the Event of a R<ellipsis><metamark><space/></metamark></ellipsis>on,
+```
+
+Note that the `<metamark>` element allows you to use either a `<space>` element *or* text content (but not both); if, for instance, the elision was signaled using em-dashes (i.e. "Mr. F———"), then you would put the "———" as the text value of the `<metamark>`:
+
+```
+I went to the store with Mr. F<ellipsis><metamark>———</metamark></ellipsis>
+```
+
+To add the supplied text, place a `<supplied>` after the `<metamark>` like so. Make sure to use a `@resp` that points to your team ID to credit yourself; if you are uncertain about your interpretation, you can use a `@cert` (as described above) with a value of "low":
+
+```
+He said, in the Event of a R<ellipsis><metamark><space/></metamark><supplied resp="team:JT1" cert="low">estoration</supplied></ellipsis>
+```
+
+#### Elisions: Multiple Choices (Prince vs Pretender)
+
+In cases of an initial P with a set of spaces (which can be either Prince or Pretender), place a `<choice>` within the `<supplied>` with a `<seg>` for each "rince" and "retender" like so:
+
+```
+If The P<ellipsis>
+  <metamark><space/></metamark>
+  <choice>
+     <seg>rince</seg>
+     <seg>retender</seg>
+  </choice>
+</ellipsis> returns...
+```
+
 ### Foreign Language
 
 To tag that something is in a foreign language, use the `@xml:lang` attribute with an ISO language tag value for that language:

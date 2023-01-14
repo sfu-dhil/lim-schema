@@ -385,8 +385,8 @@
             <head>Appendix</head>
             <schemaSpec ident="lim"
                start="TEI div person place org biblStruct"
-               source="tei:4.2.2">
-               
+               source="tei:4.5.0">
+
                <?module analysis?>
                <?module core?>
                <?module corpus?>

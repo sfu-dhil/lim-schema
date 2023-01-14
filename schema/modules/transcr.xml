@@ -24,7 +24,7 @@
             <head>transcr</head>
             <schemaSpec ident="lim_transcr">
                <moduleRef key="transcr"
-                          include="damage facsimile fw handNotes handShift subst supplied surface surfaceGrp zone"/>
+                          include="damage facsimile fw handNotes handShift metamark space subst supplied surface surfaceGrp zone"/>
                <!--facsimile-->
                <elementSpec ident="facsimile" module="transcr" mode="change">
                   <classes mode="change">
@@ -69,6 +69,42 @@
                         </valList>
                      </attDef>
                   </attList>
+               </elementSpec>
+               <!--metamark-->
+               <elementSpec ident="metamark" module="transcr" mode="change">
+                  <!--Delete all class membership, since we don't want this appearing
+                     anywhere but within ellipsis-->
+                  <classes mode="replace"/>
+                  <content>
+                     <alternate minOccurs="1" maxOccurs="1">
+                        <elementRef key="space"/>
+                        <textNode/>
+                     </alternate>
+                  </content>
+                  <constraintSpec ident="metamark.actualContentOrSpace" scheme="schematron">
+                     <desc>All metamarks should contain actual content or the <gi>space</gi> element</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:metamark[not(tei:space)]">
+                              <sch:assert test="matches(string(.),'\S')">ERROR: Metamarks must contain
+                                 either text content or the &lt;space&gt; element.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <remarks>
+                     <p><gi>metamark</gi>s should only appear within the <gi>ellipsis</gi> element and should contain either 
+                     meaningful text-content or the <gi>space</gi> element.</p>
+                  </remarks>
+               </elementSpec>
+               <!--space-->
+               <elementSpec ident="space" module="transcr" mode="change">
+                  <classes mode="replace"/>
+                  <remarks>
+                     <p>The <gi>space</gi> element should be used only within the <gi>metamark</gi> element (which itself is 
+                     only used within the <gi>ellipsis</gi> element).</p>
+                  </remarks>
+                  
                </elementSpec>
                <!--supplied-->
                <elementSpec ident="supplied" module="transcr" mode="change">

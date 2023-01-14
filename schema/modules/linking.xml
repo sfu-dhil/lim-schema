@@ -23,7 +23,7 @@
          <div>
             <head>linking</head>
             <schemaSpec ident="lim_linking">
-               <moduleRef key="linking" include="ab linkGrp ptr standOff"/>
+               <moduleRef key="linking" include="ab linkGrp ptr seg standOff"/>
                <!--anchor-->
                <elementSpec ident="anchor" module="linking" mode="change">
                   <classes mode="change">
@@ -40,6 +40,27 @@
                      <attDef ident="xml:space" mode="delete"/>
                   </attList>
                </elementSpec>
+               <!--seg-->
+               <elementSpec ident="seg" module="linking" mode="change">
+                  <classes mode="replace">
+                     <memberOf key="model.choicePart"/>
+                  </classes>
+                  <constraintSpec ident="seg.onlyAllowedInEllipsis" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:choice[tei:seg]">
+                              <sch:assert test="parent::tei:supplied/parent::tei:ellipsis">
+                                 ERROR: choice/seg is allowed ONLY within a supplied and ellipsis.
+                              </sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <remarks>
+                     <p><gi>seg</gi> is allowed only within a <gi>choice</gi> (and only when the choice is within a supplied and metamark).</p>
+                  </remarks>
+               </elementSpec>
+               
                <!--standOff-->
                <elementSpec ident="standOff" module="linking" mode="change">
                   <constraintSpec ident="standoff.elementsMustUseCopyOfORHaveAPersName"

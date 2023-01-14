@@ -366,8 +366,8 @@
       <back>
          <div>
             <head>Appendix</head>
-            <schemaSpec ident="lim" start="TEI div person place org biblStruct" source="tei:4.2.2">
-               
+            <schemaSpec ident="lim" start="TEI div person place org biblStruct" source="tei:4.5.0">
+
                <moduleRef key="analysis" include="pc w"/><elementSpec ident="pc" mode="change" module="analysis">
             <!--Remove all other attributes-->
                   <classes mode="change">
@@ -444,7 +444,7 @@
                      </constraint>
                   </constraintSpec>
                </elementSpec><classSpec ident="att.linguistic" module="analysis" type="atts" mode="delete"/>
-               <moduleRef key="core" include="abbr add author bibl biblStruct choice corr date del desc divGen editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note noteGrp num orig p pb ptr pubPlace publisher q quote ref reg resp respStmt rs sic term time title unclear"/><elementSpec ident="abbr" module="core" mode="change">
+               <moduleRef key="core" include="abbr add author bibl biblStruct choice corr date del desc divGen editor ellipsis emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note noteGrp num orig p pb ptr pubPlace publisher q quote ref reg resp respStmt rs sic term time title unclear"/><elementSpec ident="abbr" module="core" mode="change">
                   <classes mode="change">
                      <!--Add cert and resp-->
                      <memberOf key="att.global.responsibility" mode="add"/>
@@ -2047,7 +2047,7 @@
                      </sch:pattern>
                   </constraint>
                </constraintSpec>
-               <moduleRef key="linking" include="ab linkGrp ptr standOff"/><elementSpec ident="anchor" module="linking" mode="change">
+               <moduleRef key="linking" include="ab linkGrp ptr seg standOff"/><elementSpec ident="anchor" module="linking" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global.rendition" mode="delete"/>
                      <memberOf key="att.global.change" mode="delete"/>
@@ -2061,6 +2061,24 @@
                      <attDef ident="xml:id" usage="req" mode="change"/>
                      <attDef ident="xml:space" mode="delete"/>
                   </attList>
+               </elementSpec><elementSpec ident="seg" module="linking" mode="change">
+                  <classes mode="replace">
+                     <memberOf key="model.choicePart"/>
+                  </classes>
+                  <constraintSpec ident="seg.onlyAllowedInEllipsis" scheme="schematron">
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:choice[tei:seg]">
+                              <sch:assert test="parent::tei:supplied/parent::tei:ellipsis">
+                                 ERROR: choice/seg is allowed ONLY within a supplied and ellipsis.
+                              </sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <remarks>
+                     <p><gi>seg</gi> is allowed only within a <gi>choice</gi> (and only when the choice is within a supplied and metamark).</p>
+                  </remarks>
                </elementSpec><elementSpec ident="standOff" module="linking" mode="change">
                   <constraintSpec ident="standoff.elementsMustUseCopyOfORHaveAPersName" scheme="schematron">
                      <constraint>
@@ -2889,7 +2907,7 @@
                      </alternate>
                   </content>
                </macroSpec>
-               <moduleRef key="transcr" include="damage facsimile fw handNotes handShift subst supplied surface surfaceGrp zone"/><elementSpec ident="facsimile" module="transcr" mode="change">
+               <moduleRef key="transcr" include="damage facsimile fw handNotes handShift metamark space subst supplied surface surfaceGrp zone"/><elementSpec ident="facsimile" module="transcr" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global.linking" mode="add"/>
                   </classes>
@@ -2930,6 +2948,37 @@
                         </valList>
                      </attDef>
                   </attList>
+               </elementSpec><elementSpec ident="metamark" module="transcr" mode="change">
+                  <!--Delete all class membership, since we don't want this appearing
+                     anywhere but within ellipsis-->
+                  <classes mode="replace"/>
+                  <content>
+                     <alternate minOccurs="1" maxOccurs="1">
+                        <elementRef key="space"/>
+                        <textNode/>
+                     </alternate>
+                  </content>
+                  <constraintSpec ident="metamark.actualContentOrSpace" scheme="schematron">
+                     <desc>All metamarks should contain actual content or the <gi>space</gi> element</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:metamark[not(tei:space)]">
+                              <sch:assert test="matches(string(.),'\S')">ERROR: Metamarks must contain
+                                 either text content or the &lt;space&gt; element.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
+                  <remarks>
+                     <p><gi>metamark</gi>s should only appear within the <gi>ellipsis</gi> element and should contain either 
+                     meaningful text-content or the <gi>space</gi> element.</p>
+                  </remarks>
+               </elementSpec><elementSpec ident="space" module="transcr" mode="change">
+                  <classes mode="replace"/>
+                  <remarks>
+                     <p>The <gi>space</gi> element should be used only within the <gi>metamark</gi> element (which itself is 
+                     only used within the <gi>ellipsis</gi> element).</p>
+                  </remarks>
                </elementSpec><elementSpec ident="supplied" module="transcr" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global.responsibility" mode="add"/>
