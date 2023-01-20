@@ -184,7 +184,7 @@
                <desc>Underlined</desc>
                <gloss>Items that are underlined; note that since underlining often denotes
                emphasis, this should usually be used with more precise elements (persName, emph, etc)</gloss>
-               <outputRendition>text-decoration:underlined;</outputRendition>
+               <outputRendition>text-decoration:underline;</outputRendition>
             </rendition>
             <rendition xml:id="rnd_right-braced">
                <desc>Right braced</desc>
