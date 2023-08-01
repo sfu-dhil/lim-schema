@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xlink="http://www.w3.org/1999/xlink" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2023-01-14T01:26:10Z. .
+Schema generated from ODD source 2023-08-01T18:18:35Z. .
 TEI Edition: Version 4.5.0. Last updated on
         25th October 2022, revision 3e98e619e
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.5.0/
@@ -8310,7 +8310,7 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
          <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
             <sch:rule context="tei:noteMarker[@target]">
                <sch:let name="localTargs" value="tokenize(@target,'\s+')"/>
-               <sch:assert test="every $targ in $localTargs satisfies matches($targ,'^#')">ERROR: Every target in noteMarker must start with a '#'</sch:assert>
+               <sch:assert test="every $targ in $localTargs satisfies matches($targ,'^(doc:[^#]+)?#')">ERROR: Every target in noteMarker must start with a '#' or a "doc:" pointer with a hash reference.</sch:assert>
             </sch:rule>
          </sch:pattern>
          <sch:pattern xmlns="http://www.tei-c.org/ns/1.0" xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">

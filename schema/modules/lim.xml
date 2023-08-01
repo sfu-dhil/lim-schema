@@ -194,7 +194,7 @@
                         <sch:pattern>
                            <sch:rule context="tei:noteMarker[@target]">
                               <sch:let name="localTargs" value="tokenize(@target,'\s+')"/>
-                              <sch:assert test="every $targ in $localTargs satisfies matches($targ,'^#')">ERROR: Every target in noteMarker must start with a '#'</sch:assert>
+                              <sch:assert test="every $targ in $localTargs satisfies matches($targ,'^(doc:[^#]+)?#')">ERROR: Every target in noteMarker must start with a '#' or a "doc:" pointer with a hash reference.</sch:assert>
                            </sch:rule>
                         </sch:pattern>
                      </constraint>

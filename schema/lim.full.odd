@@ -177,7 +177,7 @@
                <desc>Underlined</desc>
                <gloss>Items that are underlined; note that since underlining often denotes
                emphasis, this should usually be used with more precise elements (persName, emph, etc)</gloss>
-               <outputRendition>text-decoration:underlined;</outputRendition>
+               <outputRendition>text-decoration:underline;</outputRendition>
             </rendition>
             <rendition xml:id="rnd_right-braced">
                <desc>Right braced</desc>
@@ -592,6 +592,27 @@
                         we must add att.written -->
                      <memberOf key="att.written" mode="add"/>
                   </classes>
+               </elementSpec><elementSpec ident="ellipsis" module="core" mode="change">
+                  <exemplum>
+                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        He said, in the Event of a R<ellipsis>
+                           <metamark><space/></metamark>
+                           <supplied resp="team:JT1">estoration</supplied>
+                        </ellipsis>,
+                     </egXML>
+                  </exemplum>
+                  <exemplum>
+                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        If The P<ellipsis>
+                           <metamark><space/></metamark>
+                           <choice>
+                              <seg>rince</seg>
+                              <seg>retender</seg>
+                           </choice>
+                        </ellipsis> returns...
+                     </egXML>
+                  </exemplum>
+                  
                </elementSpec><elementSpec ident="expan" module="core" mode="change">
                   <classes mode="change">
               <!--Remove from pPart.editorial, since it should only be in <choice>-->
@@ -1446,7 +1467,7 @@
                         <sch:pattern>
                            <sch:rule context="tei:noteMarker[@target]">
                               <sch:let name="localTargs" value="tokenize(@target,'\s+')"/>
-                              <sch:assert test="every $targ in $localTargs satisfies matches($targ,'^#')">ERROR: Every target in noteMarker must start with a '#'</sch:assert>
+                              <sch:assert test="every $targ in $localTargs satisfies matches($targ,'^(doc:[^#]+)?#')">ERROR: Every target in noteMarker must start with a '#' or a "doc:" pointer with a hash reference.</sch:assert>
                            </sch:rule>
                         </sch:pattern>
                      </constraint>
@@ -2979,6 +3000,7 @@
                      <p>The <gi>space</gi> element should be used only within the <gi>metamark</gi> element (which itself is 
                      only used within the <gi>ellipsis</gi> element).</p>
                   </remarks>
+                  
                </elementSpec><elementSpec ident="supplied" module="transcr" mode="change">
                   <classes mode="change">
                      <memberOf key="att.global.responsibility" mode="add"/>
