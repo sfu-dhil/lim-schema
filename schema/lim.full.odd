@@ -2486,7 +2486,7 @@
                            <sch:assert test="tei:langKnowledge">ERROR: People must contain a langKnowledge element.</sch:assert>
                         </sch:rule>
                         <sch:rule context="/tei:person[@role='contributor']">
-                           <sch:assert test="matches(@xml:id, '^[A-Z]{2}\d+$')">ERROR: All contributors must have an @xml:id of 2 uppercase letters and a number (e.g. LD1).</sch:assert>
+                           <sch:assert test="matches(@xml:id, '^[A-Z]{2,3}\d+$')">ERROR: All contributors must have an @xml:id of 2-3 uppercase letters and a number (e.g. LD1).</sch:assert>
                            <sch:assert test="tei:persName and tei:note">ERROR: Contributors should only contain persName and note.</sch:assert>
                         </sch:rule>
                      </constraint>
