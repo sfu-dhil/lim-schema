@@ -1,0 +1,1 @@
+{"stem":"issn","instances":[{"docId":"TEI.idno","docUri":"TEI.idno.html","score":2,"contexts":[{"form":"ISSN","weight":"1","pos":117,"context":"<mark>ISSN<\/mark>","fid":"_d2e34011"},{"form":"ISSN","weight":"1","pos":345,"context":"...suggested values for type on idno are ISBN, <mark>ISSN<\/mark>, DOI, and URI.","fid":"_d2e34381"}]}]}
