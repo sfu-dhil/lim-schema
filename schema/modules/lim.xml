@@ -529,6 +529,15 @@
                            </valItem>
                         </valList>
                      </attDef>
+                     <attDef ident="rendition" usage="opt">
+                        <desc>Rendition</desc>
+                        <valList type="closed">
+                           <valItem ident="rnd:dashed">
+                              <gloss>a dashed line</gloss>
+                              <desc>a dashed line</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
                   </attList>
                   <remarks>
                      <p>This element is semantically equivalent to the standard TEI <gi>milestone</gi> with <att>rendition</att> values. However, it may contain an optional <gi>desc</gi> child if further description of line is necessary.</p>
