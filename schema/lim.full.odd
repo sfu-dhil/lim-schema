@@ -444,7 +444,7 @@
                      </constraint>
                   </constraintSpec>
                </elementSpec><classSpec ident="att.linguistic" module="analysis" type="atts" mode="delete"/>
-               <moduleRef key="core" include="abbr add author bibl biblStruct choice corr date del desc divGen editor ellipsis emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note noteGrp num orig p pb ptr pubPlace publisher q quote ref reg resp respStmt rs sic term time title unclear"/><elementSpec ident="abbr" module="core" mode="change">
+               <moduleRef key="core" include="abbr add author bibl biblStruct choice cit corr date del desc divGen editor ellipsis emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl mentioned milestone name note noteGrp num orig p pb ptr pubPlace publisher q quote ref reg resp respStmt rs sic term time title unclear"/><elementSpec ident="abbr" module="core" mode="change">
                   <classes mode="change">
                      <!--Add cert and resp-->
                      <memberOf key="att.global.responsibility" mode="add"/>

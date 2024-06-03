@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xlink="http://www.w3.org/1999/xlink" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2024-05-13T21:32:45Z. .
+Schema generated from ODD source 2024-06-03T18:35:29Z. .
 TEI Edition: Version 4.5.0. Last updated on
         25th October 2022, revision 3e98e619e
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.5.0/
@@ -2405,6 +2405,9 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
    <define name="model.stageLike_sequenceRepeatable">
       <notAllowed/>
    </define>
+   <define name="model.entryPart">
+      <notAllowed/>
+   </define>
    <define name="model.global.edit">
       <choice>
          <ref name="gap"/>
@@ -2557,29 +2560,41 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
    <define name="model.quoteLike">
       <choice>
          <ref name="quote"/>
+         <ref name="cit"/>
       </choice>
    </define>
    <define name="model.quoteLike_alternation">
       <choice>
          <ref name="quote"/>
+         <ref name="cit"/>
       </choice>
    </define>
    <define name="model.quoteLike_sequence">
       <ref name="quote"/>
+      <ref name="cit"/>
    </define>
    <define name="model.quoteLike_sequenceOptional">
       <optional>
          <ref name="quote"/>
+      </optional>
+      <optional>
+         <ref name="cit"/>
       </optional>
    </define>
    <define name="model.quoteLike_sequenceOptionalRepeatable">
       <zeroOrMore>
          <ref name="quote"/>
       </zeroOrMore>
+      <zeroOrMore>
+         <ref name="cit"/>
+      </zeroOrMore>
    </define>
    <define name="model.quoteLike_sequenceRepeatable">
       <oneOrMore>
          <ref name="quote"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="cit"/>
       </oneOrMore>
    </define>
    <define name="model.attributable">
@@ -3245,6 +3260,27 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
                </attribute>
             </optional>
          </choice>
+         <empty/>
+      </element>
+   </define>
+   <define name="cit">
+      <element name="cit">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(cited quotation) contains a quotation from some other document, together with a bibliographic reference to its source. In a dictionary it may contain an example text with at least one occurrence of the word form, used in the sense being described, or a translation of the headword, or an example. [3.3.3. Quotation 4.3.1. Grouped Texts 9.3.5.1. Examples]</a:documentation>
+         <oneOrMore>
+            <choice>
+               <ref name="model.biblLike"/>
+               <ref name="model.egLike"/>
+               <ref name="model.entryPart"/>
+               <ref name="model.global"/>
+               <ref name="model.graphicLike"/>
+               <ref name="model.ptrLike"/>
+               <ref name="model.attributable"/>
+               <ref name="pc"/>
+               <ref name="q"/>
+            </choice>
+         </oneOrMore>
+         <ref name="att.global.attributes"/>
+         <ref name="att.typed.attributes"/>
          <empty/>
       </element>
    </define>
