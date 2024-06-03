@@ -366,7 +366,7 @@
       <back>
          <div>
             <head>Appendix</head>
-            <schemaSpec ident="lim" start="TEI div person place org biblStruct" source="tei:4.5.0">
+            <schemaSpec ident="lim" start="TEI div person place org biblStruct" source="tei:4.7.0">
 
                <moduleRef key="analysis" include="pc w"/><elementSpec ident="pc" mode="change" module="analysis">
             <!--Remove all other attributes-->
@@ -568,7 +568,7 @@
                      <memberOf key="att.written" mode="add"/>
                   </classes>
                </elementSpec><elementSpec ident="bibl" module="core" mode="change">
-                  <classes>
+                  <classes mode="change">
                      <memberOf key="att.docStatus" mode="delete"/>
                   </classes>
                </elementSpec><elementSpec ident="corr" module="core" mode="change">
@@ -1874,24 +1874,26 @@
                   </attList>
                </classSpec><macroSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ident="lim.personMacro" module="lim" mode="add">
                   <content>
-                     <elementRef key="persName" minOccurs="1" maxOccurs="unbounded"/>
-                     <!--NOTE: preserveORder doesn't actually work, but there
+                    <sequence>
+                       <elementRef key="persName" minOccurs="1" maxOccurs="unbounded"/>
+                       <!--NOTE: preserveORder doesn't actually work, but there
                 may be a new element coming: see
                 https://github.com/TEIC/TEI/issues/2154 -->
-                     <sequence preserveOrder="false">
-                        <elementRef key="sex" minOccurs="0" maxOccurs="1"/>
-                        <elementRef key="birth" minOccurs="0" maxOccurs="1"/>
-                        <elementRef key="death" minOccurs="0" maxOccurs="1"/>
-                        <elementRef key="faith" minOccurs="0" maxOccurs="unbounded"/>
-                        <elementRef key="affiliation" minOccurs="0" maxOccurs="unbounded"/>
-                        <elementRef key="occupation" minOccurs="0" maxOccurs="unbounded"/>
-                        <elementRef key="nationality" minOccurs="0" maxOccurs="unbounded"/>
-                        <elementRef key="residence" minOccurs="0" maxOccurs="unbounded"/>
-                        <elementRef key="figure" minOccurs="0" maxOccurs="unbounded"/>
-                     </sequence>
-                     <!--Always make langKnowledge and note come last-->
-                     <elementRef key="langKnowledge" minOccurs="0" maxOccurs="1"/>
-                     <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+                       <sequence preserveOrder="false">
+                          <elementRef key="sex" minOccurs="0" maxOccurs="1"/>
+                          <elementRef key="birth" minOccurs="0" maxOccurs="1"/>
+                          <elementRef key="death" minOccurs="0" maxOccurs="1"/>
+                          <elementRef key="faith" minOccurs="0" maxOccurs="unbounded"/>
+                          <elementRef key="affiliation" minOccurs="0" maxOccurs="unbounded"/>
+                          <elementRef key="occupation" minOccurs="0" maxOccurs="unbounded"/>
+                          <elementRef key="nationality" minOccurs="0" maxOccurs="unbounded"/>
+                          <elementRef key="residence" minOccurs="0" maxOccurs="unbounded"/>
+                          <elementRef key="figure" minOccurs="0" maxOccurs="unbounded"/>
+                       </sequence>
+                       <!--Always make langKnowledge and note come last-->
+                       <elementRef key="langKnowledge" minOccurs="0" maxOccurs="1"/>
+                       <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+                    </sequence> 
                   </content>
                </macroSpec><dataSpec xmlns:xsl="http://www.w3.org/1999/XSL/Transform" module="lim" ident="limdata.ana" mode="add">
                   <desc>Datatype for all analytic pointers</desc>

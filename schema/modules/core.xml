@@ -158,7 +158,7 @@
                
                <!--bibl-->
                <elementSpec ident="bibl" module="core" mode="change">
-                  <classes>
+                  <classes mode="change">
                      <memberOf key="att.docStatus" mode="delete"/>
                   </classes>
                </elementSpec>

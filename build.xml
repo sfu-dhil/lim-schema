@@ -71,13 +71,13 @@
             <arg line="-s:${schemaDir}/lim.expanded.odd"/>
             <arg line="-o:${schemaDir}/lim.rng"/>
         </java>
-        <!--And now adjust the RNG to allow person elements in any order-->
+     <!--   <!-\-And now adjust the RNG to allow person elements in any order-\->
         <move file="${schemaDir}/lim.rng" tofile="${schemaDir}/lim.rng.tmp"/>
         <java jar="${saxon}" fork="true">
             <arg line="-xsl:${basedir}/code/schema/fix_rng.xsl"/>
             <arg line="-s:${schemaDir}/lim.rng.tmp"/>
             <arg line="-o:${schemaDir}/lim.rng"/>
-        </java>
+        </java>-->
     </target>
     
 
