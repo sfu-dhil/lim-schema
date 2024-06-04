@@ -219,9 +219,12 @@
                      <memberOf key="att.docStatus" mode="delete"/>
                   </classes>
                   <content>
-                     <elementRef key="objectName" minOccurs="0" maxOccurs="1"/>
-                     <elementRef key="note" minOccurs="0" maxOccurs="1"/>
-                     <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
+                     <sequence>
+                        <elementRef key="objectName" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
+                     </sequence>
+                   
                   </content>
                   <remarks mode="add">
                      <p>Our use of object is not TEI conformant, but the break is fairly
@@ -235,14 +238,17 @@
                      <memberOf key="att.global.linking" mode="add"/>
                   </classes>
                   <content>
-              <!--Orgs must have an orgName-->
-                     <elementRef key="orgName" minOccurs="1" maxOccurs="unbounded"/>
-                     <!--Also needs a note-->
-                     <elementRef key="note" minOccurs="0" maxOccurs="1"/>
-                     <!--And may include a ptrGrp-->
-                     <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
-                     <!--And may have a list of suborganizations below it-->
-                     <elementRef key="listOrg" minOccurs="0" maxOccurs="1"/>
+                     <sequence>
+                        <!--Orgs must have an orgName-->
+                        <elementRef key="orgName" minOccurs="1" maxOccurs="unbounded"/>
+                        <!--Also needs a note-->
+                        <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+                        <!--And may include a ptrGrp-->
+                        <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
+                        <!--And may have a list of suborganizations below it-->
+                        <elementRef key="listOrg" minOccurs="0" maxOccurs="1"/>
+                     </sequence>
+            
                   </content>
                   <attList>
                      <attDef ident="xml:id" mode="change" usage="req">
@@ -306,9 +312,12 @@
                      <memberOf key="att.global.linking" mode="add"/>
                   </classes>
                   <content>
-                     <macroRef key="lim.personMacro"/>
-                     <!--Add linkGrp optionally only for person, not persona-->
-                     <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
+                     <sequence>
+                        <macroRef key="lim.personMacro"/>
+                        <!--Add linkGrp optionally only for person, not persona-->
+                        <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
+                     </sequence>
+                 
                   </content>
                   <constraintSpec ident="person.constraints" scheme="schematron">
                      <desc>Various constraints for the different models for contributors and non-contributors.</desc>
@@ -353,10 +362,13 @@
                      <memberOf key="att.global.linking" mode="add"/>
                   </classes>
                   <content>
-                     <elementRef key="placeName" minOccurs="0" maxOccurs="unbounded"/>
-                     <elementRef key="location" minOccurs="0" maxOccurs="1"/>
-                     <elementRef key="note" minOccurs="0" maxOccurs="1"/>
-                     <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
+                     <sequence>
+                        <elementRef key="placeName" minOccurs="0"
+                           maxOccurs="unbounded"/>
+                        <elementRef key="location" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+                        <elementRef key="linkGrp" minOccurs="0" maxOccurs="1"/>
+                     </sequence>
                   </content>
                   <constraintSpec ident="place.mustHaveProperId" scheme="schematron">
                      <desc>All people must have a proper id.</desc>

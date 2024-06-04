@@ -2,8 +2,6 @@
 <?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
 	schematypens="http://purl.oclc.org/dsdl/schematron"?>
-<?xml-model href="../odd/lim-odd.sch" type="application/xml"
-	schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0"
      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
      xml:id="core">
@@ -246,6 +244,19 @@
                   <classes mode="change">
                      <memberOf key="att.global.analytic" mode="add"/>
                   </classes>
+                  <constraintSpec ident="item.indexItemsMustHaveTitleAndNum"
+                     scheme="schematron"
+                     mode="add">
+                     <desc>All index items must contain a title and a number</desc>
+                     <constraint>
+                        <sch:pattern>
+                           <sch:rule context="tei:div[@type='index']/tei:list/tei:item">
+                              <sch:assert test="count(tei:num) gt 0">ERROR: All index items must contain at least one num element.</sch:assert>
+                              <sch:assert test="count(descendant::tei:title) gt 0">ERROR: All index items must contain at least one title element.</sch:assert>
+                           </sch:rule>
+                        </sch:pattern>
+                     </constraint>
+                  </constraintSpec>
                </elementSpec>
                <!--l-->
                <elementSpec ident="l" module="core" mode="change">

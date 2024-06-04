@@ -39,8 +39,11 @@
                <!--settingDesc-->
                <elementSpec ident="settingDesc" module="corpus" mode="change">
                   <content>
-                     <elementRef key="setting" minOccurs="1" maxOccurs="unbounded"/>
-                     <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+                     <sequence>
+                        <elementRef key="setting" minOccurs="1" maxOccurs="unbounded"/>
+                        <elementRef key="note" minOccurs="0" maxOccurs="1"/>
+                     </sequence>
+                     
                   </content>
                </elementSpec>
             </schemaSpec>

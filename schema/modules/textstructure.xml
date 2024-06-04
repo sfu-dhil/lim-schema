@@ -66,22 +66,6 @@
                      </attDef>
                   </attList>
                </elementSpec>
-               <!--item-->
-               <elementSpec ident="item" mode="change" module="textstructure">
-                  <constraintSpec ident="item.indexItemsMustHaveTitleAndNum"
-                                  scheme="schematron"
-                                  mode="add">
-                     <desc>All index items must contain a title and a number</desc>
-                     <constraint>
-                        <sch:pattern>
-                           <sch:rule context="tei:div[@type='index']/tei:list/tei:item">
-                              <sch:assert test="count(tei:num) gt 0">ERROR: All index items must contain at least one num element.</sch:assert>
-                              <sch:assert test="count(descendant::tei:title) gt 0">ERROR: All index items must contain at least one title element.</sch:assert>
-                           </sch:rule>
-                        </sch:pattern>
-                     </constraint>
-                  </constraintSpec>
-               </elementSpec>
                <!--opener-->
                <elementSpec ident="opener" module="textstructure" mode="change">
                   <content>
