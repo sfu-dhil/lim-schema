@@ -1,0 +1,1 @@
+{"stem":"doi","instances":[{"docId":"TEI.idno","docUri":"TEI.idno.html","score":2,"contexts":[{"form":"DOI","weight":"1","pos":129,"context":"<mark>DOI<\/mark>","fid":"_d2e35385"},{"form":"DOI","weight":"1","pos":400,"context":"...for type on idno are ISBN, ISSN, <mark>DOI<\/mark>, and URI.","fid":"_d2e35784"}]}]}
