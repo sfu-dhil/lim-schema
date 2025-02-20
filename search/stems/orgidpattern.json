@@ -1,0 +1,1 @@
+{"stem":"orgidpattern","instances":[{"docId":"TEI.org","docUri":"TEI.org.html","score":1,"contexts":[{"form":"orgIdPattern","weight":"1","pos":79,"context":"...\"matches(@xml:id, concat('^', $<mark>orgIdPattern<\/mark>, '$'))\"&gt;ERROR: All main orgs must have...","fid":"_d2e55290"}]}]}

@@ -1,0 +1,679 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" id="TEI.category">
+   
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      
+      <title>&lt;category&gt;</title>
+      
+      <meta name="robots" content="noindex"/>
+      
+      <link rel="stylesheet" href="css/documentation.css"/>
+      
+      <meta xmlns:xsl="http://www.w3.org/1999/XSL/Transform" class="staticSearch_desc" name="Document Type" content="Specification"/>
+      <meta xmlns:xsl="http://www.w3.org/1999/XSL/Transform" class="staticSearch_feat" name="Elements Mentioned" content="category"/>
+      <meta xmlns:xsl="http://www.w3.org/1999/XSL/Transform" class="staticSearch_feat" name="Elements Mentioned" content="catDesc"/>
+      <meta xmlns:xsl="http://www.w3.org/1999/XSL/Transform" class="staticSearch_feat" name="Elements Mentioned" content="elementSpec"/>
+      <meta xmlns:xsl="http://www.w3.org/1999/XSL/Transform" class="staticSearch_feat" name="Elements Mentioned" content="gloss"/>
+      <meta xmlns:xsl="http://www.w3.org/1999/XSL/Transform" class="staticSearch_feat" name="Elements Mentioned" content="desc"/>
+      <meta xmlns:xsl="http://www.w3.org/1999/XSL/Transform" class="staticSearch_feat" name="Elements Mentioned" content="classes"/>
+      <meta xmlns:xsl="http://www.w3.org/1999/XSL/Transform" class="staticSearch_feat" name="Elements Mentioned" content="memberOf"/>
+      <meta xmlns:xsl="http://www.w3.org/1999/XSL/Transform" class="staticSearch_feat" name="Elements Mentioned" content="content"/>
+      <meta xmlns:xsl="http://www.w3.org/1999/XSL/Transform" class="staticSearch_feat" name="Elements Mentioned" content="sequence"/>
+      <meta xmlns:xsl="http://www.w3.org/1999/XSL/Transform" class="staticSearch_feat" name="Elements Mentioned" content="alternate"/>
+      <meta xmlns:xsl="http://www.w3.org/1999/XSL/Transform" class="staticSearch_feat" name="Elements Mentioned" content="elementRef"/>
+      <meta xmlns:xsl="http://www.w3.org/1999/XSL/Transform" class="staticSearch_feat" name="Elements Mentioned" content="classRef"/>
+   </head>
+   
+   <body>
+      
+      <div class="container">
+         
+         <nav>
+            
+            <ul xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+               <li><span class="nav-item"><a href="index.html">Home</a></span></li>
+               <li><span class="nav-item"><a href="helpful_links.html">Helpful Links</a></span></li>
+               <li class="expandable"><span class="nav-item"><a href="getting_started.html">Getting Started</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                           <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                     <li class="expandable"><span class="nav-item"><a href="getting_started.html#getting_started_setting-up">Setting up</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                 <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                           <li><span class="nav-item"><a href="getting_started.html#getting_started_setting-up-the-repository">Setting up the Repository</a></span></li>
+                        </ul>
+                     </li>
+                  </ul>
+               </li>
+               <li class="expandable"><span class="nav-item"><a href="workflow.html">Workflow</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                           <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                     <li><span class="nav-item"><a href="workflow.html#workflow_updating-your-repository">Updating your Repository</a></span></li>
+                     <li><span class="nav-item"><a href="workflow.html#workflow_editing-in-oxygen">Editing in oXygen</a></span></li>
+                     <li><span class="nav-item"><a href="workflow.html#workflow_committing-changes">Committing Changes</a></span></li>
+                     <li><span class="nav-item"><a href="workflow.html#workflow_issuing-a-pull-request">Issuing a Pull Request</a></span></li>
+                  </ul>
+               </li>
+               <li class="expandable"><span class="nav-item"><span>Encoding Transcriptions</span><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                           <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                     <li class="expandable"><span class="nav-item"><a href="transcription_workflow.html">Transcription Encoding Workflow</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                 <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                           <li><span class="nav-item"><a href="transcription_workflow.html#transcription_workflow_step-0-update-your-repository">Step 0: Update your repository</a></span></li>
+                           <li><span class="nav-item"><a href="transcription_workflow.html#transcription_workflow_step-1-check-google-drive-transcription">Step 1: Check Google Drive Transcription</a></span></li>
+                           <li><span class="nav-item"><a href="transcription_workflow.html#transcription_workflow_step-2-convert-the-transcription">Step 2: Convert the Transcription</a></span></li>
+                           <li><span class="nav-item"><a href="transcription_workflow.html#transcription_workflow_step-3-encoding-the-transcription">Step 3: Encoding the Transcription</a></span></li>
+                        </ul>
+                     </li>
+                     <li class="expandable"><span class="nav-item"><a href="encoding_common.html">Common Bibliographical / Structural Features</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                 <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                           <li><span class="nav-item"><a href="encoding_common.html#encoding_common_line-beginnings">Line Beginnings</a></span></li>
+                           <li><span class="nav-item"><a href="encoding_common.html#encoding_common_page-beginnings">Page Beginnings</a></span></li>
+                           <li><span class="nav-item"><a href="encoding_common.html#encoding_common_formeworks">Formeworks</a></span></li>
+                           <li><span class="nav-item"><a href="encoding_common.html#encoding_common_end-of-line-hyphens">End of Line Hyphens</a></span></li>
+                           <li class="expandable"><span class="nav-item"><a href="encoding_common.html#encoding_common_horizontal-rules">Horizontal Rules</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                       <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                                 <li><span class="nav-item"><a href="encoding_common.html#encoding_common_styling-horizontal-rules">Styling Horizontal Rules</a></span></li>
+                              </ul>
+                           </li>
+                           <li><span class="nav-item"><a href="encoding_common.html#encoding_common_source-styling">Source Styling</a></span></li>
+                        </ul>
+                     </li>
+                     <li class="expandable"><span class="nav-item"><a href="encoding_structure.html">Document Structure</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                 <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                           <li><span class="nav-item"><a href="encoding_structure.html#encoding_structure_headings">Headings</a></span></li>
+                           <li><span class="nav-item"><a href="encoding_structure.html#encoding_structure_paragraphs">Paragraphs</a></span></li>
+                           <li class="expandable"><span class="nav-item"><a href="encoding_structure.html#encoding_structure_openers-and-closers">Openers and Closers</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                       <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                                 <li><span class="nav-item"><a href="encoding_structure.html#encoding_structure_two-column-closers">Two Column Closers</a></span></li>
+                              </ul>
+                           </li>
+                           <li><span class="nav-item"><a href="encoding_structure.html#encoding_structure_verse">Verse</a></span></li>
+                        </ul>
+                     </li>
+                     <li class="expandable"><span class="nav-item"><a href="encoding_notes.html">Notes and Annotations</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                 <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                           <li><span class="nav-item"><a href="encoding_notes.html#encoding_notes_note-content">Note Content</a></span></li>
+                           <li class="expandable"><span class="nav-item"><a href="encoding_notes.html#encoding_notes_footnotes">Footnotes</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                       <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                                 <li><span class="nav-item"><a href="encoding_notes.html#encoding_notes_encoding-the-note-marker">Encoding the note marker</a></span></li>
+                                 <li><span class="nav-item"><a href="encoding_notes.html#encoding_notes_encoding-the-note">Encoding the Note</a></span></li>
+                              </ul>
+                           </li>
+                           <li><span class="nav-item"><a href="encoding_notes.html#encoding_notes_unanchored-notes">Unanchored Notes</a></span></li>
+                           <li><span class="nav-item"><a href="encoding_notes.html#encoding_notes_nota-benes">Nota Benes</a></span></li>
+                        </ul>
+                     </li>
+                     <li class="expandable"><span class="nav-item"><a href="transcribing_editing.html">Item Content and Transcription</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                 <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                           <li class="expandable"><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_abbreviations-and-expansions">Abbreviations and Expansions</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                       <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                                 <li><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_common-abbreviations-the-that-ampersands">Common abbreviations: the, that, ampersands</a></span></li>
+                                 <li><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_uncommon-abbreviations">Uncommon abbreviations</a></span></li>
+                                 <li><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_expanding-hyphenated-words">Expanding Hyphenated Words</a></span></li>
+                              </ul>
+                           </li>
+                           <li class="expandable"><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_supplying-regularizing-and-flagging-incorrect-text">Supplying, Regularizing, and Flagging Incorrect Text</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                       <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                                 <li><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_supplying-text">Supplying Text</a></span></li>
+                                 <li><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_regularizing-text">Regularizing Text</a></span></li>
+                                 <li><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_corrections">Corrections</a></span></li>
+                              </ul>
+                           </li>
+                           <li class="expandable"><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_additions-deletions-and-substitutions">Additions, Deletions, and Substitutions</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                       <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                                 <li><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_additions">Additions</a></span></li>
+                                 <li><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_deletions">Deletions</a></span></li>
+                                 <li><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_substitutions">Substitutions</a></span></li>
+                                 <li><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_unclear-text">Unclear Text</a></span></li>
+                              </ul>
+                           </li>
+                           <li class="expandable"><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_elisions-and-omissions">Elisions and Omissions</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                       <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                                 <li><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_elisions-multiple-choices-prince-vs-pretender">Elisions: Multiple Choices (Prince vs Pretender)</a></span></li>
+                              </ul>
+                           </li>
+                           <li><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_foreign-language">Foreign Language</a></span></li>
+                           <li><span class="nav-item"><a href="transcribing_editing.html#transcribing_editing_multiple-hands">Multiple Hands</a></span></li>
+                        </ul>
+                     </li>
+                     <li class="expandable"><span class="nav-item"><a href="people_places.html">Tagging People, Places, etc in Transcriptions</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                 <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                           <li><span class="nav-item"><a href="people_places.html#people_places_contributors">Contributors</a></span></li>
+                           <li><span class="nav-item"><a href="people_places.html#people_places_people">People</a></span></li>
+                           <li><span class="nav-item"><a href="people_places.html#people_places_places">Places</a></span></li>
+                           <li><span class="nav-item"><a href="people_places.html#people_places_events">Events</a></span></li>
+                           <li><span class="nav-item"><a href="people_places.html#people_places_objects">Objects</a></span></li>
+                        </ul>
+                     </li>
+                     <li class="expandable"><span class="nav-item"><a href="encoding_dates_times.html">Encoding Dates and Times</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                 <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                           <li><span class="nav-item"><a href="encoding_dates_times.html#encoding_dates_times_dates">Dates</a></span></li>
+                           <li><span class="nav-item"><a href="encoding_dates_times.html#encoding_dates_times_times">Times</a></span></li>
+                        </ul>
+                     </li>
+                  </ul>
+               </li>
+               <li><span class="nav-item"><a href="facsimiles.html">Encoding Facsimiles</a></span></li>
+               <li class="expandable"><span class="nav-item"><a href="encoding_vol11.html">Encoding the Index Volume (Volume 11)</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                           <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                     <li><span class="nav-item"><a href="encoding_vol11.html#encoding_vol11_index-and-page-numbers">Index and Page Numbers</a></span></li>
+                     <li><span class="nav-item"><a href="encoding_vol11.html#encoding_vol11_encoding-pages">Encoding pages</a></span></li>
+                     <li class="expandable"><span class="nav-item"><a href="encoding_vol11.html#encoding_vol11_encoding-the-indexes">Encoding the Indexes</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                 <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                           <li class="expandable"><span class="nav-item"><a href="encoding_vol11.html#encoding_vol11_index-items">Index Items</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                       <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                                 <li><span class="nav-item"><a href="encoding_vol11.html#encoding_vol11_basic-structure">Basic Structure</a></span></li>
+                                 <li><span class="nav-item"><a href="encoding_vol11.html#encoding_vol11_line-beginnings">Line Beginnings</a></span></li>
+                                 <li><span class="nav-item"><a href="encoding_vol11.html#encoding_vol11_marginalia-in-index-items">Marginalia in Index Items</a></span></li>
+                              </ul>
+                           </li>
+                        </ul>
+                     </li>
+                  </ul>
+               </li>
+               <li class="expandable"><span class="nav-item"><a href="writing_documentation.html">Writing Documentation</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                           <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                     <li><span class="nav-item"><a href="writing_documentation.html#writing_documentation_why-write-documentation">Why write documentation?</a></span></li>
+                     <li><span class="nav-item"><a href="writing_documentation.html#writing_documentation_forking-the-repository">Forking the Repository</a></span></li>
+                     <li class="expandable"><span class="nav-item"><a href="writing_documentation.html#writing_documentation_working-on-the-documentation">Working on the documentation</a><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                 <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                           <li><span class="nav-item"><a href="writing_documentation.html#writing_documentation_editing-existing-documents">Editing existing documents</a></span></li>
+                           <li><span class="nav-item"><a href="writing_documentation.html#writing_documentation_adding-new-documents">Adding new documents</a></span></li>
+                           <li><span class="nav-item"><a href="writing_documentation.html#writing_documentation_re-arranging-documents">Re-arranging documents</a></span></li>
+                        </ul>
+                     </li>
+                  </ul>
+               </li>
+               <li class="expandable current expanded"><span class="nav-item"><span>Appendix</span><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                           <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                     <li class="expandable current expanded"><span class="nav-item"><span>Elements</span><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                 <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                           <li><span class="nav-item"><a href="TEI.NB.html">&lt;NB&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.TEI.html">&lt;TEI&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.ab.html">&lt;ab&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.abbr.html">&lt;abbr&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.abstract.html">&lt;abstract&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.activity.html">&lt;activity&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.add.html">&lt;add&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.addName.html">&lt;addName&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.additional.html">&lt;additional&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.adminInfo.html">&lt;adminInfo&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.affiliation.html">&lt;affiliation&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.author.html">&lt;author&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.bibl.html">&lt;bibl&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.biblStruct.html">&lt;biblStruct&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.birth.html">&lt;birth&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.body.html">&lt;body&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.byline.html">&lt;byline&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.catDesc.html">&lt;catDesc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.catRef.html">&lt;catRef&gt;</a></span></li>
+                           <li><span class="nav-item"><span>&lt;category&gt;</span></span></li>
+                           <li><span class="nav-item"><a href="TEI.cell.html">&lt;cell&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.change.html">&lt;change&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.char.html">&lt;char&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.charDecl.html">&lt;charDecl&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.choice.html">&lt;choice&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.cit.html">&lt;cit&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.closer.html">&lt;closer&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.collection.html">&lt;collection&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.compliment.html">&lt;compliment&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.compliments.html">&lt;compliments&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.corr.html">&lt;corr&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.correspAction.html">&lt;correspAction&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.correspContext.html">&lt;correspContext&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.correspDesc.html">&lt;correspDesc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.creation.html">&lt;creation&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.custodialHist.html">&lt;custodialHist&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.damage.html">&lt;damage&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.date.html">&lt;date&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.dateline.html">&lt;dateline&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.death.html">&lt;death&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.del.html">&lt;del&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.desc.html">&lt;desc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.div.html">&lt;div&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.divGen.html">&lt;divGen&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.docAuthor.html">&lt;docAuthor&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.docDate.html">&lt;docDate&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.docEdition.html">&lt;docEdition&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.docImprint.html">&lt;docImprint&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.docTitle.html">&lt;docTitle&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.duration.html">&lt;duration&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.editor.html">&lt;editor&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.ellipsis.html">&lt;ellipsis&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.emph.html">&lt;emph&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.enclosure.html">&lt;enclosure&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.enclosures.html">&lt;enclosures&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.encodingDesc.html">&lt;encodingDesc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.epigraph.html">&lt;epigraph&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.expan.html">&lt;expan&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.extent.html">&lt;extent&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.facsimile.html">&lt;facsimile&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.faith.html">&lt;faith&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.figDesc.html">&lt;figDesc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.figure.html">&lt;figure&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.fileDesc.html">&lt;fileDesc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.floruit.html">&lt;floruit&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.foreign.html">&lt;foreign&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.forename.html">&lt;forename&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.front.html">&lt;front&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.fw.html">&lt;fw&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.g.html">&lt;g&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.gap.html">&lt;gap&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.genName.html">&lt;genName&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.geo.html">&lt;geo&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.gloss.html">&lt;gloss&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.graphic.html">&lt;graphic&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.handNote.html">&lt;handNote&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.handNotes.html">&lt;handNotes&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.handShift.html">&lt;handShift&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.head.html">&lt;head&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.hi.html">&lt;hi&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.history.html">&lt;history&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.idno.html">&lt;idno&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.imprimatur.html">&lt;imprimatur&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.imprint.html">&lt;imprint&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.item.html">&lt;item&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.l.html">&lt;l&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.label.html">&lt;label&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.langKnowledge.html">&lt;langKnowledge&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.langKnown.html">&lt;langKnown&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.langUsage.html">&lt;langUsage&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.language.html">&lt;language&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.lb.html">&lt;lb&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.lg.html">&lt;lg&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.limItem.html">&lt;limItem&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.linkGrp.html">&lt;linkGrp&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.list.html">&lt;list&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.listBibl.html">&lt;listBibl&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.listChange.html">&lt;listChange&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.listObject.html">&lt;listObject&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.listOrg.html">&lt;listOrg&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.listPerson.html">&lt;listPerson&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.listPlace.html">&lt;listPlace&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.listPrefixDef.html">&lt;listPrefixDef&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.localProp.html">&lt;localProp&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.location.html">&lt;location&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.locus.html">&lt;locus&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.locusGrp.html">&lt;locusGrp&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.mapping.html">&lt;mapping&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.mentioned.html">&lt;mentioned&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.metamark.html">&lt;metamark&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.milestone.html">&lt;milestone&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.msContents.html">&lt;msContents&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.msDesc.html">&lt;msDesc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.msIdentifier.html">&lt;msIdentifier&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.msItem.html">&lt;msItem&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.msName.html">&lt;msName&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.msPart.html">&lt;msPart&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.name.html">&lt;name&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.nameLink.html">&lt;nameLink&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.nationality.html">&lt;nationality&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.note.html">&lt;note&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.noteGrp.html">&lt;noteGrp&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.noteMarker.html">&lt;noteMarker&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.notesStmt.html">&lt;notesStmt&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.num.html">&lt;num&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.object.html">&lt;object&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.objectDesc.html">&lt;objectDesc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.objectName.html">&lt;objectName&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.occupation.html">&lt;occupation&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.opener.html">&lt;opener&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.org.html">&lt;org&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.orgName.html">&lt;orgName&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.orig.html">&lt;orig&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.origin.html">&lt;origin&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.p.html">&lt;p&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.pb.html">&lt;pb&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.pc.html">&lt;pc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.persName.html">&lt;persName&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.person.html">&lt;person&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.persona.html">&lt;persona&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.physDesc.html">&lt;physDesc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.place.html">&lt;place&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.placeName.html">&lt;placeName&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.postscript.html">&lt;postscript&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.prefixDef.html">&lt;prefixDef&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.profileDesc.html">&lt;profileDesc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.projectDesc.html">&lt;projectDesc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.ptr.html">&lt;ptr&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.pubPlace.html">&lt;pubPlace&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.publicationStmt.html">&lt;publicationStmt&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.publisher.html">&lt;publisher&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.q.html">&lt;q&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.quote.html">&lt;quote&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.ref.html">&lt;ref&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.reg.html">&lt;reg&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.rendition.html">&lt;rendition&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.repository.html">&lt;repository&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.request.html">&lt;request&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.requests.html">&lt;requests&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.residence.html">&lt;residence&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.resp.html">&lt;resp&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.respStmt.html">&lt;respStmt&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.revisionDesc.html">&lt;revisionDesc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.roleName.html">&lt;roleName&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.row.html">&lt;row&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.rs.html">&lt;rs&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.rule.html">&lt;rule&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.salute.html">&lt;salute&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.scaffold.html">&lt;scaffold&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.seg.html">&lt;seg&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.setting.html">&lt;setting&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.settingDesc.html">&lt;settingDesc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.settlement.html">&lt;settlement&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.sex.html">&lt;sex&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.sic.html">&lt;sic&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.signed.html">&lt;signed&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.sourceDesc.html">&lt;sourceDesc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.space.html">&lt;space&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.standOff.html">&lt;standOff&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.subst.html">&lt;subst&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.summary.html">&lt;summary&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.supplied.html">&lt;supplied&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.supportDesc.html">&lt;supportDesc&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.surface.html">&lt;surface&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.surfaceGrp.html">&lt;surfaceGrp&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.surname.html">&lt;surname&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.surrogates.html">&lt;surrogates&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.table.html">&lt;table&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.tagsDecl.html">&lt;tagsDecl&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.taxonomy.html">&lt;taxonomy&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teiHeader.html">&lt;teiHeader&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.term.html">&lt;term&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.text.html">&lt;text&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.textClass.html">&lt;textClass&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.time.html">&lt;time&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.title.html">&lt;title&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.titlePage.html">&lt;titlePage&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.titlePart.html">&lt;titlePart&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.titleStmt.html">&lt;titleStmt&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.trailer.html">&lt;trailer&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.unclear.html">&lt;unclear&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.w.html">&lt;w&gt;</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.zone.html">&lt;zone&gt;</a></span></li>
+                        </ul>
+                     </li>
+                     <li class="expandable"><span class="nav-item"><span>Model classes</span><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                 <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                           <li><span class="nav-item"><a href="TEI.model.addressLike.html">model.addressLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.annotationLike.html">model.annotationLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.attributable.html">model.attributable</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.biblLike.html">model.biblLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.biblPart.html">model.biblPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.choicePart.html">model.choicePart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.common.html">model.common</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.correspActionPart.html">model.correspActionPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.correspContextPart.html">model.correspContextPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.correspDescPart.html">model.correspDescPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.dateLike.html">model.dateLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.descLike.html">model.descLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.divBottom.html">model.divBottom</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.divBottomPart.html">model.divBottomPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.divGenLike.html">model.divGenLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.divLike.html">model.divLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.divPart.html">model.divPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.divTop.html">model.divTop</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.divTopPart.html">model.divTopPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.divWrapper.html">model.divWrapper</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.emphLike.html">model.emphLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.encodingDescPart.html">model.encodingDescPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.frontPart.html">model.frontPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.gLike.html">model.gLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.global.html">model.global</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.global.edit.html">model.global.edit</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.global.meta.html">model.global.meta</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.graphicLike.html">model.graphicLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.headLike.html">model.headLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.hiLike.html">model.hiLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.highlighted.html">model.highlighted</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.imprintPart.html">model.imprintPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.inter.html">model.inter</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.lLike.html">model.lLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.labelLike.html">model.labelLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.limitedPhrase.html">model.limitedPhrase</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.linePart.html">model.linePart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.listLike.html">model.listLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.measureLike.html">model.measureLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.milestoneLike.html">model.milestoneLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.msItemPart.html">model.msItemPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.msQuoteLike.html">model.msQuoteLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.nameLike.html">model.nameLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.nameLike.agent.html">model.nameLike.agent</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.noteLike.html">model.noteLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.pLike.html">model.pLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.pLike.front.html">model.pLike.front</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.pPart.data.html">model.pPart.data</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.pPart.edit.html">model.pPart.edit</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.pPart.editorial.html">model.pPart.editorial</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.pPart.msdesc.html">model.pPart.msdesc</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.pPart.transcriptional.html">model.pPart.transcriptional</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.paraPart.html">model.paraPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.persNamePart.html">model.persNamePart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.phrase.html">model.phrase</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.physDescPart.html">model.physDescPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.placeNamePart.html">model.placeNamePart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.placeStateLike.html">model.placeStateLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.ptrLike.html">model.ptrLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.publicationStmtPart.agency.html">model.publicationStmtPart.agency</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.publicationStmtPart.detail.html">model.publicationStmtPart.detail</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.quoteLike.html">model.quoteLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.resource.html">model.resource</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.respLike.html">model.respLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.segLike.html">model.segLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.settingPart.html">model.settingPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.standOffPart.html">model.standOffPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.teiHeaderPart.html">model.teiHeaderPart</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.model.titlepagePart.html">model.titlepagePart</a></span></li>
+                        </ul>
+                     </li>
+                     <li class="expandable"><span class="nav-item"><span>Attribute classes</span><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                 <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                           <li><span class="nav-item"><a href="TEI.att.anchoring.html">att.anchoring</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.ascribed.html">att.ascribed</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.ascribed.directed.html">att.ascribed.directed</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.calendarSystem.html">att.calendarSystem</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.canonical.html">att.canonical</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.citing.html">att.citing</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.coordinated.html">att.coordinated</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.damaged.html">att.damaged</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.datable.html">att.datable</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.datable.custom.html">att.datable.custom</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.datable.w3c.html">att.datable.w3c</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.dimensions.html">att.dimensions</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.docStatus.html">att.docStatus</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.duration.w3c.html">att.duration.w3c</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.editLike.html">att.editLike</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.gaijiProp.html">att.gaijiProp</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.global.html">att.global</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.global.analytic.html">att.global.analytic</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.global.facs.html">att.global.facs</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.global.linking.html">att.global.linking</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.global.rendition.html">att.global.rendition</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.global.responsibility.html">att.global.responsibility</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.global.source.html">att.global.source</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.handFeatures.html">att.handFeatures</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.internetMedia.html">att.internetMedia</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.media.html">att.media</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.msClass.html">att.msClass</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.msExcerpt.html">att.msExcerpt</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.naming.html">att.naming</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.patternReplacement.html">att.patternReplacement</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.personal.html">att.personal</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.placement.html">att.placement</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.pointing.html">att.pointing</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.ranging.html">att.ranging</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.resourced.html">att.resourced</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.spanning.html">att.spanning</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.styleDef.html">att.styleDef</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.tableDecoration.html">att.tableDecoration</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.typed.html">att.typed</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.att.written.html">att.written</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.lim.att.boolean.html">lim.att.boolean</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.lim.att.global.fragmentable.html">lim.att.global.fragmentable</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.lim.att.locatable.html">lim.att.locatable</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.lim.att.locatable.directed.html">lim.att.locatable.directed</a></span></li>
+                        </ul>
+                     </li>
+                     <li class="expandable"><span class="nav-item"><span>Macros</span><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                 <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                           <li><span class="nav-item"><a href="TEI.lim.macro.openerAndCloserContent.html">lim.macro.openerAndCloserContent</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.lim.personMacro.html">lim.personMacro</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.macro.abContent.html">macro.abContent</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.macro.limitedContent.html">macro.limitedContent</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.macro.paraContent.html">macro.paraContent</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.macro.phraseSeq.html">macro.phraseSeq</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.macro.phraseSeq.limited.html">macro.phraseSeq.limited</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.macro.specialPara.html">macro.specialPara</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.macro.xtext.html">macro.xtext</a></span></li>
+                        </ul>
+                     </li>
+                     <li class="expandable"><span class="nav-item"><span>Datatypes</span><span class="nav-dropdown"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                                 <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg></span></span><ul>
+                           <li><span class="nav-item"><a href="TEI.limdata.ana.html">limdata.ana</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.limdata.facs.html">limdata.facs</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.limdata.glyph.html">limdata.glyph</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.limdata.placement.html">limdata.placement</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.certainty.html">teidata.certainty</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.count.html">teidata.count</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.duration.iso.html">teidata.duration.iso</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.duration.w3c.html">teidata.duration.w3c</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.enumerated.html">teidata.enumerated</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.gender.html">teidata.gender</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.language.html">teidata.language</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.name.html">teidata.name</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.numeric.html">teidata.numeric</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.outputMeasurement.html">teidata.outputMeasurement</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.pattern.html">teidata.pattern</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.point.html">teidata.point</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.pointer.html">teidata.pointer</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.prefix.html">teidata.prefix</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.probCert.html">teidata.probCert</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.probability.html">teidata.probability</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.replacement.html">teidata.replacement</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.sex.html">teidata.sex</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.temporal.w3c.html">teidata.temporal.w3c</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.text.html">teidata.text</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.truthValue.html">teidata.truthValue</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.version.html">teidata.version</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.versionNumber.html">teidata.versionNumber</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.word.html">teidata.word</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.xTruthValue.html">teidata.xTruthValue</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.xmlName.html">teidata.xmlName</a></span></li>
+                           <li><span class="nav-item"><a href="TEI.teidata.xpath.html">teidata.xpath</a></span></li>
+                        </ul>
+                     </li>
+                     <li><span class="nav-item"><span>Constraints</span></span></li>
+                  </ul>
+               </li>
+            </ul>
+            </nav>
+         
+         <main>
+            
+            <nav class="searchBar">
+               <input type="text" placeholder="🔍 Search..." minlength="3"/>
+               </nav>
+            
+            <article>
+               <h1>&lt;category&gt;</h1>
+               <div xmlns:xsl="http://www.w3.org/1999/XSL/Transform" class="p" id="_d2e12345"><span class="label">&lt;category&gt; </span>(category) contains an individual descriptive category, possibly nested within a superordinate
+                  category, within a user-defined taxonomy. [<a href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD55" target="_blank" rel="noopener noreferrer" class="ref">2.3.7. The Classification Declaration</a>]</div>
+               <div xmlns:xsl="http://www.w3.org/1999/XSL/Transform" class="table-container">
+                  <table>
+                     <tbody>
+                        <tr>
+                           <td><span class="label">Module</span></td>
+                           <td>header</td>
+                        </tr>
+                        <tr>
+                           <td><span class="label">Attributes</span></td>
+                           <td>
+                              <div class="list" id="_d2e12360">
+                                 <div class="item" id="_d2e12362"><a href="TEI.att.global.html" class="ref">att.global</a><div class="list" id="_d2e12365">
+                                       <div class="item" id="_d2e12366"><span class="att">xml:id</span></div>
+                                       <div class="item" id="_d2e12368"><span class="att">n</span></div>
+                                       <div class="item" id="_d2e12370"><span class="att">xml:lang</span></div>
+                                    </div>
+                                    <div class="list" id="_d2e12372">
+                                       <div class="item" id="_d2e12373"><a href="TEI.lim.att.global.fragmentable.html" class="ref">lim.att.global.fragmentable</a><div class="list" id="_d2e12376">
+                                             <div class="item" id="_d2e12377"><span class="att">part</span></div>
+                                          </div>
+                                       </div>
+                                       <div class="item" id="_d2e12379"><a href="TEI.att.global.rendition.html" class="ref">att.global.rendition</a><div class="list" id="_d2e12382">
+                                             <div class="item" id="_d2e12383"><span class="att">rendition</span></div>
+                                          </div>
+                                       </div>
+                                       <div class="item" id="_d2e12385"><a href="TEI.att.global.source.html" class="ref">att.global.source</a><div class="list" id="_d2e12388">
+                                             <div class="item" id="_d2e12389"><span class="att">source</span></div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><span class="label">Contained by</span></td>
+                           <td>
+                              <div class="list" id="_d2e12395">
+                                 <div class="item" id="_d2e12396">
+                                    <div class="list" id="_d2e12397">
+                                       <div class="item" id="_d2e12398">header: <a href="TEI.category.html" class="ref">category</a> <a href="TEI.taxonomy.html" class="ref">taxonomy</a></div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><span class="label">May contain</span></td>
+                           <td>
+                              <div class="list" id="_d2e12409">
+                                 <div class="item" id="_d2e12410">core: <a href="TEI.desc.html" class="ref">desc</a> <a href="TEI.gloss.html" class="ref">gloss</a></div>
+                                 <div class="item" id="_d2e12417">header: <a href="TEI.catDesc.html" class="ref">catDesc</a> <a href="TEI.category.html" class="ref">category</a></div>
+                              </div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><span class="label">Examples</span></td>
+                           <td>
+                              
+                              <div class="egXML true" xml:space="preserve">
+                                 <span class="space"><br/></span><span class="xmlTag">&lt;category</span><span class="xmlAttName"> xml:id=</span><span class="xmlAttVal">"b1"</span><span class="xmlTag">&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;catDesc</span><span class="xmlTag">&gt;</span><span class="space">Prose reportage</span><span class="xmlTag">&lt;/catDesc&gt;</span><span class="space"><br/></span><span class="xmlTag">&lt;/category&gt;</span><span class="space"></span>
+                                 </div>
+                              
+                              
+                              <div class="egXML true" xml:space="preserve">
+                                 <span class="space"><br/></span><span class="xmlTag">&lt;category</span><span class="xmlAttName"> xml:id=</span><span class="xmlAttVal">"b2"</span><span class="xmlTag">&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;catDesc</span><span class="xmlTag">&gt;</span><span class="space">Prose </span><span class="xmlTag">&lt;/catDesc&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;category</span><span class="xmlAttName"> xml:id=</span><span class="xmlAttVal">"b11"</span><span class="xmlTag">&gt;</span><span class="space"><br/>      </span><span class="xmlTag">&lt;catDesc</span><span class="xmlTag">&gt;</span><span class="space">journalism</span><span class="xmlTag">&lt;/catDesc&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;/category&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;category</span><span class="xmlAttName"> xml:id=</span><span class="xmlAttVal">"b12"</span><span class="xmlTag">&gt;</span><span class="space"><br/>      </span><span class="xmlTag">&lt;catDesc</span><span class="xmlTag">&gt;</span><span class="space">fiction</span><span class="xmlTag">&lt;/catDesc&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;/category&gt;</span><span class="space"><br/></span><span class="xmlTag">&lt;/category&gt;</span><span class="space"></span>
+                                 </div>
+                              
+                              
+                              <div class="egXML true" xml:space="preserve">
+                                 <span class="space"><br/></span><span class="xmlTag">&lt;category</span><span class="xmlAttName"> xml:id=</span><span class="xmlAttVal">"LIT"</span><span class="xmlTag">&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;catDesc</span><span class="xmlAttName"> xml:lang=</span><span class="xmlAttVal">"pl"</span><span class="xmlTag">&gt;</span><span class="space">literatura piękna</span><span class="xmlTag">&lt;/catDesc&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;catDesc</span><span class="xmlAttName"> xml:lang=</span><span class="xmlAttVal">"en"</span><span class="xmlTag">&gt;</span><span class="space">fiction</span><span class="xmlTag">&lt;/catDesc&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;category</span><span class="xmlAttName"> xml:id=</span><span class="xmlAttVal">"LPROSE"</span><span class="xmlTag">&gt;</span><span class="space"><br/>      </span><span class="xmlTag">&lt;catDesc</span><span class="xmlAttName"> xml:lang=</span><span class="xmlAttVal">"pl"</span><span class="xmlTag">&gt;</span><span class="space">proza</span><span class="xmlTag">&lt;/catDesc&gt;</span><span class="space"><br/>      </span><span class="xmlTag">&lt;catDesc</span><span class="xmlAttName"> xml:lang=</span><span class="xmlAttVal">"en"</span><span class="xmlTag">&gt;</span><span class="space">prose</span><span class="xmlTag">&lt;/catDesc&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;/category&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;category</span><span class="xmlAttName"> xml:id=</span><span class="xmlAttVal">"LPOETRY"</span><span class="xmlTag">&gt;</span><span class="space"><br/>      </span><span class="xmlTag">&lt;catDesc</span><span class="xmlAttName"> xml:lang=</span><span class="xmlAttVal">"pl"</span><span class="xmlTag">&gt;</span><span class="space">poezja</span><span class="xmlTag">&lt;/catDesc&gt;</span><span class="space"><br/>      </span><span class="xmlTag">&lt;catDesc</span><span class="xmlAttName"> xml:lang=</span><span class="xmlAttVal">"en"</span><span class="xmlTag">&gt;</span><span class="space">poetry</span><span class="xmlTag">&lt;/catDesc&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;/category&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;category</span><span class="xmlAttName"> xml:id=</span><span class="xmlAttVal">"LDRAMA"</span><span class="xmlTag">&gt;</span><span class="space"><br/>      </span><span class="xmlTag">&lt;catDesc</span><span class="xmlAttName"> xml:lang=</span><span class="xmlAttVal">"pl"</span><span class="xmlTag">&gt;</span><span class="space">dramat</span><span class="xmlTag">&lt;/catDesc&gt;</span><span class="space"><br/>      </span><span class="xmlTag">&lt;catDesc</span><span class="xmlAttName"> xml:lang=</span><span class="xmlAttVal">"en"</span><span class="xmlTag">&gt;</span><span class="space">drama</span><span class="xmlTag">&lt;/catDesc&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;/category&gt;</span><span class="space"><br/></span><span class="xmlTag">&lt;/category&gt;</span><span class="space"></span>
+                                 </div>
+                              </td>
+                        </tr>
+                        <tr>
+                           <td><span class="label">Source</span></td>
+                           <td><a href="https://github.com/TEIC/TEI/blob/dev/P5/Source/Specs/category.xml" target="_blank" rel="noopener noreferrer" class="ref right">Github</a>
+                              
+                              <div class="egXML true" xml:space="preserve">
+                                 <span class="space"><br/></span><span class="xmlTag">&lt;elementSpec</span><span class="xmlAttName"> module=</span><span class="xmlAttVal">"header"</span><span class="xmlAttName"> ident=</span><span class="xmlAttVal">"category"</span><span class="xmlTag">&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;gloss</span><span class="xmlTag">&gt;</span><span class="space">category</span><span class="xmlTag">&lt;/gloss&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;desc</span><span class="xmlTag">&gt;</span><span class="space">contains an individual descriptive category, possibly nested within a superordinate<br/> category, within a user-defined taxonomy.</span><span class="xmlTag">&lt;/desc&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;classes</span><span class="xmlTag">&gt;</span><span class="space"><br/>      </span><span class="xmlTag">&lt;memberOf</span><span class="xmlAttName"> key=</span><span class="xmlAttVal">"att.global"</span><span class="xmlTag">/&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;/classes&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;content</span><span class="xmlTag">&gt;</span><span class="space"><br/>      </span><span class="xmlTag">&lt;sequence</span><span class="xmlTag">&gt;</span><span class="space"><br/>         </span><span class="xmlTag">&lt;alternate</span><span class="xmlTag">&gt;</span><span class="space"><br/>            </span><span class="xmlTag">&lt;elementRef</span><span class="xmlAttName"> key=</span><span class="xmlAttVal">"catDesc"</span><span class="xmlAttName"> minOccurs=</span><span class="xmlAttVal">"1"</span><span class="xmlAttName"> maxOccurs=</span><span class="xmlAttVal">"unbounded"</span><span class="xmlTag">/&gt;</span><span class="space"><br/>            </span><span class="xmlTag">&lt;alternate</span><span class="xmlAttName"> minOccurs=</span><span class="xmlAttVal">"0"</span><span class="xmlAttName"> maxOccurs=</span><span class="xmlAttVal">"unbounded"</span><span class="xmlTag">&gt;</span><span class="space"><br/>               </span><span class="xmlTag">&lt;classRef</span><span class="xmlAttName"> key=</span><span class="xmlAttVal">"model.descLike"</span><span class="xmlTag">/&gt;</span><span class="space"><br/>               </span><span class="xmlTag">&lt;elementRef</span><span class="xmlAttName"> key=</span><span class="xmlAttVal">"equiv"</span><span class="xmlTag">/&gt;</span><span class="space"><br/>               </span><span class="xmlTag">&lt;elementRef</span><span class="xmlAttName"> key=</span><span class="xmlAttVal">"gloss"</span><span class="xmlTag">/&gt;</span><span class="space"><br/>            </span><span class="xmlTag">&lt;/alternate&gt;</span><span class="space"><br/>         </span><span class="xmlTag">&lt;/alternate&gt;</span><span class="space"><br/>         </span><span class="xmlTag">&lt;elementRef</span><span class="xmlAttName"> key=</span><span class="xmlAttVal">"category"</span><span class="xmlAttName"> minOccurs=</span><span class="xmlAttVal">"0"</span><span class="xmlAttName"> maxOccurs=</span><span class="xmlAttVal">"unbounded"</span><span class="xmlTag">/&gt;</span><span class="space"><br/>      </span><span class="xmlTag">&lt;/sequence&gt;</span><span class="space"><br/>   </span><span class="xmlTag">&lt;/content&gt;</span><span class="space"><br/></span><span class="xmlTag">&lt;/elementSpec&gt;</span><span class="space"></span>
+                                 </div>
+                              </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </article>
+            </main>
+         
+         
+         
+         </div>
+      
+      
+      
+      
+      <div id="popup" class="hidden">
+         
+         <div id="popup_content"></div>
+         </div>
+      <script src="js/documentation.js"></script>
+      </body>
+   </html>

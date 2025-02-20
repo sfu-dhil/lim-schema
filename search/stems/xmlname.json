@@ -1,0 +1,1 @@
+{"stem":"xmlname","instances":[{"docId":"TEI.att.gaijiProp","docUri":"TEI.att.gaijiProp.html","score":1,"contexts":[{"form":"xmlName","weight":"1","pos":27,"context":"teidata.<mark>xmlName<\/mark>"}]},{"docId":"TEI.teidata.xmlName","docUri":"TEI.teidata.xmlName.html","score":2,"contexts":[{"form":"xmlName","weight":"2","pos":2,"context":"teidata.<mark>xmlName<\/mark>"}]}]}

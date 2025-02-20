@@ -1,0 +1,1 @@
+{"stem":"starts-with","instances":[{"docId":"TEI.org","docUri":"TEI.org.html","score":1,"contexts":[{"form":"\"starts-with","weight":"1","pos":119,"context":"...id\"\/&gt; &lt;sch:assert test=<mark>\"starts-with<\/mark>(@xml:id, $parentId)\"&gt;ERROR...","fid":"_d2e55297"}]}]}
