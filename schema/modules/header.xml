@@ -109,9 +109,10 @@
                               </sequence>
                               <elementRef key="locus" minOccurs="1" maxOccurs="2"/>
                            </alternate>
-                           <elementRef key="abstact" minOccurs="0" maxOccurs="1"/>
+                           <elementRef key="abstract" minOccurs="0" maxOccurs="1"/>
                            <elementRef key="langUsage" minOccurs="0" maxOccurs="1"/>
                            <elementRef key="limItem"/>
+                           <elementRef key="handNotes" minOccurs="0" maxOccurs="1"/>
                         </sequence>
                         <elementRef key="catRef"/>
                      </alternate>
