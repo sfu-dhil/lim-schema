@@ -91,6 +91,26 @@
                      </constraint>
                   </constraintSpec>
                </elementSpec>
+               <!--handNote-->
+               <elementSpec ident="handNote" module="header" mode="change">
+                  <attList>
+                     <attDef ident="xml:id" mode="change" usage="req"/>
+                     <attDef ident="medium" mode="change" usage="rec">
+                        <valList type="closed" mode="add">
+                           <valItem ident="pencil" mode="add"/>
+                           <valItem ident="ink" mode="add"/>
+                           <valItem ident="crayon" mode="add"/>
+                        </valList>
+                     </attDef>
+                     <attDef ident="n" mode="delete"/>
+                     <attDef ident="scribe" mode="delete"/>
+                     <attDef ident="script" mode="delete"/>
+                     <attDef ident="scriptRef" mode="delete"/>
+                     <attDef ident="part" mode="delete"/>
+                     <attDef ident="scope" mode="delete"/>
+                     <attDef ident="source" mode="delete"/>
+                  </attList>
+               </elementSpec>
                <!--langUsage-->
                <elementSpec ident="langUsage" module="header" mode="change">
                   <content>

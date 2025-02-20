@@ -30,6 +30,12 @@ Uncommon or unfamiliar abbreviations—like Revd—will often need to be expande
 <title>Letter from the <choice><abbr>Revd.</abbr><expan>Reverend</expan></choice> Mr. <persName>Lyon</persName></title>
 ```
 
+#### Expanding Hyphenated Words
+
+Hyphenated words (i.e. words tagged with `<w>`) may also need to be expanded; in this case, just wrap the `<w>` in an `<abbr>` and then use a `<choice>` and `<expan>` as above:
+
+
+
 ### Supplying, Regularizing, and Flagging Incorrect Text
 
 Since the LiM represents multiple voices, we need to be explicit in our signalling of our editorial interventions and judicious in our appraisal of what kind of intervention we need to make.
@@ -214,5 +220,66 @@ How and where you attach that `@xml:lang` depends on whether the segment of fore
  If the foreign language appears has no logical wrapper (i.e. a single foreign phrase in a sentence or a foreign word), then use the `<foreign>` element: 
 ```
 <item><title>This example was created <foreign xml:lang="la">ex nihilo</foreign></title></item>
+```
+
+### Multiple Hands
+
+Annotations in different hands—i.e. additions written in a different medium by another scribe—can be encoded using the `@hand` attribute in concert with the `<handNotes>` element in the `<teiHeader>`.
+
+Hands are not centralized, so each distinct hand encountered in a file needs to be encoded in the `<teiHeader>`. Specifically, the `<handNotes>` and `<handNote>` element should appear in the `<profileDesc>`, below the `<limItem>` element:
+
+```
+ <profileDesc>
+    <limItem>
+      <!--Lots of metadata here...-->
+    </limItem>
+    <!--Add a handNotes and handNote element here-->
+    <handNotes>
+        <handNote></handNote>
+    </handNotes>
+ </profileDesc>
+```
+
+Encode each distinct hand in the document using the `<handNote>` element, which must contain an `@xml:id` and a `@medium`:
+
+```
+<handNotes>
+   <handNote xml:id="hand_pencil" medium="pencil">Unknown hand in pencil</handNote>
+</handNotes>
+```
+
+If you know the scribe, use the `@scribeRef` attribute to denote to whom the hand belongs:
+
+```
+<handNote xml:id="hand_crayon" medium="crayon" scribeRef="pers:BLOGJ1">Hand in crayon, likely J. Bloggs.</handNote>
+```
+
+Once the `<handNote>` is encoded, use the `@hand` attribute to point to the `@xml:id` of the `<handNote>`:
+
+```
+<!--In the teiHeader-->
+<teiHeader>
+<!-- [...] -->
+    <profileDesc>
+        <limItem>
+            <!--[...]-->
+        </limItem>            
+         <handNotes>
+            <handNote xml:id="hand_pencil" medium="pencil">Unknown hand in pencil</handNote>
+        <handNote xml:id="hand_crayon" medium="crayon" scribeRef="pers:BLOGJ1">Hand in crayon, likely J. Bloggs.</handNote>
+         </handNotes>
+    </profileDesc>
+    <!--[...]-->
+</teiHeader>
+<text>
+    <body>
+        <!--[...]-->
+        <add hand="#hand_pencil">Bogue</add>
+        <!--[...]-->
+        <note type="lim" anchored="false" hand="#hand_crayon">
+            <p>[...]</p>
+        </note>
+    </body>
+</text>
 ```
 
