@@ -328,28 +328,9 @@
             <prefixDef ident="g" matchPattern="(.+)" replacementPattern="lim.odd#char_$1">
                <p>Resolves links to a glyph.</p>
             </prefixDef>
-            <prefixDef ident="hand" matchPattern="(.+)" replacementPattern="lim.odd#hand_$1">
-               <p>Resolves link to a particular hand.</p>
-            </prefixDef>
+         
          </listPrefixDef>
       </encodingDesc>
-      <profileDesc>
-         <particDesc>
-            <listPerson>
-               <person xml:id="Forbes">
-                  <persName>Forbes</persName>
-               </person>
-               <person xml:id="Chambers">
-                  <persName>Chambers</persName>
-               </person>
-            </listPerson>
-         </particDesc>
-         <handNotes>
-            <handNote xml:id="hand_Forbes" medium="ink" scope="major" scribeRef="#Forbes">Forbes' hand</handNote>
-            <handNote xml:id="hand_Chambers" medium="pencil" scope="minor" scribeRef="#Chambers">Chambers' hand, written in pencil</handNote>
-            <handNote xml:id="hand_unknown">An unknown hand that is neither Chambers or Forbes.</handNote>
-         </handNotes>
-      </profileDesc>
    </teiHeader>
    <text>
       <front>
@@ -2851,20 +2832,20 @@
                      <attDef ident="subtype" mode="delete"/>
                   </attList>
                </classSpec><classSpec ident="att.written" module="tei" type="atts" mode="change">
-                  <constraintSpec scheme="schematron" ident="hand.ForbesOnlyIfImmediateHandIsnt">
-                     <desc>The use of Forbes' hand makes no sense unless the hand is someone else's.</desc>
+                  <constraintSpec ident="hand.mustUseLocalPointer" mode="add" scheme="schematron">
+                     <desc>All <att>hand</att> attributes should point 
+                        to a locally defined hand.</desc>
                      <constraint>
-                        <sch:rule context="tei:*[@hand = 'hand:Forbes']">
-                           <sch:let name="ancHand" value="ancestor::*[1][@hand]/@hand"/>
-                           <sch:assert test="exists($ancHand) and not($ancHand = 'hand:Forbes')">ERROR: Specifying hand:Forbes rarely makes sense since his is the implied hand in all cases; the value hand:Forbes should only be used when the hand has switched from Forbes to another hand and then back to Forbes.</sch:assert>
+                        <sch:rule context="tei:*[@hand]">
+                           <sch:let name="hand" value="@hand"/>
+                           <sch:let name="ptrs" value="tokenize($hand,'\s+')"/>
+                           <sch:let name="handNotes" value="ancestor::tei:TEI//tei:handNote"/>
+                           <sch:let name="unmatched" value="for $p in $ptrs                               return                                   if                                   ($handNotes[@xml:id = substring-after($p,'#')])                                     then ()                                   else $p"/>
+                           <sch:assert test="every $p in $ptrs satisfies starts-with($p,'#')">ERROR: All @hand values must start with a # to point to a locally defined handNote.</sch:assert>
+                           <sch:assert test="empty($unmatched)">ERROR: Cannot find associated handNotes for <sch:value-of select="string-join($unmatched, ' ')"/></sch:assert>
                         </sch:rule>
                      </constraint>
                   </constraintSpec>
-                  <attList>
-                     <attDef ident="hand" mode="change">
-                        
-                     <valList type="closed" mode="add"><valItem ident="hand:Forbes"><gloss>Forbes</gloss><desc>Forbes' hand</desc></valItem><valItem ident="hand:Chambers"><gloss>Chambers</gloss><desc>Chambers' hand, written in pencil</desc></valItem><valItem ident="hand:unknown"><gloss>unknown</gloss><desc>An unknown hand that is neither Chambers or Forbes.</desc></valItem></valList></attDef>
-                  </attList>
                </classSpec><dataSpec module="tei" ident="teidata.language" mode="change">
                   <content>
                      <alternate>

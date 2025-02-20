@@ -331,23 +331,30 @@
                   </attList>
                </classSpec>
                <!--att.written-->
-               <classSpec ident="att.written" module="tei" type="atts" mode="change">
-                  <constraintSpec scheme="schematron" ident="hand.ForbesOnlyIfImmediateHandIsnt">
-                     <desc>The use of Forbes' hand makes no sense unless the hand is someone else's.</desc>
+               <classSpec ident="att.written" 
+                  module="tei" type="atts" mode="change">
+                  <constraintSpec ident="hand.mustUseLocalPointer"
+                     mode="add" scheme="schematron">
+                     <desc>All <att>hand</att> attributes should point 
+                        to a locally defined hand.</desc>
                      <constraint>
-                        <sch:rule context="tei:*[@hand = 'hand:Forbes']">
-                           <sch:let name="ancHand" value="ancestor::*[1][@hand]/@hand"/>
-                           <sch:assert test="exists($ancHand) and not($ancHand = 'hand:Forbes')">ERROR: Specifying hand:Forbes rarely makes sense since his is the implied hand in all cases; the value hand:Forbes should only be used when the hand has switched from Forbes to another hand and then back to Forbes.</sch:assert>
+                        <sch:rule context="tei:*[@hand]">
+                           <sch:let name="hand" value="@hand"/>
+                           <sch:let name="ptrs" value="tokenize($hand,'\s+')"/>
+                           <sch:let name="handNotes"
+                              value="ancestor::tei:TEI//tei:handNote"/>
+                           <sch:let name="unmatched" 
+                              value="for $p in $ptrs
+                              return 
+                                 if 
+                                 ($handNotes[@xml:id = substring-after($p,'#')])
+                                    then () 
+                                 else $p"/>
+                           <sch:assert test="every $p in $ptrs satisfies starts-with($p,'#')">ERROR: All @hand values must start with a # to point to a locally defined handNote.</sch:assert>
+                           <sch:assert test="empty($unmatched)">ERROR: Cannot find associated handNotes for <sch:value-of select="string-join($unmatched, ' ')"/></sch:assert>
                         </sch:rule>
                      </constraint>
                   </constraintSpec>
-                  <attList>
-                     <attDef ident="hand" mode="change">
-                        <valList mode="add" type="closed">
-                           
-                        </valList>
-                     </attDef>
-                  </attList>
                </classSpec>
                <!--teidata.language-->
                <dataSpec module="tei" ident="teidata.language" mode="change">

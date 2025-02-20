@@ -343,30 +343,9 @@
             <prefixDef ident="g" matchPattern="(.+)" replacementPattern="lim.odd#char_$1">
                <p>Resolves links to a glyph.</p>
             </prefixDef>
-            <prefixDef ident="hand" matchPattern="(.+)" replacementPattern="lim.odd#hand_$1">
-               <p>Resolves link to a particular hand.</p>
-            </prefixDef>
+         
          </listPrefixDef>
       </encodingDesc>
-      <profileDesc>
-         <particDesc>
-            <listPerson>
-               <person xml:id="Forbes">
-                  <persName>Forbes</persName>
-               </person>
-               <person xml:id="Chambers">
-                  <persName>Chambers</persName>
-               </person>
-            </listPerson>
-         </particDesc>
-         <handNotes>
-            <handNote xml:id="hand_Forbes" medium="ink" scope="major"
-               scribeRef="#Forbes">Forbes' hand</handNote>
-            <handNote xml:id="hand_Chambers" medium="pencil" scope="minor" 
-               scribeRef="#Chambers">Chambers' hand, written in pencil</handNote>
-            <handNote xml:id="hand_unknown">An unknown hand that is neither Chambers or Forbes.</handNote>
-         </handNotes>
-      </profileDesc>
    </teiHeader>
    <text>
       <front>
