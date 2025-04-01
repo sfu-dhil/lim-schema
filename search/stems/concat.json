@@ -1,0 +1,1 @@
+{"stem":"concat","instances":[{"docId":"TEI.org","docUri":"TEI.org.html","score":1,"contexts":[{"form":"concat","weight":"1","pos":78,"context":"... test=\"matches(@xml:id, <mark>concat<\/mark>('^', $orgIdPattern, '$'))\"&gt;ERROR: All main...","fid":"_d2e55290"}]}]}

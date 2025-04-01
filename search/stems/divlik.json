@@ -1,0 +1,1 @@
+{"stem":"divlik","instances":[{"docId":"TEI.model.divLike","docUri":"TEI.model.divLike.html","score":2,"contexts":[{"form":"divLike","weight":"2","pos":2,"context":"model.<mark>divLike<\/mark>"}]},{"docId":"TEI.div","docUri":"TEI.div.html","score":1,"contexts":[{"form":"divLike","weight":"1","pos":69,"context":"model.<mark>divLike<\/mark>","fid":"_d2e20420"}]}]}

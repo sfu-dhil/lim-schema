@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     xmlns:sqf="http://www.schematron-quickfix.com/validator/process"
+     xmlns:lim="https://dhil.lib.sfu.ca/lyoninmourning"
+     xml:lang="en">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Schema and Encoding Guidelines for the <title level="m">Lyon in Mourning</title> Project</title>
+            <respStmt>
+               <resp>Principle Investigator</resp>
+               <name>Leith Davis</name>
+            </respStmt>
+         </titleStmt>
+         <publicationStmt>
+            <p>Probably free?</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>No source; born digital.</p>
+         </sourceDesc>
+      </fileDesc>
+      <encodingDesc>
+         <charDecl>
+            <glyph xml:id="char_star">
+                <unicodeProp name="Name" value="STAR / ASTERISK"/>
+                <mapping type="standard">*</mapping>
+                <mapping type="unicode">U+002A</mapping>
+                <figure>
+                   <graphic url="img:char_star.svg"/> 
+                </figure>
+            </glyph>
+            <glyph xml:id="char_cross">
+               <unicodeProp name="Name" value="CROSS OR DAGGER"/>
+               <mapping type="standard">✝</mapping>
+               <mapping type="unicode">U+271D</mapping>
+               <figure>
+                  <graphic url="img:char_cross.svg"/>
+               </figure>
+            </glyph>
+            <glyph xml:id="char_x">
+               <unicodeProp name="Name" value="X"/>
+               <mapping type="standard">X</mapping>
+            </glyph>
+            <glyph xml:id="char_circledX">
+               <unicodeProp name="Name" value="X WITH CIRCLE"/>
+               <mapping type="standard">ⓧ</mapping>
+            </glyph>
+            <glyph xml:id="char_phi">
+               <unicodeProp name="Name" value="PHI"/>
+               <mapping type="standard">φ</mapping>
+               <mapping type="unicode">U+03C6</mapping>
+            </glyph>
+            <glyph xml:id="char_theta">
+               <unicodeProp name="Name" value="THETA"/>
+               <mapping type="standard">θ</mapping>
+               <mapping type="unicode">U+03B8;</mapping>
+            </glyph>
+            <glyph xml:id="char_umbrella">
+               <unicodeProp name="Name" value="UMBRELLA"/>
+               <mapping type="standard">☂</mapping>
+               <figure>
+                  <graphic url="img:char_umbrella.svg"/>
+               </figure>
+            </glyph>
+            <glyph xml:id="char_tau">
+               <unicodeProp name="Name" value="TAU"/>
+               <mapping type="standard">Τ</mapping>
+            </glyph>
+            <glyph xml:id="char_pi">
+               <unicodeProp name="Name" value="PI"/>
+               <mapping type="standard">Π</mapping>
+            </glyph>
+            <glyph xml:id="char_UNKNOWN">
+               <unicodeProp name="Name" value="UNKNOWN"/>
+               <desc>An unknown character to be used as a placeholder until
+               a character can be properly assigned.</desc>
+            </glyph>
+         </charDecl>
+         <classDecl>
+            <taxonomy>
+               <desc>Genre</desc>
+               <category xml:id="letter">
+                  <catDesc>
+                     <term>letter</term>
+                     <gloss/>
+                  </catDesc>
+               </category>
+               <category xml:id="speech">
+                  <catDesc>
+                     <term>speech</term>
+                     <gloss/>
+                  </catDesc>
+               </category>
+               <category xml:id="conversation">
+                  <catDesc>
+                     <term>conversation</term>
+                  </catDesc>
+               </category>
+               <category xml:id="accountNarrative">
+                  <catDesc>
+                     <term>account/narrative</term>
+                  </catDesc>
+               </category>
+               <category xml:id="text">
+                  <catDesc>
+                     <term>text</term>
+                  </catDesc>
+                  <category xml:id="text_poem">
+                     <catDesc>
+                        <term>poem</term>
+                     </catDesc>
+                  </category>
+                  <category xml:id="text_song">
+                     <catDesc>
+                        <term>poem</term>
+                     </catDesc>
+                  </category>
+                  <category xml:id="text_epitaph">
+                     <catDesc>
+                        <term>epitaph</term>
+                     </catDesc>
+                  </category>
+               </category>
+               <category xml:id="insert">
+                  <catDesc>
+                     <term>insert</term>
+                  </catDesc>
+               </category>
+               <category xml:id="misc">
+                  <catDesc>
+                     <term>Miscellaneous</term>
+                  </catDesc>
+               </category>
+            </taxonomy>
+            <taxonomy xml:id="docStatus">
+               <bibl>Document Status taxonomy</bibl>
+               <category xml:id="docStatus_empty">
+                  <catDesc>
+                     <term>empty</term>
+                     <gloss>empty / not yet worked on or edited</gloss>
+                  </catDesc>
+                  <category xml:id="docStatus_inProgress">
+                     <catDesc>
+                        <term>in progress</term>
+                        <gloss>currently being worked on, but not yet "done"</gloss>
+                     </catDesc>
+                  </category>
+                  <category xml:id="docStatus_readyForProof">
+                     <catDesc>
+                        <term>ready for proof</term>
+                        <gloss>corrected and encoded, and is now ready to be proofed</gloss>
+                     </catDesc>
+                  </category>
+                  <category xml:id="docStatus_proofed">
+                     <catDesc>
+                        <term>proofed</term>
+                        <gloss>proofed and checked</gloss>
+                     </catDesc>
+                  </category>
+               </category>
+            </taxonomy>
+         </classDecl>
+
+         <tagsDecl>
+            <!--HOW THIS WORKS:
+               @xml:id = the rendition pointer,
+               desc / gloss = the desc and gloss in the ODD
+               outputRendition = the CSS styling-->
+            <rendition xml:id="rnd_super">
+               <desc>Superscript</desc>
+               <gloss>Superscripted letters</gloss>
+               <outputRendition>text-align:super;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_sub">
+               <desc>Subscript</desc>
+               <gloss>Subscripted letters</gloss>
+               <outputRendition>text-align:sub;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_underlined">
+               <desc>Underlined</desc>
+               <gloss>Items that are underlined; note that since underlining often denotes
+               emphasis, this should usually be used with more precise elements (persName, emph, etc)</gloss>
+               <outputRendition>text-decoration:underline;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_right-braced">
+               <desc>Right braced</desc>
+               <gloss>A set of elements with a CURLY right brace</gloss>
+            </rendition>
+            <rendition xml:id="rnd_bordered-all">
+               <desc>Bordered on all four sides</desc>
+               <gloss>Items that have a full border</gloss>
+               <outputRendition>border:1px solid black;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_bordered-left">
+               <desc>Left bordered</desc>
+               <gloss>Items that have a left border (straight or ragged)</gloss>
+               <outputRendition>border-left:1px solid black;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_bordered-right">
+               <desc>Right bordered</desc>
+               <gloss>An element with a right border (straight or ragged)</gloss>
+               <outputRendition>border-right:1px solid black;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_bordered-bottom">
+               <desc>Bottom bordered</desc>
+               <gloss>An element with a bottom border (straight or ragged)</gloss>
+               <outputRendition>border-bottom:1px solid black;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_bordered-bottom-dashed">
+               <desc>Bottom bordered</desc>
+               <gloss>An element with a dashed bottom border</gloss>
+               <outputRendition>border-bottom:1px dashed black;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_bordered-top">
+               <desc>Top bordered</desc>
+               <gloss>An element with a bottom border (straight or ragged)</gloss>
+               <outputRendition>border-top:1px solid black;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_bold">
+               <desc>Bold</desc>
+               <gloss>Bold or heavier weight. TODO: What is the difference between
+               bold and a shift in ink?</gloss>
+               <outputRendition>font-weight:bold;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_indent-first-line">
+               <desc>Indent</desc>
+               <gloss>A paragraph or poetic line that has a first line indent.</gloss>
+               <outputRendition>text-indent: 1rem;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_indent-block">
+               <desc>Indented block</desc>
+               <gloss>A block element that is entirely indented (i.e. a paragraph). Use the @n attribute as a multiplier.</gloss>
+               <outputRendition>margin-left: 1rem;</outputRendition>
+            </rendition>
+            
+            <rendition xml:id="rnd_overline">
+               <desc>Overline</desc>
+               <gloss>An element with a line above. Note: this should NOT be used for letters with macrons (i.e. ō);
+                  if those ever appear, use the actual letter.</gloss>
+               <outputRendition>text-decoration: overline;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_small">
+               <desc>Small text</desc>
+               <gloss>Use for marginal notes etc, if they are smaller</gloss>
+               <outputRendition>font-size: 0.8em;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_large" select="head">
+               <desc>Larger text (i.e. headings)</desc>
+               <gloss>Use this for headings or other large text</gloss>
+               <outputRendition>font-size: 1.5rem;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_strikethrough" selector="del">
+               <desc>Strikethrough</desc>
+               <gloss>Use this for text that is struck through; note that,
+               by default, you do not need to put this element for dels.</gloss>
+               <outputRendition>text-decoration:line-through;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_normal">
+               <desc>Normal</desc>
+               <gloss>This text should NOT follow any of the default assumptions
+               about its styling (i.e. a heading that is NOT large; a deletion that is
+               not struck through)</gloss>
+            </rendition>
+            <rendition xml:id="rnd_left">
+               <desc>Left aligned</desc>
+               <gloss>Left aligned text</gloss>
+               <outputRendition>text-align: left;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_right">
+               <desc>Right aligned</desc>
+               <gloss>Left aligned text</gloss>
+               <outputRendition>text-align: right;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_center">
+               <desc>Centered</desc>
+               <gloss>Centered text</gloss>
+               <outputRendition>text-align: center;</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_embellished">
+               <desc>Embellished letter</desc>
+               <gloss>Use this when some letter/character is embellished.</gloss>
+            </rendition>
+            <rendition xml:id="rnd_two-column">
+               <desc>A block that has two columns</desc>
+               <gloss>Used for instances where (usually a closer) has two distinct
+               blocks with something in the left and right-column</gloss>
+            </rendition>
+            <rendition xml:id="rnd_rotate-left">
+               <desc>A block rotated -90 degrees.</desc>
+               <gloss>Used for notes, annotations, et cetera that are rotated -90 degrees (i.e.
+               read from bottom to top)</gloss>
+               <outputRendition>transform: rotate(-90deg);</outputRendition>
+            </rendition>
+            <rendition xml:id="rnd_rotate-right">
+               <desc>A block rotated 90 degrees.</desc>
+               <gloss>Used for notes, annotations, et cetera that are rotated 90 degrees (i.e.
+               read from top to bottom)</gloss>
+               <outputRendition>transform: rotate(90deg);</outputRendition>
+            </rendition>
+         </tagsDecl>
+         <listPrefixDef>
+            <prefixDef ident="doc" matchPattern="(.+)(#.+)?" replacementPattern="$1.xml$2">
+               <p>Mechanism for pointing to a document in the repository. E.g. <val>doc:vol11_vol1</val>.</p>
+            </prefixDef>
+            <prefixDef ident="islandora"
+                       matchPattern="(\d+)"
+                       replacementPattern="https://digital.lib.sfu.ca/islandora/object/lyoninmourning:$1">
+               <p>Resolves links to SFU's Islandora collection for the Lyon in Mourning page images.</p>
+            </prefixDef>
+            <prefixDef ident="lib" matchPattern="(\d+)" replacementPattern="#sfu_pg_$1">
+               <p>Resolves links from a page in a volume to a facsimile element.</p>
+            </prefixDef>
+            <prefixDef ident="lim" matchPattern="(.+)" replacementPattern="lim.odd#$1"/>
+            <prefixDef ident="prs" matchPattern="(.+)" replacementPattern="people.xml#$1">
+               <p>Resolves links to a person to the personography.</p>
+            </prefixDef>
+            <prefixDef ident="plc" matchPattern="(.+)" replacementPattern="places.xml#$1">
+               <p>Resolves links to a place to the geography.</p>
+            </prefixDef>
+            <prefixDef ident="team" matchPattern="(.+)" replacementPattern="contributors.xml#$1">
+               <p>Resolve links to team members.</p>
+            </prefixDef>
+            <prefixDef ident="org"
+                       matchPattern="(.+)"
+                       replacementPattern="organizations.xml#$1">
+               <p>Resolves links to a place to the geography.</p>
+            </prefixDef>
+            <prefixDef ident="obj" matchPattern="(.+)" replacementPattern="objects.xml#$1">
+               <p>Resolves links to an object to the object database.</p>
+            </prefixDef>
+            <prefixDef ident="bibl"
+                       matchPattern="(.+)"
+                       replacementPattern="bibliography.xml$1">
+               <p>Resolves links to a bibliographic item.</p>
+            </prefixDef>
+            <prefixDef ident="img"
+                       matchPattern="(.+)"
+                       replacementPattern="images/$1"/>
+            <prefixDef ident="g" matchPattern="(.+)" replacementPattern="lim.odd#char_$1">
+               <p>Resolves links to a glyph.</p>
+            </prefixDef>
+         
+         </listPrefixDef>
+      </encodingDesc>
+   </teiHeader>
+   <text>
+      <front>
+         <div>
+            <head>Lyon in Mourning Encoding Guidelines</head>
+            <p>This is the encoding documentation for the forthcoming <ref target="https://dhil.lib.sfu.ca/lyoninmourning">Lyon in Mourning digital edition</ref>, which is part of the larger SSHRC-funded Networking Jacobites project (Leith Davis [SFU, Department of English], Ralph MacLean [National Library of Scotland], and Joey Takeda [SFU, Digital Humanities Innovation Lab]).</p>
+         </div>
+      </front>
+      <body>
+         <div>
+            <divGen xml:id="index"/>
+         </div>
+      </body>
+      <back>
+         <div>
+            <head>Appendix</head>
+            <schemaSpec ident="lim"
+               start="TEI div person place org biblStruct"
+               source="tei:4.7.0">
+
+               <?module analysis?>
+               <?module core?>
+               <?module corpus?>
+               <?module header?>
+               <?module figures?>
+               <?module gaiji?>
+               <?module lim?>
+               <?module linking?>
+               <?module msdescription?>
+               <?module namesdates?>
+               <?module tei?>
+               <?module textstructure?>
+               <?module transcr?>
+            </schemaSpec>
+         </div>
+      </back>
+   </text>
+</TEI>
