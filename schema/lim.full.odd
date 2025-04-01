@@ -2082,7 +2082,7 @@
                   <desc>Set of constraints for text and punctuation</desc>
                   <constraint>
                      <sch:pattern>
-                        <sch:rule context="tei:*[text()][matches(string-join(text(),''),'\S')][ancestor::tei:text][$docStatus=('draft','inProgress','proofed', 'readyForProof')]">
+                        <sch:rule context="tei:*[text()][matches(string-join(text(),''),'\S')][ancestor::tei:text][not(self::tei:metamark)][$docStatus=('draft','inProgress','proofed', 'readyForProof')]">
                            <sch:let name="string" value="string-join(text(),'')"/>
                            <sch:assert test="not(matches($string,'(--+)|(––+)'))">
                               ERROR: Do not use multiple hyphens or en-dashes to represent an em-dash (—).
