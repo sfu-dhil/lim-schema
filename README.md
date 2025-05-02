@@ -1,3 +1,7 @@
+# DEPRECATED (May 2025)
+
+Content migrated to sfu-dhil/lim. 
+
 # Lyon in Mourning Project Schema
 
 This repository contains the schema, documentation, and oXygen editing framework for the Lyon in Mourning Project, a TEI-encoded edition of Robert Forbes' manuscript of Jacobite materials. The project is led by Dr. Leith Davis (SFU) with support provided by the Digital Humanities Innovation Lab (SFU Library).
